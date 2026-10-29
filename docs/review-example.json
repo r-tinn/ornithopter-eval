@@ -1,0 +1,12 @@
+{
+  "source_visual_review": {
+    "score": 0,
+    "rationale": "Replace with an evidence-based assessment using docs/GRADERS.md and task/TASK.md.",
+    "evidence": ["inspection.png: replace with specific observations"]
+  },
+  "visual_quality": {
+    "score": 0,
+    "rationale": "Replace with observations of depth, layout, controls and sampled artifacts; state uncertainty.",
+    "evidence": ["orbit.png and powered-0.png: replace with specific observations"]
+  }
+}

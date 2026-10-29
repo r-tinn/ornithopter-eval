@@ -1,0 +1,64 @@
+{
+  "task_version": "swan-v1.0",
+  "offline_validation_passed": true,
+  "live_api_tested": false,
+  "multimodal_judge_tested_live": false,
+  "note": "Calibration detects these selected defects; it is not independent scientific validation.",
+  "reports": {
+    "reference": {
+      "status": "awaiting_review",
+      "overall_score": null,
+      "dimensions": {
+        "source": 100.0,
+        "physics": 100.0,
+        "interaction": 100.0,
+        "source_visual_review": null,
+        "visual_quality": null
+      }
+    },
+    "wrong_units": {
+      "status": "awaiting_review",
+      "overall_score": null,
+      "dimensions": {
+        "source": 77.78,
+        "physics": 100.0,
+        "interaction": 100.0,
+        "source_visual_review": null,
+        "visual_quality": null
+      }
+    },
+    "free_thrust": {
+      "status": "awaiting_review",
+      "overall_score": null,
+      "dimensions": {
+        "source": 100.0,
+        "physics": 50.0,
+        "interaction": 92.86,
+        "source_visual_review": null,
+        "visual_quality": null
+      }
+    },
+    "broken_step": {
+      "status": "awaiting_review",
+      "overall_score": null,
+      "dimensions": {
+        "source": 100.0,
+        "physics": 72.73,
+        "interaction": 85.71,
+        "source_visual_review": null,
+        "visual_quality": null
+      }
+    },
+    "empty_starter": {
+      "status": "awaiting_review",
+      "overall_score": null,
+      "dimensions": {
+        "source": 0.0,
+        "physics": 13.64,
+        "interaction": 14.29,
+        "source_visual_review": null,
+        "visual_quality": null
+      }
+    }
+  }
+}

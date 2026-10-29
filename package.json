@@ -1,0 +1,14 @@
+{
+  "name": "ornithopter-eval",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "test": "python3 -m unittest discover -s tests -v",
+    "browser:install": "playwright install chromium",
+    "validate": "python3 -m ornithopter_eval validate"
+  },
+  "devDependencies": {"playwright": "1.62.1"},
+  "engines": {"node": ">=22", "pnpm": ">=10"},
+  "packageManager": "pnpm@11.19.0"
+}

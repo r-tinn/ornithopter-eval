@@ -1,0 +1,9 @@
+{
+  "sources": [
+    {"id":"02", "used_for":"Rounded Say span, wrist span, 4-inch shoulder span, 8-inch body width, 55-inch overall length; paragraph wing area and parallel inner/elliptical outer planform. Derived AR from the rounded span."},
+    {"id":"14", "used_for":"Two wing regions, conventional tail, fin and rudder as an educational mechanical interpretation."}
+  ],
+  "assumptions": ["6 kg mass, 400 W motor and 65% propulsive efficiency are benchmark assumptions, not Stanley's measured values.", "Cycle-averaged lift/drag/thrust; 2 Hz visual flapping, 0.45 rad inner amplitude and phase-shifted outer articulation are new assumptions.", "A parallel central panel and sampled elliptical outer panel are a geometric idealization; thickness, tail shape and landing gear are illustrative."],
+  "excluded_fields": ["The printed 3.135 ft wing length conflicts with the scaled value and is excluded.", "The 7.83 table and crossed-out 14% comparison are unavailable/uncertain.", "Biological stroke-angle axes and vortex-lift landing claims on page 14 are not numeric constraints."],
+  "limitations": ["An educational point-mass demonstrator, not a validated aircraft or prediction of real flight.", "No aeroelasticity, structural loads, wake history, measured polar, wing-inertia energy or actual motor mechanism.", "Body geometry and controls are assumed; no recovered engineering design is claimed."]
+}

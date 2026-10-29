@@ -1,0 +1,41 @@
+name: Offline validation
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '11.19.0'
+          run_install: false
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.cache/browsers
+      - name: Validate available inputs
+        run: |
+          if [ -f task/sources/Unknown-2.jpg ] && [ -f task/sources/Unknown-14.jpg ]; then
+            python3 -m unittest discover -s tests -v
+            python3 -m ornithopter_eval validate
+          else
+            python3 -m unittest discover -s tests -p test_policy.py -v
+            echo "Source packet is not published: full calibration skipped." >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: offline-evaluation-evidence
+          path: runs/validation-*
+          retention-days: 7

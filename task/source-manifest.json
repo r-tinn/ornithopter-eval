@@ -1,0 +1,101 @@
+{
+  "audit_date": "2026-10-29",
+  "selected_ids": [
+    "02",
+    "14"
+  ],
+  "archive_files": [
+    {
+      "file": "Unknown-10.jpg",
+      "bytes": 110998,
+      "sha256": "61aa7012757f1ed9eaa41cd97add95d96e653008c97996f9e50e5e5ecdf0a728",
+      "selected": false
+    },
+    {
+      "file": "Unknown-11.jpg",
+      "bytes": 152784,
+      "sha256": "5af32b5955dcd63b509ccc1c8f9f852cc4b038624af7cdec7d4559bef6dbfefc",
+      "selected": false
+    },
+    {
+      "file": "Unknown-12.jpg",
+      "bytes": 177791,
+      "sha256": "b203e7e32b70f3a87a8bfe85859f9901ba12fd191ac4908b908179f63cd07d38",
+      "selected": false
+    },
+    {
+      "file": "Unknown-13.jpg",
+      "bytes": 85591,
+      "sha256": "71b43e76e76c3bf0f031b8ff339329c4b255e9457e5710c3dfd029292211dfac",
+      "selected": false
+    },
+    {
+      "file": "Unknown-14.jpg",
+      "bytes": 144470,
+      "sha256": "889697309f83ec195a90d91974ff30e5374ab321284a759bbe8c929f5e8e405e",
+      "selected": true,
+      "id": "14"
+    },
+    {
+      "file": "Unknown-15.jpg",
+      "bytes": 88483,
+      "sha256": "d47f1d827d666153804c7cdf018565c13e3febcf880df9365b665b9e9b987465",
+      "selected": false
+    },
+    {
+      "file": "Unknown-2.jpg",
+      "bytes": 109866,
+      "sha256": "5c0a94b3f137307104f8062c23c3a6a3c6366c88f2f18c8fafed9ee3ddf0cbd9",
+      "selected": true,
+      "id": "02"
+    },
+    {
+      "file": "Unknown-3.jpg",
+      "bytes": 85841,
+      "sha256": "5772a9b841ac2f0a4c00ed6e7fa09e5fc7a4eae195caa3fc4c6c72aa8b43ef86",
+      "selected": false
+    },
+    {
+      "file": "Unknown-4.jpg",
+      "bytes": 114949,
+      "sha256": "d2c7b2b0257a79dcfbf057642626bf537e932ee79a88f1c798c2a7efcb130d74",
+      "selected": false
+    },
+    {
+      "file": "Unknown-5.jpg",
+      "bytes": 70091,
+      "sha256": "d3f1c4428cc44f785fc3913a6f5e44c49dfb312dd94261fe446de944e83c2092",
+      "selected": false
+    },
+    {
+      "file": "Unknown-6.jpg",
+      "bytes": 108649,
+      "sha256": "e2de1730ee3f816d41b09d9bf30d7d522feda63a9ab430b187e18d84e90b49ab",
+      "selected": false
+    },
+    {
+      "file": "Unknown-7.jpg",
+      "bytes": 212085,
+      "sha256": "503200ed9f97c8b52c8c3a2a1ea4d1f2c5b77f6d8083ffa1ff315f543fd3ea4c",
+      "selected": false
+    },
+    {
+      "file": "Unknown-8.jpg",
+      "bytes": 150650,
+      "sha256": "c765fd61b0d8bb15fd932a05a42276c18d91163e53170d743292d66d6e2ff290",
+      "selected": false
+    },
+    {
+      "file": "Unknown-9.jpg",
+      "bytes": 175403,
+      "sha256": "87fcd95b10c35c0e098592c15cca7f81d265420f2d61778a008314a24f63ab9c",
+      "selected": false
+    },
+    {
+      "file": "Unknown.jpg",
+      "bytes": 73372,
+      "sha256": "77c7fd5f98590e99d8ceee238fb45d5efd2d5d17f3168bb1d4f1e19007e996cc",
+      "selected": false
+    }
+  ]
+}
