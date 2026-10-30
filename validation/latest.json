@@ -1,5 +1,5 @@
 {
-  "task_version": "swan-v1.0",
+  "task_version": "swan-v2.0",
   "offline_validation_passed": true,
   "live_api_tested": false,
   "multimodal_judge_tested_live": false,
@@ -7,57 +7,273 @@
   "reports": {
     "reference": {
       "status": "awaiting_review",
-      "overall_score": null,
+      "passed": null,
       "dimensions": {
-        "source": 100.0,
-        "physics": 100.0,
-        "interaction": 100.0,
-        "source_visual_review": null,
-        "visual_quality": null
+        "source": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "physics": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "interaction": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "visual": {
+          "passed": null,
+          "failed": [],
+          "ungraded": [
+            "wings_on_both_sides",
+            "tail_behind_wings"
+          ]
+        }
       }
     },
     "wrong_units": {
       "status": "awaiting_review",
-      "overall_score": null,
+      "passed": false,
       "dimensions": {
-        "source": 77.78,
-        "physics": 100.0,
-        "interaction": 100.0,
-        "source_visual_review": null,
-        "visual_quality": null
+        "source": {
+          "passed": false,
+          "failed": [
+            "span_m"
+          ],
+          "ungraded": []
+        },
+        "physics": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "interaction": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "visual": {
+          "passed": null,
+          "failed": [],
+          "ungraded": [
+            "wings_on_both_sides",
+            "tail_behind_wings"
+          ]
+        }
       }
     },
     "free_thrust": {
       "status": "awaiting_review",
-      "overall_score": null,
+      "passed": false,
       "dimensions": {
-        "source": 100.0,
-        "physics": 50.0,
-        "interaction": 92.86,
-        "source_visual_review": null,
-        "visual_quality": null
+        "source": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "physics": {
+          "passed": false,
+          "failed": [
+            "power_controls_thrust"
+          ],
+          "ungraded": []
+        },
+        "interaction": {
+          "passed": false,
+          "failed": [
+            "power_moves_forward",
+            "landing"
+          ],
+          "ungraded": []
+        },
+        "visual": {
+          "passed": null,
+          "failed": [],
+          "ungraded": [
+            "wings_on_both_sides",
+            "tail_behind_wings"
+          ]
+        }
+      }
+    },
+    "linear_lift": {
+      "status": "awaiting_review",
+      "passed": false,
+      "dimensions": {
+        "source": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "physics": {
+          "passed": false,
+          "failed": [
+            "lift_scales_with_speed_squared"
+          ],
+          "ungraded": []
+        },
+        "interaction": {
+          "passed": false,
+          "failed": [
+            "takeoff",
+            "landing"
+          ],
+          "ungraded": []
+        },
+        "visual": {
+          "passed": null,
+          "failed": [],
+          "ungraded": [
+            "wings_on_both_sides",
+            "tail_behind_wings"
+          ]
+        }
+      }
+    },
+    "ignored_wind": {
+      "status": "awaiting_review",
+      "passed": false,
+      "dimensions": {
+        "source": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "physics": {
+          "passed": false,
+          "failed": [
+            "matching_wind_removes_lift"
+          ],
+          "ungraded": []
+        },
+        "interaction": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "visual": {
+          "passed": null,
+          "failed": [],
+          "ungraded": [
+            "wings_on_both_sides",
+            "tail_behind_wings"
+          ]
+        }
       }
     },
     "broken_step": {
       "status": "awaiting_review",
-      "overall_score": null,
+      "passed": false,
       "dimensions": {
-        "source": 100.0,
-        "physics": 72.73,
-        "interaction": 85.71,
-        "source_visual_review": null,
-        "visual_quality": null
+        "source": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "physics": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "interaction": {
+          "passed": false,
+          "failed": [
+            "power_moves_forward",
+            "takeoff",
+            "landing"
+          ],
+          "ungraded": []
+        },
+        "visual": {
+          "passed": null,
+          "failed": [],
+          "ungraded": [
+            "wings_on_both_sides",
+            "tail_behind_wings"
+          ]
+        }
+      }
+    },
+    "broken_pause": {
+      "status": "awaiting_review",
+      "passed": false,
+      "dimensions": {
+        "source": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "physics": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "interaction": {
+          "passed": false,
+          "failed": [
+            "pause_freezes_state"
+          ],
+          "ungraded": []
+        },
+        "visual": {
+          "passed": null,
+          "failed": [],
+          "ungraded": [
+            "wings_on_both_sides",
+            "tail_behind_wings"
+          ]
+        }
       }
     },
     "empty_starter": {
       "status": "awaiting_review",
-      "overall_score": null,
+      "passed": false,
       "dimensions": {
-        "source": 0.0,
-        "physics": 13.64,
-        "interaction": 14.29,
-        "source_visual_review": null,
-        "visual_quality": null
+        "source": {
+          "passed": false,
+          "failed": [
+            "span_m",
+            "wing_area_m2",
+            "wrist_span_m",
+            "shoulder_span_m",
+            "body_width_m",
+            "overall_length_m",
+            "aspect_ratio"
+          ],
+          "ungraded": []
+        },
+        "physics": {
+          "passed": false,
+          "failed": [
+            "power_controls_thrust",
+            "lift_scales_with_speed_squared",
+            "matching_wind_removes_lift"
+          ],
+          "ungraded": []
+        },
+        "interaction": {
+          "passed": false,
+          "failed": [
+            "power_moves_forward",
+            "pitch_input_changes_pitch",
+            "pause_freezes_state",
+            "reset_restores_state",
+            "takeoff",
+            "landing"
+          ],
+          "ungraded": []
+        },
+        "visual": {
+          "passed": null,
+          "failed": [],
+          "ungraded": [
+            "wings_on_both_sides",
+            "tail_behind_wings"
+          ]
+        }
       }
     }
   }

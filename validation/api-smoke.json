@@ -1,0 +1,12 @@
+{
+  "responses_api_tested_live": true,
+  "model": "gpt-4.1-mini-2025-04-14",
+  "status": "completed",
+  "structured_boolean_output": true,
+  "input_tokens": 47,
+  "output_tokens": 6,
+  "images_sent": false,
+  "generator_attempt_tested": false,
+  "visual_judge_tested": false,
+  "note": "Text-only authentication and structured-output protocol check; not a model evaluation."
+}

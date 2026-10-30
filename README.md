@@ -5,11 +5,11 @@
 
 This is a small, reproducible **single-task pilot** measuring source interpretation
 and simulator implementation. It includes two audited original photographs, a
-bounded task, a Responses API harness, deterministic and browser graders, optional
-multimodal review, and a newly written calibration simulator.
+bounded task, a Responses API harness, 16 automated binary checks, two focused
+image-review questions, and a newly written calibration simulator.
 
-The current delivery is validated offline. **No live model or model-judge call has
-been tested yet.** An API key is needed only when you choose to run those trials.
+The current delivery is validated offline. A small text-only Responses API check
+has passed. **No live generator attempt or image-judge call has been tested yet.**
 There is no claim of general benchmark validity or real-world aircraft validity.
 
 The historical source photographs and generated preview are currently kept local
@@ -19,7 +19,7 @@ pending approval for public sharing. The code can be published independently.
 
 - [The model's task](task/TASK.md) and [source guide](task/SOURCE_GUIDE.md)
 - [Why these sources were selected](docs/SOURCE_AUDIT.md)
-- [Scoring, evidence and limitations](docs/GRADERS.md)
+- [Binary checks, evidence and limitations](docs/GRADERS.md)
 - [Latest offline calibration results](validation/latest.json)
 
 ## Setup
@@ -32,7 +32,8 @@ source packet from the repository owner and place `Unknown-2.jpg` and
 `Unknown-14.jpg` in `task/sources/`. Preserve the original bytes; their hashes are
 checked against `task/source-manifest.json`. Do not substitute unrelated images.
 Full task preparation, runner tests and browser calibration require this packet.
-The code-only CI path runs file-policy tests and explicitly skips dataset checks.
+The code-only CI path runs file-policy, local-config and review-protocol tests
+and explicitly skips dataset-dependent checks.
 
 ```sh
 pnpm install --frozen-lockfile
@@ -57,9 +58,12 @@ from the evaluated agent. It is not a model submission or a recovered flight des
 
 ## One-attempt model run (when a key is available)
 
-Set `OPENAI_API_KEY` in your local environment; never put it in the task or a
-tracked file. Use a model that supports images, Responses `apply_patch` and local
-`shell`. Tool support depends on the selected model. No model ID is assumed.
+Set `OPENAI_API_KEY` in your local environment or in the Git-ignored `.env` file
+at the repository root, with permissions 0600. The environment takes precedence;
+the harness reads only that key and never executes the config file. Never put
+the key in the task or a tracked file. Use a model that supports images, Responses
+`apply_patch` and local `shell`. Tool support depends on the selected model.
+No model ID is assumed.
 
 ```sh
 python3 -m ornithopter_eval run --model YOUR_MODEL_ID --output runs/model-a-01
@@ -90,11 +94,15 @@ attempt manifest, and response/tool-result events. They are ignored by Git to
 avoid publishing trial outputs inadvertently. The harness never logs API headers
 or passes API credentials into the submission's browser environment.
 
-## Complete the visual/source review
+## Complete the two image checks
 
-Deterministic grading reports three dimension scores and leaves the two review
-dimensions **ungraded**, with no overall score. View the captured evidence in the
-grade directory. A model review, using a separately selected image-capable model:
+V2 reports individual pass/fail results: seven source parameters, three simple
+force relationships and six UI cause-and-effect checks. There are no weights or
+visual-quality scores. Two image questions remain **ungraded** until reviewed:
+is there a wing on each side, and is the tail behind the wing roots?
+
+Each question gets its own LLM call with one source photo and a standard top-view
+screenshot. Use a separately selected image-capable model:
 
 ```sh
 python3 -m ornithopter_eval judge runs/model-a-01/submission runs/model-a-01/grade --model YOUR_JUDGE_MODEL_ID
@@ -107,12 +115,12 @@ Or write a human review following `docs/GRADERS.md` and the JSON shape in
 python3 -m ornithopter_eval review runs/model-a-01/grade my-review.json --reviewer "Reviewer name"
 ```
 
-Reports retain separate scores, failed-check evidence, screenshots, submission
-hashes and reviewer metadata. No missing dimension is silently renormalized.
-Fixed browser actions are a reproducible interaction grader; a free-form CUA
-model pilot is outside v1. Image samples and paused-frame equality cannot prove
-that a live simulation never flickers. An attractive renderer cannot establish
-correct physics or real flight.
+Reports retain each boolean verdict, failed-check evidence, screenshot,
+submission hashes and reviewer metadata. A full task pass requires all 18 checks.
+An unreviewed check is null; an infrastructure failure is never a model score.
+Fixed Playwright actions use a virtual clock and observe the production state
+hook. They establish narrow input-to-state behaviour; they do not independently
+prove mesh motion or realistic flight. LLM answers still require calibration.
 
 ## Repository layout
 
@@ -122,7 +130,7 @@ configs/              Fixed attempt budgets
 ornithopter_eval/     Standard-library Python harness, tool policy, grading and CLI
 grader/               Trusted, isolated browser checks
 reference/            Calibration implementation; never exposed to evaluated model
-tests/                Tool-policy, budget, API-loop and scoring regression tests
+tests/                Tool-policy, budget, API-loop and binary-review tests
 validation/           Offline calibration summary and reference preview
 docs/                 Source audit, grader contract and human-review shape
 ```

@@ -1,20 +1,23 @@
 import argparse
 import json
-import os
 import shutil
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-from .api import APIError
+from .api import APIError, get_api_key
+from .checks import TASK_VERSION
 from .grading import grade_submission
 from .review import apply_review, judge
 from .runner import ROOT, DEFAULT_CONFIG, prepare, run_model, verify_sources, write_json
 
 
 def summarize(report):
-    return {"status":report["status"],"overall_score":report.get("overall_score"),
-            "dimensions":{k:v.get("score") for k,v in report.get("dimensions",{}).items()},
+    return {"status":report["status"],"passed":report.get("passed"),
+            "dimensions":{k:{"passed":v.get("passed"),
+                "failed":[c["id"] for c in v["checks"] if c["pass"] is False],
+                "ungraded":[c["id"] for c in v["checks"] if c["pass"] is None]}
+                for k,v in report.get("dimensions",{}).items()},
             **({"error":report["error"]} if "error" in report else {})}
 
 
@@ -25,9 +28,12 @@ def validate(node):
     root.mkdir(parents=True)
     # Calibrate against known-good and deliberately incorrect submissions.
     fixtures = {"reference":None,
-                "wrong_units":("span_m: 7.4 * 0.3048", "span_m: 7.4"),
-                "free_thrust":("0.65*power / Math.max(airspeed,5)", "52"),
-                "broken_step":("s.velocity = state.velocity.map((v,i) => v + f[i]/mass*dt);", "s.velocity = [0,0,0];"),
+                "wrong_units":("physics.mjs", "span_m: 7.4 * 0.3048", "span_m: 7.4"),
+                "free_thrust":("physics.mjs", "0.65*power / Math.max(airspeed,5)", "52"),
+                "linear_lift":("physics.mjs", "0.5 * environment.rho * airspeed ** 2", "0.5 * environment.rho * airspeed"),
+                "ignored_wind":("physics.mjs", "v - environment.wind[i]", "v"),
+                "broken_step":("physics.mjs", "s.velocity = state.velocity.map((v,i) => v + f[i]/mass*dt);", "s.velocity = [0,0,0];"),
+                "broken_pause":("app.mjs", "$('pause').onclick=()=>{paused=true;accumulator=0;draw();};", "$('pause').onclick=()=>{};"),
                 "empty_starter":None}
     reports = {}
     for name, mutation in fixtures.items():
@@ -62,30 +68,35 @@ def validate(node):
         else:
             shutil.copytree(ROOT / "reference",submission)
         if mutation:
-            physics = submission / "physics.mjs"
-            source = physics.read_text()
-            if source.count(mutation[0]) != 1:
+            target = submission / mutation[0]
+            source = target.read_text()
+            if source.count(mutation[1]) != 1:
                 raise ValueError(f"Mutation anchor changed: {name}")
-            physics.write_text(source.replace(*mutation))
+            target.write_text(source.replace(mutation[1],mutation[2]))
         report = grade_submission(submission,root / name / "grade",node=node)
         reports[name] = summarize(report)
         print(name+": "+json.dumps(reports[name]),flush=True)
-    success = (all(reports["reference"]["dimensions"].get(k)==100 for k in ("source","physics","interaction")) and
-               reports["wrong_units"]["dimensions"].get("source",100)<100 and
-               reports["free_thrust"]["dimensions"].get("physics",100)<100 and
-               reports["broken_step"]["dimensions"].get("physics",100)<100 and
-               reports["empty_starter"]["dimensions"].get("source",100)==0 and
-               reports["empty_starter"]["dimensions"].get("physics",100)<20 and
-               reports["empty_starter"]["dimensions"].get("interaction",100)<20 and
+    targets = {"wrong_units":("source","span_m"), "free_thrust":("physics","power_controls_thrust"),
+               "linear_lift":("physics","lift_scales_with_speed_squared"),
+               "ignored_wind":("physics","matching_wind_removes_lift"),
+               "broken_step":("interaction","power_moves_forward"),
+               "broken_pause":("interaction","pause_freezes_state")}
+    success = (all(reports["reference"]["dimensions"].get(k,{}).get("passed") is True
+                   for k in ("source","physics","interaction")) and
+               all(check in reports[name]["dimensions"].get(group,{}).get("failed",[])
+                   for name,(group,check) in targets.items()) and
+               "power_moves_forward" in reports["free_thrust"]["dimensions"].get("interaction",{}).get("failed",[]) and
+               all(len(reports["empty_starter"]["dimensions"].get(k,{}).get("failed",[]))==n
+                   for k,n in (("source",7),("physics",3),("interaction",6))) and
                all(r["status"]=="awaiting_review" for r in reports.values()))
-    result = {"task_version":"swan-v1.0","offline_validation_passed":success,
+    result = {"task_version":TASK_VERSION,"offline_validation_passed":success,
               "live_api_tested":False,"multimodal_judge_tested_live":False,
               "note":"Calibration detects these selected defects; it is not independent scientific validation.",
               "reports":reports}
     write_json(root / "summary.json",result)
     (ROOT / "validation").mkdir(exist_ok=True)
     write_json(ROOT / "validation/latest.json",result)
-    image = root / "reference/grade/inspection.png"
+    image = root / "reference/grade/inspection-top.png"
     if image.exists():
         shutil.copyfile(image,ROOT / "validation/reference-inspection.png")
     print("Evidence: "+str(root))
@@ -107,7 +118,7 @@ def main(argv=None):
         if args.command == "prepare":
             print(prepare(args.output,args.config))
         elif args.command == "run":
-            if not os.environ.get("OPENAI_API_KEY"):
+            if not get_api_key():
                 raise APIError("Set OPENAI_API_KEY locally; no run or API call was created")
             run = prepare(args.output,args.config)
             result = run_model(run,args.model)
@@ -123,9 +134,11 @@ def main(argv=None):
             folder = Path(args.grade_dir)
             if (folder / "review.json").exists():
                 raise ValueError("Review already exists")
+            if not (folder / "inspection-top.png").is_file():
+                raise ValueError("Missing inspection evidence; visual checks remain ungraded")
             review = json.loads(Path(args.review_json).read_text())
             report = apply_review(json.loads((folder / "report.json").read_text()),review)
-            report["reviewer"]={"type":"human","name":args.reviewer,"rubric":"swan-v1.0"}
+            report["reviewer"]={"type":"human","name":args.reviewer,"rubric":TASK_VERSION}
             write_json(folder / "review.json",review)
             write_json(folder / "report.json",report)
             print(json.dumps(summarize(report),indent=2))

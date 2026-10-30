@@ -1,4 +1,4 @@
-# Swan Flight Lab — swan-v1.0
+# Swan Flight Lab — swan-v2.0
 
 Build a dependency-free interactive 3D ornithopter flight lab from the two source
 photographs and SOURCE_GUIDE.md. Deliver a self-contained static site in
@@ -82,7 +82,11 @@ inspection view. State clearly that this is an educational approximation.
 
 Required `data-testid` elements:
 `scene` (canvas, at least 600×350 CSS pixels at a 1280×800 viewport),
-`start`, `pause`, `reset`, `approach`, `throttle` (range 0..1), and `telemetry`.
+`start`, `pause`, `reset`, `approach`, `view-top`, `throttle` (range 0..1), and `telemetry`.
+`view-top` switches to a view directly above the actual model, nose pointing up
+the screen, with both wings and the tail unobscured. Show the complete aircraft.
+Do not substitute a separate illustration for this view. It supports two binary
+image checks: a wing on each side of the body, and a tail aft of the wing roots.
 ArrowUp/ArrowDown change pitch, ArrowLeft/ArrowRight change bank; Space brakes.
 Telemetry displays speed, altitude, simulation time and status, updates while
 running and freezes on pause. Handle key release and focus loss.
@@ -92,7 +96,20 @@ status grounded, throttle 0, paused. Start runs physics. Pause freezes physics
 and wing animation. `approach` loads position [0,2,0], velocity [10,-1,0],
 pitch/roll/phase/time 0, status flying, throttle 0, paused. Both presets must
 render immediately. Simulation must support takeoff with power and manual pitch,
-and a safe landing from the approach preset with sensible input.
+and a safe landing from the approach preset. The fixed takeoff sequence is full
+throttle, Start, wait 2 s, hold ArrowUp for 0.3 s, release and continue; be flying
+above y=0.7 m throughout the samples at 6, 6.25, 6.5, 6.75 and 7 s.
+The landing sequence is approach, Start, ArrowUp for 0.4 s, release and continue
+for 2 s; finish landed at y=0.2 m with zero vertical velocity.
+
+The remaining browser checks ask whether full power moves x more than 0.1 m
+farther than zero power over 1 s, ArrowUp produces more than 0.1 rad more pitch
+than neutral over 0.4 s, Pause freezes an advancing state for 1 s, and Reset
+restores the exact initial state and zero throttle and stays paused for 1 s.
+The force checks ask only whether zero throttle removes thrust (positive at
+full throttle), doubling horizontal airspeed from 10 to 20 m/s quadruples
+positive lift at zero pitch/roll, and wind [10,0,0] removes lift at velocity
+[10,0,0]. These focused checks do not cover every equation above.
 
 Expose `window.flightLab = {getState(), getControls()}` returning JSON-safe
 copies of the actual state and controls used by the render/physics loop. This is

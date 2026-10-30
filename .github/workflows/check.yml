@@ -31,6 +31,8 @@ jobs:
             python3 -m ornithopter_eval validate
           else
             python3 -m unittest discover -s tests -p test_policy.py -v
+            python3 -m unittest discover -s tests -p test_review.py -v
+            python3 -m unittest discover -s tests -p test_api.py -v
             echo "Source packet is not published: full calibration skipped." >> "$GITHUB_STEP_SUMMARY"
           fi
       - uses: actions/upload-artifact@v4

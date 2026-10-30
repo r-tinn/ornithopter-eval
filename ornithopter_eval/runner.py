@@ -10,6 +10,7 @@ from pathlib import Path
 
 from .api import APIError, create_response
 from .policy import FilePolicy, PolicyError
+from .checks import TASK_VERSION
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONFIG = ROOT / "configs/pilot.json"
@@ -43,7 +44,7 @@ def prepare(output, config_path=DEFAULT_CONFIG):
                 "max_wall_seconds", "max_submission_bytes"):
         if type(config.get(key)) is not int or config[key] <= 0:
             raise ValueError(f"Invalid budget: {key}")
-    if config.get("task_version") != "swan-v1.0":
+    if config.get("task_version") != TASK_VERSION:
         raise ValueError("Unsupported task version")
     output.mkdir(parents=True)
     (output / "inputs/sources").mkdir(parents=True)

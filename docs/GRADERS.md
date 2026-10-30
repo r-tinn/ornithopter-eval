@@ -1,83 +1,140 @@
-# Grading contract
+# Binary grading contract — swan-v2.0
 
-The task and numeric contracts are public. The evaluated agent can access only
-its prepared `inputs/` and `submission/` through the virtual tool adapter; it
-cannot read this grader, reference implementation, hidden expected values, API
-credentials, or local repository. Public publication is not a guarantee against
-future training contamination. This is **one task**, not a demonstrated general
-benchmark or a claim of saturation resistance.
+This pilot has one construction task and **18 required pass/fail checks**.
+There are no weights, percentages, aesthetic scores or partial-credit rubrics.
+The report retains each question, boolean verdict and observed evidence.
 
-| Dimension | Weight | Evidence and limits |
-|---|---:|---|
-| Source checks | 25% | SI source parameters within 0.5% relative tolerance; required interpretation fields and source IDs. Documentation completeness does not establish semantic accuracy. |
-| Physics | 35% | Wind/flow, units, density, stall clamp, power budget, force directions, integration, immutability, contact, takeoff, repeatability, energy and step-size checks. These establish compliance with the specified approximate model. |
-| Browser interaction | 20% | Fixed Playwright actions: controls, pause, reset, pitch/bank, landing approach, brake, orbit, telemetry, errors and network requests. This is scripted computer interaction, not an autonomous CUA-model pilot. |
-| Source/visual interpretation | 10% | Explicit human or multimodal judge review of source images, documentation and rendered frames: planform, proportions, two-panel articulation, tail and honest attribution. |
-| Visual quality | 10% | Explicit human or multimodal judge review of depth, usability, layout and visible artifacts in sampled frames. |
+Seven source checks, three force checks and six browser checks are deterministic.
+Two image checks require a human or an explicitly selected image-capable LLM.
+Unreviewed image checks are null (ungraded), never assumed to pass. Any known
+failure makes the task verdict false; a full pass requires all 18 checks true.
+The report stays awaiting_review until both image questions are answered,
+including when an automated check has already failed.
 
-Checks within each deterministic dimension are equally weighted, with a fixed
-denominator: 9 source, 22 physics and 14 interaction checks. Unreached checks fail;
-early module/UI errors cannot shrink the denominator and inflate a score. Force comparisons
-use a relative/absolute combined tolerance of 1e-6 against an independently written
-oracle. This strict tolerance applies to equations, not confidence in real-world
-aerodynamics. The step-size check allows 0.25 m position difference over one second
-at the stated scenario; it is a numerical convergence sanity check, not a universal
-error bound. Accepted source rounding should be used consistently in the force
-equations. Individual failures and actual/expected evidence remain in the report.
+## Source parameters: seven questions
 
-An overall weighted score exists only when **all five** dimensions have scores.
-Missing review yields `overall_score: null`, never a silent renormalization.
-Always publish the dimension breakdown, attempt status and configuration too.
+Each exported parameter in physics.mjs is compared with one selected source value.
+Tolerance is 0.5% relative, allowing paper rounding and normal decimal conversion.
 
-## Reproducibility and evidence
+| Field | Paper value | Expected SI value |
+|---|---|---|
+| span_m | 7.4 ft | 2.25552 m |
+| wing_area_m2 | 6.61 ft² | 0.6140890944 m² |
+| wrist_span_m | 3.7 ft | 1.12776 m |
+| shoulder_span_m | 4 in | 0.1016 m |
+| body_width_m | 8 in | 0.2032 m |
+| overall_length_m | 55 in | 1.397 m |
+| aspect_ratio | b²/S using the selected values | 7.4²/6.61 |
 
-Runs record task/input/starter hashes, exact model identifier, configuration,
-token usage, elapsed time, request/response and tool-result events, completion
-status, and final file hashes. Output-token budget includes reasoning tokens
-reported by the API; repeated input-token consumption is recorded separately.
-There is a request cap and a wall-clock cap. Transport failure is not retried
-automatically because the provider may have already consumed an attempt.
+The trusted expected values come from the audited source packet, not an LLM at
+grading time. The grader imports the module in a browser and reads its exports.
+This verifies the numeric declaration. It does not prove that a renderer or
+force calculation uses that declaration. No points are awarded for merely
+populating documentation fields.
 
-The API may consume a final request up to its timeout. A response arriving after
-the wall-clock deadline is recorded but its edits are not applied. Byte/file
-limits and file access are enforced by host code. No dependency installation,
-shell interpreter, model subprocess, browser or verification tool is exposed.
-The task can require multiple Responses exchanges for file operations; “one
-attempt” does not mean literally one HTTP request or prohibit thought/editing.
+## Force checks: three questions
 
-The grader serves only submitted static assets to fresh Chromium with network
-requests blocked, service workers disabled, a restrictive CSP, a clean credential
-environment, a separate browser profile and a process-group timeout. It never
-executes submitted Node/Python code on the host. Chromium's sandbox is enabled.
-These measures are not an independently hardened sandbox for actively hostile
-submissions; use a disposable VM/container when evaluating adversarial code.
+The old v1 numerical oracle independently reimplemented the specified equations
+and compared the complete force output. That checked equation agreement, not
+whether those equations represented a real ornithopter. V2 removes that broad
+oracle and tests only three transparent relationships:
 
-Browser tests capture initial/orbit screenshots, powered wingbeat samples and
-landing samples. Exact paused-canvas equality checks a frozen scene only. Dynamic
-sample review cannot prove absence of all flicker, depth correctness, source
-fidelity or real-world flight validity. Visual reviewers must state uncertainty
-and cite filenames. A multimodal judge is optional, uncalibrated and potentially
-biased; retain its model ID and output separately from deterministic results.
+| ID | Controlled experiment | Pass condition |
+|---|---|---|
+| power_controls_thrust | At velocity [10,0,0], compare throttle 0 with 1. | Zero-power thrust is zero; powered thrust is finite and positive. |
+| lift_scales_with_speed_squared | At zero pitch/roll and unchanged density, compare velocity [10,0,0] with [20,0,0]. | Baseline lift is positive and finite; second lift is four times the first. |
+| matching_wind_removes_lift | At velocity [10,0,0], compare wind [0,0,0] with [10,0,0]. | Baseline lift is positive and finite; matching-wind lift is zero. |
 
-`validate` submits a newly written reference through an injected offline Responses
-transport and the real native patch adapter, then grades it. It also grades wrong
-length units, thrust independent of power, broken integration, and an empty starter.
-Detecting these proves only those checks are sensitive to those defects. Neither
-the fixture nor mutation testing establishes coverage of all possible shortcuts.
-The source/visual grader remains necessary because valid exported numbers alone
-do not establish that the displayed mesh or production simulation uses them.
+The comparisons use |actual − expected| <= 1e-6 * max(1, |expected|).
+Gravity is not part of the reported aerodynamic lift scalar: it still acts
+when relative airflow is zero. Positive baselines prevent an implementation
+returning zero for every force from passing.
 
-## Failures and comparisons
+For example, with L = 0.5*rho*v²*S*CL, doubling v while keeping rho, S and CL fixed
+gives 4L. The grader checks that ratio, without recomputing an entire flight.
+These checks deliberately leave drag, force direction, integration accuracy,
+stall behaviour and much else unverified. They are sanity checks of the new
+benchmark model, not validation of the historical design.
 
-`submitted` means the model ended the attempt; `budget_exhausted` is a distinct
-model-attempt outcome and may leave partial files. `infrastructure_error` means
-transport, environment or malformed API accounting; do not report it as a zero.
-Missing/broken module or UI yields failed checks. A browser timeout is reported as
-`submission_timeout` requiring triage, because infrastructure slowness and infinite
-submission loops cannot always be distinguished automatically.
+## Browser: six questions
 
-For comparisons, fix the task version, source hashes, starter, token/request/time
-budgets, reasoning setting, host/browser environment and grader revision. Report
-every attempt; do not silently select the best retry. Model sampling remains
-stochastic. Repeated attempts and confidence intervals are needed before strong
-ranking claims; v1 does not invent confidence from a single run.
+Playwright performs actual UI actions and reads copies of the production state
+through window.flightLab. Each check opens a fresh page. Each half of a paired
+trial also opens a fresh page with the same clock schedule and starting conditions.
+A virtual clock fires animation callbacks at fixed
+times so laptop/CI speed does not determine how long an input is held.
+
+| ID | Action | Binary observation |
+|---|---|---|
+| power_moves_forward | Reset and Start for 1 s at throttle 0; repeat at throttle 1. | Powered x exceeds neutral x by more than 0.1 m. |
+| pitch_input_changes_pitch | From approach, run 0.4 s neutral; repeat holding ArrowUp. | ArrowUp pitch exceeds neutral pitch by more than 0.1 rad. |
+| pause_freezes_state | Start approach for 0.4 s, Pause, advance clock 1 s. | State had advanced before Pause and is exactly unchanged afterwards. |
+| reset_restores_state | Run approach with full power for 0.4 s, Reset, advance clock 1 s. | Exact initial state and zero throttle persist, including time 0. |
+| takeoff | Full power; Start; after 2 s hold ArrowUp 0.3 s, then release. | At 6, 6.25, 6.5, 6.75 and 7 s, status is flying and y > 0.7 m. |
+| landing | Approach; Start; hold ArrowUp 0.4 s, release; run 2 more seconds. | Airborne initial state reaches landed at y=0.2 m with zero vertical velocity. |
+
+These are input-to-state tests. Avoiding a crash, making no network requests or
+showing a canvas earns no separate pass. Browser errors and blocked requests are
+diagnostics only. Missing/broken modules or controls fail affected checks; an
+early exception cannot shorten the checklist.
+
+These tests trust the required state hook to expose the state used by production
+physics/rendering. They do not independently establish that pixels follow it.
+A dishonest hook, canned flight path or model that passes just these cases can
+still exploit the grader. V2 makes no claim to close those gaps.
+
+## Image review: two questions, two separate calls
+
+Each LLM call receives exactly source photograph Unknown-2.jpg and one
+inspection-top.png captured from the actual rendered model after Reset and
+view-top. Nose points up the screen. No submitted prose, other rubric, previous
+judge answer or unrelated screenshot is included.
+
+| ID | Question | Pass only when |
+|---|---|---|
+| wings_on_both_sides | Is there a wing on each lateral side? | A wing visibly attaches to both the left and right of the central body. |
+| tail_behind_wings | Is the tail aft of the wing roots? | A distinct tail surface visibly attaches below the wing-root region in the nose-up view. |
+
+Each call returns only a boolean pass, one short reason and supplied evidence
+filenames. The strict output schema contains no numeric score. A false answer
+means the specified feature is absent, incorrect or cannot be confirmed because
+it is obscured/ambiguous. No judgement of polish, colours, overall resemblance,
+beauty, proportions or flight realism is requested. The selected pages do not
+unambiguously specify an exact fin orientation, so that is not graded.
+
+A malformed, refused, truncated or failed judge response leaves checks ungraded.
+It is not interpreted as a failed aircraft. Raw responses (including model,
+usage and response IDs), evidence hashes and reviewer-code hash are retained in
+review.json. Calls are not automatically retried. If the second call fails, the
+first response remains recorded and neither is silently used as a complete review.
+Another judge requires a separate grading directory.
+
+A boolean output does not make an LLM infallible. These two questions still need
+calibration against human-labelled correct and deliberately incorrect images
+before using them for model rankings. Live judge calls have not yet been tested.
+Humans use the same two questions and JSON shape in review-example.json.
+
+## Reproduction and calibration
+
+The harness still gives the generator one instruction and a fixed file-only
+budget, without execution, rendering, testing or grader feedback. It logs source,
+starter and final file hashes; task/model/budget; usage; responses/tool results;
+completion status; and runtime. The grader serves only submission assets to a
+fresh sandboxed Chromium profile with external requests blocked, restrictive CSP,
+a clean environment and process timeout. It never runs submitted Node/Python
+code on the host. This is not a hardened environment for hostile code.
+
+validate sends the calibration reference through a mocked Responses transport
+and the real patch adapter, then runs real browser grading. Deliberate defects
+check that their corresponding binary verifier fails: wrong source units,
+constant free thrust, lift linear in speed, ignored wind, disabled integration,
+disabled Pause, and an empty starter. The reference must pass all 16 automated
+checks; its two image checks remain ungraded. These selected mutations establish
+sensitivity to those defects only. They do not establish scientific validity,
+complete task coverage, judge accuracy or model rankings.
+
+Infrastructure errors and grader-wide timeouts carry no task verdict. Missing
+review never becomes a fabricated pass. Versions v1 and v2 have incompatible
+grading semantics; retain the task version with every report and comparison.
+Fix inputs, budgets, reasoning setting, browser/runtime and grader revision when
+comparing models, and report all attempts.

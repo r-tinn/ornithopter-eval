@@ -1,7 +1,7 @@
 import {parameters as p, step, forces} from './physics.mjs';
 const $=id=>document.querySelector(`[data-testid="${id}"]`);
 const canvas=$('scene'), ctx=canvas.getContext('2d'), throttle=$('throttle');
-let state, paused=true, keys=new Set(), accumulator=0, last=0, yaw=-0.9, elevation=0.5;
+let state, paused=true, keys=new Set(), accumulator=0, last=0, yaw=-0.9, elevation=0.5, topView=false;
 let controls={throttle:0,pitch:0,bank:0,brake:0};
 const env={wind:[0,0,0],rho:1.225};
 function preset(approach=false){
@@ -10,13 +10,14 @@ function preset(approach=false){
 }
 $('start').onclick=()=>{paused=false;draw();};$('pause').onclick=()=>{paused=true;accumulator=0;draw();};
 $('reset').onclick=()=>preset();$('approach').onclick=()=>preset(true);
+$('view-top').onclick=()=>{topView=true;draw();};
 throttle.oninput=()=>{controls.throttle=Number(throttle.value);draw();};
 window.addEventListener('keydown',e=>{if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].includes(e.code)){e.preventDefault();keys.add(e.code);}});
 window.addEventListener('keyup',e=>keys.delete(e.code));
 window.addEventListener('blur',()=>{keys.clear();paused=true;accumulator=0;});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){keys.clear();paused=true;accumulator=0;}});
 let drag=null;canvas.onpointerdown=e=>{drag=[e.clientX,e.clientY];canvas.setPointerCapture(e.pointerId);};
-canvas.onpointerup=()=>{drag=null;};canvas.onpointermove=e=>{if(drag){yaw+=(e.clientX-drag[0])*0.009;elevation=Math.max(0.1,Math.min(1.2,elevation+(e.clientY-drag[1])*0.006));drag=[e.clientX,e.clientY];draw();}};
+canvas.onpointerup=()=>{drag=null;};canvas.onpointermove=e=>{if(drag){topView=false;yaw+=(e.clientX-drag[0])*0.009;elevation=Math.max(0.1,Math.min(1.2,elevation+(e.clientY-drag[1])*0.006));drag=[e.clientX,e.clientY];draw();}};
 window.flightLab={getState:()=>structuredClone(state),getControls:()=>({...controls})};
 const dot=(a,b)=>a.reduce((s,v,i)=>s+v*b[i],0);
 const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
@@ -25,8 +26,9 @@ function draw(){
  const w=canvas.clientWidth,h=canvas.clientHeight,dpr=Math.min(devicePixelRatio,2);
  if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);}
  ctx.setTransform(dpr,0,0,dpr,0,0);ctx.fillStyle='#142a38';ctx.fillRect(0,0,w,h);
- const eye=[5*Math.cos(elevation)*Math.cos(yaw),state.position[1]+5*Math.sin(elevation),5*Math.cos(elevation)*Math.sin(yaw)];
- const forward=normalize([0,state.position[1],0].map((v,i)=>v-eye[i])),right=normalize(cross(forward,[0,1,0])),up=cross(right,forward);
+ const eye=topView?[0,state.position[1]+4,0]:[5*Math.cos(elevation)*Math.cos(yaw),state.position[1]+5*Math.sin(elevation),5*Math.cos(elevation)*Math.sin(yaw)];
+ const forward=normalize([0,state.position[1],0].map((v,i)=>v-eye[i])),right=normalize(cross(forward,topView?[1,0,0]:[0,1,0])),up=cross(right,forward);
+ document.querySelector('.caption').textContent=topView?'TOP VIEW / NOSE UP':'PERSPECTIVE VIEW / TWO-PART WING';
  const project=a=>{const r=a.map((v,i)=>v-eye[i]),z=dot(r,forward);return z<0.1?null:[w/2+dot(r,right)*h/z,h/2-dot(r,up)*h/z];};
  function line(points,color,width=1,fill=null){const q=points.map(project);if(q.some(v=>!v))return;ctx.beginPath();q.forEach((v,i)=>i?ctx.lineTo(...v):ctx.moveTo(...v));if(fill){ctx.closePath();ctx.fillStyle=fill;ctx.fill();}ctx.strokeStyle=color;ctx.lineWidth=width;ctx.stroke();}
  const ox=state.position[0]%2,oz=state.position[2]%2;

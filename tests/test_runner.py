@@ -7,8 +7,7 @@ from pathlib import Path
 from ornithopter_eval.api import APIError
 from ornithopter_eval.runner import prepare, run_model, verify_sources, execute_call
 from ornithopter_eval.policy import FilePolicy
-from ornithopter_eval.grading import normalize_checks, grade_submission
-from ornithopter_eval.review import apply_review, judge
+from ornithopter_eval.grading import grade_submission
 
 
 def response(output, status="completed", tokens=100):
@@ -99,48 +98,6 @@ class RunnerTests(unittest.TestCase):
         result=run_model(self.run,"offline-test",transport)
         self.assertEqual(len(count),2)
         self.assertEqual(result["status"],"budget_exhausted")
-
-    def test_review_never_renormalizes_missing_dimensions(self):
-        report={"status":"awaiting_review","overall_score":None,"dimensions":
-                {k:{"score":100} for k in ("source","physics","interaction")}}
-        with self.assertRaises(KeyError):
-            apply_review(report,{})
-        self.assertIsNone(report["overall_score"])
-        review={k:{"score":80,"rationale":"Observed geometry","evidence":["inspection.png"]}
-                for k in ("source_visual_review","visual_quality")}
-        result=apply_review(report,review)
-        self.assertEqual(result["overall_score"],96)
-
-    def test_unreached_checks_do_not_inflate_scores(self):
-        checks=normalize_checks("interaction",[{"id":"no_uncaught_errors","pass":True}])
-        self.assertEqual(len(checks),14)
-        self.assertEqual(sum(c["pass"] for c in checks),1)
-
-    def test_review_rejects_infrastructure_errors_and_invalid_scores(self):
-        review={k:{"score":101,"rationale":"x","evidence":["inspection.png"]}
-                for k in ("source_visual_review","visual_quality")}
-        with self.assertRaises(ValueError):
-            apply_review({"status":"infrastructure_error"},review)
-
-    def test_mocked_multimodal_review_with_evidence_and_metadata(self):
-        grade = Path(self.temp.name)/"grade"
-        grade.mkdir()
-        for i in range(6):
-            (grade/f"frame-{i}.png").write_bytes(b"offline-image-fixture")
-        (grade/"report.json").write_text(json.dumps({"status":"awaiting_review","submission_sha256":{},
-            "dimensions":{k:{"score":100} for k in ("source","physics","interaction")},
-            "evidence":{"screenshots":[f"frame-{i}.png" for i in range(6)]}}))
-        review={k:{"score":70,"rationale":"Offline protocol check, not a real visual assessment", "evidence":["frame-0.png"]}
-                for k in ("source_visual_review","visual_quality")}
-        def transport(payload,timeout):
-            self.assertEqual(payload["text"]["format"]["type"],"json_schema")
-            self.assertEqual(payload["model"],"offline-judge")
-            self.assertEqual(sum(c["type"]=="input_image" for c in payload["input"][0]["content"]),8)
-            return response([{"type":"message","content":[{"type":"output_text","text":json.dumps(review)}]}])
-        result=judge(self.run/"submission",grade,"offline-judge",transport)
-        self.assertEqual(result["overall_score"],94)
-        self.assertEqual(result["reviewer"]["model"],"offline-judge")
-        self.assertTrue((grade/"review.json").is_file())
 
 
 if __name__ == "__main__":
