@@ -72,3 +72,27 @@ class ExperimentTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 run_experiment(path,["../escape","other"],3,ROOT/"configs/frontier-calibration.json")
             self.assertFalse(path.exists())
+
+    def test_v4_smoke_checklist_packet_and_gallery_have_correct_counts(self):
+        from ornithopter_eval.checks import MECHANICAL_VERSION,MECHANICAL_CHECKS
+        def grade(submission,output,node):
+            output.mkdir()
+            report={'task_version':MECHANICAL_VERSION,'status':'awaiting_review','dimensions':{
+                group:{'checks':[{'id':name,'pass':True} for name in names]}
+                for group,names in MECHANICAL_CHECKS.items() if group!='visual'},'evidence':{'screenshots':[]}}
+            write_json(output/'report.json',report);return report
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp)/'v4';calls=[]
+            def transport(payload,timeout):
+                calls.append(payload);return {'status':'completed','output':[],'usage':{'input_tokens':100,'output_tokens':1}}
+            result=run_experiment(root,['model-a','model-b'],1,ROOT/'configs/mechanical-v4-smoke.json',transport=transport,grader=grade)
+            self.assertEqual(result['models']['model-a']['total_checks'],15)
+            self.assertEqual(result['models']['model-a']['graded_attempts'],1)
+            self.assertEqual(len(calls),2)
+            self.assertEqual(calls[0]['input'],calls[1]['input'])
+            self.assertIn('Mechanical ornithopter',(root/'index.html').read_text())
+            self.assertIn('4 visual checks',(root/'index.html').read_text())
+            source=(root/'trials/model-a-01/submission-source.txt').read_text()
+            self.assertIn('FILE: aircraft.mjs',source)
+            self.assertNotIn('FILE: environment/',source)
+            self.assertIn('candidate/mechanical-v4/scaffold/environment/vendor/three.core.min.js',json.loads((root/'experiment.json').read_text())['frozen_sha256'])

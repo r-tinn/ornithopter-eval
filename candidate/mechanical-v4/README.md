@@ -1,7 +1,6 @@
-# Mechanical v4: shared-world candidate
+# Mechanical v4: shared-world smoke task
 
-This is the revised task, fixed environment and proposed grader boundary for
-review. It is self-contained in this repository. Only the terrain formula,
+This is the revised task, fixed environment and provisional smoke checklist. It is self-contained in this repository. Only the terrain formula,
 palette, simple tree construction and runway concept were adapted from the
 owner's original simulator; PROVENANCE.json records the source file hashes.
 Three.js and its MIT license are vendored with the scaffold.
@@ -47,7 +46,22 @@ the small scene footprint, real wheel clearance, on-demand paused rendering,
 takeoff and landing on both strips, with screenshots. This is a regression of
 the supplied world and handwritten fixture, not model grading or image judging.
 
-This candidate cannot be submitted to the existing run/compare commands. Those
-commands still implement the archived v3 task. V4 harness/grader integration and
-model trials follow review of this new task and environment; no v4 model scores
-or completed image-judge calibration are claimed here.
+## Run a model comparison
+
+```sh
+python3 -m ornithopter_eval compare --models gpt-6.1-sol gpt-5.6-sol --repeats 1 --config configs/mechanical-v4-smoke.json --output runs/mechanical-v4-smoke
+python3 -m ornithopter_eval serve-artifacts runs/mechanical-v4-smoke --port 8767
+```
+
+The config selects v4 explicitly; older configs retain their older tasks. Each
+model has medium reasoning and 32,000 total output tokens including reasoning.
+Only three aircraft files are writable. Generation cannot execute or verify code.
+A fresh output directory is required, and API errors are retained without retries.
+The viewer saves playable submissions, all fixed-world files, raw API events,
+transcripts, source, 15 automated check outcomes and grader screenshots. The four
+visual questions stay ungraded; one smoke attempt cannot establish a ranking.
+
+Run `python3 -m ornithopter_eval validate-mechanical` for the working fixture,
+wrong source values, broken force/phase dynamics, frozen integration, oversized
+wheels/high-poly geometry and empty starter. This calibration detects selected
+defects, not every possible failure or real-world aerodynamic validity.

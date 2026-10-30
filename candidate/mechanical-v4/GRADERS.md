@@ -1,8 +1,9 @@
-# Proposed v4 checklist — owner review before model calibration
+# Provisional v4 smoke checklist
 
 **19 binary checks: 15 automated, four visual.** These replace the old checklist
-for the proposed mechanical-aircraft task. They are a review specification;
-v4 grading and judge calibration are not yet claimed as implemented or validated.
+for the mechanical-aircraft task. The 15 automated checks are implemented in
+`grader/mechanical-v4.mjs`; four visual checks remain ungraded. The selected
+fixture/mutant calibration is separate from model trials and scientific validation.
 No old trial is rescored under these new requirements.
 
 The shared environment, cameras and UI are provided infrastructure. Their
@@ -11,7 +12,7 @@ weighted average, generic “realism” judgment or hardware-dependent FPS pass/
 
 ## Source interpretation — three deterministic questions
 
-| ID | Binary question | Proposed comparison |
+| ID | Binary question | Comparison |
 |---|---|---|
 | aspect_ratio_from_study | Is exported AR derived from the selected source span and area? | 7.4²/6.61, within 0.5%. |
 | wrist_fraction_from_study | Is the wrist-to-wrist fraction derived from that same source column? | 3.7/7.4, within 0.5%. |
@@ -39,7 +40,7 @@ not validate the complete aerodynamic model or real-world aircraft performance.
 
 ## Aircraft in the shared world — six deterministic browser questions
 
-| ID | One cause / observation | Proposed pass condition |
+| ID | One cause / observation | Pass condition |
 |---|---|---|
 | pitch_input_changes_pitch | Compare neutral approach with ArrowUp held 0.4 s. | Actual production pitch increases by >0.1 rad. |
 | rudder_changes_heading | Compare neutral approach with D held 1 s. | Actual heading changes toward +z by >0.02 rad. |
@@ -48,9 +49,10 @@ not validate the complete aerodynamic model or real-world aircraft performance.
 | wheels_above_surface | Sample the actual transformed wheel geometry during approach/contact. | Lowest tyre points do not penetrate the rendered/contact surface by >0.01 m, and touchdown reaches it within 0.02 m. Both strips. |
 | aircraft_geometry_bounded | Count triangles in production aircraft meshes, including instances. | <=12,000 aircraft triangles, with nonempty geometry. |
 
-Takeoff/landing sequences must be calibrated against a withheld working fixture
-and broken variants before they can be frozen. Wheel checks must inspect actual
-production geometry, not a second declared “contact height”. Surface sampling
+Takeoff/landing sequences are checked against a withheld working fixture and
+broken variants before the smoke protocol is frozen. Wheel checks inspect actual
+production geometry at 0.1 s intervals, not a second declared “contact height”.
+This samples contact; it does not prove nonpenetration between samples. Surface sampling
 must agree with the rendered terrain/runway. Hook values alone do not prove
 correct appearance, mesh coupling, rudder rendering or absence of all collisions.
 

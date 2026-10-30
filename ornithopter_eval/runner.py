@@ -40,6 +40,9 @@ def prepare(output, config_path=DEFAULT_CONFIG):
         raise ValueError("Run directory already exists; each attempt requires a fresh directory")
     selected = verify_sources()
     config = json.loads(Path(config_path).read_text())
+    if config.get("task_version") == "mechanical-v4-draft":
+        from .world_candidate import prepare_world_trial
+        return prepare_world_trial(output, config_path)
     for key in ("max_output_tokens_total", "max_output_tokens_per_response", "max_requests",
                 "max_wall_seconds", "max_submission_bytes"):
         if type(config.get(key)) is not int or config[key] <= 0:
@@ -83,14 +86,19 @@ def image_input(path):
 
 
 def initial_input(run):
-    config = json.loads((run / "manifest.json").read_text())["config"]
+    manifest = json.loads((run / "manifest.json").read_text())
+    config = manifest["config"]
     budget = "\n\nAttempt limits: " + json.dumps(config,sort_keys=True) + \
         ". The total output-token budget spans ALL responses, including reasoning, code/tool calls and final text."
+    mechanical = manifest.get("task_version") == "mechanical-v4-draft"
+    api = ("\n\n" + (run / "inputs/AIRCRAFT_API.md").read_text() +
+           "\n\nENGINEERING ASSUMPTIONS\n" + (run / "inputs/engineering.json").read_text()) if mechanical else ""
+    starter = ("Writable files: submission/aircraft.mjs, submission/physics.mjs, submission/interpretation.json. "
+               "All other submission files are supplied read-only infrastructure. " if mechanical else
+               "Starter files: submission/index.html, submission/physics.mjs, submission/interpretation.json. ")
     content = [{"type": "input_text", "text": (run / "inputs/TASK.md").read_text() +
                "\n\n" + (run / "inputs/SOURCE_GUIDE.md").read_text() +
-               budget +
-               "\n\nStarter files: submission/index.html, submission/physics.mjs, "
-               "submission/interpretation.json. Images follow, labelled in filename order."}]
+               api + budget + "\n\n" + starter + "Images follow, labelled in filename order."}]
     for path in sorted((run / "inputs/sources").glob("*.jpg")):
         content.extend([{"type": "input_text", "text": path.name}, image_input(path)])
     return [{"role": "user", "content": content}]
@@ -134,7 +142,11 @@ def run_model(run, model, transport=create_response):
         if digest(run / name) != expected:
             raise ValueError(f"Prepared file changed: {name}")
     config = manifest["config"]
-    policy = FilePolicy(run, config["max_submission_bytes"])
+    policy_type = FilePolicy
+    if manifest.get("task_version") == "mechanical-v4-draft":
+        from .world_candidate import CandidateFilePolicy
+        policy_type = CandidateFilePolicy
+    policy = policy_type(run, config["max_submission_bytes"])
     history = initial_input(run)
     usage = {"input_tokens": 0, "output_tokens": 0, "requests": 0}
     notified = set()
@@ -213,6 +225,9 @@ def run_model(run, model, transport=create_response):
                     break
     except (APIError, ValueError, OSError) as exc:
         status, reason = "infrastructure_error", str(exc)
+    for name, expected in manifest.get("readonly_sha256", {}).items():
+        if not (run / "submission" / name).is_file() or digest(run / "submission" / name) != expected:
+            status, reason = "infrastructure_error", "Shared world changed: " + name
     manifest.update(status=status, reason=reason, usage=usage,
                     output_token_notice_percentages_sent=sorted(notified),
                     elapsed_seconds=round(time.monotonic() - started, 3),

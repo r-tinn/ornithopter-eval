@@ -1,12 +1,12 @@
 # Ornithopter Eval
 
-**The intended next task is a mechanical aircraft inside a fixed, lightweight
-flight world.** The [v4 review candidate](candidate/mechanical-v4/README.md)
+**The v4 smoke task builds a mechanical aircraft inside a fixed, lightweight
+flight world.** The [v4 task and commands](candidate/mechanical-v4/README.md)
 includes standalone hills, 48 simple trees, two landing strips, controls and
 cameras. Only aircraft geometry, articulation and flight dynamics are model work.
 The [revised brief](docs/REVISED_BRIEF.md), [candidate task](candidate/mechanical-v4/TASK.md),
 [source re-audit](candidate/mechanical-v4/SOURCE_AUDIT.md) and
-[19 proposed binary checks](candidate/mechanical-v4/GRADERS.md) are ready for review.
+[19 binary checks](candidate/mechanical-v4/GRADERS.md) define the provisional smoke test.
 
 ```sh
 python3 -m ornithopter_eval prepare-world runs/mechanical-v4-review --reference
@@ -16,9 +16,18 @@ python3 -m ornithopter_eval serve-world runs/mechanical-v4-review --port 8766
 Open `http://127.0.0.1:8766/`. The aircraft in this preview is a handwritten,
 withheld integration fixture. The environment, renderer and license are copied
 into this repository; the old project is not needed to prepare or run it.
-V4 is a review candidate, with no model scores or completed grader calibration.
-The existing `run`/`compare` commands below still implement the previous v3 task;
-they do not run this candidate. The original trials are retained unchanged.
+Run the new task with its explicit configuration:
+
+```sh
+python3 -m ornithopter_eval compare --models gpt-6.1-sol gpt-5.6-sol --repeats 1 --config configs/mechanical-v4-smoke.json --output runs/mechanical-v4-smoke
+python3 -m ornithopter_eval serve-artifacts runs/mechanical-v4-smoke --port 8767
+```
+
+V4 reports 15 automated binary checks and four ungraded visual predicates. The
+handwritten fixture and selected broken variants are tested separately from
+model submissions. Use a fresh output directory. Medium reasoning, 32,000 total
+output tokens including reasoning, no execution during generation and no retries.
+The original v3 trials and their configuration are retained unchanged.
 
 ## Previous task and calibration
 

@@ -1,4 +1,4 @@
-"""Self-contained v4 review packets. Candidate tasks cannot start model trials."""
+"""Self-contained v4 review packets and explicitly prepared smoke trials."""
 import http.server
 import json
 import shutil
@@ -6,6 +6,8 @@ import os
 import subprocess
 import threading
 import signal
+import platform
+import sys
 from datetime import datetime,timezone
 from pathlib import Path
 
@@ -48,6 +50,30 @@ def prepare_world(output, reference=False):
         'grading_status':'proposed checklist for review; not a scored model trial',
         'runtime_dependencies':'Only files inside this packet; no original-project paths, package install or network assets',
     })
+    return output
+
+
+def prepare_world_trial(output, config_path):
+    config = json.loads(Path(config_path).read_text())
+    if config.get('task_version') != 'mechanical-v4-draft':
+        raise ValueError('Unsupported mechanical task version')
+    for key in ('max_output_tokens_total','max_output_tokens_per_response','max_requests','max_wall_seconds','max_submission_bytes'):
+        if type(config.get(key)) is not int or config[key] <= 0:
+            raise ValueError('Invalid budget: '+key)
+    config['reasoning_effort'] = config.get('reasoning_effort') or 'medium'
+    percentages = config.setdefault('output_token_notice_percentages',[50,75])
+    if not isinstance(percentages,list) or any(type(p) is not int or not 0<p<100 for p in percentages) or percentages != sorted(set(percentages)):
+        raise ValueError('Invalid output-token notice percentages')
+    output = prepare_world(output)
+    manifest = json.loads((output/'manifest.json').read_text())
+    manifest.update(status='prepared',model=None,config=config,
+        created_utc=datetime.now(timezone.utc).isoformat(),
+        grading_status='provisional smoke checklist; four visual checks ungraded',
+        starter_sha256={str(p.relative_to(output)):digest(p) for p in sorted((output/'submission').rglob('*')) if p.is_file()},
+        implementation_sha256={str(p.relative_to(ROOT)):digest(p) for pattern in ('ornithopter_eval/*.py','grader/*.mjs') for p in sorted(ROOT.glob(pattern))},
+        runtime={'python':sys.version,'platform':platform.platform()},
+        protocol='one instruction; three writable aircraft files; no execution or grader feedback; token-only checkpoints')
+    write_json(output/'manifest.json',manifest)
     return output
 
 

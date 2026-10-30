@@ -64,3 +64,47 @@ class WorldCandidateTests(unittest.TestCase):
         self.assertIn('different task version',report['error'])
         with self.assertRaises(ValueError):
             prepare_world(packet)
+
+    def test_prepared_smoke_uses_restricted_native_tools_and_includes_full_contract(self):
+        from ornithopter_eval.runner import prepare,initial_input
+        from ornithopter_eval.checks import MECHANICAL_VERSION
+        packet=prepare(Path(self.temp.name)/'trial',CANDIDATE.parents[1]/'configs/mechanical-v4-smoke.json')
+        original=digest(packet/'submission/environment/world.mjs')
+        calls=[]
+        replies=iter([
+            {'status':'completed','output':[
+                {'type':'apply_patch_call','call_id':'forbidden','operation':{'type':'delete_file','path':'submission/environment/world.mjs'}},
+                {'type':'apply_patch_call','call_id':'allowed','operation':{'type':'update_file','path':'submission/interpretation.json','diff':'@@\n-  "sources": [],\n+  "sources": ["02"],'}}
+            ],'usage':{'input_tokens':100,'output_tokens':17000}},
+            {'status':'completed','output':[],'usage':{'input_tokens':100,'output_tokens':100}},
+        ])
+        def transport(payload,timeout):
+            calls.append(json.loads(json.dumps(payload)));return next(replies)
+        prompt=initial_input(packet)[0]['content'][0]['text']
+        self.assertIn('ENGINEERING ASSUMPTIONS',prompt)
+        self.assertIn('createAircraft',prompt)
+        self.assertNotIn('7.4²/6.61',prompt)
+        self.assertNotIn('fixture_only:true',prompt)
+        result=run_model(packet,'offline-smoke',transport)
+        self.assertEqual(result['task_version'],MECHANICAL_VERSION)
+        self.assertEqual(result['status'],'submitted')
+        self.assertEqual(result['output_token_notice_percentages_sent'],[50])
+        self.assertEqual(calls[0]['reasoning'],{'effort':'medium'})
+        self.assertEqual(calls[0]['max_output_tokens'],32000)
+        self.assertEqual(calls[1]['max_output_tokens'],15000)
+        self.assertEqual(digest(packet/'submission/environment/world.mjs'),original)
+        events=[json.loads(l) for l in (packet/'events.jsonl').read_text().splitlines()]
+        outputs=[e['result'] for e in events if e['event']=='tool_result']
+        self.assertEqual([o['status'] for o in outputs],['failed','completed'])
+
+    def test_smoke_grader_refuses_shared_world_tampering(self):
+        from ornithopter_eval.runner import prepare
+        from ornithopter_eval.checks import MECHANICAL_VERSION
+        packet=prepare(Path(self.temp.name)/'tamper',CANDIDATE.parents[1]/'configs/mechanical-v4-smoke.json')
+        result=run_model(packet,'offline-smoke',lambda *a,**kw:{'status':'completed','output':[],'usage':{'input_tokens':0,'output_tokens':1}})
+        world=packet/'submission/environment/world.mjs';world.write_text('// changed world\n')
+        result['submission_sha256']['environment/world.mjs']=digest(world)
+        (packet/'manifest.json').write_text(json.dumps(result))
+        report=grade_submission(packet/'submission',packet/'grade',task_version=MECHANICAL_VERSION)
+        self.assertEqual(report['status'],'infrastructure_error')
+        self.assertIn('Shared world changed',report['error'])

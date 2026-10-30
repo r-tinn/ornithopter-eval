@@ -1,0 +1,172 @@
+{
+  "task_version": "mechanical-v4-draft",
+  "offline_validation_passed": true,
+  "model_trial": false,
+  "evidence_directory": "runs/mechanical-grader-calibration-20261030T165813Z",
+  "results": {
+    "reference": {
+      "passed": 15,
+      "total": 15,
+      "failed": [],
+      "groups": {
+        "source": {
+          "passed": 3,
+          "total": 3
+        },
+        "physics": {
+          "passed": 6,
+          "total": 6
+        },
+        "interaction": {
+          "passed": 6,
+          "total": 6
+        }
+      }
+    },
+    "wrong_study": {
+      "passed": 11,
+      "total": 15,
+      "failed": [
+        "aspect_ratio_from_study",
+        "wrist_fraction_from_study",
+        "mechanical_area_consistent",
+        "steady_glide_ratio"
+      ],
+      "groups": {
+        "source": {
+          "passed": 0,
+          "total": 3
+        },
+        "physics": {
+          "passed": 5,
+          "total": 6
+        },
+        "interaction": {
+          "passed": 6,
+          "total": 6
+        }
+      }
+    },
+    "wrong_dynamics": {
+      "passed": 6,
+      "total": 15,
+      "failed": [
+        "power_controls_thrust",
+        "lift_scales_with_speed_squared",
+        "matching_wind_removes_lift",
+        "powered_phase_frequency",
+        "unpowered_phase_stops",
+        "steady_glide_ratio",
+        "rudder_changes_heading",
+        "takeoff_from_strip",
+        "landing_on_strip"
+      ],
+      "groups": {
+        "source": {
+          "passed": 3,
+          "total": 3
+        },
+        "physics": {
+          "passed": 0,
+          "total": 6
+        },
+        "interaction": {
+          "passed": 3,
+          "total": 6
+        }
+      }
+    },
+    "frozen_step": {
+      "passed": 8,
+      "total": 15,
+      "failed": [
+        "powered_phase_frequency",
+        "steady_glide_ratio",
+        "pitch_input_changes_pitch",
+        "rudder_changes_heading",
+        "takeoff_from_strip",
+        "landing_on_strip",
+        "wheels_above_surface"
+      ],
+      "groups": {
+        "source": {
+          "passed": 3,
+          "total": 3
+        },
+        "physics": {
+          "passed": 4,
+          "total": 6
+        },
+        "interaction": {
+          "passed": 1,
+          "total": 6
+        }
+      }
+    },
+    "oversize_gear": {
+      "passed": 12,
+      "total": 15,
+      "failed": [
+        "landing_on_strip",
+        "wheels_above_surface",
+        "aircraft_geometry_bounded"
+      ],
+      "groups": {
+        "source": {
+          "passed": 3,
+          "total": 3
+        },
+        "physics": {
+          "passed": 6,
+          "total": 6
+        },
+        "interaction": {
+          "passed": 3,
+          "total": 6
+        }
+      }
+    },
+    "empty": {
+      "passed": 0,
+      "total": 15,
+      "failed": [
+        "aspect_ratio_from_study",
+        "wrist_fraction_from_study",
+        "mechanical_area_consistent",
+        "power_controls_thrust",
+        "lift_scales_with_speed_squared",
+        "matching_wind_removes_lift",
+        "powered_phase_frequency",
+        "unpowered_phase_stops",
+        "steady_glide_ratio",
+        "pitch_input_changes_pitch",
+        "rudder_changes_heading",
+        "takeoff_from_strip",
+        "landing_on_strip",
+        "wheels_above_surface",
+        "aircraft_geometry_bounded"
+      ],
+      "groups": {
+        "source": {
+          "passed": 0,
+          "total": 3
+        },
+        "physics": {
+          "passed": 0,
+          "total": 6
+        },
+        "interaction": {
+          "passed": 0,
+          "total": 6
+        }
+      }
+    }
+  },
+  "grader_sha256": "273bc646ce099642b26b323142d81b49c33365b8c87282da2a37ba5ddf8a22a2",
+  "fixture_sha256": {
+    "aircraft.mjs": "ac470febf2bef16a039504ce2e8b676dcbee88ded3ff1f8490dce3c4a2facb45",
+    "interpretation.json": "ea86958f2e53162a9d21a8e90126969b0aea0b22a0db40e579a63b867162dc66",
+    "physics.mjs": "56a39afc71e9ab29b6d55754c0063a2f9021e29a53c6b04ea1738182823d1530"
+  },
+  "scope": "Selected positive/negative fixtures; four visual checks ungraded; no scientific validation."
+}

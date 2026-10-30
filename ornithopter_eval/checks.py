@@ -75,18 +75,55 @@ VISUAL_CHECKS = {
 }
 
 
-def normalize_checks(group, observed):
+MECHANICAL_VERSION = "mechanical-v4-draft"
+MECHANICAL_CHECKS = {
+    "source": {
+        "aspect_ratio_from_study": "Does aspect ratio preserve 7.4²/6.61 within 0.5%?",
+        "wrist_fraction_from_study": "Does wrist fraction preserve 3.7/7.4 within 0.5%?",
+        "mechanical_area_consistent": "Does the 3 m aircraft preserve the source-derived area ratio?",
+    },
+    "physics": {
+        "power_controls_thrust": "Is scalar thrust zero with power off and positive with power on?",
+        "lift_scales_with_speed_squared": "Does doubling airspeed quadruple positive scalar lift?",
+        "matching_wind_removes_lift": "Does wind matching velocity remove aerodynamic lift?",
+        "powered_phase_frequency": "Does powered phase follow the specified 2 Hz cycle?",
+        "unpowered_phase_stops": "Does phase stop with power off?",
+        "steady_glide_ratio": "Does the 2 s steady glide preserve the specified lift/drag ratio?",
+    },
+    "interaction": {
+        "pitch_input_changes_pitch": "Does ArrowUp increase pitch by more than 0.1 rad versus neutral?",
+        "rudder_changes_heading": "Does D change heading toward +z by more than 0.02 rad versus neutral?",
+        "takeoff_from_strip": "Does the prescribed sequence sustain flight above both strips?",
+        "landing_on_strip": "Does the prescribed approach land safely on both strips?",
+        "wheels_above_surface": "Do actual wheel meshes avoid ground penetration during both approaches?",
+        "aircraft_geometry_bounded": "Is the actual aircraft nonempty and at most 12,000 triangles?",
+    },
+    "visual": {
+        "wings_lateral": "Is a wing attached on each lateral side, extending across the frame?",
+        "tail_aft": "Is the tail fin above the aft frame and behind the wing roots?",
+        "landing_gear_visible": "Are at least two wheels visibly attached below the frame by gear?",
+        "outer_panels_articulate": "Does each outer panel visibly change angle relative to its inner panel?",
+    },
+}
+
+
+def checklist(version):
+    return MECHANICAL_CHECKS if version == MECHANICAL_VERSION else CHECKS
+
+
+def normalize_checks(group, observed, checks=CHECKS):
     by_id = {item["id"]: item for item in observed}
     return [{"id": name, "question": question,
              "pass": by_id.get(name, {}).get("pass") is True,
              "detail": by_id.get(name, {}).get("detail", "Check not reached; see diagnostics")}
-            for name, question in CHECKS[group].items()]
+            for name, question in checks[group].items()]
 
 
 def refresh_verdict(report):
-    if set(report["dimensions"]) != set(CHECKS):
+    checks = checklist(report.get("task_version"))
+    if set(report["dimensions"]) != set(checks):
         raise ValueError("Report must contain the complete checklist")
-    for group, expected in CHECKS.items():
+    for group, expected in checks.items():
         items = report["dimensions"][group]["checks"]
         if (len(items) != len(expected) or {c["id"] for c in items} != set(expected) or
             any(type(c["pass"]) is not bool and not (group == "visual" and c["pass"] is None) for c in items)):

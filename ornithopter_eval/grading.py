@@ -8,7 +8,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 from .runner import ROOT, digest, write_json
-from .checks import CHECKS, TASK_VERSION, normalize_checks, refresh_verdict
+from .checks import CHECKS, TASK_VERSION, MECHANICAL_VERSION, checklist, normalize_checks, refresh_verdict
 
 
 class SubmissionServer(http.server.BaseHTTPRequestHandler):
@@ -40,7 +40,11 @@ class SubmissionServer(http.server.BaseHTTPRequestHandler):
         self.wfile.write(body)
 
 
-def grade_submission(submission, output, node="node", timeout=60):
+def grade_submission(submission, output, node="node", timeout=None, task_version=TASK_VERSION):
+    if timeout is None:
+        timeout = 120 if task_version == MECHANICAL_VERSION else 60
+    checks = checklist(task_version)
+    browser_file = "mechanical-v4.mjs" if task_version == MECHANICAL_VERSION else "browser.mjs"
     submission, output = Path(submission).resolve(), Path(output).resolve()
     if not submission.is_dir():
         raise ValueError("Submission directory missing")
@@ -49,8 +53,8 @@ def grade_submission(submission, output, node="node", timeout=60):
     output.mkdir(parents=True)
     hashes = {str(p.relative_to(submission)): digest(p) for p in sorted(submission.rglob("*"))
               if p.is_file() and not p.is_symlink()}
-    report = {"task_version":TASK_VERSION, "submission_sha256":hashes,
-              "grader_sha256": {"browser.mjs":digest(ROOT / "grader/browser.mjs"),
+    report = {"task_version":task_version, "submission_sha256":hashes,
+              "grader_sha256": {browser_file:digest(ROOT / "grader" / browser_file),
                                 "grading.py":digest(Path(__file__)),
                                 "checks.py":digest(ROOT / "ornithopter_eval/checks.py")},
               "passed":None, "status":"partial", "dimensions":{},
@@ -65,7 +69,7 @@ def grade_submission(submission, output, node="node", timeout=60):
         attempt = json.loads(manifest_path.read_text())
         report["attempt"] = {k:attempt.get(k) for k in
             ("model","status","reason","config","usage","elapsed_seconds","input_sha256","runtime")}
-        if attempt.get("task_version") != TASK_VERSION:
+        if attempt.get("task_version") != task_version:
             report.update(status="infrastructure_error", error="Attempt uses a different task version")
             write_json(output / "report.json", report)
             return report
@@ -77,6 +81,18 @@ def grade_submission(submission, output, node="node", timeout=60):
             report.update(status="infrastructure_error",error="Submission changed after the attempt; refusing to grade a revision")
             write_json(output / "report.json",report)
             return report
+    if task_version == MECHANICAL_VERSION:
+        report['limitations'] = [
+            'Provisional mechanical-v4 smoke test; one task and selected properties, not scientific validation.',
+            'The supplied world and UI earn no model points. Aircraft state hooks do not prove all mesh coupling.',
+            'Four binary visual checks remain ungraded; automated totals are not full-task scores.',
+            'Browser isolation is defense in depth, not a hardened hostile-code sandbox.']
+        if manifest_path.exists():
+            for name, sha in attempt.get('readonly_sha256', {}).items():
+                if hashes.get(name) != sha:
+                    report.update(status='infrastructure_error',error='Shared world changed: '+name)
+                    write_json(output/'report.json',report)
+                    return report
     # Do not pass API keys, GitHub credentials or the parent process environment to Chromium.
     allowed = ("PATH", "TMPDIR", "SYSTEMROOT", "DISPLAY", "PLAYWRIGHT_BROWSERS_PATH")
     clean_env = {k:os.environ[k] for k in allowed if k in os.environ}
@@ -92,7 +108,7 @@ def grade_submission(submission, output, node="node", timeout=60):
     thread = threading.Thread(target=server.serve_forever, daemon=True)
     thread.start()
     try:
-        command = [node,str(ROOT / "grader/browser.mjs"), f"http://127.0.0.1:{server.server_port}",str(output)]
+        command = [node,str(ROOT / "grader" / browser_file), f"http://127.0.0.1:{server.server_port}",str(output)]
         with (output / "grader.log").open("w") as log:
             process = subprocess.Popen(command, env=clean_env, stdout=log, stderr=log, start_new_session=True)
             try:
@@ -110,10 +126,10 @@ def grade_submission(submission, output, node="node", timeout=60):
         if raw.get("infrastructure_error"):
             raise RuntimeError(raw["infrastructure_error"])
         for key in ("source","physics","interaction"):
-            report["dimensions"][key] = {"kind":"deterministic", "checks":normalize_checks(key,raw[key])}
+            report["dimensions"][key] = {"kind":"deterministic", "checks":normalize_checks(key,raw[key],checks)}
         report["diagnostics"] = raw.get("diagnostics", {})
         report["dimensions"]["visual"] = {"kind":"review", "checks":[
-            {"id":name,"question":question,"pass":None} for name, question in CHECKS["visual"].items()]}
+            {"id":name,"question":question,"pass":None} for name, question in checks["visual"].items()]}
         report["evidence"] = raw["evidence"]
         refresh_verdict(report)
     except (OSError,ValueError,RuntimeError) as exc:

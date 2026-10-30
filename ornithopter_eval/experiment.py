@@ -12,7 +12,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 from .api import create_response, get_api_key
-from .checks import CHECKS, TASK_VERSION
+from .checks import CHECKS, TASK_VERSION, MECHANICAL_VERSION, checklist
 from .grading import grade_submission
 from .runner import ROOT, digest, initial_input, prepare, run_model, write_json
 
@@ -22,11 +22,12 @@ AUTOMATED = ("source", "physics", "interaction")
 def automated_result(report):
     if report.get("status") in ("infrastructure_error", "submission_timeout", "partial"):
         return None
+    checks_expected = checklist(report.get("task_version"))
     observed = []
     groups = {}
     for group in AUTOMATED:
         checks = report.get("dimensions", {}).get(group, {}).get("checks", [])
-        if len(checks) != len(CHECKS[group]) or {c["id"] for c in checks} != set(CHECKS[group]):
+        if len(checks) != len(checks_expected[group]) or {c["id"] for c in checks} != set(checks_expected[group]):
             return None
         if any(type(c.get("pass")) is not bool for c in checks):
             return None
@@ -79,9 +80,11 @@ def write_trial_pages(run):
         evidence = report.get("evidence", {}).get("screenshots", [])
     figures = ''.join('<figure><figcaption>'+html.escape(name)+'</figcaption><img src="grade/'+html.escape(name,quote=True)+'" alt="'+html.escape(name,quote=True)+'"></figure>' for name in evidence)
     _write_html(run / "evidence.html",_page("Grader captures",'<p><a href="../../index.html">All trials</a></p><h1>Grader captures</h1><p>Captured after submission. No feedback was returned to the generator.</p>'+figures+('<p>No screenshots were captured; inspect the report and logs.</p>' if not figures else '')+'<p><a href="grade/report.json">Full report</a> · <a href="grade/grader.log">Grader log</a></p>'))
+    manifest = json.loads((run / "manifest.json").read_text())
+    editable = manifest.get("editable_files")
     sources = []
     for path in sorted((run / "submission").rglob("*")):
-        if path.is_file() and not path.is_symlink():
+        if path.is_file() and not path.is_symlink() and (editable is None or str(path.relative_to(run)) in editable):
             name = str(path.relative_to(run / "submission"))
             sources.append("FILE: "+name+"\n"+path.read_text()+"\n")
     (run / "submission-source.txt").write_text("\n".join(sources))
@@ -89,33 +92,36 @@ def write_trial_pages(run):
 
 def refresh_workbench(root, experiment):
     version = experiment["task_version"]
+    checks = checklist(version)
+    total = sum(len(checks[g]) for g in AUTOMATED)
+    visual_count = len(checks["visual"])
     summaries = {}
     for model in experiment["models"]:
         trials = [t for t in experiment["trials"] if t["model"] == model]
         valid = [t["automated"] for t in trials if t.get("automated") is not None]
         summaries[model] = {"attempts":len(trials), "graded_attempts":len(valid),
             "mean_passed":round(sum(t["passed"] for t in valid)/len(valid),2) if valid else None,
-            "total_checks":20, "all_automated_passes":sum(t["passed"]==20 for t in valid),
+            "total_checks":total, "all_automated_passes":sum(t["passed"]==total for t in valid),
             "range":[min(t["passed"] for t in valid),max(t["passed"] for t in valid)] if valid else None}
     summary = {"task_version":version,"status":experiment["status"],"models":summaries,
-               "comparison_scope":"20 deterministic checks; all five visual checks remain separately ungraded.",
-               "full_task_pass_rate":None,"note":"Three repeats per model are exploratory, not a definitive ranking.",
+               "comparison_scope":f"{total} deterministic checks; {visual_count} visual checks remain separately ungraded.",
+               "full_task_pass_rate":None,"note":f"{experiment['repeats']} repeat(s) per model; exploratory, not a definitive ranking.",
                "trials":experiment["trials"]}
     write_json(root / "summary.json", summary)
     write_json(root / "experiment.json", experiment)
-    cards = ''.join('<div class="card"><strong>'+html.escape(model)+'</strong><div class="score">'+str(s["mean_passed"] if s["mean_passed"] is not None else '—')+' <small>/ 20</small></div><span class="muted">Mean automated checks · '+str(s["graded_attempts"])+' / '+str(s["attempts"])+' graded</span></div>' for model,s in summaries.items())
+    cards = ''.join('<div class="card"><strong>'+html.escape(model)+'</strong><div class="score">'+str(s["mean_passed"] if s["mean_passed"] is not None else '—')+' <small>/ '+str(total)+'</small></div><span class="muted">Mean automated checks · '+str(s["graded_attempts"])+' / '+str(s["attempts"])+' graded</span></div>' for model,s in summaries.items())
     rows = []
     for t in experiment["trials"]:
         prefix = 'trials/'+t["id"]+'/'
         result = t.get("automated")
-        score = str(result["passed"])+" / 20" if result else '—'
+        score = str(result["passed"])+" / "+str(total) if result else '—'
         simulator_label = 'Fly simulator ↗' if result and result['groups']['interaction']['passed'] else 'Open submission ↗'
         actions = '<a target="_blank" rel="noopener" href="'+prefix+'submission/index.html">'+simulator_label+'</a><a href="'+prefix+'evidence.html">Captures</a><a href="'+prefix+'grade/report.json">Checks</a><a href="'+prefix+'transcript.txt">Transcript</a><a href="'+prefix+'submission-source.txt">Source</a>' if t["status"] not in ("prepared","running") else '<span class="muted">Artifacts appear when this attempt finishes.</span>'
         reason = '<br><small>'+html.escape(t['reason'])+'</small>' if t.get('reason') else ''
         rows.append('<tr><td>'+str(t["repeat"])+'</td><td>'+html.escape(t["model"])+'</td><td><strong>'+score+'</strong></td><td><span class="badge">'+html.escape(t["status"])+'</span>'+reason+'</td><td class="actions">'+actions+'</td></tr>')
     effort = html.escape(str(experiment["config"].get("reasoning_effort","default")))
     tokens = str(experiment["config"]["max_output_tokens_total"])
-    body = '<p class="muted">Stanley’s Swan · '+html.escape(version)+'</p><h1>Frontier model calibration</h1><p>Open each unchanged model submission to fly it yourself, or inspect what the graders captured.</p><p><strong>Automated checks only.</strong> Five visual checks remain ungraded. A 20/20 result is not a full-task pass.</p>'+cards+'<table><thead><tr><th>Repeat</th><th>Model</th><th>Automated</th><th>Attempt</th><th>Inspect</th></tr></thead><tbody>'+''.join(rows)+'</tbody></table><p class="muted">Same source packet, starter, '+effort+' reasoning and '+tokens+' total output tokens. No execution, testing or grader feedback during generation. Refresh this page for completed attempts.</p><p><a href="experiment.json">Protocol and provenance</a> · <a href="summary.json">Results JSON</a> · <a href="config.json">Fixed budget</a></p>'
+    body = '<p class="muted">'+('Mechanical ornithopter' if version==MECHANICAL_VERSION else 'Stanley’s Swan')+' · '+html.escape(version)+'</p><h1>Frontier model calibration</h1><p>Open each unchanged model submission to fly it yourself, or inspect what the graders captured.</p><p><strong>Automated checks only.</strong> '+str(visual_count)+' visual checks remain ungraded. Passing all automated checks is not a full-task pass.</p>'+cards+'<table><thead><tr><th>Repeat</th><th>Model</th><th>Automated</th><th>Attempt</th><th>Inspect</th></tr></thead><tbody>'+''.join(rows)+'</tbody></table><p class="muted">Same source packet, starter, '+effort+' reasoning and '+tokens+' total output tokens. No execution, testing or grader feedback during generation. Refresh this page for completed attempts.</p><p><a href="experiment.json">Protocol and provenance</a> · <a href="summary.json">Results JSON</a> · <a href="config.json">Fixed budget</a></p>'
     if (root / "artifacts.zip").exists():
         body += '<p><a href="artifacts.zip">Download all artifacts</a></p>'
     if (root / "CALIBRATION.md").exists():
@@ -134,8 +140,12 @@ def run_experiment(output, models, repeats, config_path, node="node", transport=
         raise ValueError("Repeats must be between 1 and 20")
     if transport is create_response and not get_api_key():
         raise ValueError("A local API key is required; no experiment was created")
+    config = json.loads(Path(config_path).read_text())
+    version = config.get("task_version")
+    if version not in (TASK_VERSION, MECHANICAL_VERSION):
+        raise ValueError("Unsupported task version")
     frozen = {str(p.relative_to(ROOT)):digest(p) for pattern in
-              ("ornithopter_eval/*.py","grader/*.mjs","task/*.md","task/starter/*","task/sources/*.jpg")
+              ("ornithopter_eval/*.py","grader/*.mjs","task/*.md","task/starter/*","task/sources/*.jpg","candidate/mechanical-v4/**/*")
               for p in sorted(ROOT.glob(pattern)) if p.is_file()}
     root.mkdir(parents=True)
     shutil.copyfile(config_path, root / "config.json")
@@ -144,7 +154,7 @@ def run_experiment(output, models, repeats, config_path, node="node", transport=
         commit = subprocess.check_output(["git","rev-parse","HEAD"],cwd=ROOT,text=True).strip()
     except (OSError,subprocess.CalledProcessError):
         commit = None
-    experiment = {"task_version":TASK_VERSION,"created_utc":datetime.now(timezone.utc).isoformat(),
+    experiment = {"task_version":version,"created_utc":datetime.now(timezone.utc).isoformat(),
         "git_commit":commit,"frozen_sha256":frozen,"config_sha256":digest(root / "config.json"),
         "models":models,"repeats":repeats,"config":config,"status":"prepared",
         "protocol":f"Two generators in parallel per round; {repeats} independent rounds; grading only after submission; no retries.",
@@ -180,7 +190,8 @@ def run_experiment(output, models, repeats, config_path, node="node", transport=
                     manifest = future.result()
                     trial.update(status=manifest["status"],reason=manifest.get("reason"),usage=manifest.get("usage"),elapsed_seconds=manifest.get("elapsed_seconds"))
                     if manifest["status"] in ("submitted","budget_exhausted"):
-                        report = grader(run / "submission",run / "grade",node=node)
+                        report = (grader(run / "submission",run / "grade",node=node,task_version=version)
+                                  if grader is grade_submission else grader(run / "submission",run / "grade",node=node))
                         trial["grading_status"] = report["status"]
                         trial["automated"] = automated_result(report)
                         if trial["automated"] is None:
@@ -191,6 +202,8 @@ def run_experiment(output, models, repeats, config_path, node="node", transport=
                     write_trial_pages(run)
                 refresh_workbench(root,experiment)
                 print(trial["id"]+": "+json.dumps({k:trial.get(k) for k in ("status","automated","reason","grading_error")}),flush=True)
+            if digest(root / "config.json")!=experiment["config_sha256"] or any(digest(ROOT/name)!=sha for name,sha in frozen.items()):
+                raise ValueError("Frozen experiment files changed during generation or grading")
             if any(t["status"]=="infrastructure_error" or t.get("grading_error") for t in pair):
                 experiment["status"]="attention_required"
                 return refresh_workbench(root,experiment)

@@ -1,4 +1,4 @@
-# Mechanical ornithopter in a shared flight world — v4 candidate
+# Mechanical ornithopter in a shared flight world — v4 smoke task
 
 Build an engineered, motor-driven ornithopter from the supplied source studies
 and explicit engineering assumptions. Implement the aircraft's 3D structure,
@@ -52,7 +52,7 @@ Export `parameters` with `aspect_ratio`, `wrist_span_fraction`, `wing_area_m2`,
 The engineering values, including three wheel centres, are supplied assumptions;
 the two source ratios must be interpreted from the photographs.
 
-## Proposed physical model
+## Required educational physical model
 
 Axes: x forward, y up, z right; heading turns +x toward +z. State and controls are
 specified in AIRCRAFT_API.md. Use 6 kg, g=9.80665 and density supplied by the world.
@@ -95,8 +95,9 @@ Use at most 12,000 aircraft triangles. Reuse geometry/materials, batch rigid par
 where practical and avoid allocations of meshes/materials every frame. The
 shared world has no animated scenery, shadow maps or post-processing.
 
-## Review status
+## Provisional smoke-test status
 
-This is a candidate task and engineering model for owner review. The handwritten
-preview aircraft is a withheld integration fixture, not a model-generated result.
-The proposed binary checks are in GRADERS.md. No v4 model calibration has run.
+This task uses an educational engineering model. The handwritten preview aircraft
+is a withheld integration fixture, not a model-generated result. The 15 automated
+binary checks are implemented for smoke testing; four visual predicates remain
+separately ungraded. Passing these checks does not establish real-world validity.

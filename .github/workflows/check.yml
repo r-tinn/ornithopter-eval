@@ -32,6 +32,7 @@ jobs:
             python3 -m unittest discover -s tests -v
             python3 -m ornithopter_eval validate
             python3 -m ornithopter_eval validate-world
+            python3 -m ornithopter_eval validate-mechanical
           else
             python3 -m unittest discover -s tests -p test_policy.py -v
             python3 -m unittest discover -s tests -p test_review.py -v
@@ -45,4 +46,5 @@ jobs:
           path: |
             runs/validation-*
             runs/world-review-*
+            runs/mechanical-grader-calibration-*
           retention-days: 7
