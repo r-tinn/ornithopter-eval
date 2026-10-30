@@ -1,0 +1,4439 @@
+{
+  "source": [
+    {
+      "id": "aspect_ratio_from_study",
+      "pass": true,
+      "detail": {
+        "actual": 8.284417549167928,
+        "expected": 8.284417549167928,
+        "relative_tolerance": 0.005
+      }
+    },
+    {
+      "id": "wrist_fraction_from_study",
+      "pass": true,
+      "detail": {
+        "actual": 0.5,
+        "expected": 0.5,
+        "relative_tolerance": 0.005
+      }
+    },
+    {
+      "id": "mechanical_area_consistent",
+      "pass": true,
+      "detail": {
+        "span": 3,
+        "area": 1.0863769174579985,
+        "expected_span": 3,
+        "expected_area": 1.0863769174579985
+      }
+    }
+  ],
+  "physics": [
+    {
+      "id": "power_controls_thrust",
+      "pass": true,
+      "detail": {
+        "off": 0,
+        "on": 26
+      }
+    },
+    {
+      "id": "lift_scales_with_speed_squared",
+      "pass": true,
+      "detail": {
+        "slow": 39.92435171658144,
+        "fast": 159.69740686632576,
+        "ratio": 4
+      }
+    },
+    {
+      "id": "matching_wind_removes_lift",
+      "pass": true,
+      "detail": {
+        "still": 39.92435171658144,
+        "matching": 0
+      }
+    },
+    {
+      "id": "powered_phase_frequency",
+      "pass": true,
+      "detail": [
+        {
+          "step": 12,
+          "actual": 1.626637061435917,
+          "expected": 1.6266370614359174,
+          "error": 4.440892098500626e-16
+        },
+        {
+          "step": 25,
+          "actual": 2.987993877991495,
+          "expected": 2.9879938779914945,
+          "error": 4.440892098500626e-16
+        },
+        {
+          "step": 44,
+          "actual": 4.977669225265029,
+          "expected": 4.977669225265029,
+          "error": 0
+        }
+      ]
+    },
+    {
+      "id": "unpowered_phase_stops",
+      "pass": true,
+      "detail": {
+        "initial": 0.37,
+        "actual": 0.37
+      }
+    },
+    {
+      "id": "steady_glide_ratio",
+      "pass": true,
+      "detail": {
+        "distance": 24.142512148671354,
+        "height_lost": 2.104029013262334,
+        "actual": 11.474419790075975,
+        "expected": 11.47441979014297,
+        "relative_tolerance": 0.01,
+        "initial": {
+          "position": [
+            0,
+            1000,
+            0
+          ],
+          "velocity": [
+            12.07125607433567,
+            -1.0520145066250242,
+            0
+          ],
+          "pitch": -0.08693073497786764,
+          "roll": 0,
+          "heading": 0,
+          "phase": 0.37,
+          "time": 0,
+          "status": "flying"
+        },
+        "final": {
+          "position": [
+            24.142512148671354,
+            997.8959709867377,
+            0
+          ],
+          "velocity": [
+            12.07125607433567,
+            -1.0520145066250242,
+            0
+          ],
+          "pitch": -0.08693073497786764,
+          "roll": 0,
+          "heading": 0,
+          "phase": 0.37,
+          "time": 1.9999999999999953,
+          "status": "flying"
+        }
+      }
+    }
+  ],
+  "interaction": [
+    {
+      "id": "aircraft_geometry_bounded",
+      "pass": true,
+      "detail": {
+        "triangles": 4532,
+        "wheel_clearances": [
+          3.576278384542775e-9,
+          3.576278384542775e-9,
+          3.576278384542775e-9
+        ]
+      }
+    },
+    {
+      "id": "pitch_input_changes_pitch",
+      "pass": true,
+      "detail": {
+        "neutral": {
+          "position": [
+            -181.155637957706,
+            4.298800483149736,
+            -165
+          ],
+          "velocity": [
+            10.051352608184862,
+            -0.9257442993401281,
+            0
+          ],
+          "pitch": 0,
+          "roll": 0,
+          "heading": 0,
+          "phase": 0,
+          "time": 0.3833333333333337,
+          "status": "flying"
+        },
+        "pressed": {
+          "position": [
+            -181.16959278401285,
+            4.4149387481564,
+            -165
+          ],
+          "velocity": [
+            9.910894472027357,
+            -0.12725164260195612,
+            0
+          ],
+          "pitch": 0.19166666666666685,
+          "roll": 0,
+          "heading": 0,
+          "phase": 0,
+          "time": 0.3833333333333337,
+          "status": "flying"
+        },
+        "delta": 0.19166666666666685
+      }
+    },
+    {
+      "id": "rudder_changes_heading",
+      "pass": true,
+      "detail": {
+        "neutral": {
+          "position": [
+            -175.0260747557212,
+            3.751189843884559,
+            -165
+          ],
+          "velocity": [
+            10.095468657629143,
+            -0.8829166305827046,
+            0
+          ],
+          "pitch": 0,
+          "roll": 0,
+          "heading": 0,
+          "phase": 0,
+          "time": 0.9916666666666656,
+          "status": "flying"
+        },
+        "pressed": {
+          "position": [
+            -175.07261339872719,
+            3.7513387238418527,
+            -164.16034021345214
+          ],
+          "velocity": [
+            9.955502788483388,
+            -0.8825670549546821,
+            1.6812552178165645
+          ],
+          "pitch": 0,
+          "roll": 0,
+          "heading": 0.16729847600102637,
+          "phase": 0,
+          "time": 0.9916666666666656,
+          "status": "flying"
+        },
+        "delta": 0.16729847600102637
+      }
+    },
+    {
+      "id": "takeoff_from_strip",
+      "pass": true,
+      "detail": [
+        {
+          "field": "Valley",
+          "pass": true,
+          "samples": [
+            {
+              "at_seconds": 6,
+              "state": {
+                "position": [
+                  -163.27370701361826,
+                  11.880607648235904,
+                  -165
+                ],
+                "velocity": [
+                  13.776556197728706,
+                  2.842039911573392,
+                  0
+                ],
+                "pitch": 0.15000000000000005,
+                "roll": 0,
+                "heading": 0,
+                "phase": 6.073745796940214,
+                "time": 5.98333333333342,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  9.31355763620115,
+                  9.15664759710387,
+                  9.15664759710387
+                ]
+              },
+              "diagnostics": {
+                "mode": "chase",
+                "field": "valley",
+                "ready": true,
+                "running": true,
+                "terrain_triangles": 8192,
+                "trees": 48,
+                "airfields": 2,
+                "draw_calls": 114,
+                "triangles": 14236,
+                "render_frames": 288,
+                "paused_rendering": "on demand",
+                "external_assets": false
+              }
+            },
+            {
+              "at_seconds": 6.25,
+              "state": {
+                "position": [
+                  -160.05603270812233,
+                  12.545611680205829,
+                  -165
+                ],
+                "velocity": [
+                  13.802078660200628,
+                  2.8571407758703753,
+                  0
+                ],
+                "pitch": 0.15000000000000005,
+                "roll": 0,
+                "heading": 0,
+                "phase": 2.7227136331111006,
+                "time": 6.216666666666765,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  9.930203070633192,
+                  9.773293031535912,
+                  9.773293031535912
+                ]
+              },
+              "diagnostics": {
+                "mode": "chase",
+                "field": "valley",
+                "ready": true,
+                "running": true,
+                "terrain_triangles": 8192,
+                "trees": 48,
+                "airfields": 2,
+                "draw_calls": 114,
+                "triangles": 14236,
+                "render_frames": 295,
+                "paused_rendering": "on demand",
+                "external_assets": false
+              }
+            },
+            {
+              "at_seconds": 6.5,
+              "state": {
+                "position": [
+                  -156.4871099573544,
+                  13.285704741361965,
+                  -165
+                ],
+                "velocity": [
+                  13.826931881871156,
+                  2.8718032077337545,
+                  0
+                ],
+                "pitch": 0.15000000000000005,
+                "roll": 0,
+                "heading": 0,
+                "phase": 5.96902604182055,
+                "time": 6.4750000000001116,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  10.669593596831666,
+                  10.512683557734386,
+                  10.512683557734386
+                ]
+              },
+              "diagnostics": {
+                "mode": "chase",
+                "field": "valley",
+                "ready": true,
+                "running": true,
+                "terrain_triangles": 8192,
+                "trees": 48,
+                "airfields": 2,
+                "draw_calls": 114,
+                "triangles": 14236,
+                "render_frames": 303,
+                "paused_rendering": "on demand",
+                "external_assets": false
+              }
+            },
+            {
+              "at_seconds": 6.75,
+              "state": {
+                "position": [
+                  -152.91219310381322,
+                  14.029329272265295,
+                  -165
+                ],
+                "velocity": [
+                  13.848657509747026,
+                  2.8845867425286214,
+                  0
+                ],
+                "pitch": 0.15000000000000005,
+                "roll": 0,
+                "heading": 0,
+                "phase": 2.932153143350416,
+                "time": 6.733333333333458,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  11.413041708711583,
+                  11.256131669614303,
+                  11.256131669614303
+                ]
+              },
+              "diagnostics": {
+                "mode": "chase",
+                "field": "valley",
+                "ready": true,
+                "running": true,
+                "terrain_triangles": 8192,
+                "trees": 48,
+                "airfields": 2,
+                "draw_calls": 114,
+                "triangles": 14236,
+                "render_frames": 311,
+                "paused_rendering": "on demand",
+                "external_assets": false
+              }
+            },
+            {
+              "at_seconds": 7,
+              "state": {
+                "position": [
+                  -149.56315801745848,
+                  14.72777452091869,
+                  -165
+                ],
+                "velocity": [
+                  13.86650755186925,
+                  2.8950666414464887,
+                  0
+                ],
+                "pitch": 0.15000000000000005,
+                "roll": 0,
+                "heading": 0,
+                "phase": 5.969026041820546,
+                "time": 6.975000000000136,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  12.160189126806314,
+                  12.003279087709034,
+                  12.003279087709034
+                ]
+              },
+              "diagnostics": {
+                "mode": "chase",
+                "field": "valley",
+                "ready": true,
+                "running": true,
+                "terrain_triangles": 8192,
+                "trees": 48,
+                "airfields": 2,
+                "draw_calls": 114,
+                "triangles": 14236,
+                "render_frames": 319,
+                "paused_rendering": "on demand",
+                "external_assets": false
+              }
+            }
+          ]
+        },
+        {
+          "field": "Meadow",
+          "pass": true,
+          "samples": [
+            {
+              "at_seconds": 6,
+              "state": {
+                "position": [
+                  756.7262929863832,
+                  10.899944601293223,
+                  285
+                ],
+                "velocity": [
+                  13.776556197728706,
+                  2.842039911573392,
+                  0
+                ],
+                "pitch": 0.15000000000000005,
+                "roll": 0,
+                "heading": 0,
+                "phase": 6.073745796940214,
+                "time": 5.98333333333342,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  9.31355763620115,
+                  9.15664759710387,
+                  9.15664759710387
+                ]
+              },
+              "diagnostics": {
+                "mode": "chase",
+                "field": "meadow",
+                "ready": true,
+                "running": true,
+                "terrain_triangles": 8192,
+                "trees": 48,
+                "airfields": 2,
+                "draw_calls": 114,
+                "triangles": 14236,
+                "render_frames": 699,
+                "paused_rendering": "on demand",
+                "external_assets": false
+              }
+            },
+            {
+              "at_seconds": 6.25,
+              "state": {
+                "position": [
+                  759.9439672918792,
+                  11.564948633263148,
+                  285
+                ],
+                "velocity": [
+                  13.802078660200628,
+                  2.8571407758703753,
+                  0
+                ],
+                "pitch": 0.15000000000000005,
+                "roll": 0,
+                "heading": 0,
+                "phase": 2.7227136331111006,
+                "time": 6.216666666666765,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  9.930203070633192,
+                  9.773293031535912,
+                  9.773293031535912
+                ]
+              },
+              "diagnostics": {
+                "mode": "chase",
+                "field": "meadow",
+                "ready": true,
+                "running": true,
+                "terrain_triangles": 8192,
+                "trees": 48,
+                "airfields": 2,
+                "draw_calls": 114,
+                "triangles": 14236,
+                "render_frames": 706,
+                "paused_rendering": "on demand",
+                "external_assets": false
+              }
+            },
+            {
+              "at_seconds": 6.5,
+              "state": {
+                "position": [
+                  763.5128900426473,
+                  12.305041694419284,
+                  285
+                ],
+                "velocity": [
+                  13.826931881871156,
+                  2.8718032077337545,
+                  0
+                ],
+                "pitch": 0.15000000000000005,
+                "roll": 0,
+                "heading": 0,
+                "phase": 5.96902604182055,
+                "time": 6.4750000000001116,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  10.669593596831666,
+                  10.512683557734386,
+                  10.512683557734386
+                ]
+              },
+              "diagnostics": {
+                "mode": "chase",
+                "field": "meadow",
+                "ready": true,
+                "running": true,
+                "terrain_triangles": 8192,
+                "trees": 48,
+                "airfields": 2,
+                "draw_calls": 114,
+                "triangles": 14236,
+                "render_frames": 714,
+                "paused_rendering": "on demand",
+                "external_assets": false
+              }
+            },
+            {
+              "at_seconds": 6.75,
+              "state": {
+                "position": [
+                  767.0878068961887,
+                  13.048666225322615,
+                  285
+                ],
+                "velocity": [
+                  13.848657509747026,
+                  2.8845867425286214,
+                  0
+                ],
+                "pitch": 0.15000000000000005,
+                "roll": 0,
+                "heading": 0,
+                "phase": 2.932153143350416,
+                "time": 6.733333333333458,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  11.413041708711583,
+                  11.256131669614303,
+                  11.256131669614303
+                ]
+              },
+              "diagnostics": {
+                "mode": "chase",
+                "field": "meadow",
+                "ready": true,
+                "running": true,
+                "terrain_triangles": 8192,
+                "trees": 48,
+                "airfields": 2,
+                "draw_calls": 114,
+                "triangles": 14236,
+                "render_frames": 722,
+                "paused_rendering": "on demand",
+                "external_assets": false
+              }
+            },
+            {
+              "at_seconds": 7,
+              "state": {
+                "position": [
+                  770.4368419825436,
+                  13.747111473976009,
+                  285
+                ],
+                "velocity": [
+                  13.86650755186925,
+                  2.8950666414464887,
+                  0
+                ],
+                "pitch": 0.15000000000000005,
+                "roll": 0,
+                "heading": 0,
+                "phase": 5.969026041820546,
+                "time": 6.975000000000136,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  12.160189126806314,
+                  12.003279087709034,
+                  12.003279087709034
+                ]
+              },
+              "diagnostics": {
+                "mode": "chase",
+                "field": "meadow",
+                "ready": true,
+                "running": true,
+                "terrain_triangles": 8192,
+                "trees": 48,
+                "airfields": 2,
+                "draw_calls": 114,
+                "triangles": 14236,
+                "render_frames": 730,
+                "paused_rendering": "on demand",
+                "external_assets": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "landing_on_strip",
+      "pass": true,
+      "detail": [
+        {
+          "field": "Valley",
+          "pass": true,
+          "final": {
+            "at_seconds": 6,
+            "state": {
+              "position": [
+                -128.07737923781238,
+                2.6654485464928204,
+                -165
+              ],
+              "velocity": [
+                8.313751149944624,
+                0,
+                0
+              ],
+              "pitch": 0,
+              "roll": 0,
+              "heading": 0,
+              "phase": 0,
+              "time": 5.98333333333342,
+              "status": "landed"
+            },
+            "geometry": {
+              "triangles": 4532,
+              "wheel_clearances": [
+                0.0011130145539026692,
+                0.0011130145539026692,
+                0.0011130145539026692
+              ]
+            },
+            "ready": true
+          },
+          "crashed": false
+        },
+        {
+          "field": "Meadow",
+          "pass": true,
+          "final": {
+            "at_seconds": 6,
+            "state": {
+              "position": [
+                771.9226207621874,
+                1.68478549955014,
+                285
+              ],
+              "velocity": [
+                8.313751149944624,
+                0,
+                0
+              ],
+              "pitch": 0,
+              "roll": 0,
+              "heading": 0,
+              "phase": 0,
+              "time": 5.98333333333342,
+              "status": "landed"
+            },
+            "geometry": {
+              "triangles": 4532,
+              "wheel_clearances": [
+                0.0011130145539026692,
+                0.0011130145539026692,
+                0.0011130145539026692
+              ]
+            },
+            "ready": true
+          },
+          "crashed": false
+        }
+      ]
+    },
+    {
+      "id": "wheels_above_surface",
+      "pass": true,
+      "detail": [
+        {
+          "field": "Valley",
+          "pass": true,
+          "samples": [
+            {
+              "at_seconds": 0.1,
+              "state": {
+                "position": [
+                  -184.24946135708578,
+                  4.591322258261587,
+                  -165
+                ],
+                "velocity": [
+                  10.012678666105753,
+                  -0.9796007016508251,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 0.075,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  1.9433766188509654,
+                  1.9433766188509654,
+                  1.9433766188509654
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 0.2,
+              "state": {
+                "position": [
+                  -183.24738416605757,
+                  4.494593672529399,
+                  -165
+                ],
+                "velocity": [
+                  10.027255598509774,
+                  -0.9576838103217669,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 0.175,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  1.8465233143073516,
+                  1.8465233143073516,
+                  1.8465233143073516
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 0.3,
+              "state": {
+                "position": [
+                  -182.32763246125674,
+                  4.4076295798936425,
+                  -165
+                ],
+                "velocity": [
+                  10.038748017878715,
+                  -0.9417338253359756,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 0.26666666666666666,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  1.7579395749969682,
+                  1.7579395749969682,
+                  1.7579395749969682
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 0.4,
+              "state": {
+                "position": [
+                  -181.155637957706,
+                  4.298800483149736,
+                  -165
+                ],
+                "velocity": [
+                  10.051352608184862,
+                  -0.9257442993401281,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 0.3833333333333337,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  1.6342996966038634,
+                  1.6342996966038634,
+                  1.6342996966038634
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 0.5,
+              "state": {
+                "position": [
+                  -180.2338246021,
+                  4.214454810791734,
+                  -165
+                ],
+                "velocity": [
+                  10.059990519767567,
+                  -0.9157543684298184,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 0.47500000000000064,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  1.549039777394079,
+                  1.549039777394079,
+                  1.549039777394079
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 0.6,
+              "state": {
+                "position": [
+                  -179.2273623524501,
+                  4.1233787088066185,
+                  -165
+                ],
+                "velocity": [
+                  10.068394668496415,
+                  -0.9068092519348054,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 0.5750000000000004,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  1.4581719098722283,
+                  1.4581719098722283,
+                  1.4581719098722283
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 0.7,
+              "state": {
+                "position": [
+                  -178.3040745659804,
+                  4.0406037209393855,
+                  -165
+                ],
+                "velocity": [
+                  10.075324859500904,
+                  -0.9000024144762953,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 0.6666666666666667,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  1.3762457049971952,
+                  1.3762457049971952,
+                  1.3762457049971952
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 0.8,
+              "state": {
+                "position": [
+                  -177.12811528350164,
+                  3.936066609723187,
+                  -165
+                ],
+                "velocity": [
+                  10.083260070011262,
+                  -0.8928162633532827,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 0.783333333333333,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  1.28589493338111,
+                  1.28589493338111,
+                  1.28589493338111
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 0.9,
+              "state": {
+                "position": [
+                  -176.20353043412058,
+                  3.854467567550735,
+                  -165
+                ],
+                "velocity": [
+                  10.088908810621163,
+                  -0.8880720955450215,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 0.8749999999999993,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  1.2043621746752362,
+                  1.2043621746752362,
+                  1.2043621746752362
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 1,
+              "state": {
+                "position": [
+                  -175.19432883856635,
+                  3.765907956877192,
+                  -165
+                ],
+                "velocity": [
+                  10.094570800999032,
+                  -0.8836012026294174,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 0.974999999999999,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  1.1167154104677008,
+                  1.1167154104677008,
+                  1.1167154104677008
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 1.1,
+              "state": {
+                "position": [
+                  -174.26875097571482,
+                  3.6850935358977006,
+                  -165
+                ],
+                "velocity": [
+                  10.099360691073162,
+                  -0.8800211900035831,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 1.0666666666666653,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  1.0343352857135946,
+                  1.0343352857135946,
+                  1.0343352857135946
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 1.2,
+              "state": {
+                "position": [
+                  -173.09013652271273,
+                  3.582679009139048,
+                  -165
+                ],
+                "velocity": [
+                  10.104973287913882,
+                  -0.8760361678288096,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 1.1833333333333316,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.9173296132017512,
+                  0.9173296132017512,
+                  0.9173296132017512
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 1.3,
+              "state": {
+                "position": [
+                  -172.16364153659504,
+                  3.5025162105214496,
+                  -165
+                ],
+                "velocity": [
+                  10.109046494082644,
+                  -0.8732692676562446,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 1.274999999999998,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.8384530835265993,
+                  0.8384530835265993,
+                  0.8384530835265993
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 1.4,
+              "state": {
+                "position": [
+                  -171.15251004583382,
+                  3.4153389623745634,
+                  -165
+                ],
+                "velocity": [
+                  10.113188655494763,
+                  -0.8705494804365599,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 1.3749999999999976,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.750891125057644,
+                  0.750891125057644,
+                  0.750891125057644
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 1.5,
+              "state": {
+                "position": [
+                  -170.22528870554254,
+                  3.3356532595455386,
+                  -165
+                ],
+                "velocity": [
+                  10.116734978550468,
+                  -0.8682867962362212,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 1.466666666666664,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.6704902750970763,
+                  0.6704902750970763,
+                  0.6704902750970763
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 1.6,
+              "state": {
+                "position": [
+                  -169.04473725825187,
+                  3.2345190372029244,
+                  -165
+                ],
+                "velocity": [
+                  10.120934155471966,
+                  -0.8656751820886326,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 1.5833333333333302,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.5849550391587517,
+                  0.5849550391587517,
+                  0.5849550391587517
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 1.7,
+              "state": {
+                "position": [
+                  -168.11682984717064,
+                  3.1552601673065155,
+                  -165
+                ],
+                "velocity": [
+                  10.124007705989426,
+                  -0.8638035927735979,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 1.6749999999999965,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.5042108168260913,
+                  0.5042108168260913,
+                  0.5042108168260913
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 1.8,
+              "state": {
+                "position": [
+                  -167.10425698488297,
+                  3.068983200038902,
+                  -165
+                ],
+                "velocity": [
+                  10.127152928194363,
+                  -0.8619181829555788,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 1.7749999999999961,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.4183534985484427,
+                  0.4183534985484427,
+                  0.4183534985484427
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 1.9,
+              "state": {
+                "position": [
+                  -166.17579807189009,
+                  2.990054978528697,
+                  -165
+                ],
+                "velocity": [
+                  10.129859532907194,
+                  -0.8603165450034553,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 1.8666666666666625,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.33923852421583733,
+                  0.33923852421583733,
+                  0.33923852421583733
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 2,
+              "state": {
+                "position": [
+                  -164.99377757747564,
+                  2.889804020748357,
+                  -165
+                ],
+                "velocity": [
+                  10.13307865538764,
+                  -0.8584329989781575,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 1.9833333333333287,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.22460407606617228,
+                  0.22460407606617228,
+                  0.22460407606617228
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 2.1,
+              "state": {
+                "position": [
+                  -164.06479274507188,
+                  2.8111835630562227,
+                  -165
+                ],
+                "velocity": [
+                  10.135443338901231,
+                  -0.8570620362284878,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 2.0749999999999953,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.14699253869020268,
+                  0.14699253869020268,
+                  0.14699253869020268
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 2.2,
+              "state": {
+                "position": [
+                  -163.05111571050486,
+                  2.72555385068803,
+                  -165
+                ],
+                "velocity": [
+                  10.137869542130323,
+                  -0.855664868330849,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 2.174999999999995,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0609740128529217,
+                  0.0609740128529217,
+                  0.0609740128529217
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 2.3,
+              "state": {
+                "position": [
+                  -162.1218342784745,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  10.129658557536668,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 2.2666666666666613,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0003620763373342051,
+                  0.0003620763373342051,
+                  0.0003620763373342051
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 2.4,
+              "state": {
+                "position": [
+                  -160.94436128457,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  10.060676421398538,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 2.3833333333333275,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.00018117653135840683,
+                  0.00018117653135840683,
+                  0.00018117653135840683
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 2.5,
+              "state": {
+                "position": [
+                  -160.02481416765613,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  10.007131927193399,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 2.474999999999994,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.00009084988381236059,
+                  0.00009084988381236059,
+                  0.00009084988381236059
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 2.6,
+              "state": {
+                "position": [
+                  -159.02723548950573,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  9.949366173297589,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 2.5749999999999935,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.00012371603696736955,
+                  0.00012371603696736955,
+                  0.00012371603696736955
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 2.7,
+              "state": {
+                "position": [
+                  -158.11783289706608,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  9.896997141141242,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 2.66666666666666,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0005763052521778889,
+                  0.0005763052521778889,
+                  0.0005763052521778889
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 2.8,
+              "state": {
+                "position": [
+                  -156.96730794462928,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  9.831137853806593,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 2.783333333333326,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0011163022674756107,
+                  0.0011163022674756107,
+                  0.0011163022674756107
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 2.9,
+              "state": {
+                "position": [
+                  -156.06868108598215,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  9.78000312033347,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 2.8749999999999925,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0011391813384526994,
+                  0.0011391813384526994,
+                  0.0011391813384526994
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 3,
+              "state": {
+                "position": [
+                  -155.09367485699116,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  9.724823162081076,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 2.974999999999992,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0014516099287975592,
+                  0.0014516099287975592,
+                  0.0014516099287975592
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 3.1,
+              "state": {
+                "position": [
+                  -154.20473851182356,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  9.674785838879297,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 3.0666666666666584,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0005044515309302611,
+                  0.0005044515309302611,
+                  0.0005044515309302611
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 3.2,
+              "state": {
+                "position": [
+                  -153.07995543626058,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  9.611842012124793,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 3.1833333333333247,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.00007603169879777383,
+                  0.00007603169879777383,
+                  0.00007603169879777383
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 3.3,
+              "state": {
+                "position": [
+                  -152.20131790018982,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  9.562957925713805,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 3.274999999999991,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0017292651754952093,
+                  0.0017292651754952093,
+                  0.0017292651754952093
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 3.4,
+              "state": {
+                "position": [
+                  -151.24788499071977,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  9.510193921649764,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 3.3749999999999907,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.000003428433652086227,
+                  0.000003428433652086227,
+                  0.000003428433652086227
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 3.5,
+              "state": {
+                "position": [
+                  -150.37851377197788,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  9.462335954651428,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 3.466666666666657,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.000017878961822814787,
+                  0.000017878961822814787,
+                  0.000017878961822814787
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 3.6,
+              "state": {
+                "position": [
+                  -149.2783456278845,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  9.40211816736691,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 3.5833333333333233,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0005319191104689036,
+                  0.0005319191104689036,
+                  0.0005319191104689036
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 3.7,
+              "state": {
+                "position": [
+                  -148.41882727413866,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  9.355339321761212,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 3.6749999999999896,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0000016049343576352015,
+                  0.0000016049343576352015,
+                  0.0000016049343576352015
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 3.8,
+              "state": {
+                "position": [
+                  -147.48603346485703,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  9.304835986925076,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 3.7749999999999893,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0003010291472242965,
+                  0.0003010291472242965,
+                  0.0003010291472242965
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 3.9,
+              "state": {
+                "position": [
+                  -146.6353844922697,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  9.25901801424844,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 3.8666666666666556,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0004890323409529884,
+                  0.0004890323409529884,
+                  0.0004890323409529884
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 4,
+              "state": {
+                "position": [
+                  -145.55877676396992,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  9.201352907861988,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 3.983333333333322,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0004351929851282854,
+                  0.0004351929851282854,
+                  0.0004351929851282854
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 4.1,
+              "state": {
+                "position": [
+                  -144.7175630662368,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  9.156546159176596,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 4.074999999999992,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.00003221172732503774,
+                  0.00003221172732503774,
+                  0.00003221172732503774
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 4.2,
+              "state": {
+                "position": [
+                  -143.80453354401408,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  9.108161238261726,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 4.174999999999997,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0001990696117262214,
+                  0.0001990696117262214,
+                  0.0001990696117262214
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 4.3,
+              "state": {
+                "position": [
+                  -142.97181726432228,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  9.064255533092119,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 4.266666666666668,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.000033089834162502996,
+                  0.000033089834162502996,
+                  0.000033089834162502996
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 4.4,
+              "state": {
+                "position": [
+                  -141.91778178857138,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  9.008984144243374,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 4.383333333333341,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.001161256489250917,
+                  0.001161256489250917,
+                  0.001161256489250917
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 4.5,
+              "state": {
+                "position": [
+                  -141.09410919352126,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  8.966027344959528,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 4.475000000000012,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0003860802844188882,
+                  0.0003860802844188882,
+                  0.0003860802844188882
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 4.6,
+              "state": {
+                "position": [
+                  -140.200023618669,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  8.919630273711553,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 4.575000000000017,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0002133304306588535,
+                  0.0002133304306588535,
+                  0.0002133304306588535
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 4.7,
+              "state": {
+                "position": [
+                  -139.3844993995776,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  8.877519554832107,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 4.666666666666688,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.00029194175210833784,
+                  0.00029194175210833784,
+                  0.00029194175210833784
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 4.8,
+              "state": {
+                "position": [
+                  -138.35210891262477,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  8.824495851515278,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 4.783333333333361,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.001667875127814522,
+                  0.001667875127814522,
+                  0.001667875127814522
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 4.9,
+              "state": {
+                "position": [
+                  -137.54526067320674,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  8.78327673815446,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 4.875000000000032,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0009346995204422281,
+                  0.0009346995204422281,
+                  0.0009346995204422281
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 5,
+              "state": {
+                "position": [
+                  -136.6693487483315,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  8.738747466478157,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 4.975000000000037,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0005153799109050006,
+                  0.0005153799109050006,
+                  0.0005153799109050006
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 5.1,
+              "state": {
+                "position": [
+                  -135.87032091834072,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  8.698323851802936,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 5.066666666666708,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.001101603745514046,
+                  0.001101603745514046,
+                  0.001101603745514046
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 5.2,
+              "state": {
+                "position": [
+                  -134.8587041519229,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  8.647413444587759,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 5.183333333333381,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0006461237718573543,
+                  0.0006461237718573543,
+                  0.0006461237718573543
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 5.3,
+              "state": {
+                "position": [
+                  -134.0680065779189,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  8.607828657732183,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 5.275000000000052,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0008567831658852221,
+                  0.0008567831658852221,
+                  0.0008567831658852221
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 5.4,
+              "state": {
+                "position": [
+                  -133.20954405839666,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  8.56505661216529,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 5.375000000000057,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.00011257973977629732,
+                  0.00011257973977629732,
+                  0.00011257973977629732
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 5.5,
+              "state": {
+                "position": [
+                  -132.42635833943743,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  8.526220695610649,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 5.466666666666728,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0006037677713013334,
+                  0.0006037677713013334,
+                  0.0006037677713013334
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 5.6,
+              "state": {
+                "position": [
+                  -131.43469560069718,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  8.477299699988837,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 5.5833333333334005,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0013165455145263127,
+                  0.0013165455145263127,
+                  0.0013165455145263127
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 5.7,
+              "state": {
+                "position": [
+                  -130.65951467737398,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  8.439253918633948,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 5.675000000000072,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0004034516968094426,
+                  0.0004034516968094426,
+                  0.0004034516968094426
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 5.8,
+              "state": {
+                "position": [
+                  -129.8178197716581,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  8.39813708530563,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 5.775000000000077,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0001569072155236384,
+                  0.0001569072155236384,
+                  0.0001569072155236384
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 5.9,
+              "state": {
+                "position": [
+                  -129.04986005868355,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  8.360797120366538,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 5.866666666666748,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.00021757921850262818,
+                  0.00021757921850262818,
+                  0.00021757921850262818
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 6,
+              "state": {
+                "position": [
+                  -128.07737923781238,
+                  2.6654485464928204,
+                  -165
+                ],
+                "velocity": [
+                  8.313751149944624,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 5.98333333333342,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0011130145539026692,
+                  0.0011130145539026692,
+                  0.0011130145539026692
+                ]
+              },
+              "ready": true
+            }
+          ]
+        },
+        {
+          "field": "Meadow",
+          "pass": true,
+          "samples": [
+            {
+              "at_seconds": 0.1,
+              "state": {
+                "position": [
+                  715.7505386429141,
+                  3.6106592113189073,
+                  285
+                ],
+                "velocity": [
+                  10.012678666105753,
+                  -0.9796007016508251,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 0.075,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  1.9433766188509658,
+                  1.9433766188509658,
+                  1.9433766188509658
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 0.2,
+              "state": {
+                "position": [
+                  716.7526158339423,
+                  3.5139306255867178,
+                  285
+                ],
+                "velocity": [
+                  10.027255598509774,
+                  -0.9576838103217669,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 0.175,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  1.8465233143073503,
+                  1.8465233143073503,
+                  1.8465233143073503
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 0.3,
+              "state": {
+                "position": [
+                  717.6723675387431,
+                  3.426966532950961,
+                  285
+                ],
+                "velocity": [
+                  10.038748017878715,
+                  -0.9417338253359756,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 0.26666666666666666,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  1.7579395749969673,
+                  1.7579395749969673,
+                  1.7579395749969673
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 0.4,
+              "state": {
+                "position": [
+                  718.8443620422938,
+                  3.3181374362070546,
+                  285
+                ],
+                "velocity": [
+                  10.051352608184862,
+                  -0.9257442993401281,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 0.3833333333333337,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  1.634299696603862,
+                  1.634299696603862,
+                  1.634299696603862
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 0.5,
+              "state": {
+                "position": [
+                  719.7661753978996,
+                  3.2337917638490525,
+                  285
+                ],
+                "velocity": [
+                  10.059990519767567,
+                  -0.9157543684298184,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 0.47500000000000064,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  1.5490397773940776,
+                  1.5490397773940776,
+                  1.5490397773940776
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 0.6,
+              "state": {
+                "position": [
+                  720.7726376475493,
+                  3.142715661863937,
+                  285
+                ],
+                "velocity": [
+                  10.068394668496415,
+                  -0.9068092519348054,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 0.5750000000000004,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  1.458171909872227,
+                  1.458171909872227,
+                  1.458171909872227
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 0.7,
+              "state": {
+                "position": [
+                  721.695925434019,
+                  3.059940673996705,
+                  285
+                ],
+                "velocity": [
+                  10.075324859500904,
+                  -0.9000024144762953,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 0.6666666666666667,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  1.3762457049971952,
+                  1.3762457049971952,
+                  1.3762457049971952
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 0.8,
+              "state": {
+                "position": [
+                  722.8718847164977,
+                  2.9554035627805075,
+                  285
+                ],
+                "velocity": [
+                  10.083260070011262,
+                  -0.8928162633532827,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 0.783333333333333,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  1.285894933381111,
+                  1.285894933381111,
+                  1.285894933381111
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 0.9,
+              "state": {
+                "position": [
+                  723.7964695658787,
+                  2.8738045206080556,
+                  285
+                ],
+                "velocity": [
+                  10.088908810621163,
+                  -0.8880720955450215,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 0.8749999999999993,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  1.204362174675237,
+                  1.204362174675237,
+                  1.204362174675237
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 1,
+              "state": {
+                "position": [
+                  724.805671161433,
+                  2.785244909934513,
+                  285
+                ],
+                "velocity": [
+                  10.094570800999032,
+                  -0.8836012026294174,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 0.974999999999999,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  1.1167154104677015,
+                  1.1167154104677015,
+                  1.1167154104677015
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 1.1,
+              "state": {
+                "position": [
+                  725.7312490242846,
+                  2.7044304889550217,
+                  285
+                ],
+                "velocity": [
+                  10.099360691073162,
+                  -0.8800211900035831,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 1.0666666666666653,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  1.034335285713596,
+                  1.034335285713596,
+                  1.034335285713596
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 1.2,
+              "state": {
+                "position": [
+                  726.9098634772866,
+                  2.602015962196369,
+                  285
+                ],
+                "velocity": [
+                  10.104973287913882,
+                  -0.8760361678288096,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 1.1833333333333316,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.9173296132017525,
+                  0.9173296132017525,
+                  0.9173296132017525
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 1.3,
+              "state": {
+                "position": [
+                  727.8363584634044,
+                  2.5218531635787707,
+                  285
+                ],
+                "velocity": [
+                  10.109046494082644,
+                  -0.8732692676562446,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 1.274999999999998,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.8384530835266006,
+                  0.8384530835266006,
+                  0.8384530835266006
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 1.4,
+              "state": {
+                "position": [
+                  728.8474899541658,
+                  2.4346759154318844,
+                  285
+                ],
+                "velocity": [
+                  10.113188655494763,
+                  -0.8705494804365599,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 1.3749999999999976,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.7508911250576451,
+                  0.7508911250576451,
+                  0.7508911250576451
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 1.5,
+              "state": {
+                "position": [
+                  729.7747112944571,
+                  2.3549902126028597,
+                  285
+                ],
+                "velocity": [
+                  10.116734978550468,
+                  -0.8682867962362212,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 1.466666666666664,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.6704902750970776,
+                  0.6704902750970776,
+                  0.6704902750970776
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 1.6,
+              "state": {
+                "position": [
+                  730.9552627417479,
+                  2.2538559902602455,
+                  285
+                ],
+                "velocity": [
+                  10.120934155471966,
+                  -0.8656751820886326,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 1.5833333333333302,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.584955039158753,
+                  0.584955039158753,
+                  0.584955039158753
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 1.7,
+              "state": {
+                "position": [
+                  731.883170152829,
+                  2.1745971203638366,
+                  285
+                ],
+                "velocity": [
+                  10.124007705989426,
+                  -0.8638035927735979,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 1.6749999999999965,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.5042108168260928,
+                  0.5042108168260928,
+                  0.5042108168260928
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 1.8,
+              "state": {
+                "position": [
+                  732.8957430151168,
+                  2.088320153096223,
+                  285
+                ],
+                "velocity": [
+                  10.127152928194363,
+                  -0.8619181829555788,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 1.7749999999999961,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.41835349854844406,
+                  0.41835349854844406,
+                  0.41835349854844406
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 1.9,
+              "state": {
+                "position": [
+                  733.8242019281096,
+                  2.009391931586018,
+                  285
+                ],
+                "velocity": [
+                  10.129859532907194,
+                  -0.8603165450034553,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 1.8666666666666625,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.33923852421583867,
+                  0.33923852421583867,
+                  0.33923852421583867
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 2,
+              "state": {
+                "position": [
+                  735.0062224225239,
+                  1.9091409738056784,
+                  285
+                ],
+                "velocity": [
+                  10.13307865538764,
+                  -0.8584329989781575,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 1.9833333333333287,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.22460407606617383,
+                  0.22460407606617383,
+                  0.22460407606617383
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 2.1,
+              "state": {
+                "position": [
+                  735.9352072549277,
+                  1.8305205161135432,
+                  285
+                ],
+                "velocity": [
+                  10.135443338901231,
+                  -0.8570620362284878,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 2.0749999999999953,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.14699253869020357,
+                  0.14699253869020357,
+                  0.14699253869020357
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 2.2,
+              "state": {
+                "position": [
+                  736.9488842894947,
+                  1.74489080374535,
+                  285
+                ],
+                "velocity": [
+                  10.137869542130323,
+                  -0.855664868330849,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 2.174999999999995,
+                "status": "flying"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.06097401285292203,
+                  0.06097401285292203,
+                  0.06097401285292203
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 2.3,
+              "state": {
+                "position": [
+                  737.878165721525,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  10.129658557536668,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 2.2666666666666613,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0003620763373343161,
+                  0.0003620763373343161,
+                  0.0003620763373343161
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 2.4,
+              "state": {
+                "position": [
+                  739.0556387154294,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  10.060676421398538,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 2.3833333333333275,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0001811765313582958,
+                  0.0001811765313582958,
+                  0.0001811765313582958
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 2.5,
+              "state": {
+                "position": [
+                  739.9751858323433,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  10.007131927193399,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 2.474999999999994,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.00009084988381236059,
+                  0.00009084988381236059,
+                  0.00009084988381236059
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 2.6,
+              "state": {
+                "position": [
+                  740.9727645104939,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  9.949366173297589,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 2.5749999999999935,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.00012371603696736955,
+                  0.00012371603696736955,
+                  0.00012371603696736955
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 2.7,
+              "state": {
+                "position": [
+                  741.8821671029335,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  9.896997141141242,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 2.66666666666666,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0005763052521778889,
+                  0.0005763052521778889,
+                  0.0005763052521778889
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 2.8,
+              "state": {
+                "position": [
+                  743.0326920553701,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  9.831137853806593,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 2.783333333333326,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0011163022674756107,
+                  0.0011163022674756107,
+                  0.0011163022674756107
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 2.9,
+              "state": {
+                "position": [
+                  743.9313189140173,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  9.78000312033347,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 2.8749999999999925,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0011391813384526994,
+                  0.0011391813384526994,
+                  0.0011391813384526994
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 3,
+              "state": {
+                "position": [
+                  744.9063251430083,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  9.724823162081076,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 2.974999999999992,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0014516099287975592,
+                  0.0014516099287975592,
+                  0.0014516099287975592
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 3.1,
+              "state": {
+                "position": [
+                  745.7952614881757,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  9.674785838879297,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 3.0666666666666584,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.00050445153093015,
+                  0.00050445153093015,
+                  0.00050445153093015
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 3.2,
+              "state": {
+                "position": [
+                  746.9200445637388,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  9.611842012124793,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 3.1833333333333247,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.00007603169879777383,
+                  0.00007603169879777383,
+                  0.00007603169879777383
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 3.3,
+              "state": {
+                "position": [
+                  747.7986820998096,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  9.562957925713805,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 3.274999999999991,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0017292651754952093,
+                  0.0017292651754952093,
+                  0.0017292651754952093
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 3.4,
+              "state": {
+                "position": [
+                  748.7521150092799,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  9.510193921649764,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 3.3749999999999907,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.000003428433652086227,
+                  0.000003428433652086227,
+                  0.000003428433652086227
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 3.5,
+              "state": {
+                "position": [
+                  749.6214862280218,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  9.462335954651428,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 3.466666666666657,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.000017878961822703765,
+                  0.000017878961822703765,
+                  0.000017878961822703765
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 3.6,
+              "state": {
+                "position": [
+                  750.7216543721154,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  9.40211816736691,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 3.5833333333333233,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0005319191104689036,
+                  0.0005319191104689036,
+                  0.0005319191104689036
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 3.7,
+              "state": {
+                "position": [
+                  751.581172725861,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  9.355339321761212,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 3.6749999999999896,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0000016049343576352015,
+                  0.0000016049343576352015,
+                  0.0000016049343576352015
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 3.8,
+              "state": {
+                "position": [
+                  752.5139665351428,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  9.304835986925076,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 3.7749999999999893,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0003010291472242965,
+                  0.0003010291472242965,
+                  0.0003010291472242965
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 3.9,
+              "state": {
+                "position": [
+                  753.3646155077304,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  9.25901801424844,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 3.8666666666666556,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0004890323409530994,
+                  0.0004890323409530994,
+                  0.0004890323409530994
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 4,
+              "state": {
+                "position": [
+                  754.4412232360302,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  9.201352907861988,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 3.983333333333322,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.00043519298512839644,
+                  0.00043519298512839644,
+                  0.00043519298512839644
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 4.1,
+              "state": {
+                "position": [
+                  755.2824369337632,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  9.156546159176596,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 4.074999999999992,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.00003221172732492672,
+                  0.00003221172732492672,
+                  0.00003221172732492672
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 4.2,
+              "state": {
+                "position": [
+                  756.1954664559859,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  9.108161238261726,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 4.174999999999997,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.00019906961172633242,
+                  0.00019906961172633242,
+                  0.00019906961172633242
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 4.3,
+              "state": {
+                "position": [
+                  757.0281827356775,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  9.064255533092119,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 4.266666666666668,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.000033089834162391973,
+                  0.000033089834162391973,
+                  0.000033089834162391973
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 4.4,
+              "state": {
+                "position": [
+                  758.0822182114284,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  9.008984144243374,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 4.383333333333341,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.001161256489251028,
+                  0.001161256489251028,
+                  0.001161256489251028
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 4.5,
+              "state": {
+                "position": [
+                  758.9058908064784,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  8.966027344959528,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 4.475000000000012,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0003860802844188882,
+                  0.0003860802844188882,
+                  0.0003860802844188882
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 4.6,
+              "state": {
+                "position": [
+                  759.7999763813306,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  8.919630273711553,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 4.575000000000017,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0002133304306588535,
+                  0.0002133304306588535,
+                  0.0002133304306588535
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 4.7,
+              "state": {
+                "position": [
+                  760.615500600422,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  8.877519554832107,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 4.666666666666688,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.00029194175210833784,
+                  0.00029194175210833784,
+                  0.00029194175210833784
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 4.8,
+              "state": {
+                "position": [
+                  761.647891087375,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  8.824495851515278,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 4.783333333333361,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.001667875127814633,
+                  0.001667875127814633,
+                  0.001667875127814633
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 4.9,
+              "state": {
+                "position": [
+                  762.454739326793,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  8.78327673815446,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 4.875000000000032,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0009346995204422281,
+                  0.0009346995204422281,
+                  0.0009346995204422281
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 5,
+              "state": {
+                "position": [
+                  763.3306512516682,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  8.738747466478157,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 4.975000000000037,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0005153799109050006,
+                  0.0005153799109050006,
+                  0.0005153799109050006
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 5.1,
+              "state": {
+                "position": [
+                  764.129679081659,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  8.698323851802936,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 5.066666666666708,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.001101603745514046,
+                  0.001101603745514046,
+                  0.001101603745514046
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 5.2,
+              "state": {
+                "position": [
+                  765.1412958480768,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  8.647413444587759,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 5.183333333333381,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0006461237718573543,
+                  0.0006461237718573543,
+                  0.0006461237718573543
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 5.3,
+              "state": {
+                "position": [
+                  765.9319934220807,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  8.607828657732183,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 5.275000000000052,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0008567831658853331,
+                  0.0008567831658853331,
+                  0.0008567831658853331
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 5.4,
+              "state": {
+                "position": [
+                  766.790455941603,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  8.56505661216529,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 5.375000000000057,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.00011257973977629732,
+                  0.00011257973977629732,
+                  0.00011257973977629732
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 5.5,
+              "state": {
+                "position": [
+                  767.5736416605621,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  8.526220695610649,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 5.466666666666728,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0006037677713013334,
+                  0.0006037677713013334,
+                  0.0006037677713013334
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 5.6,
+              "state": {
+                "position": [
+                  768.5653043993024,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  8.477299699988837,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 5.5833333333334005,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0013165455145263127,
+                  0.0013165455145263127,
+                  0.0013165455145263127
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 5.7,
+              "state": {
+                "position": [
+                  769.3404853226256,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  8.439253918633948,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 5.675000000000072,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.00040345169680933157,
+                  0.00040345169680933157,
+                  0.00040345169680933157
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 5.8,
+              "state": {
+                "position": [
+                  770.1821802283415,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  8.39813708530563,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 5.775000000000077,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0001569072155236384,
+                  0.0001569072155236384,
+                  0.0001569072155236384
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 5.9,
+              "state": {
+                "position": [
+                  770.950139941316,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  8.360797120366538,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 5.866666666666748,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.00021757921850262818,
+                  0.00021757921850262818,
+                  0.00021757921850262818
+                ]
+              },
+              "ready": true
+            },
+            {
+              "at_seconds": 6,
+              "state": {
+                "position": [
+                  771.9226207621874,
+                  1.68478549955014,
+                  285
+                ],
+                "velocity": [
+                  8.313751149944624,
+                  0,
+                  0
+                ],
+                "pitch": 0,
+                "roll": 0,
+                "heading": 0,
+                "phase": 0,
+                "time": 5.98333333333342,
+                "status": "landed"
+              },
+              "geometry": {
+                "triangles": 4532,
+                "wheel_clearances": [
+                  0.0011130145539026692,
+                  0.0011130145539026692,
+                  0.0011130145539026692
+                ]
+              },
+              "ready": true
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "diagnostics": {
+    "errors": [],
+    "external_requests": [],
+    "initial": {
+      "mode": "chase",
+      "field": "valley",
+      "ready": true,
+      "running": false,
+      "terrain_triangles": 8192,
+      "trees": 48,
+      "airfields": 2,
+      "draw_calls": 115,
+      "triangles": 14252,
+      "render_frames": 1,
+      "paused_rendering": "on demand",
+      "external_assets": false
+    },
+    "final": {
+      "mode": "front",
+      "field": "valley",
+      "ready": true,
+      "running": false,
+      "terrain_triangles": 8192,
+      "trees": 48,
+      "airfields": 2,
+      "draw_calls": 115,
+      "triangles": 14252,
+      "render_frames": 940,
+      "paused_rendering": "on demand",
+      "external_assets": false
+    },
+    "runtime": {
+      "browser": "151.0.7922.34",
+      "viewport": [
+        1280,
+        900
+      ],
+      "clock": "Playwright virtual clock",
+      "fps_scored": false,
+      "wheel_sampling_seconds": 0.1
+    }
+  },
+  "evidence": {
+    "screenshots": [
+      "initial.png",
+      "flight-valley.png",
+      "landing-valley.png",
+      "flight-meadow.png",
+      "landing-meadow.png",
+      "inspection-orbit.png",
+      "inspection-top.png",
+      "inspection-side.png",
+      "inspection-front.png",
+      "flap-0.png",
+      "flap-1.png",
+      "flap-2.png",
+      "flap-3.png"
+    ]
+  }
+}

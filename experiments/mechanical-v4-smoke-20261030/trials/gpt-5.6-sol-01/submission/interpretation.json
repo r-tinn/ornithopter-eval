@@ -1,0 +1,95 @@
+{
+  "sources": [
+    {
+      "id": "02",
+      "file": "Unknown-2.jpg",
+      "historical_observations": [
+        "The rounded Say column gives a full span of 7.4 ft and a wrist-to-wrist span of 3.7 ft.",
+        "The paragraph gives the original total wing area as 6.61 square feet.",
+        "The pictured inner wing is broadly parallel-chord and the outer wing tapers."
+      ],
+      "source_calculations": {
+        "aspect_ratio": "(7.4 ft)^2 / 6.61 ft^2 = 8.2844175492",
+        "wrist_span_fraction": "3.7 ft / 7.4 ft = 0.5"
+      }
+    },
+    {
+      "id": "14",
+      "file": "Unknown-14.jpg",
+      "historical_observations": [
+        "The text distinguishes an inner arm wing from an articulated outer hand wing.",
+        "The manoeuvring discussion recommends a conventional tail or weight shift for an elementary ornithopter.",
+        "The tail discussion says a fin or rudder would probably benefit an ornithopter."
+      ]
+    }
+  ],
+  "biomimetic_translation": {
+    "mechanical_span_m": 3.0,
+    "transferred_aspect_ratio": 8.2844175492,
+    "derived_wing_area_m2": 1.0863783784,
+    "transferred_wrist_span_fraction": 0.5,
+    "wrist_to_wrist_distance_m": 1.5,
+    "implementation": [
+      "Each wing has a rigid parallel-chord inner panel and tapered outer panel hinged at its wrist.",
+      "The wrist hinges are 1.5 m apart and complete tip-to-tip span is 3.0 m.",
+      "A crank articulates both inner panels; each outer panel changes angle relative to its inner panel.",
+      "A horizontal tail, elevator, fin and input-driven rudder translate source 14's control suggestion."
+    ]
+  },
+  "engineering_assumptions": {
+    "status": "Proposed benchmark assumptions for review, not historical observations or measured aircraft data.",
+    "span_m": 3.0,
+    "body_length_m": 2.0,
+    "mass_kg": 6.0,
+    "maximum_mechanical_power_w": 400,
+    "propulsive_efficiency": 0.65,
+    "powered_wingbeat_hz": 2,
+    "rho_reference_kg_m3": 1.225,
+    "gravity_m_s2": 9.80665,
+    "wheel_radius_m": 0.16,
+    "gear_centres_m": [
+      [0.6, -0.66, 0.0],
+      [-0.45, -0.66, -0.32],
+      [-0.45, -0.66, 0.32]
+    ],
+    "wing_area_rule": "3.0^2 / 8.2844175492 = 1.0863783784 square metres",
+    "drive_and_structure": "Electric motor, crank, pin-jointed spars, triangulated frame and rolling tricycle gear are new visual engineering choices.",
+    "flight_model": "Cycle-averaged point-mass translation with the specified educational polar, power conversion, rudder side force and commanded attitude rates.",
+    "source_derived_values_only": ["aspect_ratio", "wrist_span_fraction"],
+    "not_claimed": [
+      "validated mechanical efficiency",
+      "real-world airworthiness",
+      "a human-carrying aircraft",
+      "full unsteady or aeroelastic simulation"
+    ]
+  },
+  "excluded_fields": [
+    {
+      "item": "3.135 ft wing length",
+      "reason": "Explicitly identified as erroneous and not used."
+    },
+    {
+      "item": "7.83 comparison and crossed-out area argument",
+      "reason": "Unavailable or explicitly excluded; the original 6.61 square-foot area is used."
+    },
+    {
+      "item": "animal body width, neck and overall length",
+      "reason": "Biological dimensions do not prescribe the mechanical fuselage."
+    },
+    {
+      "item": "exact biological stroke angles, spring stiffness and curved-plate polar",
+      "reason": "Reference frames or quantitative data are incomplete."
+    },
+    {
+      "item": "vortex-landing hypothesis",
+      "reason": "It is insufficiently quantified for this educational force model."
+    }
+  ],
+  "limitations": [
+    "The cycle-averaged aerodynamic model omits blade-element, wake, stall hysteresis, aeroelastic and inertial wing loads.",
+    "Geometry communicates the mechanism, while translation uses benchmark equations rather than mesh-integrated moving-panel forces.",
+    "Ground support uses vertical point contacts; tire compliance, suspension, wheel inertia and terrain-normal forces are omitted.",
+    "Attitude follows bounded educational control rates rather than rigid-body moments.",
+    "This shared-world model is not evidence of practical flight performance or safety."
+  ]
+}

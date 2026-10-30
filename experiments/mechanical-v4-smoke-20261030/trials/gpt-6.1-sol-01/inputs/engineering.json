@@ -1,0 +1,17 @@
+{
+  "status": "proposed assumptions for review; not measured aircraft data",
+  "span_m": 3.0,
+  "body_length_m": 2.0,
+  "mass_kg": 6.0,
+  "maximum_mechanical_power_w": 400,
+  "propulsive_efficiency": 0.65,
+  "powered_wingbeat_hz": 2,
+  "rho_kg_m3": 1.225,
+  "gravity_m_s2": 9.80665,
+  "wheel_radius_m": 0.16,
+  "gear_centres_m": [[0.6, -0.66, 0], [-0.45, -0.66, -0.32], [-0.45, -0.66, 0.32]],
+  "source_derived": ["aspect_ratio", "wrist_span_fraction"],
+  "wing_area_m2": "span_m ** 2 / aspect_ratio",
+  "flight_model": "cycle-averaged point-mass translation with commanded attitude; educational approximation",
+  "not_claimed": ["validated mechanical efficiency", "real-world airworthiness", "a human-carrying aircraft", "full unsteady or aeroelastic simulation"]
+}

@@ -1,0 +1,136 @@
+{
+  "task_version": "mechanical-v4-draft",
+  "created_utc": "2026-10-30T17:00:28.130423+00:00",
+  "git_commit": "7fd662a3f91f1c383efaba11ac55e4ad6be9680c",
+  "frozen_sha256": {
+    "ornithopter_eval/__init__.py": "cf2e15d3648bbebad0684ba37d53870ab138f103137e6aff4a07972396944741",
+    "ornithopter_eval/__main__.py": "9a6a0931008136bfe4f958e8186655eeca8457e72ee80ba7e58b7becbfa83519",
+    "ornithopter_eval/api.py": "a6911fc493250a712a8b1a9c3e78c8c88de68533395501f1dc991927940ab111",
+    "ornithopter_eval/checks.py": "19c0209a284d4db0fa67c0b3bf3eee3cd465aecb40a1fb6764f69c4a1cc25324",
+    "ornithopter_eval/experiment.py": "9775b886312750ce30207d8893025bb975e62a8e7040e619f8e77978bf07bed0",
+    "ornithopter_eval/grading.py": "dce74f9b3521c1ad6d3b0180643746208467712cebd966fa8c1a9c4ee4367c79",
+    "ornithopter_eval/mechanical_validation.py": "2f260e8baa25b02ef43234f39ddfb887ceb3b2d87e576b91ac8e3af94e9d306a",
+    "ornithopter_eval/policy.py": "e24cbe3c5026e4928660f1d1692c9b44c22d0c7a7652c390ec462d27f08f635e",
+    "ornithopter_eval/review.py": "5a45a5e4a364a11dd78cb7c23bf43b26fbf5bfd8f6c81d5668145ca2daec89c6",
+    "ornithopter_eval/runner.py": "c973287a0c5ca62a1dde1f657d2c5340ca816cc34a731da9b360a3351a642a2e",
+    "ornithopter_eval/world_candidate.py": "bdbadb578a139852cfa227644703ad87795f823265b2591f7b957fb2302745e7",
+    "grader/browser.mjs": "8bdbaf053d9668016dc3f645a08966260f1d7efa58f4d68806c63e05d1804fe5",
+    "grader/mechanical-v4.mjs": "273bc646ce099642b26b323142d81b49c33365b8c87282da2a37ba5ddf8a22a2",
+    "grader/world-review.mjs": "821db24745dadbff7514282315ab32afc80a967a4b3473d8283bf79cb8db990b",
+    "task/SOURCE_GUIDE.md": "8ceaae0207c5b378b708489f78479fa2397f11d1b65846cc438af596275c0117",
+    "task/TASK.md": "27cd8e4bc4ea256c517d312bb99af592dc80f2b890a8e521450d7e69dc150d0a",
+    "task/starter/index.html": "38d212328cf4a327fa3a7672e4c6f117dff120a853deec32cb10c4d090dbd92f",
+    "task/starter/interpretation.json": "3f5bbb3adf4b6d80d5628ffd76ac5a787640b2b3d433afbc5ce51d2b2d583aaa",
+    "task/starter/physics.mjs": "eeae447f2f6d3ca4b7ae29ab2205dc856112ff92ff725361bd9e8f32c5c8ace6",
+    "task/sources/Unknown-14.jpg": "889697309f83ec195a90d91974ff30e5374ab321284a759bbe8c929f5e8e405e",
+    "task/sources/Unknown-2.jpg": "5c0a94b3f137307104f8062c23c3a6a3c6366c88f2f18c8fafed9ee3ddf0cbd9",
+    "candidate/mechanical-v4/AIRCRAFT_API.md": "fbda58e519ba572b2446836f7c3a3fe12c01d56bb73f313b594bc9a821eeda4d",
+    "candidate/mechanical-v4/GRADERS.md": "c009e308ac91824951d0ad96e3bdddfffac5b8cdc79750c67025ad28c1107bf7",
+    "candidate/mechanical-v4/PROVENANCE.json": "9b6f91dab6cd6c9eda4cb7eb3e872d31efc168daa906aa446c034ddd4a44a0f6",
+    "candidate/mechanical-v4/README.md": "19dfafb4255e72445ebd7d52aa3e84efd14cabd3e0d2f39a01ff9bd55c603e47",
+    "candidate/mechanical-v4/SOURCE_AUDIT.md": "bae9134595e412daba31316e638c3c6c47b225fb61b7cc8f21baf17d1bb6f388",
+    "candidate/mechanical-v4/SOURCE_GUIDE.md": "1b25ee299cd033223d4a5d0c5b07fd5bd69f0bf780156ced433202a9541fa5db",
+    "candidate/mechanical-v4/TASK.md": "394d67a65a2ee9b01cc29e33323a8a56acef3d793ffd48b50864600320261c19",
+    "candidate/mechanical-v4/engineering.json": "110bc006a5ab34018f58eff9385c615eb7a92f51af7b87519c15dc6bc83b59b9",
+    "candidate/mechanical-v4/scaffold/aircraft.mjs": "a8d74bf688691be65471b67c2cae2b8422beffe8df3d20e1f37f6d157e73f3b7",
+    "candidate/mechanical-v4/scaffold/environment/platform.mjs": "ef5d2798219092c4606556f3a2e5a87355dca5b85f6f529fea7883bbd71cddaa",
+    "candidate/mechanical-v4/scaffold/environment/style.css": "21db9f38d2ab3f0c10c667245fed2748689382465c4164e281bed102b2b7f5ed",
+    "candidate/mechanical-v4/scaffold/environment/vendor/THREE-LICENSE.txt": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+    "candidate/mechanical-v4/scaffold/environment/vendor/three.core.min.js": "05b2609338c76cd65daf74f3ac515bc9a5045e1b3b33edc07d8c9bd55250fa90",
+    "candidate/mechanical-v4/scaffold/environment/vendor/three.module.min.js": "86bcee248b64f44bcfc23c331ae74619061957d59cab040171dcb6fb5900beb6",
+    "candidate/mechanical-v4/scaffold/environment/world.mjs": "a9508dc6e6cc844211fce7c800ae8a1ae422adb961c700e7533169815b4abcb7",
+    "candidate/mechanical-v4/scaffold/index.html": "cc3859c2e59abd4a4d22abe9e19df2bf95c5d8d29ad0a3f470c7ed066322dc88",
+    "candidate/mechanical-v4/scaffold/interpretation.json": "f929fe8d5a737d35febccd19f40536813cf56773ef0f9a288be1c5b7e2357678",
+    "candidate/mechanical-v4/scaffold/physics.mjs": "cbecaa7415b5ee012a696d94433395e28aac9cbdf01cc12962d62867b73277ce"
+  },
+  "config_sha256": "0436dc85c3ef71edecb286ff0e9d6e85dae44893b1f57834d820e4ff57a2a060",
+  "models": [
+    "gpt-6.1-sol",
+    "gpt-5.6-sol"
+  ],
+  "repeats": 1,
+  "config": {
+    "task_version": "mechanical-v4-draft",
+    "max_output_tokens_total": 32000,
+    "max_output_tokens_per_response": 32000,
+    "max_requests": 24,
+    "max_wall_seconds": 900,
+    "max_submission_bytes": 2000000,
+    "reasoning_effort": "medium",
+    "output_token_notice_percentages": [
+      50,
+      75
+    ]
+  },
+  "status": "completed",
+  "protocol": "Two generators in parallel per round; 1 independent rounds; grading only after submission; no retries.",
+  "visual_review": "Not scored: previous image judge failed calibration.",
+  "trials": [
+    {
+      "id": "gpt-6.1-sol-01",
+      "model": "gpt-6.1-sol",
+      "repeat": 1,
+      "status": "submitted",
+      "automated": {
+        "passed": 15,
+        "total": 15,
+        "failed": [],
+        "groups": {
+          "source": {
+            "passed": 3,
+            "total": 3
+          },
+          "physics": {
+            "passed": 6,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 6,
+            "total": 6
+          }
+        }
+      },
+      "reason": null,
+      "usage": {
+        "input_tokens": 63730,
+        "output_tokens": 12958,
+        "requests": 6
+      },
+      "elapsed_seconds": 190.063,
+      "grading_status": "awaiting_review"
+    },
+    {
+      "id": "gpt-5.6-sol-01",
+      "model": "gpt-5.6-sol",
+      "repeat": 1,
+      "status": "submitted",
+      "automated": {
+        "passed": 15,
+        "total": 15,
+        "failed": [],
+        "groups": {
+          "source": {
+            "passed": 3,
+            "total": 3
+          },
+          "physics": {
+            "passed": 6,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 6,
+            "total": 6
+          }
+        }
+      },
+      "reason": null,
+      "usage": {
+        "input_tokens": 75894,
+        "output_tokens": 19842,
+        "requests": 4
+      },
+      "elapsed_seconds": 128.889,
+      "grading_status": "awaiting_review"
+    }
+  ]
+}

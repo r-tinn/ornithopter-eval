@@ -1,0 +1,616 @@
+FILE: aircraft.mjs
+// A small electric research machine, not an enlargement of the animal's body.
+// All dimensions below are metres. The geometry mounted here is the flight model.
+export function createAircraft(THREE, parameters) {
+  const root = new THREE.Group();
+  root.name = 'Kestrel M3 | 400 W articulated test aircraft';
+  const material = (color, metalness = 0, roughness = 0.65) =>
+    new THREE.MeshStandardMaterial({color, metalness, roughness});
+  const skin = material(0xe9e4cc);
+  const teal = material(0x126773, 0.35);
+  const carbon = material(0x263137, 0.45);
+  const alloy = material(0xbac9ca, 0.75, 0.32);
+  const orange = material(0xf3a335, 0.3, 0.4);
+  const rubber = material(0x171f25, 0, 0.88);
+  const dark = material(0x0d303e, 0.35, 0.3);
+  const unitBox = new THREE.BoxGeometry(1, 1, 1);
+  const unitTube = new THREE.CylinderGeometry(1, 1, 1, 8);
+  const unitDisc = new THREE.CylinderGeometry(1, 1, 1, 20);
+  const axisY = new THREE.Vector3(0, 1, 0);
+  const pointA = new THREE.Vector3(), pointB = new THREE.Vector3();
+  function mesh(parent, geometry, mat, name) {
+    const m = new THREE.Mesh(geometry, mat);
+    m.name = name;
+    parent.add(m);
+    return m;
+  }
+  function box(parent, pos, size, mat, name) {
+    const m = mesh(parent, unitBox, mat, name);
+    m.position.set(...pos); m.scale.set(...size);
+    return m;
+  }
+  function rod(parent, a, b, radius, mat, name) {
+    const m = mesh(parent, unitTube, mat, name);
+    pointA.set(...a); pointB.set(...b).sub(pointA);
+    m.position.copy(pointA).addScaledVector(pointB, 0.5);
+    m.scale.set(radius, pointB.length(), radius);
+    m.quaternion.setFromUnitVectors(axisY, pointB.normalize());
+    return m;
+  }
+  function disc(parent, pos, radius, length, axis, mat, name) {
+    const m = mesh(parent, unitDisc, mat, name);
+    m.position.set(...pos); m.scale.set(radius, length, radius);
+    if (axis === 'x') m.rotation.z = -Math.PI / 2;
+    if (axis === 'z') m.rotation.x = Math.PI / 2;
+    return m;
+  }
+  // Octagonal, tapered sheet-metal equipment pod; nose x=+1, tail x=-1.
+  function podGeometry() {
+    const stations = [
+      [-0.70, 0.085, 0.07], [-0.35, 0.17, 0.14],
+      [0.47, 0.17, 0.14], [0.86, 0.11, 0.095], [1.0, 0.025, 0.025]
+    ];
+    const v = [], idx = [];
+    for (const [x, height, width] of stations) {
+      for (let j = 0; j < 8; j++) {
+        const a = 2 * Math.PI * j / 8 + Math.PI / 8;
+        v.push(x, -0.025 + height * Math.cos(a), width * Math.sin(a));
+      }
+    }
+    for (let i = 0; i < stations.length - 1; i++) {
+      for (let j = 0; j < 8; j++) {
+        const a = i * 8 + j, b = i * 8 + (j + 1) % 8;
+        idx.push(a, b, a + 8, b, b + 8, a + 8);
+      }
+    }
+    for (let j = 1; j < 7; j++) {
+      idx.push(0, j + 1, j);
+      const end = (stations.length - 1) * 8;
+      idx.push(end, end + j, end + j + 1);
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(v, 3));
+    g.setIndex(idx); g.computeVertexNormals();
+    return g;
+  }
+  // Closed wing sections with a thin, explicitly engineered biconvex profile.
+  // Mirroring reverses winding, so both panels have outward normals.
+  function panelGeometry(length, chord0, chord1, sweep, sign, thickness, lead = 0.40) {
+    const v = [], idx = [];
+    const fractions = [0, 0.14, 0.38, 0.72, 1];
+    const profile = [0.07, 0.8, 1, 0.55, 0.04];
+    for (let top = 0; top < 2; top++) {
+      for (let end = 0; end < 2; end++) {
+        const chord = end ? chord1 : chord0;
+        for (let i = 0; i < 5; i++) {
+          v.push(lead - end * sweep - fractions[i] * chord,
+            (top === 0 ? 1 : -1) * thickness * 0.5 * profile[i] * (end ? 0.65 : 1),
+            sign * end * length);
+        }
+      }
+    }
+    function tri(a, b, c) {
+      if (sign > 0) idx.push(a, b, c); else idx.push(a, c, b);
+    }
+    for (let i = 0; i < 4; i++) {
+      tri(i, i + 1, i + 5); tri(i + 1, i + 6, i + 5);
+      tri(10 + i, 15 + i, 11 + i); tri(11 + i, 15 + i, 16 + i);
+      tri(i, 10 + i, i + 1); tri(i + 1, 10 + i, 11 + i);
+      tri(5 + i, 6 + i, 15 + i); tri(6 + i, 16 + i, 15 + i);
+    }
+    tri(0, 5, 10); tri(5, 15, 10);
+    tri(4, 14, 9); tri(9, 14, 19);
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(v, 3));
+    g.setIndex(idx); g.computeVertexNormals();
+    return g;
+  }
+  mesh(root, podGeometry(), skin, 'tapered equipment pod');
+  box(root, [0.49, 0.13, 0], [0.35, 0.045, 0.15], dark, 'avionics access cover');
+  box(root, [-0.06, -0.13, 0], [0.48, 0.10, 0.20], carbon, 'battery tray');
+  for (const x of [-0.23, 0.10])
+    box(root, [x, -0.13, 0], [0.025, 0.12, 0.23], orange, 'battery retaining strap');
+  // Aft carbon boom and braced conventional empennage, within the 2 m length.
+  rod(root, [-0.27, 0.02, 0], [-0.95, 0.06, 0], 0.038, carbon, 'tail boom');
+  for (const side of [-1, 1])
+    rod(root, [-0.38, -0.10, side * 0.11], [-0.90, 0.04, side * 0.23],
+      0.009, alloy, 'tail brace');
+
+  // Wing area includes the stationary centre carry-through, not the tail.
+  const half = parameters.span_m / 2;
+  const wrist = half * parameters.wrist_span_fraction;
+  const shoulder = 0.11;
+  const innerLength = wrist - shoulder;
+  const outerLength = half - wrist;
+  const tipRatio = 0.28;
+  const chord = parameters.wing_area_m2 /
+    (2 * wrist + outerLength * (1 + tipRatio));
+  const tipChord = chord * tipRatio;
+  mesh(root, panelGeometry(shoulder * 2, chord, chord, 0, 1, 0.026),
+    skin, 'centre carry-through wing').position.set(0, 0.20, -shoulder);
+  rod(root, [0.27, 0.20, -0.19], [0.27, 0.20, 0.19], 0.023, alloy,
+    'fixed carry-through spar');
+  const assemblies = [];
+  for (const side of [-1, 1]) {
+    const label = side < 0 ? 'left' : 'right';
+    const inner = new THREE.Group(); inner.name = label + ' shoulder hinge / inner wing';
+    inner.position.set(0, 0.20, side * shoulder); root.add(inner);
+    const outer = new THREE.Group(); outer.name = label + ' wrist hinge / outer wing';
+    outer.position.z = side * innerLength; inner.add(outer);
+    mesh(inner, panelGeometry(innerLength, chord, chord, 0, side, 0.026),
+      skin, label + ' parallel-chord inner skin');
+    mesh(outer, panelGeometry(outerLength, chord, tipChord, 0.14, side, 0.018),
+      skin, label + ' tapered outer skin');
+    rod(inner, [0.36, 0.019, 0], [0.36, 0.019, side * innerLength],
+      0.013, teal, label + ' inner leading spar');
+    rod(inner, [0.40 - chord * 0.72, 0.016, 0],
+      [0.40 - chord * 0.72, 0.016, side * innerLength], 0.007, carbon,
+      label + ' inner rear spar');
+    rod(outer, [0.36, 0.012, 0], [0.26 - tipChord * 0.12, 0.008, side * outerLength],
+      0.010, teal, label + ' outer leading spar');
+    rod(outer, [0.40 - chord * 0.75, 0.012, 0],
+      [0.26 - tipChord * 0.75, 0.008, side * outerLength], 0.006, carbon,
+      label + ' outer rear spar');
+    for (let i = 1; i < 6; i++) {
+      const z = side * innerLength * i / 6;
+      rod(inner, [0.39, 0.018, z], [0.41 - chord, 0.018, z],
+        0.004, alloy, label + ' inner rib cap');
+    }
+    for (let i = 1; i < 6; i++) {
+      const t = i / 6, z = side * outerLength * t;
+      const c = chord + (tipChord - chord) * t, lead = 0.40 - 0.14 * t;
+      rod(outer, [lead - 0.012, 0.012, z], [lead - c + 0.012, 0.012, z],
+        0.0035, alloy, label + ' outer rib cap');
+    }
+    box(outer, [0.26 - tipChord * 0.5, 0, side * (outerLength - 0.024)],
+      [tipChord, 0.018, 0.048], orange, label + ' high-visibility wingtip');
+    for (const x of [0.16, 0.31]) {
+      disc(root, [x, 0.20, side * shoulder], 0.041, 0.046, 'x', alloy,
+        label + ' shoulder bearing');
+      disc(inner, [x, 0, side * innerLength], 0.029, 0.034, 'x', orange,
+        label + ' wrist bearing');
+    }
+    box(inner, [0.20, 0.028, side * (innerLength - 0.055)],
+      [0.09, 0.046, 0.062], carbon, label + ' wrist servo');
+    rod(outer, [0.20, 0.018, 0], [0.20, 0.085, side * 0.06],
+      0.008, orange, label + ' wrist actuation horn');
+    // Shoulder horn is attached to its actual flapping wing.
+    rod(inner, [0.12, 0, 0], [0.12, 0.085, side * 0.13],
+      0.012, orange, label + ' shoulder bellcrank');
+    assemblies.push({inner, outer, side});
+  }
+
+  // Electric motor, reduction housing, common shaft, rotating eccentric crank.
+  disc(root, [0.43, -0.015, 0], 0.074, 0.24, 'x', carbon, '400 W electric motor');
+  for (const x of [0.34, 0.39, 0.44, 0.49, 0.54])
+    disc(root, [x, -0.015, 0], 0.080, 0.012, 'x', alloy, 'motor cooling ring');
+  box(root, [0.235, 0.045, 0], [0.10, 0.22, 0.20], teal, 'reduction gear housing');
+  disc(root, [0.165, 0.10, 0], 0.112, 0.045, 'x', alloy, 'reduction gear cover');
+  disc(root, [0.126, 0.10, 0], 0.077, 0.018, 'x', orange, 'output flange');
+  for (let i = 0; i < 8; i++) {
+    const a = i * Math.PI / 4;
+    disc(root, [0.139, 0.10 + 0.094 * Math.cos(a), 0.094 * Math.sin(a)],
+      0.008, 0.01, 'x', carbon, 'gear cover bolt');
+  }
+  const crank = new THREE.Group();
+  crank.position.set(0.12, 0.10, 0); crank.name = 'motor-driven eccentric';
+  root.add(crank);
+  rod(crank, [0, -0.045, 0], [0, 0.045, 0], 0.015, orange, 'balanced crank web');
+  disc(crank, [0, 0.045, 0], 0.019, 0.030, 'x', alloy, 'crankpin');
+  const driveLinks = [];
+  for (const {side} of assemblies) {
+    const link = rod(root, [0.12, 0.145, 0], [0.12, 0.285, side * 0.24],
+      0.008, alloy, 'articulated drive connecting rod');
+    driveLinks.push({mesh: link, side});
+  }
+
+  // Fixed stabilizer and movable elevator, aft of the CG.
+  box(root, [-0.785, 0.07, 0], [0.19, 0.018, 0.86], teal, 'horizontal stabilizer');
+  const elevator = new THREE.Group();
+  elevator.name = 'actual elevator hinge'; elevator.position.set(-0.88, 0.07, 0);
+  root.add(elevator);
+  box(elevator, [-0.06, 0, 0], [0.12, 0.016, 0.86], skin, 'elevator surface');
+  rod(root, [-0.88, 0.07, -0.43], [-0.88, 0.07, 0.43], 0.008, alloy,
+    'elevator hinge tube');
+  box(root, [-0.79, 0.235, 0], [0.18, 0.32, 0.018], teal, 'vertical fin');
+  const rudder = new THREE.Group();
+  rudder.name = 'actual rudder hinge'; rudder.position.set(-0.88, 0.08, 0);
+  root.add(rudder);
+  box(rudder, [-0.06, 0.155, 0], [0.12, 0.31, 0.018], orange, 'rudder surface');
+  rod(root, [-0.88, 0.085, 0], [-0.88, 0.39, 0], 0.007, alloy,
+    'rudder hinge tube');
+  box(root, [-0.49, 0.075, 0], [0.08, 0.04, 0.08], carbon, 'tail control servos');
+  rod(root, [-0.51, 0.10, 0.032], [-0.88, 0.10, 0.032], 0.003, alloy,
+    'rudder pushrod');
+
+  // Tricycle gear uses the actual assumed wheel centres, not a display offset.
+  const wheels = [];
+  const tireGeometry = new THREE.CylinderGeometry(
+    parameters.wheel_radius_m, parameters.wheel_radius_m, 0.075, 20);
+  tireGeometry.rotateX(Math.PI / 2);
+  const hubGeometry = new THREE.CylinderGeometry(0.082, 0.082, 0.079, 12);
+  hubGeometry.rotateX(Math.PI / 2);
+  for (let i = 0; i < parameters.gear_centres.length; i++) {
+    const centre = parameters.gear_centres[i];
+    const [x, y, z] = centre;
+    const wheel = mesh(root, tireGeometry, rubber, i === 0 ? 'nose wheel' : 'main wheel ' + i);
+    wheel.position.set(x, y, z);
+    mesh(wheel, hubGeometry, alloy, 'metal wheel hub');
+    box(wheel, [0, 0, 0.042], [0.12, 0.022, 0.008], orange, 'wheel rotation marker');
+    wheels.push(wheel);
+    if (i === 0) {
+      rod(root, [0.55, -0.12, 0], [x, y + 0.04, z], 0.021, alloy,
+        'nose oleo strut');
+      rod(root, [0.25, -0.12, 0], [x, y + 0.07, z], 0.012, carbon,
+        'nose drag brace');
+    } else {
+      rod(root, [-0.18, -0.10, z * 0.30], [x, y + 0.035, z],
+        0.019, alloy, 'main gear leg');
+      rod(root, [0.15, -0.10, z * 0.25], [x, y + 0.035, z],
+        0.012, carbon, 'main gear drag brace');
+      box(root, [x - 0.09, y + 0.025, z + (z > 0 ? -0.05 : 0.05)],
+        [0.045, 0.075, 0.032], orange, 'wheel brake caliper');
+    }
+    rod(root, [x, y, z - 0.06], [x, y, z + 0.06], 0.018, alloy, 'wheel axle');
+  }
+  rod(root, [-0.45, -0.61, -0.32], [-0.45, -0.61, 0.32], 0.010, carbon,
+    'main gear cross tie');
+
+  const aircraft = {
+    root,
+    leftInner: assemblies[0].inner, leftOuter: assemblies[0].outer,
+    rightInner: assemblies[1].inner, rightOuter: assemblies[1].outer,
+    rudder, elevator, wheels, crank, driveLinks,
+    wheelRadius: parameters.wheel_radius_m,
+    // Scratch objects are allocated once, never inside updateAircraft.
+    linkDirection: new THREE.Vector3(), linkUp: new THREE.Vector3(0, 1, 0)
+  };
+  updateAircraft(aircraft, {phase: 0, time: 0, velocity: [0, 0, 0]}, {});
+  return aircraft;
+}
+
+export function updateAircraft(aircraft, state, controls = {}) {
+  const finite = x => Number.isFinite(x) ? x : 0;
+  const bound = x => Math.max(-1, Math.min(1, finite(x)));
+  const phase = finite(state.phase);
+  const powered = finite(controls.throttle) > 0;
+  // Angles are mechanical design choices, not the ambiguous biological angles.
+  const stroke = powered ? 0.36 * Math.sin(phase) : 0;
+  const wrist = powered ? 0.22 * Math.sin(phase - 0.85) + 0.045 : 0;
+  aircraft.leftInner.rotation.x = stroke;
+  aircraft.rightInner.rotation.x = -stroke;
+  aircraft.leftOuter.rotation.x = wrist;
+  aircraft.rightOuter.rotation.x = -wrist;
+  aircraft.rudder.rotation.y = 0.45 * bound(controls.rudder);
+  aircraft.elevator.rotation.z = -0.30 * bound(controls.pitch);
+  aircraft.crank.rotation.x = powered ? phase : 0;
+  // Connecting rods close from the eccentric to actual moving shoulder horns.
+  const crankY = 0.10 + 0.045 * Math.cos(powered ? phase : 0);
+  const crankZ = 0.045 * Math.sin(powered ? phase : 0);
+  for (const link of aircraft.driveLinks) {
+    const a = -link.side * stroke;
+    const hornY = 0.20 + 0.085 * Math.cos(a) - link.side * 0.13 * Math.sin(a);
+    const hornZ = link.side * 0.11 + 0.085 * Math.sin(a) + link.side * 0.13 * Math.cos(a);
+    const d = aircraft.linkDirection.set(0, hornY - crankY, hornZ - crankZ);
+    link.mesh.position.set(0.12, (hornY + crankY) / 2, (hornZ + crankZ) / 2);
+    const length = d.length();
+    link.mesh.scale.set(0.008, length, 0.008);
+    if (length > 1e-8) link.mesh.quaternion.setFromUnitVectors(aircraft.linkUp, d.normalize());
+  }
+  // Purely visual rolling, driven by travelled-speed approximation; no root motion.
+  const speed = Math.hypot(finite(state.velocity?.[0]), finite(state.velocity?.[2]));
+  const spin = -(finite(state.time) * speed / aircraft.wheelRadius) % (2 * Math.PI);
+  for (const wheel of aircraft.wheels) wheel.rotation.z = spin;
+}
+
+
+FILE: interpretation.json
+{
+  "sources": [
+    {
+      "id": "02",
+      "file": "Unknown-2.jpg",
+      "kind": "historical observational study, not an aircraft specification",
+      "title_on_page": "Swan planform and performance data",
+      "observations": {
+        "rounded_Say_span_ft": 7.4,
+        "rounded_Say_wrist_span_ft": 3.7,
+        "original_paragraph_total_wing_area_ft2": 6.61,
+        "planform": "Broadly parallel-chord inner wing and tapered outer hand wing."
+      },
+      "derivation": {
+        "aspect_ratio_expression": "7.4^2 / 6.61",
+        "aspect_ratio_approx": 8.28441755,
+        "wrist_span_fraction_expression": "3.7 / 7.4",
+        "wrist_span_fraction": 0.5,
+        "note": "Both lengths use the same rounded Say column. Feet cancel in b^2/S. The page's printed 8.29 is not substituted for the calculation."
+      }
+    },
+    {
+      "id": "14",
+      "file": "Unknown-14.jpg",
+      "kind": "historical qualitative mechanics and control discussion",
+      "observations": [
+        "The arm/inner wing and hand/outer wing articulate differently.",
+        "Recovery includes trailing and partial closing of the hand wing.",
+        "The discussion recommends conventional tail or weight-shift control for a simple ornithopter rather than full bird-like differential manoeuvring.",
+        "A fin/rudder and longer tail moment arm are suggested as advantageous for an ornithopter."
+      ],
+      "use": "Separate shoulder and wrist pivots plus a conventional horizontal stabilizer, elevator, fixed fin and hinged rudder; not an inferred quantitative drive blueprint."
+    }
+  ],
+  "biomimetic_translation": {
+    "scale_transfer": {
+      "mechanical_span_m": 3,
+      "aspect_ratio": "7.4 * 7.4 / 6.61",
+      "wing_area_m2_expression": "3^2 / (7.4^2 / 6.61)",
+      "wing_area_m2_approx": 1.0863769175,
+      "wrist_to_wrist_distance_m": 1.5,
+      "each_wrist_distance_from_centreline_m": 0.75,
+      "outer_panel_length_m": 0.75
+    },
+    "planform_realization": "The projected unflapped span is 3 m. A 0.22 m stationary centre carry-through and two 0.64 m moving inner panels make the 1.5 m wrist span. Each tapered outer panel is 0.75 m long. Constant inner chord C and assumed outer tip/root ratio 0.28 give S = C*(1.5 + 0.75*(1+0.28)). Thus the actual modelled wing planform matches the derived area, including its centre carry-through but excluding the tail.",
+    "mechanism": "Electric motor and reduction housing drive an eccentric, paired connecting rods and shoulder bellcranks. Each wing has actual nested shoulder and wrist nodes. A wrist servo and horn indicate independent outer articulation. Inner motion is sinusoidal; outer motion is phase-offset and changes relative to its own inner wing. Opposite rotation signs produce symmetric left/right strokes.",
+    "controls": "Actual elevator and rudder surfaces deflect. The educational dynamics command pitch and bank directly, and use the specified rudder side-force law. The tail geometry provides mechanical control context, not an independently solved tail aerodynamic model.",
+    "engineering_identity": "Tapered equipment pod, battery tray, carbon tail boom, spars, rib caps, metal bearings, gearbox, motor, servo horns, and three-wheel braced landing gear. No scaled bird head, neck, body outline or feather construction."
+  },
+  "engineering_assumptions": {
+    "status": "New proposed benchmark assumptions for review; not measured aircraft data and not attributed to the historical author.",
+    "relationship_to_engineering_json": "The task's supplied ENGINEERING ASSUMPTIONS are transcribed here because interpretation.json is the writable engineering record; shared files are not changed.",
+    "span_m": 3,
+    "body_length_m": 2,
+    "mass_kg": 6,
+    "maximum_mechanical_power_w": 400,
+    "propulsive_efficiency": 0.65,
+    "powered_wingbeat_hz": 2,
+    "nominal_rho_kg_m3": 1.225,
+    "density_use": "Use environment.rho; nominal density is only a missing-input fallback.",
+    "gravity_m_s2": 9.80665,
+    "wheel_radius_m": 0.16,
+    "gear_centres_m": [[0.6, -0.66, 0], [-0.45, -0.66, -0.32], [-0.45, -0.66, 0.32]],
+    "level_root_rest_height_above_flat_surface_m": 0.82,
+    "source_derived_only": ["aspect_ratio", "wrist_span_fraction"],
+    "wing_area": "span_m^2 / aspect_ratio",
+    "additional_geometry_choices": {
+      "shoulder_offset_from_centreline_m": 0.11,
+      "wing_hinge_height_relative_to_root_m": 0.2,
+      "outer_tip_root_chord_ratio": 0.28,
+      "outer_leading_edge_sweep_m": 0.14,
+      "inner_max_section_thickness_m": 0.026,
+      "outer_root_max_section_thickness_m": 0.018,
+      "inner_stroke_amplitude_rad": 0.36,
+      "outer_relative_amplitude_rad": 0.22,
+      "outer_phase_lag_rad": 0.85,
+      "outer_relative_bias_rad": 0.045,
+      "horizontal_tail_span_m": 0.86,
+      "rudder_max_deflection_rad": 0.45,
+      "elevator_max_deflection_rad": 0.3,
+      "wing_skin": "Opaque membrane/composite panel depiction with visible spar and rib caps.",
+      "drive": "400 W electric motor, reduction gearing and schematic eccentric/connecting rods; independent wrist actuation.",
+      "power_off": "Phase is held by physics; wing panels return to a fully extended glide pose."
+    },
+    "flight_model": {
+      "type": "Cycle-averaged point-mass translation with commanded attitude, educational approximation",
+      "axes": "x forward, y up, z right; positive heading turns x toward z",
+      "relative_airflow": "velocity minus wind",
+      "alpha": "pitch - atan2(vy_air, hypot(vx_air,vz_air))",
+      "CL": "clamp(0.6 + 3*alpha, -0.2, 1.4)",
+      "CD": "0.035 + CL^2/(pi*0.8*AR)",
+      "lift_N": "0.5*rho*V^2*S*CL; signed",
+      "drag_N": "0.5*rho*V^2*S*CD",
+      "power_W": "400*throttle",
+      "thrust_N": "0.65*power/max(V,5)",
+      "directions": "Drag opposes relative flow; thrust follows it. Lift is projected world up, banked about flow. At zero speed the flow fallback is horizontal heading; at vertical flow the lift reference fallback is horizontal heading.",
+      "rudder_side_force_N": "0.5*rho*V^2*S*0.15*rudder, horizontally perpendicular to airflow",
+      "pitch": "0.5*pitch_control rad/s, bounded to [-0.35,0.45]",
+      "roll": "Approach 0.6*bank_control, limited to 2 rad/s",
+      "heading": "Horizontal velocity direction above 0.1 m/s",
+      "integrator": "Semi-implicit Euler, 1/120 s production step; legal larger dt values subdivided into steps no larger than 1/120 s. Reject dt outside (0,0.05]. Forces evaluated before attitude update.",
+      "ground": "Sample environment.surfaceHeight under all three YZX-rotated wheel centres. Include wheel radius and project root upward only to resolve penetration. Cancel downward force while supported, never upward lift. No prescribed takeoff or altitude lock.",
+      "braking": "Up to 18 N opposing horizontal velocity on contact, capped to avoid reversal",
+      "touchdown": "Landed only if sink <=3 m/s, horizontal speed <=14 m/s and abs(roll)<=0.35; otherwise crashed. Safe landings retain horizontal motion for rollout. Crashed motion stops."
+    }
+  },
+  "excluded_fields": [
+    {"field": "02 Say wing length 3.135 ft", "reason": "Known erroneous length; not used."},
+    {"field": "02 comparison AR 7.83 and crossed-out area argument", "reason": "Unavailable comparison and rejected argument; neither used to derive area or AR."},
+    {"field": "Bird body width, shoulder/body dimensions, neck and overall length", "reason": "Animal morphology does not prescribe the mechanical airframe dimensions."},
+    {"field": "14 biological stroke angles", "reason": "Incomplete reference frames; mechanical stroke angles are new assumptions."},
+    {"field": "Spring stiffness and resonance estimates", "reason": "No quantitative mechanical stiffness or structural validation supplied."},
+    {"field": "Curved-plate polar, slotted feathers, unsteady tip thrust, vortex landing and water-ski hypothesis", "reason": "Insufficient quantitative data; not substituted for the specified educational force model."}
+  ],
+  "limitations": [
+    "Not a real-world airworthiness claim or a human-carrying aircraft.",
+    "No validated motor/gearbox efficiency, battery endurance, stress, fatigue or aeroelastic calculation.",
+    "Visible mechanism is a kinematic schematic; connecting rods resize to close the animation and are not a solved fixed-length linkage synthesis.",
+    "Wingbeat animation does not introduce hidden impulses: all propulsion comes from the prescribed cycle-averaged 400 W model.",
+    "Tail surfaces are real articulated geometry but moments, rotational inertia, slip dynamics and dynamic stability are not solved.",
+    "The specified CL clamp is not a resolved stall, and the model omits Reynolds effects, feather porosity, unsteady flapping aerodynamics and ground effect.",
+    "Ground reaction is a vertical wheel-clearance constraint, not a suspension or tyre friction solver. Only wheel contacts are modelled; wing or fuselage strikes and tree collisions are not separately resolved.",
+    "Low-poly opaque panel surfaces and exposed rib/spar caps are engineering visualization, not manufacturing drawings. Geometry is reused and comfortably below the 12000-triangle budget.",
+    "No execution, rendering or verification was performed in this one-attempt submission."
+  ]
+}
+
+
+FILE: physics.mjs
+// SI units. Source 02: the rounded Say column and the ORIGINAL area paragraph.
+const AR = 7.4 * 7.4 / 6.61;
+const TAU = 2 * Math.PI;
+const G = 9.80665;
+export const parameters = {
+  aspect_ratio: AR,
+  wrist_span_fraction: 3.7 / 7.4,
+  wing_area_m2: 9 / AR,
+  span_m: 3,
+  body_length_m: 2,
+  mass_kg: 6,
+  wheel_radius_m: 0.16,
+  gear_centres: [[0.6, -0.66, 0], [-0.45, -0.66, -0.32], [-0.45, -0.66, 0.32]],
+  maximum_mechanical_power_w: 400,
+  propulsive_efficiency: 0.65,
+  powered_wingbeat_hz: 2,
+  gravity_m_s2: G
+};
+
+const finite = (x, fallback = 0) => Number.isFinite(x) ? x : fallback;
+const clamp = (x, lo, hi) => Math.max(lo, Math.min(hi, x));
+function input(c = {}) {
+  return {
+    throttle: clamp(finite(c.throttle), 0, 1),
+    pitch: clamp(finite(c.pitch), -1, 1),
+    bank: clamp(finite(c.bank), -1, 1),
+    rudder: clamp(finite(c.rudder), -1, 1),
+    brake: clamp(finite(c.brake), 0, 1)
+  };
+}
+
+export function forces(state, controls = {}, environment = {}) {
+  const c = input(controls);
+  const velocity = state.velocity || [0, 0, 0];
+  const wind = environment.wind || [0, 0, 0];
+  const vx = finite(velocity[0]) - finite(wind[0]);
+  const vy = finite(velocity[1]) - finite(wind[1]);
+  const vz = finite(velocity[2]) - finite(wind[2]);
+  const horizontal = Math.hypot(vx, vz);
+  const V = Math.hypot(vx, vy, vz);
+  const heading = finite(state.heading);
+  const pitch = finite(state.pitch);
+  const roll = finite(state.roll);
+  const alpha = pitch - Math.atan2(vy, horizontal);
+  const cl = clamp(0.6 + 3 * alpha, -0.2, 1.4);
+  const cd = 0.035 + cl * cl / (Math.PI * 0.8 * AR);
+  const rho = Math.max(0, finite(environment.rho, 1.225));
+  const qS = 0.5 * rho * V * V * parameters.wing_area_m2;
+  const lift = qS * cl;
+  const drag = qS * cd;
+  const power = 400 * c.throttle;
+  const thrust = 0.65 * power / Math.max(V, 5);
+
+  // Flow direction, with a heading-aligned launch direction at zero airspeed.
+  let ux = Math.cos(heading), uy = 0, uz = Math.sin(heading);
+  if (V > 1e-10) { ux = vx / V; uy = vy / V; uz = vz / V; }
+  const h = Math.hypot(ux, uz);
+  let lx, ly, lz;
+  if (h > 1e-10) {
+    // Normalized projection of world up onto the plane normal to flow.
+    lx = -uy * ux / h; ly = h; lz = -uy * uz / h;
+  } else {
+    // At exactly vertical flow the up projection is indeterminate.
+    lx = Math.cos(heading); ly = 0; lz = Math.sin(heading);
+  }
+  const cr = Math.cos(roll), sr = Math.sin(roll);
+  // Rodrigues rotation about airflow; positive bank produces a rightward lift.
+  const bx = lx * cr + (uy * lz - uz * ly) * sr;
+  const by = ly * cr + (uz * lx - ux * lz) * sr;
+  const bz = lz * cr + (ux * ly - uy * lx) * sr;
+  const hx = horizontal > 1e-10 ? vx / horizontal : Math.cos(heading);
+  const hz = horizontal > 1e-10 ? vz / horizontal : Math.sin(heading);
+  const side = qS * 0.15 * c.rudder;
+  return {
+    lift, drag, thrust, power, airspeed: V, cl,
+    force: [
+      (thrust - drag) * ux + lift * bx - side * hz,
+      (thrust - drag) * uy + lift * by - parameters.mass_kg * G,
+      (thrust - drag) * uz + lift * bz + side * hx
+    ]
+  };
+}
+
+// Same YZX transform as the host's Euler(roll,-heading,pitch,'YZX').
+// The highest of the three required vertical corrections enforces all contacts.
+function groundCorrection(s, env) {
+  const ca = Math.cos(s.roll), sa = Math.sin(s.roll);
+  const cp = Math.cos(s.pitch), sp = Math.sin(s.pitch);
+  const ch = Math.cos(s.heading), sh = Math.sin(s.heading);
+  let correction = -Infinity;
+  for (const w of parameters.gear_centres) {
+    const y1 = ca * w[1] - sa * w[2];
+    const z1 = sa * w[1] + ca * w[2];
+    const x2 = cp * w[0] - sp * y1;
+    const y2 = sp * w[0] + cp * y1;
+    const x = s.position[0] + ch * x2 - sh * z1;
+    const z = s.position[2] + sh * x2 + ch * z1;
+    const surface = typeof env.surfaceHeight === 'function'
+      ? finite(env.surfaceHeight(x, z)) : 0;
+    correction = Math.max(correction,
+      surface + parameters.wheel_radius_m - (s.position[1] + y2));
+  }
+  return correction;
+}
+
+function substep(s, c, env, dt) {
+  if (s.status === 'crashed') {
+    s.time += dt;
+    s.velocity = [0, 0, 0];
+    const correction = groundCorrection(s, env);
+    if (correction > 0) s.position[1] += correction;
+    return;
+  }
+  // Evaluate before any commanded attitude changes.
+  const f = forces(s, c, env).force;
+  const contactBefore = groundCorrection(s, env) >= -1e-6;
+  const supported = contactBefore && s.velocity[1] <= 0 && f[1] <= 0;
+  if (supported) {
+    f[1] = 0; // Reaction is only compressive; positive net lift remains untouched.
+    s.velocity[1] = 0;
+  }
+  const oldStatus = s.status;
+  for (let i = 0; i < 3; i++) s.velocity[i] += f[i] / parameters.mass_kg * dt;
+  if (contactBefore && c.brake > 0) {
+    const speed = Math.hypot(s.velocity[0], s.velocity[2]);
+    if (speed > 0) {
+      const scale = Math.max(0, 1 - 18 * c.brake * dt / (parameters.mass_kg * speed));
+      s.velocity[0] *= scale;
+      s.velocity[2] *= scale;
+    }
+  }
+  s.pitch = clamp(s.pitch + 0.5 * c.pitch * dt, -0.35, 0.45);
+  s.roll += clamp(0.6 * c.bank - s.roll, -2 * dt, 2 * dt);
+  if (Math.hypot(s.velocity[0], s.velocity[2]) > 0.1)
+    s.heading = Math.atan2(s.velocity[2], s.velocity[0]);
+  if (c.throttle > 0) s.phase = (s.phase + TAU * 2 * dt) % TAU;
+  for (let i = 0; i < 3; i++) s.position[i] += s.velocity[i] * dt;
+
+  const correction = groundCorrection(s, env);
+  if (correction >= -1e-7) {
+    if (correction > 0) s.position[1] += correction;
+    if (oldStatus === 'flying') {
+      const sink = Math.max(0, -s.velocity[1]);
+      const horizontal = Math.hypot(s.velocity[0], s.velocity[2]);
+      s.status = sink <= 3 && horizontal <= 14 && Math.abs(s.roll) <= 0.35
+        ? 'landed' : 'crashed';
+      if (s.status === 'crashed') s.velocity = [0, 0, 0];
+    } else {
+      s.status = oldStatus === 'landed' ? 'landed' : 'grounded';
+    }
+    if (s.velocity[1] < 0) s.velocity[1] = 0;
+  } else {
+    s.status = 'flying';
+  }
+  s.time += dt;
+}
+
+export function step(state, controls = {}, environment = {}, dt) {
+  if (!Number.isFinite(dt) || dt <= 0 || dt > 0.05)
+    throw new RangeError('dt must be finite and in (0, 0.05].');
+  const s = {
+    position: [0, 1, 2].map(i => finite(state.position?.[i])),
+    velocity: [0, 1, 2].map(i => finite(state.velocity?.[i])),
+    pitch: finite(state.pitch), roll: finite(state.roll),
+    heading: finite(state.heading), phase: finite(state.phase),
+    time: finite(state.time),
+    status: ['grounded', 'flying', 'landed', 'crashed'].includes(state.status)
+      ? state.status : 'grounded'
+  };
+  const c = input(controls);
+  // The production scheduler calls with 1/120 s; larger legal calls are subdivided.
+  let remaining = dt;
+  while (remaining > 1e-12) {
+    const h = Math.min(1 / 120, remaining);
+    substep(s, c, environment, h);
+    remaining -= h;
+  }
+  return s;
+}
+

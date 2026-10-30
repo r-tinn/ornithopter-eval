@@ -1,0 +1,99 @@
+{
+  "task_version": "mechanical-v4-draft",
+  "status": "completed",
+  "models": {
+    "gpt-6.1-sol": {
+      "attempts": 1,
+      "graded_attempts": 1,
+      "mean_passed": 15.0,
+      "total_checks": 15,
+      "all_automated_passes": 1,
+      "range": [
+        15,
+        15
+      ]
+    },
+    "gpt-5.6-sol": {
+      "attempts": 1,
+      "graded_attempts": 1,
+      "mean_passed": 15.0,
+      "total_checks": 15,
+      "all_automated_passes": 1,
+      "range": [
+        15,
+        15
+      ]
+    }
+  },
+  "comparison_scope": "15 deterministic checks; 4 visual checks remain separately ungraded.",
+  "full_task_pass_rate": null,
+  "note": "1 repeat(s) per model; exploratory, not a definitive ranking.",
+  "trials": [
+    {
+      "id": "gpt-6.1-sol-01",
+      "model": "gpt-6.1-sol",
+      "repeat": 1,
+      "status": "submitted",
+      "automated": {
+        "passed": 15,
+        "total": 15,
+        "failed": [],
+        "groups": {
+          "source": {
+            "passed": 3,
+            "total": 3
+          },
+          "physics": {
+            "passed": 6,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 6,
+            "total": 6
+          }
+        }
+      },
+      "reason": null,
+      "usage": {
+        "input_tokens": 63730,
+        "output_tokens": 12958,
+        "requests": 6
+      },
+      "elapsed_seconds": 190.063,
+      "grading_status": "awaiting_review"
+    },
+    {
+      "id": "gpt-5.6-sol-01",
+      "model": "gpt-5.6-sol",
+      "repeat": 1,
+      "status": "submitted",
+      "automated": {
+        "passed": 15,
+        "total": 15,
+        "failed": [],
+        "groups": {
+          "source": {
+            "passed": 3,
+            "total": 3
+          },
+          "physics": {
+            "passed": 6,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 6,
+            "total": 6
+          }
+        }
+      },
+      "reason": null,
+      "usage": {
+        "input_tokens": 75894,
+        "output_tokens": 19842,
+        "requests": 4
+      },
+      "elapsed_seconds": 128.889,
+      "grading_status": "awaiting_review"
+    }
+  ]
+}

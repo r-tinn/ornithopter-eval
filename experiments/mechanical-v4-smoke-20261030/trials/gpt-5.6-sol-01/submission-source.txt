@@ -1,0 +1,523 @@
+FILE: aircraft.mjs
+export function createAircraft(THREE, parameters) {
+  const root = new THREE.Group();
+  root.name = "Mechanical ornithopter";
+  const material = (color, roughness, metalness) =>
+    new THREE.MeshStandardMaterial({ color, roughness, metalness });
+  const dark = material(0x202a32, 0.72, 0.55);
+  const metal = material(0x9aa7ad, 0.38, 0.82);
+  const brass = material(0xb77b2e, 0.4, 0.72);
+  const wingMaterial = material(0xd8c69a, 0.74, 0.05);
+  const controlMaterial = material(0xb94a3e, 0.62, 0.12);
+  const tire = material(0x17191a, 0.92, 0.02);
+  wingMaterial.side = THREE.DoubleSide;
+  controlMaterial.side = THREE.DoubleSide;
+
+  const rodGeometry = new THREE.CylinderGeometry(0.025, 0.025, 1, 8);
+  const thinRodGeometry = new THREE.CylinderGeometry(0.012, 0.012, 1, 7);
+  const jointGeometry = new THREE.CylinderGeometry(0.055, 0.055, 0.07, 12);
+  const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
+  const yAxis = new THREE.Vector3(0, 1, 0);
+
+  function box(parent, size, position, mat, name) {
+    const mesh = new THREE.Mesh(boxGeometry, mat);
+    mesh.scale.set(...size);
+    mesh.position.set(...position);
+    mesh.name = name || "structure";
+    parent.add(mesh);
+    return mesh;
+  }
+  function rod(parent, a, b, mat = metal, thin = false) {
+    const mesh = new THREE.Mesh(thin ? thinRodGeometry : rodGeometry, mat);
+    const va = new THREE.Vector3(...a), vb = new THREE.Vector3(...b);
+    const direction = vb.clone().sub(va);
+    mesh.position.copy(va).add(vb).multiplyScalar(0.5);
+    mesh.scale.set(1, direction.length(), 1);
+    mesh.quaternion.setFromUnitVectors(yAxis, direction.normalize());
+    parent.add(mesh);
+    return mesh;
+  }
+
+  box(root, [1.65, 0.12, 0.18], [0, 0.02, 0], dark, "central keel");
+  box(root, [0.34, 0.34, 0.36], [0.34, 0.09, 0], metal, "motor housing");
+  rod(root, [-0.78, -0.08, -0.14], [0.65, -0.08, -0.14]);
+  rod(root, [-0.78, -0.08, 0.14], [0.65, -0.08, 0.14]);
+  rod(root, [-0.65, -0.08, -0.14], [0.22, 0.28, -0.14]);
+  rod(root, [-0.65, -0.08, 0.14], [0.22, 0.28, 0.14]);
+  rod(root, [0.22, 0.28, -0.14], [0.72, -0.08, -0.14]);
+  rod(root, [0.22, 0.28, 0.14], [0.72, -0.08, 0.14]);
+
+  const motor = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.13, 0.13, 0.30, 16), brass);
+  motor.rotation.x = Math.PI / 2;
+  motor.position.set(0.34, 0.09, 0);
+  motor.name = "400 W electric motor";
+  root.add(motor);
+  const driveCrank = new THREE.Group();
+  driveCrank.name = "two-hertz crankshaft";
+  driveCrank.position.set(0.22, 0.23, 0);
+  root.add(driveCrank);
+  const diskGeometry = new THREE.CylinderGeometry(0.105, 0.105, 0.025, 16);
+  for (const z of [-0.18, 0.18]) {
+    const disk = new THREE.Mesh(diskGeometry, brass);
+    disk.rotation.x = Math.PI / 2;
+    disk.position.z = z;
+    driveCrank.add(disk);
+  }
+
+  const innerLength = parameters.span_m * parameters.wrist_span_fraction / 2 - 0.14;
+  const outerLength = parameters.span_m * (1 - parameters.wrist_span_fraction) / 2;
+  const innerGeometry = new THREE.BoxGeometry(0.58, 0.035, innerLength);
+  function taperedGeometry(sign) {
+    const t = 0.0175, z = sign * outerLength;
+    const vertices = new Float32Array([
+      .34,t,0, -.24,t,0, -.06,t,z, .14,t,z,
+      .34,-t,0, -.24,-t,0, -.06,-t,z, .14,-t,z
+    ]);
+    const indices = [
+      0,1,2, 0,2,3, 7,6,5, 7,5,4, 0,4,5, 0,5,1,
+      3,2,6, 3,6,7, 0,3,7, 0,7,4, 1,5,6, 1,6,2
+    ];
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
+    geometry.setIndex(indices);
+    geometry.computeVertexNormals();
+    return geometry;
+  }
+  function wing(side) {
+    const sign = side === "right" ? 1 : -1;
+    const inner = new THREE.Group();
+    inner.name = `${side} inner wing`;
+    inner.position.set(0.12, 0.18, sign * 0.14);
+    root.add(inner);
+    const panel = new THREE.Mesh(innerGeometry, wingMaterial);
+    panel.position.set(0.04, 0, sign * innerLength / 2);
+    panel.name = `${side} parallel-chord inner panel`;
+    inner.add(panel);
+    rod(inner, [.28,.035,0], [.28,.035,sign*innerLength], dark, true);
+    rod(inner, [-.19,.035,0], [-.19,.035,sign*innerLength], dark, true);
+    rod(inner, [.28,.045,0], [-.19,.045,sign*innerLength], dark, true);
+    const outer = new THREE.Group();
+    outer.name = `${side} outer hand panel`;
+    outer.position.set(0, 0, sign * innerLength);
+    inner.add(outer);
+    const skin = new THREE.Mesh(taperedGeometry(sign), wingMaterial);
+    skin.name = `${side} tapered outer panel`;
+    outer.add(skin);
+    rod(outer, [.27,.035,0], [.12,.035,sign*outerLength], dark, true);
+    rod(outer, [-.19,.035,0], [-.045,.035,sign*outerLength], dark, true);
+    const wrist = new THREE.Mesh(jointGeometry, brass);
+    wrist.rotation.x = Math.PI / 2;
+    wrist.name = `${side} wrist hinge`;
+    outer.add(wrist);
+    rod(root, [.22,.23,sign*.18], [.10,.21,sign*.32], brass, true);
+    return { inner, outer };
+  }
+  const left = wing("left"), right = wing("right");
+
+  box(root, [.44,.035,.82], [-.70,.08,0], wingMaterial, "horizontal stabilizer");
+  const elevator = new THREE.Group();
+  elevator.name = "elevator";
+  elevator.position.set(-.92, .08, 0);
+  root.add(elevator);
+  box(elevator, [.22,.028,.78], [-.11,0,0], controlMaterial, "elevator surface");
+  box(root, [.40,.42,.035], [-.74,.28,0], wingMaterial, "vertical fin");
+  const rudder = new THREE.Group();
+  rudder.name = "rudder";
+  rudder.position.set(-.94, .28, 0);
+  root.add(rudder);
+  box(rudder, [.22,.38,.03], [-.11,0,0], controlMaterial, "rudder surface");
+
+  const wheels = [];
+  const wheelGeometry = new THREE.CylinderGeometry(
+    parameters.wheel_radius_m, parameters.wheel_radius_m, .065, 20);
+  parameters.gear_centres.forEach((centre, i) => {
+    const upper = i === 0 ? [.42,-.12,0] : [-.35,-.12,centre[2]];
+    rod(root, upper, centre);
+    const wheel = new THREE.Mesh(wheelGeometry, tire);
+    wheel.name = i === 0 ? "nose wheel" : `main wheel ${i}`;
+    wheel.position.set(...centre);
+    wheel.rotation.order = "YXZ";
+    wheel.rotation.x = Math.PI / 2;
+    root.add(wheel);
+    wheels.push(wheel);
+  });
+  root.userData.driveCrank = driveCrank;
+  root.userData.wheelRadius = parameters.wheel_radius_m;
+  return {
+    root,
+    leftInner: left.inner, leftOuter: left.outer,
+    rightInner: right.inner, rightOuter: right.outer,
+    rudder, elevator, wheels
+  };
+}
+
+function finite(v) { return Number.isFinite(v) ? v : 0; }
+function control(v) { return Math.max(-1, Math.min(1, finite(v))); }
+export function updateAircraft(aircraft, state, controls) {
+  const phase = finite(state && state.phase);
+  const bank = control(controls && controls.bank);
+  const stroke = .34 * Math.sin(phase);
+  aircraft.leftInner.rotation.x = stroke + .035 * bank;
+  aircraft.rightInner.rotation.x = -stroke + .035 * bank;
+  const hand = .24 * Math.sin(phase + .85);
+  aircraft.leftOuter.rotation.x = hand;
+  aircraft.rightOuter.rotation.x = -hand;
+  aircraft.rudder.rotation.y = -.48 * control(controls && controls.rudder);
+  aircraft.elevator.rotation.z = .38 * control(controls && controls.pitch);
+  const crank = aircraft.root.userData.driveCrank;
+  if (crank) crank.rotation.z = phase;
+  const heading = finite(state && state.heading);
+  const p = state && Array.isArray(state.position) ? state.position : [0,0,0];
+  const travel = finite(p[0]) * Math.cos(heading) + finite(p[2]) * Math.sin(heading);
+  const spin = -travel / aircraft.root.userData.wheelRadius;
+  for (const wheel of aircraft.wheels) wheel.rotation.y = spin;
+}
+
+
+FILE: interpretation.json
+{
+  "sources": [
+    {
+      "id": "02",
+      "file": "Unknown-2.jpg",
+      "historical_observations": [
+        "The rounded Say column gives a full span of 7.4 ft and a wrist-to-wrist span of 3.7 ft.",
+        "The paragraph gives the original total wing area as 6.61 square feet.",
+        "The pictured inner wing is broadly parallel-chord and the outer wing tapers."
+      ],
+      "source_calculations": {
+        "aspect_ratio": "(7.4 ft)^2 / 6.61 ft^2 = 8.2844175492",
+        "wrist_span_fraction": "3.7 ft / 7.4 ft = 0.5"
+      }
+    },
+    {
+      "id": "14",
+      "file": "Unknown-14.jpg",
+      "historical_observations": [
+        "The text distinguishes an inner arm wing from an articulated outer hand wing.",
+        "The manoeuvring discussion recommends a conventional tail or weight shift for an elementary ornithopter.",
+        "The tail discussion says a fin or rudder would probably benefit an ornithopter."
+      ]
+    }
+  ],
+  "biomimetic_translation": {
+    "mechanical_span_m": 3.0,
+    "transferred_aspect_ratio": 8.2844175492,
+    "derived_wing_area_m2": 1.0863783784,
+    "transferred_wrist_span_fraction": 0.5,
+    "wrist_to_wrist_distance_m": 1.5,
+    "implementation": [
+      "Each wing has a rigid parallel-chord inner panel and tapered outer panel hinged at its wrist.",
+      "The wrist hinges are 1.5 m apart and complete tip-to-tip span is 3.0 m.",
+      "A crank articulates both inner panels; each outer panel changes angle relative to its inner panel.",
+      "A horizontal tail, elevator, fin and input-driven rudder translate source 14's control suggestion."
+    ]
+  },
+  "engineering_assumptions": {
+    "status": "Proposed benchmark assumptions for review, not historical observations or measured aircraft data.",
+    "span_m": 3.0,
+    "body_length_m": 2.0,
+    "mass_kg": 6.0,
+    "maximum_mechanical_power_w": 400,
+    "propulsive_efficiency": 0.65,
+    "powered_wingbeat_hz": 2,
+    "rho_reference_kg_m3": 1.225,
+    "gravity_m_s2": 9.80665,
+    "wheel_radius_m": 0.16,
+    "gear_centres_m": [
+      [0.6, -0.66, 0.0],
+      [-0.45, -0.66, -0.32],
+      [-0.45, -0.66, 0.32]
+    ],
+    "wing_area_rule": "3.0^2 / 8.2844175492 = 1.0863783784 square metres",
+    "drive_and_structure": "Electric motor, crank, pin-jointed spars, triangulated frame and rolling tricycle gear are new visual engineering choices.",
+    "flight_model": "Cycle-averaged point-mass translation with the specified educational polar, power conversion, rudder side force and commanded attitude rates.",
+    "source_derived_values_only": ["aspect_ratio", "wrist_span_fraction"],
+    "not_claimed": [
+      "validated mechanical efficiency",
+      "real-world airworthiness",
+      "a human-carrying aircraft",
+      "full unsteady or aeroelastic simulation"
+    ]
+  },
+  "excluded_fields": [
+    {
+      "item": "3.135 ft wing length",
+      "reason": "Explicitly identified as erroneous and not used."
+    },
+    {
+      "item": "7.83 comparison and crossed-out area argument",
+      "reason": "Unavailable or explicitly excluded; the original 6.61 square-foot area is used."
+    },
+    {
+      "item": "animal body width, neck and overall length",
+      "reason": "Biological dimensions do not prescribe the mechanical fuselage."
+    },
+    {
+      "item": "exact biological stroke angles, spring stiffness and curved-plate polar",
+      "reason": "Reference frames or quantitative data are incomplete."
+    },
+    {
+      "item": "vortex-landing hypothesis",
+      "reason": "It is insufficiently quantified for this educational force model."
+    }
+  ],
+  "limitations": [
+    "The cycle-averaged aerodynamic model omits blade-element, wake, stall hysteresis, aeroelastic and inertial wing loads.",
+    "Geometry communicates the mechanism, while translation uses benchmark equations rather than mesh-integrated moving-panel forces.",
+    "Ground support uses vertical point contacts; tire compliance, suspension, wheel inertia and terrain-normal forces are omitted.",
+    "Attitude follows bounded educational control rates rather than rigid-body moments.",
+    "This shared-world model is not evidence of practical flight performance or safety."
+  ]
+}
+
+
+FILE: physics.mjs
+const PI = Math.PI;
+const G = 9.80665;
+const MASS = 6;
+const SPAN = 3;
+const ASPECT_RATIO = 7.4 * 7.4 / 6.61;
+const WING_AREA = SPAN * SPAN / ASPECT_RATIO;
+const WHEEL_RADIUS = 0.16;
+const FIXED_STEP = 1 / 120;
+const GEAR = Object.freeze([
+  Object.freeze([0.6, -0.66, 0]),
+  Object.freeze([-0.45, -0.66, -0.32]),
+  Object.freeze([-0.45, -0.66, 0.32])
+]);
+
+export const parameters = Object.freeze({
+  aspect_ratio: ASPECT_RATIO,
+  wrist_span_fraction: 3.7 / 7.4,
+  wing_area_m2: WING_AREA,
+  span_m: SPAN,
+  body_length_m: 2,
+  mass_kg: MASS,
+  wheel_radius_m: WHEEL_RADIUS,
+  gear_centres: GEAR
+});
+
+function finite(v, fallback = 0) {
+  return Number.isFinite(v) ? v : fallback;
+}
+function clamp(v, lo, hi) {
+  return Math.max(lo, Math.min(hi, finite(v)));
+}
+function cleanState(s) {
+  const p = s && Array.isArray(s.position) ? s.position : [0, 0.82, 0];
+  const v = s && Array.isArray(s.velocity) ? s.velocity : [0, 0, 0];
+  return {
+    position: [finite(p[0]), finite(p[1], 0.82), finite(p[2])],
+    velocity: [finite(v[0]), finite(v[1]), finite(v[2])],
+    pitch: clamp(s && s.pitch, -0.35, 0.45),
+    roll: finite(s && s.roll),
+    heading: finite(s && s.heading),
+    phase: finite(s && s.phase),
+    time: finite(s && s.time),
+    status: s && typeof s.status === "string" ? s.status : "grounded"
+  };
+}
+function cleanControls(c) {
+  return {
+    throttle: clamp(c && c.throttle, 0, 1),
+    pitch: clamp(c && c.pitch, -1, 1),
+    bank: clamp(c && c.bank, -1, 1),
+    rudder: clamp(c && c.rudder, -1, 1),
+    brake: clamp(c && c.brake, 0, 1)
+  };
+}
+
+// Same semantic rotations as Euler(roll,-heading,pitch,'YZX') on the host.
+function rotateLocal(p, roll, pitch, heading) {
+  const cr = Math.cos(roll), sr = Math.sin(roll);
+  const cp = Math.cos(pitch), sp = Math.sin(pitch);
+  const ch = Math.cos(heading), sh = Math.sin(heading);
+  const x1 = p[0];
+  const y1 = cr * p[1] - sr * p[2];
+  const z1 = sr * p[1] + cr * p[2];
+  const x2 = cp * x1 - sp * y1;
+  const y2 = sp * x1 + cp * y1;
+  return [ch * x2 - sh * z1, y2, sh * x2 + ch * z1];
+}
+function surface(environment, x, z) {
+  if (!environment || typeof environment.surfaceHeight !== "function") return 0;
+  return finite(environment.surfaceHeight(x, z), 0);
+}
+function contacts(s, environment) {
+  let minimum = Infinity;
+  let correction = 0;
+  for (const gear of GEAR) {
+    const q = rotateLocal(gear, s.roll, s.pitch, s.heading);
+    const x = s.position[0] + q[0];
+    const y = s.position[1] + q[1];
+    const z = s.position[2] + q[2];
+    const clearance = y - WHEEL_RADIUS - surface(environment, x, z);
+    minimum = Math.min(minimum, clearance);
+    correction = Math.max(correction, -clearance);
+  }
+  return { touching: minimum <= 1e-4, minimum, correction };
+}
+function rotateAxis(v, a, angle) {
+  const c = Math.cos(angle), s = Math.sin(angle);
+  const dot = v[0] * a[0] + v[1] * a[1] + v[2] * a[2];
+  const cross = [
+    a[1] * v[2] - a[2] * v[1],
+    a[2] * v[0] - a[0] * v[2],
+    a[0] * v[1] - a[1] * v[0]
+  ];
+  return [
+    v[0] * c + cross[0] * s + a[0] * dot * (1 - c),
+    v[1] * c + cross[1] * s + a[1] * dot * (1 - c),
+    v[2] * c + cross[2] * s + a[2] * dot * (1 - c)
+  ];
+}
+
+export function forces(stateInput, controlsInput, environment) {
+  const state = cleanState(stateInput);
+  const controls = cleanControls(controlsInput);
+  const wind = environment && Array.isArray(environment.wind) ?
+    environment.wind : [0, 0, 0];
+  const ax = state.velocity[0] - finite(wind[0]);
+  const ay = state.velocity[1] - finite(wind[1]);
+  const az = state.velocity[2] - finite(wind[2]);
+  const speed2 = ax * ax + ay * ay + az * az;
+  const airspeed = Math.sqrt(Math.max(0, speed2));
+  const horizontalAir = Math.hypot(ax, az);
+  const alpha = state.pitch - Math.atan2(ay, horizontalAir);
+  const cl = clamp(0.6 + 3 * alpha, -0.2, 1.4);
+  const rho = Math.max(0, finite(environment && environment.rho, 1.225));
+  const q = 0.5 * rho * speed2;
+  const cd = 0.035 + cl * cl / (PI * 0.8 * ASPECT_RATIO);
+  const lift = q * WING_AREA * cl;
+  const drag = Math.max(0, q * WING_AREA * cd);
+  const power = 400 * controls.throttle;
+  const thrust = Math.max(0, 0.65 * power / Math.max(airspeed, 5));
+
+  const flow = airspeed > 1e-8 ?
+    [ax / airspeed, ay / airspeed, az / airspeed] :
+    [Math.cos(state.heading), 0, Math.sin(state.heading)];
+  const upDot = flow[1];
+  let liftDirection = [-flow[0] * upDot, 1 - upDot * upDot, -flow[2] * upDot];
+  let length = Math.hypot(...liftDirection);
+  if (length < 1e-8) {
+    const forward = [Math.cos(state.heading), 0, Math.sin(state.heading)];
+    const d = forward[0] * flow[0] + forward[2] * flow[2];
+    liftDirection = [
+      forward[0] - d * flow[0], -d * flow[1], forward[2] - d * flow[2]
+    ];
+    length = Math.hypot(...liftDirection);
+  }
+  if (length < 1e-8) {
+    liftDirection = [0, 0, 1];
+    length = 1;
+  }
+  liftDirection = liftDirection.map(v => v / length);
+  liftDirection = rotateAxis(liftDirection, flow, state.roll);
+
+  let fx = (thrust - drag) * flow[0] + lift * liftDirection[0];
+  let fy = (thrust - drag) * flow[1] + lift * liftDirection[1] - MASS * G;
+  let fz = (thrust - drag) * flow[2] + lift * liftDirection[2];
+
+  const side = q * WING_AREA * 0.15 * controls.rudder;
+  if (horizontalAir > 1e-8) {
+    fx += side * -az / horizontalAir;
+    fz += side * ax / horizontalAir;
+  } else {
+    fx += side * -Math.sin(state.heading);
+    fz += side * Math.cos(state.heading);
+  }
+
+  const contact = contacts(state, environment);
+  if (contact.touching && fy < 0) fy = 0;
+  const groundSpeed = Math.hypot(state.velocity[0], state.velocity[2]);
+  if (contact.touching && controls.brake > 0 && groundSpeed > 1e-8) {
+    const brake = 18 * controls.brake;
+    fx -= brake * state.velocity[0] / groundSpeed;
+    fz -= brake * state.velocity[2] / groundSpeed;
+  }
+  return {
+    lift: finite(lift),
+    drag: finite(drag),
+    thrust: finite(thrust),
+    power: finite(power),
+    airspeed: finite(airspeed),
+    cl: finite(cl),
+    force: [finite(fx), finite(fy), finite(fz)]
+  };
+}
+
+function approach(value, target, limit) {
+  return value < target ? Math.min(value + limit, target) :
+    Math.max(value - limit, target);
+}
+function integrate(stateInput, controls, environment, dt) {
+  const state = cleanState(stateInput);
+  const oldContact = contacts(state, environment);
+  const result = forces(state, controls, environment); // before attitude changes
+  const oldVx = state.velocity[0], oldVz = state.velocity[2];
+  const oldSpeed = Math.hypot(oldVx, oldVz);
+  const velocity = [
+    oldVx + result.force[0] * dt / MASS,
+    state.velocity[1] + result.force[1] * dt / MASS,
+    oldVz + result.force[2] * dt / MASS
+  ];
+  if (oldContact.touching && controls.brake > 0 && oldSpeed > 1e-8) {
+    const along = velocity[0] * oldVx / oldSpeed +
+      velocity[2] * oldVz / oldSpeed;
+    if (along < 0) {
+      velocity[0] -= along * oldVx / oldSpeed;
+      velocity[2] -= along * oldVz / oldSpeed;
+    }
+  }
+  const position = [
+    state.position[0] + velocity[0] * dt,
+    state.position[1] + velocity[1] * dt,
+    state.position[2] + velocity[2] * dt
+  ];
+  const pitch = clamp(state.pitch + 0.5 * controls.pitch * dt, -0.35, 0.45);
+  const roll = approach(state.roll, 0.6 * controls.bank, 2 * dt);
+  const horizontalSpeed = Math.hypot(velocity[0], velocity[2]);
+  const heading = horizontalSpeed > 0.1 ?
+    Math.atan2(velocity[2], velocity[0]) : state.heading;
+  let phase = state.phase;
+  if (controls.throttle > 0) {
+    phase = (phase + 4 * PI * dt) % (2 * PI);
+    if (phase < 0) phase += 2 * PI;
+  }
+  const next = {
+    position, velocity, pitch, roll, heading, phase,
+    time: state.time + dt,
+    status: state.status
+  };
+  const newContact = contacts(next, environment);
+  if (newContact.correction > 0) {
+    const sink = Math.max(0, -velocity[1]);
+    next.position[1] += newContact.correction;
+    if (next.velocity[1] < 0) next.velocity[1] = 0;
+    if (state.status === "flying") {
+      next.status = sink <= 3 && horizontalSpeed <= 14 && Math.abs(roll) <= 0.35 ?
+        "landed" : "crashed";
+    } else if (state.status !== "crashed" && state.status !== "landed") {
+      next.status = "grounded";
+    }
+  } else if (newContact.minimum > 1e-4 &&
+    (state.status === "grounded" || state.status === "landed")) {
+    next.status = "flying";
+  }
+  return next;
+}
+
+export function step(stateInput, controlsInput, environment, dt) {
+  if (!Number.isFinite(dt) || dt <= 0 || dt > 0.05) {
+    throw new RangeError("dt must be finite and in (0, 0.05]");
+  }
+  const controls = cleanControls(controlsInput);
+  let state = cleanState(stateInput);
+  const count = Math.max(1, Math.ceil(dt / FIXED_STEP));
+  const h = dt / count;
+  for (let i = 0; i < count; i++) state = integrate(state, controls, environment, h);
+  return state;
+}
+

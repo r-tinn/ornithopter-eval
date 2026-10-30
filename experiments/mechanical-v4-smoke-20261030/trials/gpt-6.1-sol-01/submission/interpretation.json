@@ -1,0 +1,126 @@
+{
+  "sources": [
+    {
+      "id": "02",
+      "file": "Unknown-2.jpg",
+      "kind": "historical observational study, not an aircraft specification",
+      "title_on_page": "Swan planform and performance data",
+      "observations": {
+        "rounded_Say_span_ft": 7.4,
+        "rounded_Say_wrist_span_ft": 3.7,
+        "original_paragraph_total_wing_area_ft2": 6.61,
+        "planform": "Broadly parallel-chord inner wing and tapered outer hand wing."
+      },
+      "derivation": {
+        "aspect_ratio_expression": "7.4^2 / 6.61",
+        "aspect_ratio_approx": 8.28441755,
+        "wrist_span_fraction_expression": "3.7 / 7.4",
+        "wrist_span_fraction": 0.5,
+        "note": "Both lengths use the same rounded Say column. Feet cancel in b^2/S. The page's printed 8.29 is not substituted for the calculation."
+      }
+    },
+    {
+      "id": "14",
+      "file": "Unknown-14.jpg",
+      "kind": "historical qualitative mechanics and control discussion",
+      "observations": [
+        "The arm/inner wing and hand/outer wing articulate differently.",
+        "Recovery includes trailing and partial closing of the hand wing.",
+        "The discussion recommends conventional tail or weight-shift control for a simple ornithopter rather than full bird-like differential manoeuvring.",
+        "A fin/rudder and longer tail moment arm are suggested as advantageous for an ornithopter."
+      ],
+      "use": "Separate shoulder and wrist pivots plus a conventional horizontal stabilizer, elevator, fixed fin and hinged rudder; not an inferred quantitative drive blueprint."
+    }
+  ],
+  "biomimetic_translation": {
+    "scale_transfer": {
+      "mechanical_span_m": 3,
+      "aspect_ratio": "7.4 * 7.4 / 6.61",
+      "wing_area_m2_expression": "3^2 / (7.4^2 / 6.61)",
+      "wing_area_m2_approx": 1.0863769175,
+      "wrist_to_wrist_distance_m": 1.5,
+      "each_wrist_distance_from_centreline_m": 0.75,
+      "outer_panel_length_m": 0.75
+    },
+    "planform_realization": "The projected unflapped span is 3 m. A 0.22 m stationary centre carry-through and two 0.64 m moving inner panels make the 1.5 m wrist span. Each tapered outer panel is 0.75 m long. Constant inner chord C and assumed outer tip/root ratio 0.28 give S = C*(1.5 + 0.75*(1+0.28)). Thus the actual modelled wing planform matches the derived area, including its centre carry-through but excluding the tail.",
+    "mechanism": "Electric motor and reduction housing drive an eccentric, paired connecting rods and shoulder bellcranks. Each wing has actual nested shoulder and wrist nodes. A wrist servo and horn indicate independent outer articulation. Inner motion is sinusoidal; outer motion is phase-offset and changes relative to its own inner wing. Opposite rotation signs produce symmetric left/right strokes.",
+    "controls": "Actual elevator and rudder surfaces deflect. The educational dynamics command pitch and bank directly, and use the specified rudder side-force law. The tail geometry provides mechanical control context, not an independently solved tail aerodynamic model.",
+    "engineering_identity": "Tapered equipment pod, battery tray, carbon tail boom, spars, rib caps, metal bearings, gearbox, motor, servo horns, and three-wheel braced landing gear. No scaled bird head, neck, body outline or feather construction."
+  },
+  "engineering_assumptions": {
+    "status": "New proposed benchmark assumptions for review; not measured aircraft data and not attributed to the historical author.",
+    "relationship_to_engineering_json": "The task's supplied ENGINEERING ASSUMPTIONS are transcribed here because interpretation.json is the writable engineering record; shared files are not changed.",
+    "span_m": 3,
+    "body_length_m": 2,
+    "mass_kg": 6,
+    "maximum_mechanical_power_w": 400,
+    "propulsive_efficiency": 0.65,
+    "powered_wingbeat_hz": 2,
+    "nominal_rho_kg_m3": 1.225,
+    "density_use": "Use environment.rho; nominal density is only a missing-input fallback.",
+    "gravity_m_s2": 9.80665,
+    "wheel_radius_m": 0.16,
+    "gear_centres_m": [[0.6, -0.66, 0], [-0.45, -0.66, -0.32], [-0.45, -0.66, 0.32]],
+    "level_root_rest_height_above_flat_surface_m": 0.82,
+    "source_derived_only": ["aspect_ratio", "wrist_span_fraction"],
+    "wing_area": "span_m^2 / aspect_ratio",
+    "additional_geometry_choices": {
+      "shoulder_offset_from_centreline_m": 0.11,
+      "wing_hinge_height_relative_to_root_m": 0.2,
+      "outer_tip_root_chord_ratio": 0.28,
+      "outer_leading_edge_sweep_m": 0.14,
+      "inner_max_section_thickness_m": 0.026,
+      "outer_root_max_section_thickness_m": 0.018,
+      "inner_stroke_amplitude_rad": 0.36,
+      "outer_relative_amplitude_rad": 0.22,
+      "outer_phase_lag_rad": 0.85,
+      "outer_relative_bias_rad": 0.045,
+      "horizontal_tail_span_m": 0.86,
+      "rudder_max_deflection_rad": 0.45,
+      "elevator_max_deflection_rad": 0.3,
+      "wing_skin": "Opaque membrane/composite panel depiction with visible spar and rib caps.",
+      "drive": "400 W electric motor, reduction gearing and schematic eccentric/connecting rods; independent wrist actuation.",
+      "power_off": "Phase is held by physics; wing panels return to a fully extended glide pose."
+    },
+    "flight_model": {
+      "type": "Cycle-averaged point-mass translation with commanded attitude, educational approximation",
+      "axes": "x forward, y up, z right; positive heading turns x toward z",
+      "relative_airflow": "velocity minus wind",
+      "alpha": "pitch - atan2(vy_air, hypot(vx_air,vz_air))",
+      "CL": "clamp(0.6 + 3*alpha, -0.2, 1.4)",
+      "CD": "0.035 + CL^2/(pi*0.8*AR)",
+      "lift_N": "0.5*rho*V^2*S*CL; signed",
+      "drag_N": "0.5*rho*V^2*S*CD",
+      "power_W": "400*throttle",
+      "thrust_N": "0.65*power/max(V,5)",
+      "directions": "Drag opposes relative flow; thrust follows it. Lift is projected world up, banked about flow. At zero speed the flow fallback is horizontal heading; at vertical flow the lift reference fallback is horizontal heading.",
+      "rudder_side_force_N": "0.5*rho*V^2*S*0.15*rudder, horizontally perpendicular to airflow",
+      "pitch": "0.5*pitch_control rad/s, bounded to [-0.35,0.45]",
+      "roll": "Approach 0.6*bank_control, limited to 2 rad/s",
+      "heading": "Horizontal velocity direction above 0.1 m/s",
+      "integrator": "Semi-implicit Euler, 1/120 s production step; legal larger dt values subdivided into steps no larger than 1/120 s. Reject dt outside (0,0.05]. Forces evaluated before attitude update.",
+      "ground": "Sample environment.surfaceHeight under all three YZX-rotated wheel centres. Include wheel radius and project root upward only to resolve penetration. Cancel downward force while supported, never upward lift. No prescribed takeoff or altitude lock.",
+      "braking": "Up to 18 N opposing horizontal velocity on contact, capped to avoid reversal",
+      "touchdown": "Landed only if sink <=3 m/s, horizontal speed <=14 m/s and abs(roll)<=0.35; otherwise crashed. Safe landings retain horizontal motion for rollout. Crashed motion stops."
+    }
+  },
+  "excluded_fields": [
+    {"field": "02 Say wing length 3.135 ft", "reason": "Known erroneous length; not used."},
+    {"field": "02 comparison AR 7.83 and crossed-out area argument", "reason": "Unavailable comparison and rejected argument; neither used to derive area or AR."},
+    {"field": "Bird body width, shoulder/body dimensions, neck and overall length", "reason": "Animal morphology does not prescribe the mechanical airframe dimensions."},
+    {"field": "14 biological stroke angles", "reason": "Incomplete reference frames; mechanical stroke angles are new assumptions."},
+    {"field": "Spring stiffness and resonance estimates", "reason": "No quantitative mechanical stiffness or structural validation supplied."},
+    {"field": "Curved-plate polar, slotted feathers, unsteady tip thrust, vortex landing and water-ski hypothesis", "reason": "Insufficient quantitative data; not substituted for the specified educational force model."}
+  ],
+  "limitations": [
+    "Not a real-world airworthiness claim or a human-carrying aircraft.",
+    "No validated motor/gearbox efficiency, battery endurance, stress, fatigue or aeroelastic calculation.",
+    "Visible mechanism is a kinematic schematic; connecting rods resize to close the animation and are not a solved fixed-length linkage synthesis.",
+    "Wingbeat animation does not introduce hidden impulses: all propulsion comes from the prescribed cycle-averaged 400 W model.",
+    "Tail surfaces are real articulated geometry but moments, rotational inertia, slip dynamics and dynamic stability are not solved.",
+    "The specified CL clamp is not a resolved stall, and the model omits Reynolds effects, feather porosity, unsteady flapping aerodynamics and ground effect.",
+    "Ground reaction is a vertical wheel-clearance constraint, not a suspension or tyre friction solver. Only wheel contacts are modelled; wing or fuselage strikes and tree collisions are not separately resolved.",
+    "Low-poly opaque panel surfaces and exposed rib/spar caps are engineering visualization, not manufacturing drawings. Geometry is reused and comfortably below the 12000-triangle budget.",
+    "No execution, rendering or verification was performed in this one-attempt submission."
+  ]
+}

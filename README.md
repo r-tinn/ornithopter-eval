@@ -1,5 +1,10 @@
 # Ornithopter Eval
 
+The [v4 smoke results](experiments/mechanical-v4-smoke-20261030/CALIBRATION.md) and
+[playable artifact viewer](experiments/mechanical-v4-smoke-20261030/index.html) are saved:
+one attempt each, GPT-6.1 Sol and GPT-5.6 Sol, medium reasoning, 32,000 total output
+tokens. Both passed 15/15 automated checks; four visual predicates remain ungraded.
+
 **The v4 smoke task builds a mechanical aircraft inside a fixed, lightweight
 flight world.** The [v4 task and commands](candidate/mechanical-v4/README.md)
 includes standalone hills, 48 simple trees, two landing strips, controls and
