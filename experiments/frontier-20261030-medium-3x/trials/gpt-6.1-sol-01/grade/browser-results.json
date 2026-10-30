@@ -1,0 +1,206 @@
+{
+  "source": [
+    {
+      "id": "span_m",
+      "pass": false,
+      "detail": {
+        "actual": null,
+        "expected": 2.25552,
+        "relative_tolerance": 0.005
+      }
+    },
+    {
+      "id": "wing_area_m2",
+      "pass": false,
+      "detail": {
+        "actual": null,
+        "expected": 0.6140890944,
+        "relative_tolerance": 0.005
+      }
+    },
+    {
+      "id": "wrist_span_m",
+      "pass": false,
+      "detail": {
+        "actual": null,
+        "expected": 1.12776,
+        "relative_tolerance": 0.005
+      }
+    },
+    {
+      "id": "shoulder_span_m",
+      "pass": false,
+      "detail": {
+        "actual": null,
+        "expected": 0.1016,
+        "relative_tolerance": 0.005
+      }
+    },
+    {
+      "id": "body_width_m",
+      "pass": false,
+      "detail": {
+        "actual": null,
+        "expected": 0.2032,
+        "relative_tolerance": 0.005
+      }
+    },
+    {
+      "id": "overall_length_m",
+      "pass": false,
+      "detail": {
+        "actual": null,
+        "expected": 1.397,
+        "relative_tolerance": 0.005
+      }
+    },
+    {
+      "id": "aspect_ratio",
+      "pass": false,
+      "detail": {
+        "actual": null,
+        "expected": 8.284417549167928,
+        "relative_tolerance": 0.005
+      }
+    }
+  ],
+  "physics": [
+    {
+      "id": "power_controls_thrust",
+      "pass": false,
+      "detail": {
+        "power_off": {
+          "error": "Error: Not implemented"
+        },
+        "power_on": {
+          "error": "Error: Not implemented"
+        }
+      }
+    },
+    {
+      "id": "lift_scales_with_speed_squared",
+      "pass": false,
+      "detail": {
+        "speed_10_lift": null,
+        "speed_20_lift": null,
+        "expected_ratio": 4,
+        "tolerance": 0.000001
+      }
+    },
+    {
+      "id": "matching_wind_removes_lift",
+      "pass": false,
+      "detail": {
+        "still_air_lift": null,
+        "matching_wind_lift": null,
+        "tolerance": 0.000001
+      }
+    },
+    {
+      "id": "ground_nonpenetration",
+      "pass": false,
+      "detail": {
+        "error": "Error: page.evaluate: Error: Not implemented\n    at Module.step (http://127.0.0.1:65051/physics.mjs:4:64)\n    at eval (eval at evaluate (:311:30), <anonymous>:4:26)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+      }
+    },
+    {
+      "id": "powered_wingbeat_frequency",
+      "pass": false,
+      "detail": {
+        "error": "Error: page.evaluate: Error: Not implemented\n    at Module.step (http://127.0.0.1:65051/physics.mjs:4:64)\n    at eval (eval at evaluate (:311:30), <anonymous>:4:26)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+      }
+    },
+    {
+      "id": "unpowered_wingbeat_stops",
+      "pass": false,
+      "detail": {
+        "error": "Error: page.evaluate: Error: Not implemented\n    at Module.step (http://127.0.0.1:65051/physics.mjs:4:64)\n    at eval (eval at evaluate (:311:30), <anonymous>:4:26)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+      }
+    },
+    {
+      "id": "steady_glide_ratio",
+      "pass": false,
+      "detail": {
+        "error": "Error: Positive area and aspect ratio required"
+      }
+    }
+  ],
+  "interaction": [
+    {
+      "id": "power_moves_forward",
+      "pass": false,
+      "detail": {
+        "error": "TimeoutError: page.waitForFunction: Timeout 1500ms exceeded."
+      }
+    },
+    {
+      "id": "pitch_input_changes_pitch",
+      "pass": false,
+      "detail": {
+        "error": "TimeoutError: page.waitForFunction: Timeout 1500ms exceeded."
+      }
+    },
+    {
+      "id": "pause_freezes_state",
+      "pass": false,
+      "detail": {
+        "error": "TimeoutError: page.waitForFunction: Timeout 1500ms exceeded."
+      }
+    },
+    {
+      "id": "reset_restores_state",
+      "pass": false,
+      "detail": {
+        "error": "TimeoutError: page.waitForFunction: Timeout 1500ms exceeded."
+      }
+    },
+    {
+      "id": "takeoff",
+      "pass": false,
+      "detail": {
+        "error": "TimeoutError: page.waitForFunction: Timeout 1500ms exceeded."
+      }
+    },
+    {
+      "id": "landing",
+      "pass": false,
+      "detail": {
+        "error": "TimeoutError: page.waitForFunction: Timeout 1500ms exceeded."
+      }
+    }
+  ],
+  "diagnostics": {
+    "inspection_error": "TimeoutError: page.waitForFunction: Timeout 1500ms exceeded.",
+    "performance": {
+      "scored": false,
+      "measurement": "requestAnimationFrame callback intervals, not presented frames",
+      "trials": [
+        {
+          "throttle": 0,
+          "error": "TimeoutError: locator.click: Timeout 1500ms exceeded.\nCall log:\n  - waiting for getByTestId('approach')\n"
+        },
+        {
+          "throttle": 1,
+          "error": "TimeoutError: locator.click: Timeout 1500ms exceeded.\nCall log:\n  - waiting for getByTestId('approach')\n"
+        }
+      ]
+    },
+    "page_errors": [],
+    "blocked_requests": []
+  },
+  "evidence": {
+    "screenshots": [
+      "initial-page.png"
+    ],
+    "runtime": {
+      "node": "v24.19.0",
+      "browser": "151.0.7922.34",
+      "viewport": [
+        1280,
+        800
+      ],
+      "clock": "Playwright virtual clock"
+    }
+  },
+  "infrastructure_error": null
+}

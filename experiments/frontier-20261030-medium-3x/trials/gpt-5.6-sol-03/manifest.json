@@ -1,0 +1,55 @@
+{
+  "task_version": "swan-v3.0",
+  "config": {
+    "task_version": "swan-v3.0",
+    "max_output_tokens_total": 16000,
+    "max_output_tokens_per_response": 16000,
+    "max_requests": 24,
+    "max_wall_seconds": 900,
+    "max_submission_bytes": 2000000,
+    "reasoning_effort": "medium"
+  },
+  "created_utc": "2026-10-30T13:43:29.271937+00:00",
+  "input_sha256": {
+    "inputs/SOURCE_GUIDE.md": "a2d3add8df37395b01c2218fbb34bc18a9cf33f489ec6547875bbcffb47f6869",
+    "inputs/TASK.md": "261c2c73858b7a29c89328d0bd4e98a4f113fc684c61056932473d200e597247",
+    "inputs/sources/Unknown-14.jpg": "889697309f83ec195a90d91974ff30e5374ab321284a759bbe8c929f5e8e405e",
+    "inputs/sources/Unknown-2.jpg": "5c0a94b3f137307104f8062c23c3a6a3c6366c88f2f18c8fafed9ee3ddf0cbd9"
+  },
+  "starter_sha256": {
+    "submission/index.html": "38d212328cf4a327fa3a7672e4c6f117dff120a853deec32cb10c4d090dbd92f",
+    "submission/interpretation.json": "3f5bbb3adf4b6d80d5628ffd76ac5a787640b2b3d433afbc5ce51d2b2d583aaa",
+    "submission/physics.mjs": "22849e61715281b480c5383f02466f779878f942da6b93213cfa7d2a277a584e"
+  },
+  "implementation_sha256": {
+    "ornithopter_eval/__init__.py": "cf2e15d3648bbebad0684ba37d53870ab138f103137e6aff4a07972396944741",
+    "ornithopter_eval/__main__.py": "0721b0f96c14c361c64b01bc477285c6dda68fdc635764c608a4c12358cd2166",
+    "ornithopter_eval/api.py": "a6911fc493250a712a8b1a9c3e78c8c88de68533395501f1dc991927940ab111",
+    "ornithopter_eval/checks.py": "9096a52ad0610d3a9c2d8390c4935ee001640643fbd1b47735e54385e7b6323b",
+    "ornithopter_eval/experiment.py": "0b85085dbecf9eb5ade3ed6ddb9c0a89f866d48e31187df63886dcae5b0f58a0",
+    "ornithopter_eval/grading.py": "798c38800dc5ee2c9de29e02d978af9565d701b2ed5b0dcd4670153842a58754",
+    "ornithopter_eval/policy.py": "e24cbe3c5026e4928660f1d1692c9b44c22d0c7a7652c390ec462d27f08f635e",
+    "ornithopter_eval/review.py": "5a45a5e4a364a11dd78cb7c23bf43b26fbf5bfd8f6c81d5668145ca2daec89c6",
+    "ornithopter_eval/runner.py": "66a8bf4c08d0792682ab276c47e700b8fb1fa9f1e249b1a1d4594343d41aad33",
+    "grader/browser.mjs": "bc7c6b83fd104851151311d60fe11b0ba4e357c271b790e21b0855df2ab7c2ca"
+  },
+  "runtime": {
+    "python": "3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]",
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O"
+  },
+  "protocol": "one instruction; file operations only; no execution or grader feedback",
+  "status": "submitted",
+  "model": "gpt-5.6-sol",
+  "reason": null,
+  "usage": {
+    "input_tokens": 55227,
+    "output_tokens": 10870,
+    "requests": 4
+  },
+  "elapsed_seconds": 88.103,
+  "submission_sha256": {
+    "index.html": "60c1c6f5b8869c317fd52e884a5e09d06dd0ef04c789f1d767605f67c184fbea",
+    "interpretation.json": "10ac6db7186429d1bc4e62f8517e17e2810eeb7e2f42b96507dec77e6a5cbeca",
+    "physics.mjs": "616fbc940b99f1d22bfe3cbf0b82b02e387d5e10c6e941165bb0819a1362f859"
+  }
+}

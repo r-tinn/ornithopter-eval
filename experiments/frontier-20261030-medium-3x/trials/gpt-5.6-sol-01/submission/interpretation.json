@@ -1,0 +1,32 @@
+{
+  "sources": [
+    {
+      "id": "02 / Unknown-2.jpg",
+      "used_for": "Rounded “Say” dimensions: 7.4 ft span, 3.7 ft wrist span, 4 in shoulder span, 8 in maximum body width and 55 in overall length; paragraph total wing area 6.61 ft²; swan outline and approximately parallel-chord inner/tapered outer planform."
+    },
+    {
+      "id": "14 / Unknown-14.jpg",
+      "used_for": "Qualitative separation into inner arm and outer hand wing panels, plus the proposal for a conventional tail, fin and rudder."
+    }
+  ],
+  "assumptions": [
+    "Conversions use exactly 1 ft = 0.3048 m and 1 in = 0.0254 m.",
+    "Aspect ratio is derived as span²/area (8.284416767...), consistent with the page's rounded 8.29.",
+    "Each wing runs from half the 4 in shoulder span to half the 7.4 ft span, with its wrist at half the 3.7 ft wrist span.",
+    "The visual animation uses an assumed symmetric 14 degree inner-panel stroke and an additional 24 degree outer-panel articulation; these are presentation assumptions, not measured performance inputs.",
+    "Mass, atmosphere, force polar, 400 W drive, 65% propulsive factor, controls and contact rules are new benchmark assumptions supplied by this task and are not attributed to Stanley J. O. Tinn."
+  ],
+  "excluded_fields": [
+    "The page 02 “3.135 ft” wing length; individual wing length is instead inferred from span and shoulder span.",
+    "The missing-table 7.83 comparison and the crossed-out 14% area argument on page 02.",
+    "Page 14 biological stroke-angle reference frames, elastic stiffness, vortex-lift landing hypothesis and unspecified curved-plate polar.",
+    "Any missing appendices, Standard Model Swan values, or prior human-carrying simulator values."
+  ],
+  "limitations": [
+    "The photographs are historical notes, not a complete or validated ornithopter blueprint.",
+    "This is a point-mass, cycle-averaged educational model; wing panels are animated independently but do not produce resolved unsteady aerodynamic loads.",
+    "It is not a structural, aeroelastic, biological-flight or experimentally validated performance solver.",
+    "The fin, body sections, panel airfoils, colors and detailed tail geometry are visual interpretations because the sources do not fully specify them.",
+    "Publishing claims of physical validity would require evidence beyond this demonstration."
+  ]
+}

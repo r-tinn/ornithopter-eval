@@ -1,0 +1,17 @@
+FILE: index.html
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><title>Swan Flight Lab</title>
+<!-- Implement the browser contract in TASK.md. -->
+<body><p>Implement Swan Flight Lab.</p></body></html>
+
+
+FILE: interpretation.json
+{"sources":[],"assumptions":[],"excluded_fields":[],"limitations":[]}
+
+
+FILE: physics.mjs
+// Implement the shared production physics contract in TASK.md.
+export const parameters = {};
+export function forces(state, controls, environment) { throw new Error('Not implemented'); }
+export function step(state, controls, environment, dt) { throw new Error('Not implemented'); }
+

@@ -1,0 +1,37 @@
+{
+  "sources": [
+    {
+      "id": "02 / Unknown-2.jpg",
+      "used_for": "Rounded “Say” dimensions: span 7.4 ft, wrist span 3.7 ft, shoulder span 4 in, maximum body width 8 in, overall length 55 in; paragraph total wing area 6.61 ft²; swan outline and near-parallel inner chord. The stated AR 8.29 is a rounding cross-check."
+    },
+    {
+      "id": "14 / Unknown-14.jpg",
+      "used_for": "Qualitative separation of arm/inner and hand/outer wing panels, plus the proposal to use a conventional tail, fin and rudder for an ornithopter."
+    },
+    {
+      "id": "SOURCE_GUIDE.md",
+      "used_for": "Selection of rounded fields, conversion policy, exclusions, and interpretation boundaries."
+    }
+  ],
+  "assumptions": [
+    "Exact conversions use 1 ft = 0.3048 m and 1 in = 0.0254 m. Thus the selected values are span 2.25552 m, wrist span 1.12776 m, shoulder span 0.1016 m, body width 0.2032 m, length 1.397 m, and area 0.6140890944 m².",
+    "Aspect ratio is derived as span²/area = 8.284417032 (rounded), consistent with the page's 8.29.",
+    "Each individual exposed wing length is inferred as (span − shoulder span)/2 rather than copied from the excluded wing-length row.",
+    "For visualization only, the inner panel has an assumed ±18 degree sinusoidal stroke and the outer panel adds an assumed ±26 degree wrist stroke. These make panel articulation legible and are not measured performance data.",
+    "The 6 kg mass, aerodynamic polar, 400 W drive, 65% conversion, two-hertz phase, controls, atmosphere, ground contact and landing limits are new benchmark assumptions supplied by the task, not claims made by Stanley J. O. Tinn."
+  ],
+  "excluded_fields": [
+    "The page 02 “3.135 ft” wing length.",
+    "The missing table's 7.83 comparison.",
+    "The crossed-out 14% outer-wing-area argument.",
+    "Page 14 biological stroke-angle reference frames, elastic stiffness discussion, vortex-lift landing hypothesis, and unspecified curved-plate polar.",
+    "Any missing appendices, the distinct “Standard Model Swan”, and prior human-carrying simulator designs."
+  ],
+  "limitations": [
+    "The photographs are historical notes and observations, not a complete or validated blueprint.",
+    "This is a point-mass, cycle-averaged educational model. It is not a structural, unsteady-flow, wake, aeroelastic, stability or biological-flight solver.",
+    "Animated panels are visual geometry independent of the cycle-averaged force calculation; powered thrust is an explicit assumption rather than experimentally demonstrated wing performance.",
+    "Tail and fin proportions, section thicknesses, hinge geometry, materials and visual colors are illustrative because the sources do not fully specify them.",
+    "Publishing a claim of real-world physical validity would require evidence beyond this model and evaluation."
+  ]
+}

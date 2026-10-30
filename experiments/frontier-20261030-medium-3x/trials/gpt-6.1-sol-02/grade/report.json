@@ -1,0 +1,791 @@
+{
+  "task_version": "swan-v3.0",
+  "submission_sha256": {
+    "index.html": "53b88c76ac798608f7f10dd2b2ab275466145e5555530c6b7ac1b1b17630a75c",
+    "interpretation.json": "53a4041f7a8ec9b0077b2d6ddf3907d85c1581576cba5646ea984279efbb7bbc",
+    "lab.mjs": "5d6b689bcbd0f4ec89559b3ef968e8afcf24e864bc9f52ba49655e64e5cad97c",
+    "physics.mjs": "7d71fb7393af449be11f7baf893791203a7ea1021f3172033971ba16c11aaa0a",
+    "style.css": "26c09eeabbb56b6d6a2161b6f955005921c5e0e1fdb771bb268dc45186700eca"
+  },
+  "grader_sha256": {
+    "browser.mjs": "bc7c6b83fd104851151311d60fe11b0ba4e357c271b790e21b0855df2ab7c2ca",
+    "grading.py": "798c38800dc5ee2c9de29e02d978af9565d701b2ed5b0dcd4670153842a58754",
+    "checks.py": "9096a52ad0610d3a9c2d8390c4935ee001640643fbd1b47735e54385e7b6323b"
+  },
+  "passed": null,
+  "status": "awaiting_review",
+  "dimensions": {
+    "source": {
+      "kind": "deterministic",
+      "checks": [
+        {
+          "id": "span_m",
+          "question": "Is the exported span the source value in metres?",
+          "pass": true,
+          "detail": {
+            "actual": 2.25552,
+            "expected": 2.25552,
+            "relative_tolerance": 0.005
+          }
+        },
+        {
+          "id": "wing_area_m2",
+          "question": "Is the exported wing area the source value in square metres?",
+          "pass": true,
+          "detail": {
+            "actual": 0.6140890944000001,
+            "expected": 0.6140890944,
+            "relative_tolerance": 0.005
+          }
+        },
+        {
+          "id": "wrist_span_m",
+          "question": "Is the exported wrist span the source value in metres?",
+          "pass": true,
+          "detail": {
+            "actual": 1.12776,
+            "expected": 1.12776,
+            "relative_tolerance": 0.005
+          }
+        },
+        {
+          "id": "shoulder_span_m",
+          "question": "Is the exported shoulder span the source value in metres?",
+          "pass": true,
+          "detail": {
+            "actual": 0.1016,
+            "expected": 0.1016,
+            "relative_tolerance": 0.005
+          }
+        },
+        {
+          "id": "body_width_m",
+          "question": "Is the exported body width the source value in metres?",
+          "pass": true,
+          "detail": {
+            "actual": 0.2032,
+            "expected": 0.2032,
+            "relative_tolerance": 0.005
+          }
+        },
+        {
+          "id": "overall_length_m",
+          "question": "Is the exported overall length the source value in metres?",
+          "pass": true,
+          "detail": {
+            "actual": 1.397,
+            "expected": 1.397,
+            "relative_tolerance": 0.005
+          }
+        },
+        {
+          "id": "aspect_ratio",
+          "question": "Is the exported aspect ratio b\u00b2/S from the selected source values?",
+          "pass": true,
+          "detail": {
+            "actual": 8.284417549167928,
+            "expected": 8.284417549167928,
+            "relative_tolerance": 0.005
+          }
+        }
+      ],
+      "passed": true
+    },
+    "physics": {
+      "kind": "deterministic",
+      "checks": [
+        {
+          "id": "power_controls_thrust",
+          "question": "Does switching power off remove thrust?",
+          "pass": true,
+          "detail": {
+            "power_off": {
+              "lift": 22.567774219200007,
+              "drag": 1.966790010470657,
+              "thrust": 0,
+              "power": 0,
+              "airspeed": 10,
+              "cl": 0.6,
+              "force": [
+                -1.966790010470657,
+                -36.272125780799996,
+                0
+              ]
+            },
+            "power_on": {
+              "lift": 22.567774219200007,
+              "drag": 1.966790010470657,
+              "thrust": 26,
+              "power": 400,
+              "airspeed": 10,
+              "cl": 0.6,
+              "force": [
+                24.033209989529343,
+                -36.272125780799996,
+                0
+              ]
+            }
+          }
+        },
+        {
+          "id": "lift_scales_with_speed_squared",
+          "question": "Does doubling airspeed quadruple positive lift at fixed attitude?",
+          "pass": true,
+          "detail": {
+            "speed_10_lift": 22.567774219200007,
+            "speed_20_lift": 90.27109687680003,
+            "expected_ratio": 4,
+            "tolerance": 1e-06
+          }
+        },
+        {
+          "id": "matching_wind_removes_lift",
+          "question": "Does wind matching aircraft velocity remove aerodynamic lift?",
+          "pass": true,
+          "detail": {
+            "still_air_lift": 22.567774219200007,
+            "matching_wind_lift": 0,
+            "tolerance": 1e-06
+          }
+        },
+        {
+          "id": "ground_nonpenetration",
+          "question": "Does a descending aircraft stay above the ground-contact plane?",
+          "pass": true,
+          "detail": {
+            "minimum_y": 0.2,
+            "contact_plane_y": 0.2,
+            "final": {
+              "position": [
+                19.387641166712804,
+                0.2,
+                0
+              ],
+              "velocity": [
+                9.393338930470616,
+                0,
+                0
+              ],
+              "pitch": 0,
+              "roll": 0,
+              "phase": 0,
+              "time": 1.9999999999999953,
+              "status": "landed"
+            }
+          }
+        },
+        {
+          "id": "powered_wingbeat_frequency",
+          "question": "Does powered wingbeat phase follow the specified 2 Hz cycle?",
+          "pass": true,
+          "detail": {
+            "samples": [
+              {
+                "steps": 12,
+                "actual": 1.626637061435917,
+                "expected": 1.6266370614359174
+              },
+              {
+                "steps": 25,
+                "actual": 2.987993877991495,
+                "expected": 2.9879938779914945
+              },
+              {
+                "steps": 44,
+                "actual": 4.977669225265029,
+                "expected": 4.977669225265029
+              }
+            ],
+            "tolerance": 1e-06
+          }
+        },
+        {
+          "id": "unpowered_wingbeat_stops",
+          "question": "Does wingbeat phase stop when power is removed?",
+          "pass": true,
+          "detail": {
+            "initial_phase": 0.73,
+            "final_phase": 0.73
+          }
+        },
+        {
+          "id": "steady_glide_ratio",
+          "question": "Does steady unpowered flight lose the height predicted by the specified lift/drag ratio?",
+          "pass": true,
+          "detail": {
+            "actual_ratio": 11.474419790144363,
+            "expected_ratio": 11.47441979014297,
+            "forward_m": 32.11123663102688,
+            "height_lost_m": 2.798506348757428,
+            "initial": {
+              "position": [
+                0,
+                100,
+                0
+              ],
+              "velocity": [
+                16.055618315513495,
+                -1.3992531743788892,
+                0
+              ],
+              "pitch": -0.08693073497786764,
+              "roll": 0,
+              "phase": 0,
+              "time": 0,
+              "status": "flying"
+            },
+            "final": {
+              "position": [
+                32.11123663102688,
+                97.20149365124257,
+                0
+              ],
+              "velocity": [
+                16.055618315513495,
+                -1.3992531743788892,
+                0
+              ],
+              "pitch": -0.08693073497786764,
+              "roll": 0,
+              "phase": 0,
+              "time": 1.9999999999999953,
+              "status": "flying"
+            },
+            "relative_tolerance": 0.01
+          }
+        }
+      ],
+      "passed": true
+    },
+    "interaction": {
+      "kind": "deterministic",
+      "checks": [
+        {
+          "id": "power_moves_forward",
+          "question": "Does full power move the aircraft forward compared with zero power?",
+          "pass": true,
+          "detail": {
+            "neutral": {
+              "position": [
+                0,
+                0.2,
+                0
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "pitch": 0,
+              "roll": 0,
+              "phase": 0,
+              "time": 0.974999999999999,
+              "status": "grounded"
+            },
+            "powered": {
+              "position": [
+                4.159388888302743,
+                0.2,
+                0
+              ],
+              "velocity": [
+                7.757749314501303,
+                0,
+                0
+              ],
+              "pitch": 0,
+              "roll": 0,
+              "phase": 6.178465552059918,
+              "time": 0.9916666666666656,
+              "status": "grounded"
+            },
+            "minimum_difference_m": 0.1
+          }
+        },
+        {
+          "id": "pitch_input_changes_pitch",
+          "question": "Does ArrowUp increase pitch compared with neutral input?",
+          "pass": true,
+          "detail": {
+            "neutral": {
+              "position": [
+                3.863153751762828,
+                1.3771605726077163,
+                0
+              ],
+              "velocity": [
+                10.204821283585822,
+                -2.071057643848515,
+                0
+              ],
+              "pitch": 0,
+              "roll": 0,
+              "phase": 0,
+              "time": 0.3833333333333337,
+              "status": "flying"
+            },
+            "pitched": {
+              "position": [
+                3.8602743780107422,
+                1.4476817298526858,
+                0
+              ],
+              "velocity": [
+                10.169624266582288,
+                -1.6252488378301126,
+                0
+              ],
+              "pitch": 0.19166666666666685,
+              "roll": 0,
+              "phase": 0,
+              "time": 0.3833333333333337,
+              "status": "flying"
+            },
+            "minimum_difference_rad": 0.1
+          }
+        },
+        {
+          "id": "pause_freezes_state",
+          "question": "Does Pause freeze the running simulation state?",
+          "pass": true,
+          "detail": {
+            "before": {
+              "position": [
+                0,
+                2,
+                0
+              ],
+              "velocity": [
+                10,
+                -1,
+                0
+              ],
+              "pitch": 0,
+              "roll": 0,
+              "phase": 0,
+              "time": 0,
+              "status": "flying"
+            },
+            "paused": {
+              "position": [
+                3.863153751762828,
+                1.3771605726077163,
+                0
+              ],
+              "velocity": [
+                10.204821283585822,
+                -2.071057643848515,
+                0
+              ],
+              "pitch": 0,
+              "roll": 0,
+              "phase": 0,
+              "time": 0.3833333333333337,
+              "status": "flying"
+            },
+            "after": {
+              "position": [
+                3.863153751762828,
+                1.3771605726077163,
+                0
+              ],
+              "velocity": [
+                10.204821283585822,
+                -2.071057643848515,
+                0
+              ],
+              "pitch": 0,
+              "roll": 0,
+              "phase": 0,
+              "time": 0.3833333333333337,
+              "status": "flying"
+            }
+          }
+        },
+        {
+          "id": "reset_restores_state",
+          "question": "Does Reset restore the specified initial state and zero throttle?",
+          "pass": true,
+          "detail": {
+            "before": {
+              "position": [
+                4.1657780236117326,
+                1.380145943202739,
+                0
+              ],
+              "velocity": [
+                11.699614783430162,
+                -1.9664468256350678,
+                0
+              ],
+              "pitch": 0,
+              "roll": 0,
+              "phase": 4.817108735504349,
+              "time": 0.3833333333333337,
+              "status": "flying"
+            },
+            "after": {
+              "position": [
+                0,
+                0.2,
+                0
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "pitch": 0,
+              "roll": 0,
+              "phase": 0,
+              "time": 0,
+              "status": "grounded"
+            },
+            "controls": {
+              "throttle": 0,
+              "pitch": 0,
+              "bank": 0,
+              "brake": 0
+            }
+          }
+        },
+        {
+          "id": "takeoff",
+          "question": "Does the prescribed power and pitch sequence sustain flight above the runway?",
+          "pass": true,
+          "detail": {
+            "samples": [
+              {
+                "position": [
+                  73.34062589876919,
+                  6.238054998077503,
+                  0
+                ],
+                "velocity": [
+                  16.12330292068577,
+                  2.4940545246934915,
+                  0
+                ],
+                "pitch": 0.15000000000000005,
+                "roll": 0,
+                "phase": 6.073745796940214,
+                "time": 5.98333333333342,
+                "status": "flying"
+              },
+              {
+                "position": [
+                  77.37979525387955,
+                  6.867454105404323,
+                  0
+                ],
+                "velocity": [
+                  16.186684742927092,
+                  2.538682873253357,
+                  0
+                ],
+                "pitch": 0.15000000000000005,
+                "roll": 0,
+                "phase": 2.9321531433504204,
+                "time": 6.233333333333433,
+                "status": "flying"
+              },
+              {
+                "position": [
+                  81.29852001946121,
+                  7.48581432685088,
+                  0
+                ],
+                "velocity": [
+                  16.2412291541071,
+                  2.5766927910439446,
+                  0
+                ],
+                "pitch": 0.15000000000000005,
+                "roll": 0,
+                "phase": 5.96902604182055,
+                "time": 6.4750000000001116,
+                "status": "flying"
+              },
+              {
+                "position": [
+                  85.50122224307535,
+                  8.156336652819904,
+                  0
+                ],
+                "velocity": [
+                  16.293109588534236,
+                  2.612524804475071,
+                  0
+                ],
+                "pitch": 0.15000000000000005,
+                "roll": 0,
+                "phase": 2.932153143350416,
+                "time": 6.733333333333458,
+                "status": "flying"
+              },
+              {
+                "position": [
+                  89.44422397633087,
+                  8.791470714180447,
+                  0
+                ],
+                "velocity": [
+                  16.336337435751993,
+                  2.64215288823513,
+                  0
+                ],
+                "pitch": 0.15000000000000005,
+                "roll": 0,
+                "phase": 5.969026041820546,
+                "time": 6.975000000000136,
+                "status": "flying"
+              }
+            ],
+            "minimum_height_m": 0.7
+          }
+        },
+        {
+          "id": "landing",
+          "question": "Does the prescribed approach sequence reach a safe touchdown?",
+          "pass": true,
+          "detail": {
+            "before": {
+              "position": [
+                0,
+                2,
+                0
+              ],
+              "velocity": [
+                10,
+                -1,
+                0
+              ],
+              "pitch": 0,
+              "roll": 0,
+              "phase": 0,
+              "time": 0,
+              "status": "flying"
+            },
+            "after": {
+              "position": [
+                24.46985326196977,
+                0.2,
+                0
+              ],
+              "velocity": [
+                9.830481971154303,
+                0,
+                0
+              ],
+              "pitch": 0.19166666666666685,
+              "roll": 0,
+              "phase": 0,
+              "time": 2.3833333333333275,
+              "status": "landed"
+            }
+          }
+        }
+      ],
+      "passed": true
+    },
+    "visual": {
+      "kind": "review",
+      "checks": [
+        {
+          "id": "wings_on_both_sides",
+          "question": "Is there a wing attached to each lateral side of the body?",
+          "pass": null
+        },
+        {
+          "id": "tail_behind_wings",
+          "question": "Is the tail aft of the wing roots?",
+          "pass": null
+        },
+        {
+          "id": "wings_transverse",
+          "question": "Do the wings extend across the body rather than along its nose-to-tail axis?",
+          "pass": null
+        },
+        {
+          "id": "fin_present",
+          "question": "Is a distinct tail fin visible?",
+          "pass": null
+        },
+        {
+          "id": "visible_flapping",
+          "question": "Do both rendered wingtips move vertically relative to their roots during a wingbeat?",
+          "pass": null
+        }
+      ],
+      "passed": null
+    }
+  },
+  "limitations": [
+    "Single task, no evidence of general benchmark validity.",
+    "Numeric checks test selected properties of an assumed model, not realistic aerodynamics or full equation compliance.",
+    "Browser checks observe the required production state hook; they do not independently prove mesh motion or truthful coupling.",
+    "Visual judgments cover five specific geometry/motion predicates; model judges can be wrong.",
+    "Real-clock callback timing is diagnostic only; it does not prove presented-frame rate or absence of jitter.",
+    "Browser isolation is defense in depth, not a hardened sandbox for hostile code."
+  ],
+  "attempt": {
+    "model": "gpt-6.1-sol",
+    "status": "submitted",
+    "reason": null,
+    "config": {
+      "task_version": "swan-v3.0",
+      "max_output_tokens_total": 16000,
+      "max_output_tokens_per_response": 16000,
+      "max_requests": 24,
+      "max_wall_seconds": 900,
+      "max_submission_bytes": 2000000,
+      "reasoning_effort": "medium"
+    },
+    "usage": {
+      "input_tokens": 78504,
+      "output_tokens": 15746,
+      "requests": 7
+    },
+    "elapsed_seconds": 223.217,
+    "input_sha256": {
+      "inputs/SOURCE_GUIDE.md": "a2d3add8df37395b01c2218fbb34bc18a9cf33f489ec6547875bbcffb47f6869",
+      "inputs/TASK.md": "261c2c73858b7a29c89328d0bd4e98a4f113fc684c61056932473d200e597247",
+      "inputs/sources/Unknown-14.jpg": "889697309f83ec195a90d91974ff30e5374ab321284a759bbe8c929f5e8e405e",
+      "inputs/sources/Unknown-2.jpg": "5c0a94b3f137307104f8062c23c3a6a3c6366c88f2f18c8fafed9ee3ddf0cbd9"
+    },
+    "runtime": {
+      "python": "3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]",
+      "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O"
+    }
+  },
+  "diagnostics": {
+    "performance": {
+      "scored": false,
+      "measurement": "requestAnimationFrame callback intervals, not presented frames",
+      "trials": [
+        {
+          "throttle": 0,
+          "samples": 121,
+          "elapsed_ms": 1008.4,
+          "callback_hz": 119.99206664022213,
+          "p95_interval_ms": 8.400000000000034,
+          "max_interval_ms": 9.300000000000182,
+          "simulation_seconds_per_wall_second": 0.9999338886685167
+        },
+        {
+          "throttle": 1,
+          "samples": 120,
+          "elapsed_ms": 1000,
+          "callback_hz": 120,
+          "p95_interval_ms": 8.400000000000091,
+          "max_interval_ms": 8.799999999999955,
+          "simulation_seconds_per_wall_second": 0.9999999999999989
+        }
+      ]
+    },
+    "page_errors": [],
+    "blocked_requests": []
+  },
+  "evidence": {
+    "screenshots": [
+      "initial-page.png",
+      "inspection-top.png",
+      "inspection-side.png",
+      "flap-0.png",
+      "flap-1.png",
+      "flap-2.png",
+      "flap-3.png"
+    ],
+    "runtime": {
+      "node": "v24.19.0",
+      "browser": "151.0.7922.34",
+      "viewport": [
+        1280,
+        800
+      ],
+      "clock": "Playwright virtual clock"
+    },
+    "flapping_samples": [
+      {
+        "file": "flap-0.png",
+        "state": {
+          "position": [
+            0,
+            2,
+            0
+          ],
+          "velocity": [
+            10,
+            -1,
+            0
+          ],
+          "pitch": 0,
+          "roll": 0,
+          "phase": 0,
+          "time": 0,
+          "status": "flying"
+        }
+      },
+      {
+        "file": "flap-1.png",
+        "state": {
+          "position": [
+            1.1111613411158692,
+            1.8655046053220077,
+            0
+          ],
+          "velocity": [
+            10.47773075474354,
+            -1.4278575501981803,
+            0
+          ],
+          "pitch": 0,
+          "roll": 0,
+          "phase": 1.361356816555577,
+          "time": 0.10833333333333332,
+          "status": "flying"
+        }
+      },
+      {
+        "file": "flap-2.png",
+        "state": {
+          "position": [
+            2.45790593722283,
+            1.6630599462520765,
+            0
+          ],
+          "velocity": [
+            11.03368811088813,
+            -1.7620143874776715,
+            0
+          ],
+          "pitch": 0,
+          "roll": 0,
+          "phase": 2.932153143350474,
+          "time": 0.2333333333333333,
+          "status": "flying"
+        }
+      },
+      {
+        "file": "flap-3.png",
+        "state": {
+          "position": [
+            3.9710904484073484,
+            1.4128664655566274,
+            0
+          ],
+          "velocity": [
+            11.626125689060064,
+            -1.9530492463320794,
+            0
+          ],
+          "pitch": 0,
+          "roll": 0,
+          "phase": 4.60766922526503,
+          "time": 0.366666666666667,
+          "status": "flying"
+        }
+      }
+    ]
+  }
+}

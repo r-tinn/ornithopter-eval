@@ -1,0 +1,94 @@
+{
+  "official_scores_modified": false,
+  "protocol_commit": "b6c3703ff35304e269ee06118b304a52817d38e1",
+  "method": "Read frozen reports and API events. Vector magnitudes are diagnostic only; scores are unchanged.",
+  "trials": [
+    {
+      "id": "gpt-5.6-sol-01",
+      "raw_automated_passed": 17,
+      "all_requests_medium": true,
+      "submission_hashes_verified": true,
+      "reasoning_tokens": 3813,
+      "vector_diagnostics": {
+        "off_thrust_magnitude": 0.0,
+        "on_thrust_magnitude": 26.0,
+        "lift_magnitude_ratio": 4.0,
+        "matched_wind_lift_magnitude": 0.0
+      }
+    },
+    {
+      "id": "gpt-6.1-sol-01",
+      "raw_automated_passed": 0,
+      "all_requests_medium": true,
+      "submission_hashes_verified": true,
+      "reasoning_tokens": 3678,
+      "last_response_incomplete_reason": {
+        "reason": "max_output_tokens"
+      },
+      "completed_patches_discarded_by_original_harness": [
+        "submission/physics.mjs",
+        "submission/interpretation.json",
+        "submission/index.html",
+        "submission/style.css"
+      ],
+      "unfinished_items": [
+        {
+          "type": "apply_patch_call",
+          "status": "in_progress",
+          "path": "submission/app.mjs"
+        }
+      ]
+    },
+    {
+      "id": "gpt-5.6-sol-02",
+      "raw_automated_passed": 17,
+      "all_requests_medium": true,
+      "submission_hashes_verified": true,
+      "reasoning_tokens": 2698,
+      "vector_diagnostics": {
+        "off_thrust_magnitude": 0.0,
+        "on_thrust_magnitude": 26.0,
+        "lift_magnitude_ratio": 4.0,
+        "matched_wind_lift_magnitude": 0.0
+      }
+    },
+    {
+      "id": "gpt-6.1-sol-02",
+      "raw_automated_passed": 20,
+      "all_requests_medium": true,
+      "submission_hashes_verified": true,
+      "reasoning_tokens": 1836
+    },
+    {
+      "id": "gpt-5.6-sol-03",
+      "raw_automated_passed": 17,
+      "all_requests_medium": true,
+      "submission_hashes_verified": true,
+      "reasoning_tokens": 2842,
+      "vector_diagnostics": {
+        "off_thrust_magnitude": 0.0,
+        "on_thrust_magnitude": 26.0,
+        "lift_magnitude_ratio": 4.0,
+        "matched_wind_lift_magnitude": 0.0
+      }
+    },
+    {
+      "id": "gpt-6.1-sol-03",
+      "raw_automated_passed": 20,
+      "all_requests_medium": true,
+      "submission_hashes_verified": true,
+      "reasoning_tokens": 2589,
+      "last_response_incomplete_reason": {
+        "reason": "max_output_tokens"
+      },
+      "completed_patches_discarded_by_original_harness": [],
+      "unfinished_items": [
+        {
+          "type": "message",
+          "status": "incomplete",
+          "path": null
+        }
+      ]
+    }
+  ]
+}

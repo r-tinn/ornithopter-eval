@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Swan Flight Lab — articulated 3D ornithopter</title>
+<style>
+  :root{color-scheme:dark;--ink:#eaf4f5;--muted:#9eb5b8;--cyan:#68d6d2;--gold:#eabf6b;--panel:#101c22}
+  *{box-sizing:border-box} body{margin:0;background:#071015;color:var(--ink);font:14px/1.4 system-ui,Segoe UI,sans-serif;overflow:hidden}
+  main{display:grid;grid-template-columns:minmax(620px,1fr) 330px;height:100vh}
+  .stage{position:relative;min-width:0;background:#12252d}
+  canvas{display:block;width:100%;height:100%;min-height:350px;cursor:grab;touch-action:none}
+  canvas:active{cursor:grabbing}
+  .badge{position:absolute;left:18px;top:16px;padding:8px 11px;background:#081217cc;border:1px solid #54737b;border-radius:7px;letter-spacing:.08em;font-size:11px;text-transform:uppercase}
+  .hint{position:absolute;left:18px;bottom:15px;color:#d7e8e8;background:#081217b8;padding:6px 9px;border-radius:5px}
+  aside{background:linear-gradient(155deg,#13232a,#091319);border-left:1px solid #294049;padding:20px;overflow:auto}
+  h1{font:600 25px/1.05 Georgia,serif;margin:0 0 5px;color:#fff} h1 span{color:var(--gold)}
+  .sub{color:var(--muted);margin:0 0 18px;font-size:12px}
+  .controls{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+  button{border:1px solid #45616a;background:#182b32;color:#eefafa;border-radius:5px;padding:8px 5px;cursor:pointer;font-weight:650}
+  button:hover,button.active{border-color:var(--cyan);background:#1e3b42} button:focus-visible,input:focus-visible{outline:2px solid var(--gold)}
+  .primary{background:#176a69;border-color:#3ba9a5}.wide{grid-column:span 3}
+  .label{display:flex;justify-content:space-between;margin-top:17px;color:#cfe0e1}
+  input[type=range]{width:100%;accent-color:var(--cyan)}
+  #telemetry{margin-top:17px;padding:13px;background:#071116;border:1px solid #2d444c;border-radius:7px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .readout b{display:block;font:600 20px/1.1 ui-monospace,monospace;color:#fff}.readout small{color:#86a1a5;text-transform:uppercase;letter-spacing:.08em}
+  #status{color:var(--gold)!important;text-transform:uppercase}
+  .keys{display:grid;grid-template-columns:repeat(3,34px);justify-content:center;gap:4px;margin:17px 0}
+  kbd{height:30px;border:1px solid #58717a;border-radius:4px;display:grid;place-items:center;background:#18272d;color:#d9e9eb}
+  kbd:first-child{grid-column:2}.space{grid-column:1/4;width:auto}
+  .note{border-top:1px solid #294049;padding-top:13px;color:#91a9ad;font-size:12px}.note strong{color:#dce9e9}
+  @media(max-width:850px){body{overflow:auto}main{display:block;height:auto}.stage{height:55vh;min-height:390px}aside{border-left:0}.controls{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<main>
+  <section class="stage">
+    <canvas data-testid="scene" aria-label="Interactive three dimensional swan ornithopter scene"></canvas>
+    <div class="badge">3D inspection view · drag to orbit</div>
+    <div class="hint">Wings: arm + articulated hand panels • cyan joints mark wrists</div>
+  </section>
+  <aside>
+    <h1>Swan <span>Flight Lab</span></h1>
+    <p class="sub">Cycle-averaged point-mass simulation · SI units</p>
+    <div class="controls">
+      <button class="primary" data-testid="start">▶ Start</button>
+      <button data-testid="pause">Ⅱ Pause</button>
+      <button data-testid="reset">↺ Reset</button>
+      <button class="wide" data-testid="approach">Load landing approach</button>
+      <button data-testid="view-top">Top</button>
+      <button data-testid="view-side">Side</button>
+      <button data-testid="view-front">Front</button>
+    </div>
+    <label class="label" for="throttle"><span>Drive power</span><output id="powerText">0% · 0 W</output></label>
+    <input data-testid="throttle" id="throttle" type="range" min="0" max="1" step="0.01" value="0">
+    <div data-testid="telemetry" id="telemetry">
+      <div class="readout"><b id="speed">0.00</b><small>airspeed m/s</small></div>
+      <div class="readout"><b id="altitude">0.00</b><small>altitude m</small></div>
+      <div class="readout"><b id="simtime">0.00</b><small>simulation s</small></div>
+      <div class="readout"><b id="status">grounded</b><small>flight state</small></div>
+    </div>
+    <div class="keys"><kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd><kbd class="space">Space · wheel brake</kbd></div>
+    <p class="note"><strong>Educational approximation.</strong> The historical notes inform dimensions and panel layout. Aerodynamics, powered flapping and the visible stroke are explicit modern benchmark assumptions—not experimentally proven swan-wing performance.</p>
+  </aside>
+</main>
+<script type="module">
+import {parameters, forces, step} from './physics.mjs';
+
+const $ = s => document.querySelector(s);
+const canvas = $('[data-testid="scene"]'), ctx = canvas.getContext('2d');
+const throttle = $('#throttle');
+const initial = () => ({position:[0,.2,0],velocity:[0,0,0],pitch:0,roll:0,phase:0,time:0,status:'grounded'});
+let state = initial(), controls = {throttle:0,pitch:0,bank:0,brake:0};
+const environment = {wind:[0,0,0],rho:1.225};
+let running=false, last=performance.now(), accumulator=0, view='orbit';
+let az=.72, el=.34, dragging=false, px=0, py=0;
+const keys = new Set();
+const copy = x => JSON.parse(JSON.stringify(x));
+window.flightLab = {getState:()=>copy(state),getControls:()=>copy(controls)};
+
+function telemetry(){
+  const a=forces(state,controls,environment).airspeed;
+  $('#speed').textContent=a.toFixed(2); $('#altitude').textContent=Math.max(0,state.position[1]-.2).toFixed(2);
+  $('#simtime').textContent=state.time.toFixed(2); $('#status').textContent=state.status;
+  $('#powerText').textContent=`${Math.round(controls.throttle*100)}% · ${Math.round(controls.throttle*400)} W`;
+}
+function setRunning(v){running=v;last=performance.now();accumulator=0;$('[data-testid="start"]').classList.toggle('active',v)}
+function reset(){
+  state=initial(); controls={throttle:0,pitch:0,bank:0,brake:0}; throttle.value='0';keys.clear();setRunning(false);telemetry();render();
+}
+$('[data-testid="start"]').onclick=()=>setRunning(true);
+$('[data-testid="pause"]').onclick=()=>setRunning(false);
+$('[data-testid="reset"]').onclick=reset;
+$('[data-testid="approach"]').onclick=()=>{
+  state={position:[0,2,0],velocity:[10,-1,0],pitch:0,roll:0,phase:0,time:0,status:'flying'};
+  controls={throttle:0,pitch:0,bank:0,brake:0};throttle.value='0';keys.clear();setRunning(false);telemetry();render();
+};
+throttle.oninput=()=>{controls.throttle=+throttle.value;telemetry();render()};
+for(const v of ['top','side','front']) $(`[data-testid="view-${v}"]`).onclick=()=>{view=v;render()};
+
+function updateKeys(){
+  controls.pitch=(keys.has('ArrowUp')?1:0)-(keys.has('ArrowDown')?1:0);
+  controls.bank=(keys.has('ArrowRight')?1:0)-(keys.has('ArrowLeft')?1:0);
+  controls.brake=keys.has('Space')?1:0;
+}
+addEventListener('keydown',e=>{if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].includes(e.code)){e.preventDefault();keys.add(e.code);updateKeys()}});
+addEventListener('keyup',e=>{keys.delete(e.code);updateKeys()});
+addEventListener('blur',()=>{keys.clear();updateKeys()});
+
+canvas.addEventListener('pointerdown',e=>{dragging=true;px=e.clientX;py=e.clientY;canvas.setPointerCapture(e.pointerId)});
+canvas.addEventListener('pointermove',e=>{if(!dragging)return;view='orbit';az+=(e.clientX-px)*.008;el=Math.max(-.05,Math.min(1.2,el+(e.clientY-py)*-.008));px=e.clientX;py=e.clientY;render()});
+canvas.addEventListener('pointerup',()=>dragging=false);
+
+const V=(x,y,z)=>[x,y,z], add=(a,b)=>a.map((v,i)=>v+b[i]), sub=(a,b)=>a.map((v,i)=>v-b[i]);
+const dot=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
+const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+const unit=a=>{const n=Math.hypot(...a)||1;return a.map(v=>v/n)};
+function modelPoint(p){
+  let [x,y,z]=p, c=Math.cos(state.roll),s=Math.sin(state.roll); [y,z]=[y*c-z*s,y*s+z*c];
+  c=Math.cos(state.pitch);s=Math.sin(state.pitch); [x,y]=[x*c-y*s,x*s+y*c];
+  return [x+state.position[0],y+state.position[1],z+state.position[2]];
+}
+let polys=[], lines=[];
+function poly(points,fill,stroke='#27424a'){polys.push({p:points.map(modelPoint),fill,stroke})}
+function line(points,color='#71949b',width=1){lines.push({p:points.map(modelPoint),color,width})}
+function geometry(){
+  polys=[];lines=[];
+  // Faceted ellipsoidal fuselage.
+  const rings=9,segs=10;
+  for(let i=0;i<rings-1;i++)for(let j=0;j<segs;j++){
+    const body=(ii,jj)=>{const t=-Math.PI/2+Math.PI*ii/(rings-1),q=2*Math.PI*jj/segs;
+      return V(-.04+.57*Math.sin(t),.08+.105*Math.cos(t)*Math.cos(q),.10*Math.cos(t)*Math.sin(q))};
+    poly([body(i,j),body(i+1,j),body(i+1,(j+1)%segs),body(i,(j+1)%segs)],j<5?'#e7ece6':'#c6d2cf');
+  }
+  // Streamlined nose/head and a dark beak.
+  poly([V(.48,.13,-.075),V(.68,.13,-.045),V(.72,.11,0),V(.68,.13,.045),V(.48,.13,.075)],'#f2f1df');
+  poly([V(.68,.135,-.04),V(.79,.115,0),V(.68,.135,.04)],'#d49b46','#6d542d');
+  // Horizontal tail and clearly separate vertical fin.
+  poly([V(-.43,.09,0),V(-.72,.105,-.34),V(-.67,.105,0),V(-.72,.105,.34)],'#d9e3df');
+  poly([V(-.43,.1,0),V(-.70,.10,0),V(-.65,.43,0)],'#75a6a4','#d1eded');
+  line([V(-.69,.12,0),V(-.655,.39,0)],'#eefafa',2);
+  // Legs/skids establish contact at local y=-.1.
+  for(const z of [-.055,.055]){line([V(-.12,.01,z),V(-.2,-.1,z)],'#4d5c5b',3);line([V(-.25,-.1,z),V(-.12,-.1,z)],'#a6b6b2',3)}
+  // Symmetric inner arm and articulated outer hand wing.
+  const shoulder=parameters.shoulder_span_m/2,wrist=parameters.wrist_span_m/2,tip=parameters.span_m/2;
+  const wave=Math.sin(state.phase), inner=.244*wave, fold=.419*Math.sin(state.phase+.38);
+  for(const side of [-1,1]){
+    const wp=(d,x,yoff=0)=>V(x,.11+yoff+d*Math.sin(inner),side*d*Math.cos(inner));
+    const wristLead=wp(wrist,.17), wristTrail=wp(wrist,-.17);
+    const outer=(d,x,yoff=0)=>{const u=d-wrist,ang=inner+fold;
+      return V(x,.11+yoff+wrist*Math.sin(inner)+u*Math.sin(ang),side*(wrist*Math.cos(inner)+u*Math.cos(ang)))};
+    poly([wp(shoulder,.18),wristLead,wristTrail,wp(shoulder,-.18)],'#dce8e5','#4e777d');
+    poly([wristLead,outer((wrist+tip)*.72,.10),outer(tip,-.03),outer(tip,-.07),wristTrail],'#b9d2d0','#3a6970');
+    // feather ribs make the hand panel's taper/articulation legible
+    for(let k=1;k<6;k++){let d=wrist+(tip-wrist)*k/6;line([outer(d,.12-(d-wrist)*.25),outer(d,-.16+(d-wrist)*.16)],'#709a9c',1)}
+    line([wp(shoulder,0),wp(wrist,0)],'#f3f6e9',3);line([outer(wrist,0),outer(tip,-.045)],'#eef7ed',2);
+    const w=outer(wrist,0); // cyan wrist diamond
+    poly([add(w,V(.025,0,0)),add(w,V(0,.025,0)),add(w,V(-.025,0,0)),add(w,V(0,-.025,0))],'#55e0d9','#eaffff');
+  }
+}
+function camera(){
+  const target=state.position.slice(); let eye,up,ortho=false,scale=1;
+  if(view==='top'){eye=add(target,V(0,8,0));up=V(1,0,0);ortho=true;scale=1.42}
+  else if(view==='side'){eye=add(target,V(0,0,8));up=V(0,1,0);ortho=true;scale=1.42}
+  else if(view==='front'){eye=add(target,V(8,0,0));up=V(0,1,0);ortho=true;scale=1.42}
+  else{eye=add(target,V(4.0*Math.cos(el)*Math.cos(az),2.1+4*Math.sin(el),4.0*Math.cos(el)*Math.sin(az)));up=V(0,1,0)}
+  const f=unit(sub(target,eye)),r=unit(cross(f,up)),u=unit(cross(r,f));
+  return {eye,f,r,u,ortho,scale};
+}
+function render(){
+  const box=canvas.getBoundingClientRect(),dpr=Math.min(2,devicePixelRatio||1),W=Math.max(1,box.width),H=Math.max(1,box.height);
+  if(canvas.width!==Math.round(W*dpr)||canvas.height!==Math.round(H*dpr)){canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr)}
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  const grad=ctx.createLinearGradient(0,0,0,H);grad.addColorStop(0,'#173640');grad.addColorStop(.56,'#6f9192');grad.addColorStop(.565,'#62736b');grad.addColorStop(1,'#28362f');ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
+  geometry();const cam=camera(),focal=Math.min(W,H)*1.25;
+  const project=p=>{const q=sub(p,cam.eye),z=dot(q,cam.f);if(cam.ortho){const sc=Math.min(W,H)/(parameters.span_m*cam.scale);return [W/2+dot(q,cam.r)*sc,H/2-dot(q,cam.u)*sc,z]}
+    return [W/2+dot(q,cam.r)*focal/Math.max(.15,z),H/2-dot(q,cam.u)*focal/Math.max(.15,z),z]};
+  // runway and metric depth grid in actual world coordinates
+  const ground=[];
+  for(let x=-30;x<=30;x+=2)ground.push({p:[V(x,.002,-2),V(x,.002,2)],color:x%10===0?'#b3c1aa':'#718176',width:x%10===0?1.4:.6});
+  for(let z=-2;z<=2;z+=.5)ground.push({p:[V(-30,.002,z),V(30,.002,z)],color:z===0?'#e7d6a2':'#718176',width:z===0?2:.6});
+  // shadow under the moving aircraft
+  const sh=project([state.position[0],.006,state.position[2]]);ctx.beginPath();ctx.ellipse(sh[0],sh[1],55/(1+Math.abs(sh[2])*.08),12/(1+Math.abs(sh[2])*.08),0,0,Math.PI*2);ctx.fillStyle='#07100e55';ctx.fill();
+  for(const l of ground){const p=l.p.map(project);ctx.beginPath();ctx.moveTo(p[0][0],p[0][1]);ctx.lineTo(p[1][0],p[1][1]);ctx.strokeStyle=l.color;ctx.lineWidth=l.width;ctx.stroke()}
+  const draw=[...polys].map(o=>({...o,s:o.p.map(project)})).sort((a,b)=>b.s.reduce((n,p)=>n+p[2],0)/b.s.length-a.s.reduce((n,p)=>n+p[2],0)/a.s.length);
+  for(const o of draw){ctx.beginPath();o.s.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.closePath();ctx.fillStyle=o.fill;ctx.fill();ctx.strokeStyle=o.stroke;ctx.lineWidth=1;ctx.stroke()}
+  for(const l of lines){const p=l.p.map(project);ctx.beginPath();p.forEach((q,i)=>i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]));ctx.strokeStyle=l.color;ctx.lineWidth=l.width;ctx.stroke()}
+  ctx.fillStyle='#efffff';ctx.font='12px system-ui';ctx.fillText(view==='orbit'?'ORBIT / PERSPECTIVE':view.toUpperCase()+' / ORTHOGRAPHIC',18,H-42);
+}
+function frame(now){
+  if(running){
+    accumulator=Math.min(.1,accumulator+(now-last)/1000);
+    while(accumulator>=1/120){state=step(state,controls,environment,1/120);accumulator-=1/120}
+    telemetry();
+  }
+  last=now;render();requestAnimationFrame(frame);
+}
+addEventListener('resize',render);telemetry();render();requestAnimationFrame(frame);
+</script>
+</body>
+</html>

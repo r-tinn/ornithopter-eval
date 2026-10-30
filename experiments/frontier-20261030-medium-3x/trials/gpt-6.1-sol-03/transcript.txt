@@ -1,0 +1,638 @@
+INITIAL INSTRUCTION
+
+# Swan Flight Lab — swan-v3.0
+
+Build a dependency-free interactive 3D ornithopter flight lab from the two source
+photographs and SOURCE_GUIDE.md. Deliver a self-contained static site in
+`submission/`: `index.html`, `physics.mjs`, `interpretation.json`, plus optional
+local JS/CSS. No downloads, build step, imports from a CDN, or external requests.
+Canvas with real 3D projection or WebGL are both acceptable. A flat sprite is not.
+
+## One attempt
+
+You receive one user instruction, a fixed budget and the same starter files as
+every other model. You may inspect supplied text files and edit your submission.
+You cannot execute code, calculate using tools, run a server, build, render,
+lint or test, or see grading feedback. Tool exchanges for reading and writing
+are allowed within this single attempt. Finish with a brief completion message.
+All execution and grading occur after submission. Patch-application success is
+file-operation feedback, not program verification. The shell tool is a virtual
+file inspector: only `ls PATH`, `cat PATH`, and `head -n N PATH` are implemented;
+it never runs a command or launches a process. Paths start `inputs/` or `submission/`.
+
+## Interpret the sources
+
+Export `parameters` from physics.mjs with numeric SI fields:
+`span_m`, `wing_area_m2`, `wrist_span_m`, `shoulder_span_m`, `body_width_m`,
+`overall_length_m`, and `aspect_ratio` (derive b²/S). Read values from page 02
+using the source guide. Use 1 ft = 0.3048 m and 1 in = 0.0254 m exactly.
+`interpretation.json` must contain `sources` (an array of objects with `id`,
+`used_for`), `assumptions` (array of strings), `excluded_fields` (array of strings),
+and `limitations` (array of strings). Explain your decisions in those fields.
+
+## Explicit benchmark model (new assumptions)
+
+Use SI, x forward, y up, z lateral. Mass = 6 kg; g = 9.80665; rho = 1.225 kg/m³.
+This is a point-mass, cycle-averaged model, with independently animated wing
+panels, not a structural, unsteady-flow or aeroelastic solver.
+
+Export pure functions `forces(state, controls, environment)` and
+`step(state, controls, environment, dt)` from physics.mjs. They must use the same
+production implementation as the browser. Inputs must not be mutated.
+
+State: `{position:[x,y,z], velocity:[vx,vy,vz], pitch, roll, phase, time, status}`.
+Angles are radians. Controls: `{throttle, pitch, bank, brake}` with throttle/brake
+in [0,1] and pitch/bank in [-1,1]. Environment: `{wind:[wx,wy,wz], rho}`.
+
+Forces: relative air velocity = velocity − wind; speed = its norm. With
+`alpha = state.pitch − atan2(vy_air, hypot(vx_air,vz_air))`, set
+`CL = clamp(0.6 + 3*alpha, -0.2, 1.4)` and
+`CD = 0.035 + CL²/(pi*0.8*aspect_ratio)`.
+`L = 0.5*rho*speed²*S*CL`, `D = 0.5*rho*speed²*S*CD`.
+Mechanical power P = 400*throttle W; cycle-averaged thrust
+`T = 0.65*P/max(speed,5)`. Propulsive power T*speed may not exceed 0.65*P.
+This thrust models an assumed powered flapping drive, not experimentally proven
+wing performance. At zero speed use [1,0,0] as the forward unit vector.
+
+Drag opposes relative flow and thrust follows it. Lift is perpendicular to
+relative flow: project world-up onto that perpendicular plane, normalize,
+then rotate about the forward vector by roll. Use a finite fallback for vertical
+flow. Gravity is [0,-mass*g,0]. Return
+`{lift,drag,thrust,power,airspeed,cl,force:[fx,fy,fz]}` (force includes gravity).
+
+For dt in (0,0.05], advance with semi-implicit Euler (velocity before position).
+Pitch changes at `0.5*controls.pitch` rad/s, clamped to [-0.35,0.45]. Roll approaches
+`0.6*controls.bank` at at most 2 rad/s. Phase advances at 2 Hz while powered and
+stops with zero throttle. Use current-state forces before updating attitude.
+Reject invalid dt. Use fixed physics steps of 1/120 s in the real-time UI.
+
+Ground is y=0.2 m. On the ground support cancels downward vertical force.
+Braking adds up to 18 N against horizontal motion without reversing it.
+Lift can overcome weight to allow takeoff; do not impose a flight path.
+On an airborne touchdown, sink speed <=3 m/s, horizontal speed <=14 m/s and
+abs(roll)<=0.35 rad produce `landed`; otherwise `crashed`. Ground status is
+`grounded` before first takeoff; airborne status is `flying`. Prevent penetration.
+No auto-level, altitude lock, prescribed sine trajectory, or hidden autopilot.
+
+## Browser contract
+
+Render a visible articulated model with symmetric inner and outer wing panels,
+wrist locations and overall proportions informed by the source. The outer panel
+must visibly change angle relative to the inner panel; use a documented assumed
+stroke. Include a tail and fin/rudder, ground/runway, depth cues and an orbitable
+inspection view. State clearly that this is an educational approximation.
+
+Required `data-testid` elements:
+`scene` (canvas, at least 600×350 CSS pixels at a 1280×800 viewport),
+`start`, `pause`, `reset`, `approach`, `view-top`, `view-side`, `view-front`,
+`throttle` (range 0..1), and `telemetry`.
+`view-top` switches to a view directly above the actual model, nose pointing up
+the screen, with both wings and the tail unobscured. Show the complete aircraft.
+Do not substitute a separate illustration for this view. It supports two binary
+image checks: a wing on each side of the body, wings extending laterally across
+the body, and a tail aft of the wing roots. `view-side` shows the actual model
+from its side, nose pointing right, with the tail fin unobscured. The fin must be
+a distinct surface projecting above the aft body; its exact angle/shape is not
+specified by the sources. `view-front` looks along the body axis from in front,
+with world-up pointing up the screen, showing both wings and their roots.
+Keep the model centred as it moves. These views render the same production
+geometry and animation. A powered approach will be sampled from the front at
+roughly 0, 0.125, 0.25 and 0.375 s to check visible wingtip motion relative to roots.
+ArrowUp/ArrowDown change pitch, ArrowLeft/ArrowRight change bank; Space brakes.
+Telemetry displays speed, altitude, simulation time and status, updates while
+running and freezes on pause. Handle key release and focus loss.
+
+Reset to position [0,0.2,0], velocity [0,0,0], zero attitude, phase/time 0,
+status grounded, throttle 0, paused. Start runs physics. Pause freezes physics
+and wing animation. `approach` loads position [0,2,0], velocity [10,-1,0],
+pitch/roll/phase/time 0, status flying, throttle 0, paused. Both presets must
+render immediately. Simulation must support takeoff with power and manual pitch,
+and a safe landing from the approach preset. The fixed takeoff sequence is full
+throttle, Start, wait 2 s, hold ArrowUp for 0.3 s, release and continue; be flying
+above y=0.7 m throughout the samples at 6, 6.25, 6.5, 6.75 and 7 s.
+The landing sequence is approach, Start, ArrowUp for 0.4 s, release and continue
+for 2 s; finish landed at y=0.2 m with zero vertical velocity.
+
+The remaining browser checks ask whether full power moves x more than 0.1 m
+farther than zero power over 1 s, ArrowUp produces more than 0.1 rad more pitch
+than neutral over 0.4 s, Pause freezes an advancing state for 1 s, and Reset
+restores the exact initial state and zero throttle and stays paused for 1 s.
+The force checks ask only whether zero throttle removes thrust (positive at
+full throttle), doubling horizontal airspeed from 10 to 20 m/s quadruples
+positive lift at zero pitch/roll, and wind [10,0,0] removes lift at velocity
+[10,0,0]. These focused checks do not cover every equation above.
+
+Additional deterministic checks sample powered phase at non-cycle-aligned times
+against the specified 2 Hz cycle, require phase to stay fixed without power,
+and check that descent never takes the point-mass contact position below y=0.2 m.
+The unpowered glide check starts in steady trim at zero angle of attack in still
+air, then runs 2 s at 1/120 s steps. Horizontal distance divided by height lost
+must agree within 1% with CL/CD from the specified polar (CL=0.6). The trim speed
+is sqrt(2*mass*g*cos(gamma)/(rho*S*CL)), gamma=atan(CD/CL), pitch=-gamma.
+This tests the assumed equations, not measured real-world gliding performance.
+Wheels and rudder/yaw actuation are not required by this task.
+
+Expose `window.flightLab = {getState(), getControls()}` returning JSON-safe
+copies of the actual state and controls used by the render/physics loop. This is
+observation only: no grader-specific behavior. A 3D visual/source review is
+separate from numeric parameter checks; publishing a claim of physical validity
+requires evidence beyond this eval.
+
+
+# Source packet: swan-v3.0
+
+These two unchanged photographs come from Stanley J. O. Tinn's family archive.
+They are historical design notes and observations, not a complete or validated
+ornithopter blueprint. Numbers must be interpreted from the supplied images.
+
+- **02 / Unknown-2.jpg**: use the swan outline and the rounded **“Say”** span,
+  wrist span, shoulder span, maximum body width, overall length, and the paragraph's
+  total wing area. Use the stated aspect ratio as a rounding cross-check. The
+  central portion is approximately parallel-chord; outer panels taper smoothly.
+- **14 / Unknown-14.jpg**: use the distinction between inner/arm and outer/hand
+  wing, and the proposal for conventional tail/fin/rudder control. It supplies
+  qualitative design context, not a solved force model.
+
+Excluded fields remain visible in the originals. Do not use the “3.135 ft” wing
+length, the missing table's 7.83 comparison, or the crossed-out 14% area argument
+on page 02. Compute individual wing length from span and shoulder span instead.
+The page 14 biological stroke-angle reference frames, elastic stiffness,
+vortex-lift landing hypothesis, and unspecified curved-plate polar are excluded
+from numeric requirements. Do not invent missing appendices or attribute the
+benchmark's new assumptions to Stanley.
+
+The task supplies the aerodynamic, propulsion, mass, control and ground-contact
+assumptions needed for a reproducible educational model. These are explicitly new.
+Do not mix in the distinct “Standard Model Swan” or the previous human-carrying
+simulators. You have not been given either as an input.
+
+
+Attempt limits: {"max_output_tokens_per_response": 16000, "max_output_tokens_total": 16000, "max_requests": 24, "max_submission_bytes": 2000000, "max_wall_seconds": 900, "reasoning_effort": "medium", "task_version": "swan-v3.0"}. Output-token limits include reasoning.
+
+Starter files: submission/index.html, submission/physics.mjs, submission/interpretation.json. Images follow, labelled in filename order.
+
+Images: inputs/sources/Unknown-2.jpg, inputs/sources/Unknown-14.jpg
+
+
+REQUEST
+{
+  "event": "request",
+  "index": 1,
+  "model": "gpt-6.1-sol",
+  "max_output_tokens": 16000,
+  "reasoning": {
+    "effort": "medium"
+  },
+  "tools": [
+    {
+      "type": "apply_patch"
+    },
+    {
+      "type": "shell",
+      "environment": {
+        "type": "local"
+      }
+    }
+  ],
+  "instructions": "Follow the task's file-only tool policy. The shell is virtual and cannot execute programs. Submit once; no verification.",
+  "input_sha256": "a418fb3d6a716ae47f4cdaec56a2fb89475c8b77be89222c823e3063210bfd32"
+}
+
+RESPONSE resp_0be9486619fb2537016ae4a106db0487d299ced2a58d109559 / completed
+{
+  "id": "sh_0be9486619fb2537016ae4a109867087d2ae148964123def1b",
+  "type": "shell_call",
+  "status": "completed",
+  "action": {
+    "commands": [
+      "ls inputs/"
+    ],
+    "max_output_length": 3000,
+    "timeout_ms": null
+  },
+  "call_id": "call_s858utmvR4vvFJ9Fsod2Khfr",
+  "environment": null
+}
+
+TOOL RESULT
+{
+  "type": "shell_call_output",
+  "call_id": "call_s858utmvR4vvFJ9Fsod2Khfr",
+  "output": [
+    {
+      "stdout": "SOURCE_GUIDE.md\nTASK.md\nsources/",
+      "stderr": "",
+      "outcome": {
+        "type": "exit",
+        "exit_code": 0
+      }
+    }
+  ]
+}
+
+REQUEST
+{
+  "event": "request",
+  "index": 2,
+  "model": "gpt-6.1-sol",
+  "max_output_tokens": 15973,
+  "reasoning": {
+    "effort": "medium"
+  },
+  "tools": [
+    {
+      "type": "apply_patch"
+    },
+    {
+      "type": "shell",
+      "environment": {
+        "type": "local"
+      }
+    }
+  ],
+  "instructions": "Follow the task's file-only tool policy. The shell is virtual and cannot execute programs. Submit once; no verification.",
+  "input_sha256": "84601e5582c3fa455a99cc6c359eafa4490f034040a91cc485260d6d9176fbca"
+}
+
+RESPONSE resp_0be9486619fb2537016ae4a10aa42887d28a9958d785dd58dd / completed
+{
+  "id": "sh_0be9486619fb2537016ae4a10e77c887d29343358679f9a093",
+  "type": "shell_call",
+  "status": "completed",
+  "action": {
+    "commands": [
+      "cat inputs/SOURCE_GUIDE.md"
+    ],
+    "max_output_length": 12000,
+    "timeout_ms": null
+  },
+  "call_id": "call_GdWSiMwVVHQ6a3ApwkDZG8rt",
+  "environment": null
+}
+
+TOOL RESULT
+{
+  "type": "shell_call_output",
+  "call_id": "call_GdWSiMwVVHQ6a3ApwkDZG8rt",
+  "output": [
+    {
+      "stdout": "# Source packet: swan-v3.0\n\nThese two unchanged photographs come from Stanley J. O. Tinn's family archive.\nThey are historical design notes and observations, not a complete or validated\nornithopter blueprint. Numbers must be interpreted from the supplied images.\n\n- **02 / Unknown-2.jpg**: use the swan outline and the rounded **\u201cSay\u201d** span,\n  wrist span, shoulder span, maximum body width, overall length, and the paragraph's\n  total wing area. Use the stated aspect ratio as a rounding cross-check. The\n  central portion is approximately parallel-chord; outer panels taper smoothly.\n- **14 / Unknown-14.jpg**: use the distinction between inner/arm and outer/hand\n  wing, and the proposal for conventional tail/fin/rudder control. It supplies\n  qualitative design context, not a solved force model.\n\nExcluded fields remain visible in the originals. Do not use the \u201c3.135 ft\u201d wing\nlength, the missing table's 7.83 comparison, or the crossed-out 14% area argument\non page 02. Compute individual wing length from span and shoulder span instead.\nThe page 14 biological stroke-angle reference frames, elastic stiffness,\nvortex-lift landing hypothesis, and unspecified curved-plate polar are excluded\nfrom numeric requirements. Do not invent missing appendices or attribute the\nbenchmark's new assumptions to Stanley.\n\nThe task supplies the aerodynamic, propulsion, mass, control and ground-contact\nassumptions needed for a reproducible educational model. These are explicitly new.\nDo not mix in the distinct \u201cStandard Model Swan\u201d or the previous human-carrying\nsimulators. You have not been given either as an input.\n",
+      "stderr": "",
+      "outcome": {
+        "type": "exit",
+        "exit_code": 0
+      }
+    }
+  ]
+}
+
+REQUEST
+{
+  "event": "request",
+  "index": 3,
+  "model": "gpt-6.1-sol",
+  "max_output_tokens": 15942,
+  "reasoning": {
+    "effort": "medium"
+  },
+  "tools": [
+    {
+      "type": "apply_patch"
+    },
+    {
+      "type": "shell",
+      "environment": {
+        "type": "local"
+      }
+    }
+  ],
+  "instructions": "Follow the task's file-only tool policy. The shell is virtual and cannot execute programs. Submit once; no verification.",
+  "input_sha256": "ad53eecd38955aee21d5a63e107916c7b7890421db793936d4ca94c180630d93"
+}
+
+RESPONSE resp_0be9486619fb2537016ae4a111206c87d29f4b366e2fbd290b / completed
+{
+  "id": "sh_0be9486619fb2537016ae4a112b23887d2b878850009edfe93",
+  "type": "shell_call",
+  "status": "completed",
+  "action": {
+    "commands": [
+      "cat submission/physics.mjs"
+    ],
+    "max_output_length": 12000,
+    "timeout_ms": null
+  },
+  "call_id": "call_rASt9smtZ0cdgSF9Om1Fmeo2",
+  "environment": null
+}
+
+TOOL RESULT
+{
+  "type": "shell_call_output",
+  "call_id": "call_rASt9smtZ0cdgSF9Om1Fmeo2",
+  "output": [
+    {
+      "stdout": "// Implement the shared production physics contract in TASK.md.\nexport const parameters = {};\nexport function forces(state, controls, environment) { throw new Error('Not implemented'); }\nexport function step(state, controls, environment, dt) { throw new Error('Not implemented'); }\n",
+      "stderr": "",
+      "outcome": {
+        "type": "exit",
+        "exit_code": 0
+      }
+    }
+  ]
+}
+
+REQUEST
+{
+  "event": "request",
+  "index": 4,
+  "model": "gpt-6.1-sol",
+  "max_output_tokens": 15912,
+  "reasoning": {
+    "effort": "medium"
+  },
+  "tools": [
+    {
+      "type": "apply_patch"
+    },
+    {
+      "type": "shell",
+      "environment": {
+        "type": "local"
+      }
+    }
+  ],
+  "instructions": "Follow the task's file-only tool policy. The shell is virtual and cannot execute programs. Submit once; no verification.",
+  "input_sha256": "0987a6423ebbd0777723ae194ef2a6baa6014496c35382955b7413bdf65391b6"
+}
+
+RESPONSE resp_0be9486619fb2537016ae4a114232087d2ba7b98aa3cf6505b / completed
+[Private reasoning is not rendered; raw encrypted metadata is retained in events.jsonl.]
+[Private reasoning is not rendered; raw encrypted metadata is retained in events.jsonl.]
+[Private reasoning is not rendered; raw encrypted metadata is retained in events.jsonl.]
+[Private reasoning is not rendered; raw encrypted metadata is retained in events.jsonl.]
+[Private reasoning is not rendered; raw encrypted metadata is retained in events.jsonl.]
+{
+  "id": "msg_0be9486619fb2537016ae4a15a44a487d2af43c3b63ccc2575",
+  "type": "message",
+  "status": "completed",
+  "content": [
+    {
+      "type": "output_text",
+      "annotations": [],
+      "logprobs": [],
+      "text": "I\u2019ll keep the source-derived dimensions separate from the benchmark\u2019s new physics assumptions, and use the same physics module for the simulation and browser controls. The model will have articulated inner and outer wings, plus inspection views of the actual 3D geometry."
+    }
+  ],
+  "phase": "commentary",
+  "role": "assistant"
+}
+{
+  "id": "sh_0be9486619fb2537016ae4a15be81c87d2ab5287dbbef9c1d4",
+  "type": "shell_call",
+  "status": "completed",
+  "action": {
+    "commands": [
+      "cat submission/index.html"
+    ],
+    "max_output_length": 3000,
+    "timeout_ms": null
+  },
+  "call_id": "call_5UUkGPpdJGc1CmgPS64DUO5I",
+  "environment": null
+}
+
+TOOL RESULT
+{
+  "type": "shell_call_output",
+  "call_id": "call_5UUkGPpdJGc1CmgPS64DUO5I",
+  "output": [
+    {
+      "stdout": "<!doctype html>\n<html lang=\"en\"><meta charset=\"utf-8\"><title>Swan Flight Lab</title>\n<!-- Implement the browser contract in TASK.md. -->\n<body><p>Implement Swan Flight Lab.</p></body></html>\n",
+      "stderr": "",
+      "outcome": {
+        "type": "exit",
+        "exit_code": 0
+      }
+    }
+  ]
+}
+
+REQUEST
+{
+  "event": "request",
+  "index": 5,
+  "model": "gpt-6.1-sol",
+  "max_output_tokens": 13477,
+  "reasoning": {
+    "effort": "medium"
+  },
+  "tools": [
+    {
+      "type": "apply_patch"
+    },
+    {
+      "type": "shell",
+      "environment": {
+        "type": "local"
+      }
+    }
+  ],
+  "instructions": "Follow the task's file-only tool policy. The shell is virtual and cannot execute programs. Submit once; no verification.",
+  "input_sha256": "e28b86c32a0be289d9efce73e7d10233b5f98ceedfa8279b70b262c00da13eb6"
+}
+
+RESPONSE resp_0be9486619fb2537016ae4a15cc24c87d2b072813d9e71b7aa / completed
+{
+  "id": "sh_0be9486619fb2537016ae4a15f5e7087d2802535dca9100f4d",
+  "type": "shell_call",
+  "status": "completed",
+  "action": {
+    "commands": [
+      "cat submission/interpretation.json"
+    ],
+    "max_output_length": 3000,
+    "timeout_ms": null
+  },
+  "call_id": "call_aFAWAcPCoIt1IvDJrO4qrp9X",
+  "environment": null
+}
+
+TOOL RESULT
+{
+  "type": "shell_call_output",
+  "call_id": "call_aFAWAcPCoIt1IvDJrO4qrp9X",
+  "output": [
+    {
+      "stdout": "{\"sources\":[],\"assumptions\":[],\"excluded_fields\":[],\"limitations\":[]}\n",
+      "stderr": "",
+      "outcome": {
+        "type": "exit",
+        "exit_code": 0
+      }
+    }
+  ]
+}
+
+REQUEST
+{
+  "event": "request",
+  "index": 6,
+  "model": "gpt-6.1-sol",
+  "max_output_tokens": 13447,
+  "reasoning": {
+    "effort": "medium"
+  },
+  "tools": [
+    {
+      "type": "apply_patch"
+    },
+    {
+      "type": "shell",
+      "environment": {
+        "type": "local"
+      }
+    }
+  ],
+  "instructions": "Follow the task's file-only tool policy. The shell is virtual and cannot execute programs. Submit once; no verification.",
+  "input_sha256": "2b92760248bd526a7f34dc252ca2970ee364c7e0b5aee89d086b927e9c47e439"
+}
+
+RESPONSE resp_0be9486619fb2537016ae4a16042e087d2ad86bfb5a5cff2dd / completed
+{
+  "id": "apc_0be9486619fb2537016ae4a1638c7487d2a98c599cb0c0cd9f",
+  "type": "apply_patch_call",
+  "status": "completed",
+  "call_id": "call_lPvQXy3D4tEsKx7IjjuKaC9q",
+  "operation": {
+    "type": "update_file",
+    "diff": "@@\n-// Implement the shared production physics contract in TASK.md.\n-export const parameters = {};\n-export function forces(state, controls, environment) { throw new Error('Not implemented'); }\n-export function step(state, controls, environment, dt) { throw new Error('Not implemented'); }\n+// Source dimensions: page 02, rounded \"Say\" column, except the paragraph's area.\n+// All aerodynamic, power, mass, control and contact rules below are NEW assumptions.\n+const FT = 0.3048, IN = 0.0254;\n+export const parameters = Object.freeze({\n+  span_m: 7.4 * FT,\n+  wing_area_m2: 6.61 * FT * FT,\n+  wrist_span_m: 3.7 * FT,\n+  shoulder_span_m: 4 * IN,\n+  body_width_m: 8 * IN,\n+  overall_length_m: 55 * IN,\n+  aspect_ratio: (7.4 * FT) ** 2 / (6.61 * FT * FT)\n+});\n+export const constants = Object.freeze({mass: 6, g: 9.80665, rho: 1.225, ground: 0.2});\n+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));\n+const dot = (a, b) => a[0]*b[0] + a[1]*b[1] + a[2]*b[2];\n+const cross = (a, b) => [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]];\n+const normalized = a => { const n = Math.hypot(...a); return a.map(x => x/n); };\n+const copy = s => ({...s, position: [...s.position], velocity: [...s.velocity]});\n+\n+/** Cycle-averaged forces in world SI axes: x forward, y up, z lateral.\n+ *  Scalars lift/drag/thrust are N; power is mechanical W. force includes contact.\n+ *  This function and step never mutate their arguments.\n+ */\n+export function forces(state, controls, environment = {}) {\n+  const wind = environment.wind || [0, 0, 0];\n+  const rho = environment.rho ?? constants.rho;\n+  const air = state.velocity.map((v, i) => v - wind[i]);\n+  const speed = Math.hypot(...air);\n+  const forward = speed > 1e-12 ? air.map(v => v / speed) : [1, 0, 0];\n+  const alpha = state.pitch - Math.atan2(air[1], Math.hypot(air[0], air[2]));\n+  const cl = clamp(0.6 + 3 * alpha, -0.2, 1.4);\n+  const cd = 0.035 + cl * cl / (Math.PI * 0.8 * parameters.aspect_ratio);\n+  const qS = 0.5 * rho * speed * speed * parameters.wing_area_m2;\n+  const lift = qS * cl, drag = qS * cd;\n+  const power = 400 * clamp(controls.throttle ?? 0, 0, 1);\n+  const thrust = 0.65 * power / Math.max(speed, 5);\n+  // Projection of world-up onto the plane normal to forward.\n+  let up = [-forward[0]*forward[1], 1-forward[1]*forward[1], -forward[2]*forward[1]];\n+  if (Math.hypot(...up) < 1e-8) {\n+    // Project world-x instead, for a finite vertical-flow fallback.\n+    up = [1-forward[0]*forward[0], -forward[0]*forward[1], -forward[0]*forward[2]];\n+  }\n+  up = normalized(up);\n+  const side = cross(forward, up);\n+  const c = Math.cos(state.roll), s = Math.sin(state.roll);\n+  const liftDirection = up.map((u, i) => u*c + side[i]*s);\n+  const force = forward.map((f, i) => f*(thrust-drag) + liftDirection[i]*lift);\n+  force[1] -= constants.mass * constants.g;\n+  if (state.position[1] <= constants.ground + 1e-10 && state.velocity[1] <= 0) {\n+    force[1] = Math.max(0, force[1]);\n+    const horizontal = Math.hypot(state.velocity[0], state.velocity[2]);\n+    if (horizontal > 1e-12) {\n+      const braking = 18 * clamp(controls.brake ?? 0, 0, 1);\n+      force[0] -= braking * state.velocity[0] / horizontal;\n+      force[2] -= braking * state.velocity[2] / horizontal;\n+    }\n+  }\n+  return {lift, drag, thrust, power, airspeed: speed, cl, force};\n+}\n+\n+/** Semi-implicit Euler, with current-state forces and unilateral ground contact. */\n+export function step(state, controls, environment = {}, dt) {\n+  if (!Number.isFinite(dt) || dt <= 0 || dt > 0.05) {\n+    throw new RangeError('dt must be finite and in (0, 0.05] seconds');\n+  }\n+  const next = copy(state);\n+  if (state.status === 'crashed') return next;\n+  const onGround = state.position[1] <= constants.ground + 1e-10 && state.velocity[1] <= 0;\n+  // Apply a bounded braking impulse after the other forces. This is equivalent\n+  // to the force above away from zero speed, but cannot reverse motion at rest.\n+  const brake = clamp(controls.brake ?? 0, 0, 1);\n+  const f = forces(state, onGround && brake ? {...controls, brake: 0} : controls, environment);\n+  next.velocity = state.velocity.map((v, i) => v + dt * f.force[i] / constants.mass);\n+  if (onGround && brake) {\n+    const speed = Math.hypot(next.velocity[0], next.velocity[2]);\n+    const factor = speed > 0 ? Math.max(0, 1 - 18*brake*dt / (constants.mass*speed)) : 0;\n+    next.velocity[0] *= factor;\n+    next.velocity[2] *= factor;\n+  }\n+  next.position = state.position.map((p, i) => p + dt * next.velocity[i]);\n+  next.pitch = clamp(state.pitch + 0.5 * clamp(controls.pitch ?? 0, -1, 1) * dt, -0.35, 0.45);\n+  const targetRoll = 0.6 * clamp(controls.bank ?? 0, -1, 1);\n+  next.roll = state.roll + clamp(targetRoll - state.roll, -2*dt, 2*dt);\n+  next.phase = (state.phase + ((controls.throttle ?? 0) > 0 ? 4*Math.PI*dt : 0)) % (2*Math.PI);\n+  next.time = state.time + dt;\n+  if (next.position[1] <= constants.ground) {\n+    const touchdown = state.status === 'flying' || state.position[1] > constants.ground + 1e-10;\n+    if (touchdown) {\n+      const safe = -next.velocity[1] <= 3 &&\n+        Math.hypot(next.velocity[0], next.velocity[2]) <= 14 && Math.abs(next.roll) <= 0.35;\n+      next.status = safe ? 'landed' : 'crashed';\n+    }\n+    next.position[1] = constants.ground;\n+    next.velocity[1] = 0;\n+  } else {\n+    next.status = 'flying';\n+  }\n+  return next;\n+}\n",
+    "path": "submission/physics.mjs"
+  }
+}
+{
+  "id": "apc_0be9486619fb2537016ae4a171db1c87d28cb9f2896653b82b",
+  "type": "apply_patch_call",
+  "status": "completed",
+  "call_id": "call_ff5JC0S0Rw4grSj20NhieFgn",
+  "operation": {
+    "type": "update_file",
+    "diff": "@@\n-{\"sources\":[],\"assumptions\":[],\"excluded_fields\":[],\"limitations\":[]}\n+{\n+  \"sources\": [\n+    {\n+      \"id\": \"02 / Unknown-2.jpg\",\n+      \"used_for\": \"Swan outline and rounded Say column: span 7.4 ft, wrist span 3.7 ft (50% span), shoulder span 4 in, maximum body width 8 in, overall length 55 in. The paragraph supplies total wing area 6.61 ft^2. Exact conversions are 0.3048 m/ft and 0.0254 m/in. Aspect ratio is computed as span squared divided by area, about 8.284, consistent with the printed 8.29 rounding cross-check. The outline informs a long forward neck, narrow shoulders, approximately parallel-chord inner panels and smoothly tapered outer panels.\"\n+    },\n+    {\n+      \"id\": \"14 / Unknown-14.jpg\",\n+      \"used_for\": \"Qualitative distinction between inner/arm and outer/hand wing, and the proposal for conventional tail/fin/rudder control. This motivates independently articulated panel geometry and a visible aft tail and vertical fin, not a numeric aerodynamic or structural model.\"\n+    },\n+    {\n+      \"id\": \"SOURCE_GUIDE.md\",\n+      \"used_for\": \"Selection of rounded dimensions, separation of historical observations from the new benchmark assumptions, and explicit exclusions.\"\n+    }\n+  ],\n+  \"assumptions\": [\n+    \"The benchmark supplies the new mass 6 kg, gravity 9.80665 m/s^2, default density 1.225 kg/m^3, lift law, induced-drag polar, efficiency 0.8, 400 W full-throttle mechanical drive, 0.65 propulsive efficiency, control rates and contact rules. These are not claims by Stanley J. O. Tinn.\",\n+    \"A point-mass, cycle-averaged SI simulation uses x forward, y up, z lateral, current-state forces and semi-implicit Euler at 1/120 s in the browser. Wind is subtracted from world velocity. The browser defaults to still air.\",\n+    \"Individual root-to-tip wing length is (7.4 ft minus 4 in)/2, not the excluded wing-length entry. Each wrist lies at half of the 3.7 ft wrist span. The central panel chord is approximately 12 in, consistent with the rounded chord entry; the hand panels taper with an approximate elliptical envelope. Source area, not tessellated display area, drives forces.\",\n+    \"The display stroke is a new illustrative assumption: symmetric arm angle 0.28*sin(phase) rad and hand angle relative to arm 0.48*sin(phase-0.65) rad, at the specified 2 Hz while powered. The hand panels therefore rotate independently about their wrists. No biological stroke frame is inferred. Phase freezes without power and while paused.\",\n+    \"A faceted fuselage, long swan-like neck, short tail, conventional vertical fin with rudder seam, wing spars and feather-like panel seams are display approximations. Tail and fin are not separately solved aerodynamic surfaces; pitch and bank use the benchmark control law. Overall nose-to-tail length and maximum body width use source dimensions.\",\n+    \"Ground contact acts at the point-mass position y=0.2 m. A bounded braking impulse supplies up to 18 N without reversing horizontal velocity. The drawn wings and body do not undergo separate collision or structural simulation.\",\n+    \"For exactly vertical relative flow, world-x is projected onto the flow-normal plane to obtain a finite lift reference. Zero-speed forward direction is world-x. A crashed state is terminal until a preset is loaded.\"\n+  ],\n+  \"excluded_fields\": [\n+    \"Page 02: the 3.135 ft wing-length entry; individual wing length is derived from total span and shoulder span instead.\",\n+    \"Page 02: the missing table's 7.83 comparison and the crossed-out 14% area argument.\",\n+    \"Page 02: scaled-column dimensions are not substituted for the requested rounded Say values; printed AR 8.29 is a cross-check, not an independent force input.\",\n+    \"Page 14: biological arm/hand stroke-angle reference frames, elastic stiffness and resonance estimates.\",\n+    \"Page 14: vortex-lift landing hypothesis, unspecified curved-plate polar, and biological thrust/lift observations as quantitative force laws.\",\n+    \"Missing appendices, the distinct Standard Model Swan, and previous human-carrying simulators are not supplied and are not used.\"\n+  ],\n+  \"limitations\": [\n+    \"Educational approximation, not a validated ornithopter blueprint or a prediction of a real swan's performance.\",\n+    \"The assumed powered flapping drive is not experimentally proven wing performance. Propulsive power is bounded by 0.65 times mechanical input power.\",\n+    \"No unsteady flow, aeroelasticity, dynamic stall, structural stress, panel-resolved aerodynamics or wake solver. Animated wing motion does not generate extra instantaneous lift or thrust.\",\n+    \"No yaw/rudder actuation, wheels, water interaction or per-part ground collision. Bank tilts lift; there is no hidden autopilot, altitude lock or prescribed flight path.\",\n+    \"Historical photographs do not determine exact airfoil sections, fin shape, joint mechanisms or manufacturing details. Those visual choices are explicitly illustrative.\",\n+    \"Numerical agreement with the benchmark equations is not evidence of real-world physical validity.\"\n+  ]\n+}\n",
+    "path": "submission/interpretation.json"
+  }
+}
+{
+  "id": "apc_0be9486619fb2537016ae4a184e70c87d29cbb8babfe41a680",
+  "type": "apply_patch_call",
+  "status": "completed",
+  "call_id": "call_tCqqJ94jSvzzHcMK0R6YdvBb",
+  "operation": {
+    "type": "update_file",
+    "diff": "@@\n-<!doctype html>\n-<html lang=\"en\"><meta charset=\"utf-8\"><title>Swan Flight Lab</title>\n-<!-- Implement the browser contract in TASK.md. -->\n-<body><p>Implement Swan Flight Lab.</p></body></html>\n+<!doctype html>\n+<html lang=\"en\">\n+<head>\n+  <meta charset=\"utf-8\">\n+  <meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n+  <meta name=\"theme-color\" content=\"#14262c\">\n+  <title>Swan \u2014 Flight Lab</title>\n+  <link rel=\"stylesheet\" href=\"./style.css\">\n+</head>\n+<body>\n+  <header class=\"masthead\">\n+    <a class=\"brand\" href=\"./index.html\" aria-label=\"Swan Flight Lab home\"><span class=\"brand-icon\">\u2301</span> SWAN <span class=\"brand-divider\"></span><span class=\"brand-sub\">FLIGHT LAB</span></a>\n+    <div class=\"header-meta\"><span class=\"live-dot\"></span> EDUCATIONAL SIMULATION <span class=\"version\">V3.0</span></div>\n+  </header>\n+  <main>\n+    <div class=\"page-heading\">\n+      <div><p class=\"eyebrow\">ARCHIVE TO AIRFRAME / EXPERIMENT 03</p><h1>A study in powered flight<span>.</span></h1></div>\n+      <p class=\"intro\">Historical proportions. New assumptions.<br>An interactive, cycle-averaged ornithopter.</p>\n+    </div>\n+    <div class=\"lab-layout\">\n+      <section class=\"viewport-panel\" aria-label=\"Three dimensional flight inspection\">\n+        <div class=\"scene-toolbar\">\n+          <div class=\"scene-title\"><span class=\"live-dot\"></span> LIVE WORKSPACE</div>\n+          <nav class=\"views\" aria-label=\"Inspection views\">\n+            <button id=\"view-orbit\" class=\"selected\" aria-pressed=\"true\">3D orbit</button>\n+            <button data-testid=\"view-top\" id=\"view-top\" aria-pressed=\"false\">Top</button>\n+            <button data-testid=\"view-side\" id=\"view-side\" aria-pressed=\"false\">Side</button>\n+            <button data-testid=\"view-front\" id=\"view-front\" aria-pressed=\"false\">Front</button>\n+          </nav>\n+        </div>\n+        <div class=\"stage\">\n+          <canvas data-testid=\"scene\" id=\"scene\" aria-label=\"Orbitable articulated 3D swan ornithopter; drag to orbit and scroll to zoom\" tabindex=\"0\"></canvas>\n+          <div class=\"scene-note\"><span>SW\u201302</span><br>ARTICULATED DEMONSTRATOR</div>\n+          <div class=\"scene-status\"><span id=\"run-indicator\"></span><span id=\"run-label\">PAUSED</span></div>\n+          <div class=\"axis-key\"><b class=\"axis-x\">X</b> forward <b class=\"axis-y\">Y</b> up <b class=\"axis-z\">Z</b> lateral</div>\n+          <div class=\"orbit-hint\">\u2194 Drag to orbit <span>\u00b7</span> Scroll to zoom</div>\n+          <div class=\"scale-marker\">1 m <i></i></div>\n+        </div>\n+        <div data-testid=\"telemetry\" id=\"telemetry\" class=\"telemetry\" aria-live=\"off\">\n+          <div><span>AIRSPEED</span><strong id=\"speed\">0.00 <small>m/s</small></strong></div>\n+          <div><span>ALTITUDE \u00b7 WORLD Y</span><strong id=\"altitude\">0.20 <small>m</small></strong></div>\n+          <div><span>SIMULATION TIME</span><strong id=\"sim-time\">0.00 <small>s</small></strong></div>\n+          <div><span>FLIGHT STATUS</span><strong id=\"flight-status\" class=\"status-text\">Grounded</strong></div>\n+        </div>\n+      </section>\n+      <aside class=\"control-panel\">\n+        <div class=\"section-heading\"><h2>Flight controls</h2><span>01</span></div>\n+        <div class=\"transport\">\n+          <button data-testid=\"start\" id=\"start\" class=\"primary\">\u25b6 <span>Start</span></button>\n+          <button data-testid=\"pause\" id=\"pause\">\u2161 <span>Pause</span></button>\n+        </div>\n+        <div class=\"power-heading\"><label for=\"throttle\">DRIVE POWER</label><output id=\"throttle-value\" for=\"throttle\">0%</output></div>\n+        <input data-testid=\"throttle\" id=\"throttle\" aria-label=\"Throttle\" type=\"range\" min=\"0\" max=\"1\" step=\"0.01\" value=\"0\">\n+        <div class=\"range-labels\"><span>OFF</span><span>400 W</span></div>\n+        <div class=\"power-detail\"><span>Mechanical input</span><strong id=\"power-value\">0 W</strong></div>\n+        <div class=\"divider\"></div>\n+        <div class=\"controls-heading\">MANUAL INPUT</div>\n+        <div class=\"key-row\"><span>Pitch</span><div><kbd>\u2191</kbd><kbd>\u2193</kbd></div><output id=\"pitch-readout\">0.0\u00b0</output></div>\n+        <div class=\"key-row\"><span>Bank</span><div><kbd>\u2190</kbd><kbd>\u2192</kbd></div><output id=\"bank-readout\">0.0\u00b0</output></div>\n+        <div class=\"key-row\"><span>Ground brake</span><div><kbd class=\"space-key\">SPACE</kbd></div><output id=\"brake-readout\">OFF</output></div>\n+        <p class=\"help-text\">Hold an arrow to command attitude.<br>Release keys to hold pitch / centre bank.</p>\n+        <div class=\"divider\"></div>\n+        <div class=\"controls-heading\">LOAD A PRESET <span>PAUSED</span></div>\n+        <button data-testid=\"reset\" id=\"reset\" class=\"preset\"><span>\u21ba &nbsp; Ground reset</span><small>0 m/s \u00b7 0.2 m</small></button>\n+        <button data-testid=\"approach\" id=\"approach\" class=\"preset\"><span>\u2198 &nbsp; Landing approach</span><small>10 m/s \u00b7 2 m</small></button>\n+        <details class=\"flight-guide\">\n+          <summary>Quick flight guide <span>\uff0b</span></summary>\n+          <p><b>Takeoff</b> \u2014 full power, Start. After 2 seconds, hold \u2191 for 0.3 seconds, then release.</p>\n+          <p><b>Landing</b> \u2014 load approach, Start, hold \u2191 for 0.4 seconds, then release. No power needed.</p>\n+          <p>No autopilot. Ground contact is at y = 0.2 m.</p>\n+        </details>\n+      </aside>\n+    </div>\n+    <section class=\"notes-grid\" aria-label=\"Source and model notes\">\n+      <article><p class=\"eyebrow\">02 / THE PLANFORM</p><h3>Drawn from the archive</h3><p><b>2.256 m span</b> \u00b7 0.614 m\u00b2 wing area \u00b7 AR 8.284.<br>Rounded \u201cSay\u201d dimensions from Stanley J. O. Tinn\u2019s swan notes. Parallel-chord arms meet tapered hand wings at visible wrist joints.</p></article>\n+      <article><p class=\"eyebrow\">14 / THE ARTICULATION</p><h3>Two panels. One cycle.</h3><p>An assumed 2 Hz stroke articulates arm and hand separately. The conventional tail and fin follow the notes\u2019 design proposal. Wing motion is illustrative, not a flow solution.</p></article>\n+      <article class=\"assumption-card\"><p class=\"eyebrow\">MODEL BOUNDARY</p><h3>Explore, not certify</h3><p>6 kg point mass. Still air. Assumed 400 W drive.<br>This is an <b>educational approximation</b>, not a validated aircraft. New force and contact assumptions are documented in <a href=\"./interpretation.json\">the interpretation record \u2197</a>.</p></article>\n+    </section>\n+    <footer><span>SWAN FLIGHT LAB <b>/</b> FAMILY ARCHIVE \u2192 EDUCATIONAL MODEL</span><span>SI UNITS \u00b7 FIXED STEP 1/120 s \u00b7 NO EXTERNAL DEPENDENCIES</span></footer>\n+  </main>\n+  <script type=\"module\" src=\"./app.mjs\"></script>\n+</body>\n+</html>\n",
+    "path": "submission/index.html"
+  }
+}
+{
+  "id": "apc_0be9486619fb2537016ae4a19ce3e487d2a46f98a5ae0122ab",
+  "type": "apply_patch_call",
+  "status": "completed",
+  "call_id": "call_6VyjvNiwyZytk4FzRsGGoDUk",
+  "operation": {
+    "type": "create_file",
+    "diff": "+:root{color-scheme:dark;--bg:#101b20;--panel:#17262c;--line:#304048;--ink:#ebece3;--muted:#8eaaa9;--accent:#dfb681;--teal:#91c6b9}\n+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px}button,input,summary{font:inherit}button{cursor:pointer;color:inherit;background:transparent;border:1px solid var(--line);border-radius:5px;transition:background .15s,border-color .15s}button:hover{background:#2b4148;border-color:#79908c}button:focus-visible,input:focus-visible,canvas:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}a{color:inherit}.masthead{height:74px;padding:0 32px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-size:22px;font-weight:700;letter-spacing:3px}.brand-icon{color:var(--accent);font-size:40px;font-weight:400;line-height:1;transform:rotate(-15deg)}.brand-divider{height:23px;width:1px;background:#536368;margin:0 4px}.brand-sub{font-size:11px;letter-spacing:2.5px;font-weight:500;color:#b4c5c3}.header-meta{display:flex;align-items:center;gap:9px;font-size:10px;letter-spacing:1.7px;color:var(--muted)}.live-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--teal)}.version{border:1px solid var(--line);border-radius:4px;padding:5px 7px;margin-left:12px;font-size:10px}main{padding:25px 28px 0;max-width:1700px;margin:auto}.page-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:23px}.eyebrow{font-size:10px;letter-spacing:1.8px;color:var(--accent);font-weight:600;margin:0 0 9px}h1{font-size:30px;letter-spacing:-1px;line-height:1.2;font-weight:500;margin:0}h1 span{color:var(--accent)}.intro{color:var(--muted);font-size:12px;line-height:1.8;margin:0 0 0 15px}.lab-layout{display:grid;grid-template-columns:minmax(0,1fr) 282px;gap:18px;align-items:stretch}.viewport-panel{border:1px solid var(--line);border-radius:8px;overflow:hidden;min-width:0;background:var(--panel)}.scene-toolbar{height:50px;display:flex;justify-content:space-between;align-items:center;padding:0 15px;background:#18292f;border-bottom:1px solid #35464a}.scene-title{font-size:9px;letter-spacing:1.5px;color:#a3b9b7;display:flex;gap:8px;align-items:center}.views{display:flex;gap:3px}.views button{border-color:transparent;padding:6px 11px;font-size:11px;color:#9bb0b0}.views button.selected{background:#33464a;color:#f3e6ce;border-color:#506164}.stage{height:clamp(400px,calc(100vh - 315px),640px);position:relative;overflow:hidden;background:#20363a}canvas{display:block;width:100%;height:100%;touch-action:none}.scene-note,.scene-status,.axis-key,.orbit-hint,.scale-marker{position:absolute;pointer-events:none;font-size:9px;letter-spacing:1.1px;color:#97aeab}.scene-note{left:21px;top:19px;font-size:8px;line-height:1.9}.scene-note span{font-size:16px;font-weight:300;letter-spacing:2px;color:#c4d3cb}.scene-status{top:23px;right:21px;display:flex;align-items:center;gap:7px;font-size:9px}.scene-status>span:first-child{width:5px;height:5px;border-radius:50%;background:var(--accent)}.scene-status.running>span:first-child{background:var(--teal);box-shadow:0 0 8px #91c6b966}.axis-key{bottom:17px;left:20px;letter-spacing:.4px;font-size:9px}.axis-key b{margin:0 3px 0 9px;font-size:10px}.axis-key b:first-child{margin-left:0}.axis-x{color:#d4a381}.axis-y{color:#b2c78c}.axis-z{color:#8dbacb}.orbit-hint{bottom:18px;left:50%;transform:translateX(-50%);letter-spacing:.1px;white-space:nowrap}.orbit-hint span{margin:0 8px}.scale-marker{right:20px;bottom:17px;text-align:center;font-size:8px}.scale-marker i{display:block;width:47px;border:1px solid #90a8a4;border-top:0;height:5px;margin-top:5px}.telemetry{display:grid;grid-template-columns:repeat(4,1fr);padding:17px 0;background:#18272d;border-top:1px solid var(--line)}.telemetry>div{padding:0 20px;border-right:1px solid var(--line)}.telemetry>div:last-child{border:0}.telemetry span{display:block;font-size:8px;letter-spacing:1.2px;color:var(--muted);margin-bottom:7px;white-space:nowrap}.telemetry strong{font-size:24px;font-weight:450;font-variant-numeric:tabular-nums;letter-spacing:-.7px;white-space:nowrap}.telemetry small{font-size:11px;color:#96afad;letter-spacing:0;font-weight:400}.telemetry .status-text{font-size:17px;letter-spacing:0;line-height:29px;color:#cbd9bd}.control-panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:20px 18px}.section-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}.section-heading h2{font-size:15px;font-weight:500;margin:0}.section-heading>span{font-size:10px;color:#698787}.transport{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:24px}.transport button{padding:11px 7px;font-size:12px;display:flex;justify-content:center;align-items:center;gap:8px}.transport .primary{background:var(--accent);border-color:var(--accent);color:#1a292a;font-weight:650}.transport .primary:hover{background:#eed0a5}.power-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.power-heading label,.controls-heading{font-size:9px;letter-spacing:1.25px;color:#b2c4c1}.power-heading output{font-size:20px;color:var(--accent);font-variant-numeric:tabular-nums}input[type=range]{width:100%;height:16px;margin:6px 0;accent-color:var(--accent);cursor:pointer}.range-labels{display:flex;justify-content:space-between;font-size:8px;letter-spacing:1px;color:#6e9090}.power-detail{display:flex;justify-content:space-between;margin-top:15px;font-size:10px;color:var(--muted)}.power-detail strong{font-weight:500;color:#c2cfca}.divider{height:1px;background:var(--line);margin:18px 0}.controls-heading{display:flex;justify-content:space-between;margin-bottom:12px}.controls-heading span{color:#6e8c8c;font-size:8px}.key-row{display:grid;grid-template-columns:1fr 78px 42px;gap:7px;align-items:center;margin:10px 0;font-size:11px;color:#c0ceca}.key-row>div{display:flex;gap:5px;justify-content:center}.key-row output{text-align:right;font-size:10px;color:var(--accent);font-variant-numeric:tabular-nums}kbd{display:inline-block;min-width:26px;height:24px;text-align:center;line-height:21px;background:#203238;border:1px solid #476066;border-bottom:3px solid #3c5156;border-radius:4px;color:#dbe1d5;font-size:13px;font-family:inherit}.space-key{font-size:8px;width:58px;letter-spacing:.6px}.help-text{font-size:10px;line-height:1.7;color:#7e9c9a;margin:12px 0 0}.preset{width:100%;padding:10px 9px;display:flex;justify-content:space-between;align-items:center;margin:8px 0;font-size:11px;text-align:left}.preset small{font-size:8px;color:#8ea9a5;white-space:nowrap}.flight-guide{margin-top:17px;color:#91a9a6;font-size:10px}.flight-guide summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;color:#beccbf}.flight-guide p{line-height:1.7}.notes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:25px;padding:25px 0 22px}.notes-grid article{border-left:1px solid var(--line);padding-left:19px}.notes-grid article:first-child{padding-left:0;border-left:0}.notes-grid .eyebrow{font-size:8px;letter-spacing:1.4px;margin-bottom:8px}h3{font-size:14px;font-weight:500;margin:0 0 8px}.notes-grid article>p:last-child{font-size:11px;line-height:1.8;color:#8fa8a5;margin:0}.notes-grid b{font-weight:500;color:#becdc5}.notes-grid a{text-underline-offset:3px;color:#c2b08d}.assumption-card .eyebrow{color:#8dbfaf}footer{border-top:1px solid var(--line);padding:16px 0 19px;display:flex;justify-content:space-between;color:#648482;font-size:8px;letter-spacing:1.2px}footer b{color:var(--accent);margin:0 8px}@media(min-width:1450px){.control-panel{padding:24px}.lab-layout{grid-template-columns:minmax(0,1fr) 310px}}@media(max-width:950px){main{padding:20px 16px}.masthead{padding:0 20px}.lab-layout{grid-template-columns:minmax(0,1fr) 245px;gap:12px}.control-panel{padding:17px 12px}.scene-title{display:none}.scene-toolbar{justify-content:center}.telemetry>div{padding:0 11px}.telemetry strong{font-size:20px}.telemetry span{font-size:7px}.orbit-hint{display:none}.intro{font-size:10px}h1{font-size:26px}}@media(max-width:720px){.header-meta{display:none}.page-heading{align-items:flex-start}.intro{display:none}.lab-layout{grid-template-columns:1fr}.stage{height:430px}.control-panel{padding:20px}.notes-grid{grid-template-columns:1fr;gap:20px}.notes-grid article{padding-left:0;border-left:0}.telemetry>div{padding:0 10px}.telemetry strong{font-size:20px}.telemetry .status-text{font-size:14px}footer{gap:12px;line-height:1.7;flex-direction:column}.scene-title{display:flex}.scene-toolbar{justify-content:space-between}.views button{padding:6px 8px}.scene-note{font-size:7px}}\n",
+    "path": "submission/style.css"
+  }
+}
+{
+  "id": "apc_0be9486619fb2537016ae4a1b7990487d29a35bf3d311c180d",
+  "type": "apply_patch_call",
+  "status": "completed",
+  "call_id": "call_kfSbHjfTkXvxJCXgWxGYEmo2",
+  "operation": {
+    "type": "create_file",
+    "diff": "+import {parameters, constants, forces, step} from './physics.mjs';\n+\n+const $ = id => document.getElementById(id);\n+const canvas = $('scene'), ctx = canvas.getContext('2d');\n+const environment = {wind: [0,0,0], rho: constants.rho};\n+let state, running = false, accumulator = 0, lastTime = null;\n+const controls = {throttle:0, pitch:0, bank:0, brake:0};\n+const keys = new Set();\n+const fixedDt = 1/120;\n+let view = 'orbit', yaw = .82, elevation = .43, distance = 3.8, orthoZoom = 1;\n+let width = 800, height = 460, ratio = 1;\n+let drag = null;\n+const clamp = (v,a,b) => Math.max(a,Math.min(b,v));\n+const dot = (a,b) => a[0]*b[0]+a[1]*b[1]+a[2]*b[2];\n+const cross = (a,b) => [a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];\n+const norm = v => {const n=Math.hypot(...v);return v.map(x=>x/n);};\n+const sub = (a,b) => a.map((v,i)=>v-b[i]);\n+const add = (a,b) => a.map((v,i)=>v+b[i]);\n+const scale = (a,s) => a.map(v=>v*s);\n+const copy = x => JSON.parse(JSON.stringify(x));\n+\n+window.flightLab = {\n+  getState: () => copy(state),\n+  getControls: () => copy(controls)\n+};\n+\n+function clearKeys() {\n+  keys.clear();\n+  controls.pitch=0; controls.bank=0; controls.brake=0;\n+}\n+function updateKeys() {\n+  controls.pitch=(keys.has('ArrowUp')?1:0)-(keys.has('ArrowDown')?1:0);\n+  controls.bank=(keys.has('ArrowRight')?1:0)-(keys.has('ArrowLeft')?1:0);\n+  controls.brake=keys.has('Space')?1:0;\n+}\n+function load(approach=false) {\n+  running=false; accumulator=0; lastTime=null;\n+  state={position:[0,approach?2:.2,0],velocity:approach?[10,-1,0]:[0,0,0],\n+    pitch:0,roll:0,phase:0,time:0,status:approach?'flying':'grounded'};\n+  clearKeys(); controls.throttle=0; $('throttle').value='0';\n+  updateUI(); render();\n+}\n+function updateUI() {\n+  const f=forces(state,controls,environment);\n+  $('speed').innerHTML=`${f.airspeed.toFixed(2)} <small>m/s</small>`;\n+  $('altitude').innerHTML=`${state.position[1].toFixed(2)} <small>m</small>`;\n+  $('sim-time').innerHTML=`${state.time.toFixed(2)} <small>s</small>`;\n+  $('flight-status').textContent=state.status[0].toUpperCase()+state.status.slice(1);\n+  $('flight-status').style.color=state.status==='crashed'?'#ef9e88':state.status==='flying'?'#91c6b9':'#cbd9bd';\n+  $('throttle-value').textContent=`${Math.round(controls.throttle*100)}%`;\n+  $('power-value').textContent=`${Math.round(400*controls.throttle)} W`;\n+  $('pitch-readout').textContent=`${(state.pitch*180/Math.PI).toFixed(1)}\u00b0`;\n+  $('bank-readout').textContent=`${(state.roll*180/Math.PI).toFixed(1)}\u00b0`;\n+  $('brake-readout').textContent=controls.brake?'ON':'OFF';\n+  $('run-label').textContent=running?'RUNNING':'PAUSED';\n+  $('run-label').parentElement.classList.toggle('running',running);\n+  $('start').setAttribute('aria-pressed',String(running));\n+  $('pause').setAttribute('aria-pressed',String(!running));\n+}\n+$('start').onclick=()=>{running=true;lastTime=null;updateUI();};\n+$('pause').onclick=()=>{running=false;accumulator=0;updateUI();};\n+$('reset').onclick=()=>load(false);\n+$('approach').onclick=()=>load(true);\n+$('throttle').oninput=e=>{controls.throttle=Number(e.target.value);updateUI();render();};\n+window.addEventListener('keydown',e=>{\n+  if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].includes(e.code)){\n+    e.preventDefault();keys.add(e.code);updateKeys();updateUI();\n+  }\n+});\n+window.addEventListener('keyup',e=>{\n+  if(keys.has(e.code)){e.preventDefault();keys.delete(e.code);updateKeys();updateUI();}\n+});\n+window.addEventListener('blur',()=>{clearKeys();updateUI();});\n+document.addEventListener('visibilitychange',()=>{\n+  if(document.hidden){clearKeys();lastTime=null;accumulator=0;}\n+});\n+\n+function setView(name) {\n+  view=name;orthoZoom=1;\n+  for(const v of ['orbit','top','side','front']){\n+    const b=$('view-'+v);b.classList.toggle('selected',v===view);b.setAttribute('aria-pressed',String(v===view));\n+  }\n+  render();\n+}\n+for(const name of ['orbit','top','side','front']) $('view-'+name).onclick=()=>setView(name);\n+canvas.addEventListener('pointerdown',e=>{\n+  drag={x:e.clientX,y:e.clientY};canvas.setPointerCapture(e.pointerId);\n+  canvas.style.cursor='grabbing';\n+});\n+canvas.addEventListener('pointermove',e=>{\n+  if(!drag)return;\n+  if(view!=='orbit'){\n+    if(view==='top'){elevation=1.3;yaw=0;}\n+    if(view==='side'){elevation=.05;yaw=0;}\n+    if(view==='front'){elevation=.05;yaw=Math.PI/2;}\n+    setView('orbit');\n+  }\n+  yaw-=(e.clientX-drag.x)*.008;\n+  elevation=clamp(elevation+(e.clientY-drag.y)*.007,-.12,1.49);\n+  drag={x:e.clientX,y:e.clientY};render();\n+});\n+const release=()=>{drag=null;canvas.style.cursor='grab';};\n+canvas.addEventListener('pointerup',release);\n+canvas.addEventListener('pointercancel',release);\n+canvas.addEventListener('wheel',e=>{\n+  e.preventDefault();\n+  if(view==='orbit')distance=clamp(distance*Math.exp(e.deltaY*.001),2.5,9);\n+  else orthoZoom=clamp(orthoZoom*Math.exp(-e.deltaY*.001),.65,1.25);\n+  render();\n+},{passive:false});\n+canvas.style.cursor='grab';\n+\n+// The same model mesh is used by every inspection view.\n+// Angles below are display-only assumptions, not a source-derived stroke law.\n+function buildModel() {\n+  const surfaces=[], lines=[], points=[];\n+  function face(vertices,color,edge='#5e6256',unlit=false){surfaces.push({vertices,color,edge,unlit});}\n+  function line(vertices,color='#6b7770',lineWidth=1){lines.push({vertices,color,lineWidth});}\n+  const p=state.phase;\n+  const armAngle=.28*Math.sin(p);\n+  const handAngle=.48*Math.sin(p-.65);\n+  const root=parameters.shoulder_span_m/2, wrist=parameters.wrist_span_m/2, tip=parameters.span_m/2;\n+  function wingPoint(x,r,side,y=0) {\n+    const arm=Math.min(r,wrist)-root;\n+    const hand=Math.max(0,r-wrist);\n+    const radial=root+arm*Math.cos(armAngle)+hand*Math.cos(armAngle+handAngle);\n+    return [x,y+arm*Math.sin(armAngle)+hand*Math.sin(armAngle+handAngle),side*radial];\n+  }\n+  for(const side of [-1,1]){\n+    const wp=(x,r,y=0)=>wingPoint(x,r,side,y);\n+    // Near-parallel-chord arm, visibly separated from the hand by a wrist spar.\n+    const stations=6;\n+    for(let i=0;i<stations;i++){\n+      const a=root+(wrist-root)*i/stations,b=root+(wrist-root)*(i+1)/stations;\n+      face([wp(.148,a),wp(.148,b),wp(.06,b),wp(.06,a)],'#c4a174');\n+      face([wp(.06,a),wp(.06,b),wp(-.157,b),wp(-.157,a)],'#e5e2cf');\n+      line([wp(-.14,a,.004),wp(.13,a,.004)],'#9d9c83',.7);\n+    }\n+    line([wp(.109,root,.008),wp(.109,wrist,.008)],'#e7c38d',2.6);\n+    // Hand envelope tapers elliptically with a small aft sweep.\n+    function edges(t) {\n+      const chord=.305*Math.sqrt(Math.max(.0004,1-t*t));\n+      const center=-.005-.1*t;\n+      return [center+chord*.5,center-chord*.5];\n+    }\n+    const n=16;\n+    for(let i=0;i<n;i++){\n+      const t=i/n,u=(i+1)/n;\n+      const a=wrist+(tip-wrist)*t,b=wrist+(tip-wrist)*u;\n+      const [la,ta]=edges(t),[lb,tb]=edges(u);\n+      const ma=la-(la-ta)*.28,mb=lb-(lb-tb)*.28;\n+      face([wp(la,a),wp(lb,b),wp(mb,b),wp(ma,a)],i%2?'#caaa7d':'#c3a073');\n+      face([wp(ma,a),wp(mb,b),wp(tb,b),wp(ta,a)],i%2?'#eee9d7':'#dddcc8');\n+      // Individual feather/panel seam at the aft portion of each strip.\n+      line([wp(ma,a,.004),wp(ta-.014,a,.004)],'#929b8c',.7);\n+      if(i>9)face([wp(ta+.021,a,.003),wp(tb+.018,b,.003),wp(tb,b,.003),wp(ta,a,.003)],'#a5aa98');\n+    }\n+    line([wp(.128,wrist,.008),wp(-.148,wrist,.008)],'#576f6c',2.3);\n+    points.push({position:wp(.018,wrist,.015),color:'#e6bd7d',radius:.027});\n+    points.push({position:wp(.018,root,.01),color:'#a4c6b2',radius:.025});\n+    line([wp(.018,root,.022),wp(.018,wrist,.022),wp(-.09,tip,.022)],'#617d73',1.25);\n+  }\n+  // Faceted ellipsoidal fuselage, retaining maximum source body width.\n+  function tube(rings,sides,colors) {\n+    const pts=rings.map(([x,y,ry,rz])=>Array.from({length:sides},(_,i)=>{\n+      const a=2*Math.PI*i/sides;return [x,y+ry*Math.cos(a),rz*Math.sin(a)];\n+    }));\n+    for(let j=0;j<pts.length-1;j++)for(let i=0;i<sides;i++){\n+      face([pts[j][i],pts[j+1][i],pts[j+1][(i+1)%sides],pts[j][(i+1)%sides]],colors[i%colors.length],'#777e70');\n+    }\n+    face(pts[0],colors[0]);face(pts[pts.length-1],colors[0]);\n+  }\n+  tube([[-.41,.015,.025,.025],[-.27,.025,.093,.073],[-.08,.035,.125,parameters.body_width_m/2],\n+    [.12,.035,.105,.09],[.265,.055,.055,.048]],12,['#dddccc','#eeebd9','#d4d6c5','#b8c5b7']);\n+  // Long tapered forward neck and small head; entire length is 1.397 m.\n+  tube([[.22,.06,.055,.047],[.37,.085,.037,.033],[.54,.105,.026,.026],\n+    [.72,.13,.029,.027],[.79,.14,.043,.034],[.825,.13,.028,.026]],10,['#e1e0cc','#f1eddb','#c8d0bf']);\n+  face([[.816,.154,-.024],[.86,.132,0],[.816,.154,.024],[.816,.114,.024],[.86,.123,0],[.816,.114,-.024]],'#c69a62','#856c4d');\n+  for(const side of [-1,1])points.push({position:[.793,.15,side*.032],color:'#203d3a',radius:.009});\n+  // Horizontal tail: a distinct surface aft of the wing roots.\n+  face([[-.32,.035,0],[-.47,.025,-.235],[-.537,.025,-.18],[-.51,.025,0],\n+    [-.537,.025,.18],[-.47,.025,.235]],'#d5d9c4','#8c9b86');\n+  for(const side of [-1,1])line([[-.345,.039,0],[-.51,.029,side*.18]],'#9fae99',1);\n+  // Raised conventional fin; rudder seam remains visible from the side.\n+  const fin=[[-.295,.07,0],[-.397,.332,0],[-.493,.295,0],[-.523,.035,0]];\n+  face(fin,'#c9a576','#7e8168');\n+  line([[-.462,.306,.003],[-.481,.057,.003]],'#6c7e6c',1.4);\n+  line([[-.41,.055,0],[-.25,.145,0],[.12,.145,0]],'#5b8077',1.4);\n+  // Small underbody keel / contact skid. Not a wheel or extra contact solver.\n+  face([[-.20,-.08,-.028],[.1,-.08,-.028],[.08,-.18,-.018],[-.13,-.18,-.018]],'#65796c');\n+  face([[-.20,-.08,.028],[.1,-.08,.028],[.08,-.18,.018],[-.13,-.18,.018]],'#65796c');\n+  return {surfaces,lines,points};\n+}\n+\n+function worldPoint(v) {\n+  const c=Math.cos(state.roll),s=Math.sin(state.roll),cp=Math.cos(state.pitch),sp=Math.sin(state.pitch);\n+  const y=v[1]*c-v[2]*s,z=v[1]*s+v[2]*c;\n+  return [state.position[0]+v[0]*cp-y*sp,state.position[1]+v[0]*sp+y*cp,state.position[2]+z];\n+}\n+function camera() {\n+  const target=add(state.position,[0,.035,0]);\n+  let offset,up=[0,1,0];\n+  if(view==='top'){offset=[0,5,0];up=[1,0,0];}\n+  else if(view==='side')offset=[0,0,5];\n+  else if(view==='front')offset=[5,0,0];\n+  else offset=[distance*Math.sin(yaw)*Math.cos(elevation),distance*Math.sin(elevation),distance*Math.cos(yaw)*Math.cos(elevation)];\n+  const eye=add(target,offset),forward=norm(scale(offset,-1)),right=norm(cross(forward,up));\n+  up=cross(right,forward);\n+  return {eye,forward,right,up};\n+}\n+let cam;\n+function cameraSpace(v) {\n+  const d=sub(v,cam.eye);return [dot(d,cam.right),dot(d,cam.up),dot(d,cam.forward)];\n+}\n+function projectCamera(v) {\n+  if(view==='orbit'){\n+    if(v[2]<.08)return null;\n+    const f=height*1.5/v[2];\n+    return [width/2+v[0]*f,height*.52-v[1]*f,v[2]];\n+  }\n+  const s=Math.min(width/2.95,height/1.9)*orthoZoom;\n+  return [width/2+v[0]*s,height*.52-v[1]*s,v[2]];\n+}\n+function project(v){return projectCamera(cameraSpace(v));}\n+function polygon(vertices,fill,stroke=null,lineWidth=.7) {\n+  const p=vertices.map(project);\n+  if(p.some(v=>!v))return;\n+  ctx.beginPath();p.forEach((v,i)=>i?ctx.lineTo(v[0],v[1]):ctx.moveTo(v[0],v[1]));ctx.closePath();\n+  if(fill){ctx.fillStyle=fill;ctx.fill();}\n+  if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=lineWidth;ctx.stroke();}\n+}\n+function worldLine(vertices,color,lineWidth=1) {\n+  ctx.strokeStyle=color;ctx.lineWidth=lineWidth;\n+  for(let i=1;i<vertices.length;i++){\n+    let a=cameraSpace(vertices[i-1]),b=cameraSpace(vertices[i]);\n+    if(view==='orbit'){\n+      if(a[2]<.08&&b[2]<.08)continue;\n+      if(a[2]<.08){const t=(.08-a[2])/(b[2]-a[2]);a=a.map((v,k)=>v+(b[k]-v)*t);}\n+      if(b[2]<.08){const t=(.08-b[2])/(a[2]-b[2]);b=b.map((v,k)=>v+(a[k]-v)*t);}\n+    }\n+    a=projectCamera(a);b=projectCamera(b);\n+    if(!a||!b)continue;\n+    ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke();\n+  }\n+}\n+function shade(hex,normal) {\n+  const l=norm([-.3,1,.6]),light=.79+.21*Math.abs(dot(normal,l));\n+  const n=parseInt(hex.slice(1),16);\n+  return `rgb(${Math.round((n>>16)*light)},${Math.round(((n>>8)&255)*light)},${Math.round((n&255)*light)})`;\n+}\n+function drawGround(model) {\n+  const cx=Math.floor(state.position[0]/2)*2,cz=Math.floor(state.position[2]/2)*2;\n+  // Runway tiles and grid are world geometry, not a screen-aligned backdrop.\n+  for(let i=-18;i<25;i++){\n+    const x=cx+i*2;\n+    polygon([[x,0,-1.35],[x+2,0,-1.35],[x+2,0,1.35],[x,0,1.35]],'#294246');\n+    if(Math.floor(x/2)%2===0)polygon([[x,.002,-.018],[x+.7,.002,-.018],[x+.7,.002,.018],[x,.002,.018]],'#6a7c72');\n+  }\n+  for(let i=-18;i<=22;i++){\n+    const x=cx+i*2,z=cz+i*2;\n+    worldLine([[x,.001,cz-36],[x,.001,cz+44]],'#658a7d24',.7);\n+    worldLine([[cx-36,.001,z],[cx+44,.001,z]],'#658a7d24',.7);\n+  }\n+  worldLine([[cx-36,.003,-1.35],[cx+48,.003,-1.35]],'#88978666',1);\n+  worldLine([[cx-36,.003,1.35],[cx+48,.003,1.35]],'#88978666',1);\n+  // Soft, flattened silhouette provides a height cue without adding flight forces.\n+  ctx.save();ctx.globalAlpha=Math.max(.025,.16/(1+Math.max(0,state.position[1]-.2)*.3));\n+  for(const f of model.surfaces){\n+    const points=f.vertices.map(worldPoint).map(v=>[v[0]+v[1]*.28,.006,v[2]+v[1]*.12]);\n+    polygon(points,'#071a1d');\n+  }\n+  ctx.restore();\n+}\n+function render() {\n+  if(!state)return;\n+  ctx.setTransform(ratio,0,0,ratio,0,0);\n+  const gradient=ctx.createLinearGradient(0,0,0,height);\n+  gradient.addColorStop(0,'#192d35');gradient.addColorStop(1,'#2e4948');\n+  ctx.fillStyle=gradient;ctx.fillRect(0,0,width,height);\n+  cam=camera();\n+  const model=buildModel();\n+  drawGround(model);\n+  const items=model.surfaces.map(f=>{\n+    const vertices=f.vertices.map(worldPoint);\n+    const normal=norm(cross(sub(vertices[1],vertices[0]),sub(vertices[2],vertices[0])));\n+    return {...f,vertices,depth:vertices.reduce((s,v)=>s+cameraSpace(v)[2],0)/vertices.length,\n+      fill:shade(f.color,normal)};\n+  });\n+  items.sort((a,b)=>b.depth-a.depth);\n+  for(const f of items)polygon(f.vertices,f.fill,f.edge,.6);\n+  // Fine structural seams and exposed wrist/shoulder markers.\n+  for(const l of model.lines)worldLine(l.vertices.map(worldPoint),l.color,l.lineWidth);\n+  for(const p of model.points){\n+    const q=project(worldPoint(p.position));if(!q)continue;\n+    const s=view==='orbit'?height*1.5/q[2]:Math.min(width/2.95,height/1.9)*orthoZoom;\n+    ctx.beginPath();ctx.arc(q[0],q[1],Math.max(1.2,p.radius*s),0,Math.PI*2);\n+    ctx.fillStyle=p.color;ctx.fill();ctx.strokeStyle='#455e52';ctx.lineWidth=.7;ctx.stroke();\n+  }\n+  // A subtle vignette keeps attention on the airframe.\n+  const vg=ctx.createRadialGradient(width/2,height*.48,height*.2,width/2,height*.48,width*.7);\n+  vg.addColorStop(0,'#061b2200');vg.addColorStop(1,'#061b2244');\n+  ctx.fillStyle=vg;ctx.fillRect(0,0,width,height);\n+}\n+function resize() {\n+  const r=canvas.getBoundingClientRect();\n+  width=r.width;height=r.height;ratio=Math.min(window.devicePixelRatio||1,2);\n+  canvas.width=Math.round(width*ratio);canvas.height=Math.round(height*ratio);\n+  render();\n+}\n+new ResizeObserver(resize).observe(canvas);\n+function frame(now) {\n+  if(lastTime===null)lastTime=now;\n+  const elapsed=Math.min(.1,Math.max(0,(now-lastTime)/1000));lastTime=now;\n+  if(running){\n+    accumulator+=elapsed;\n+    while(accumulator>=fixedDt){\n+      state=step(state,controls,environment,fixedDt);\n+      accumulator-=fixedDt;\n+      if(state.status==='crashed'){running=false;accumulator=0;break;}\n+    }\n+    updateUI();\n+  }\n+  render();\n+  requestAnimationFrame(frame);\n+}\n+load(false);\n+resize();\n+requestAnimationFrame(frame);\n",
+    "path": "submission/app.mjs"
+  }
+}
+
+TOOL RESULT
+{
+  "type": "apply_patch_call_output",
+  "call_id": "call_lPvQXy3D4tEsKx7IjjuKaC9q",
+  "status": "completed",
+  "output": "File operation applied."
+}
+
+TOOL RESULT
+{
+  "type": "apply_patch_call_output",
+  "call_id": "call_ff5JC0S0Rw4grSj20NhieFgn",
+  "status": "completed",
+  "output": "File operation applied."
+}
+
+TOOL RESULT
+{
+  "type": "apply_patch_call_output",
+  "call_id": "call_tCqqJ94jSvzzHcMK0R6YdvBb",
+  "status": "completed",
+  "output": "File operation applied."
+}
+
+TOOL RESULT
+{
+  "type": "apply_patch_call_output",
+  "call_id": "call_6VyjvNiwyZytk4FzRsGGoDUk",
+  "status": "completed",
+  "output": "File operation applied."
+}
+
+TOOL RESULT
+{
+  "type": "apply_patch_call_output",
+  "call_id": "call_kfSbHjfTkXvxJCXgWxGYEmo2",
+  "status": "completed",
+  "output": "File operation applied."
+}
+
+REQUEST
+{
+  "event": "request",
+  "index": 7,
+  "model": "gpt-6.1-sol",
+  "max_output_tokens": 280,
+  "reasoning": {
+    "effort": "medium"
+  },
+  "tools": [
+    {
+      "type": "apply_patch"
+    },
+    {
+      "type": "shell",
+      "environment": {
+        "type": "local"
+      }
+    }
+  ],
+  "instructions": "Follow the task's file-only tool policy. The shell is virtual and cannot execute programs. Submit once; no verification.",
+  "input_sha256": "3b7909f50cfcc121210cbc2d043e6414420045118a5d2ad1ce6265b6fef7aeff"
+}
+
+RESPONSE resp_0be9486619fb2537016ae4a1ef540c87d2947a8e29d996972c / incomplete
+[Private reasoning is not rendered; raw encrypted metadata is retained in events.jsonl.]
+{
+  "id": "msg_0be9486619fb2537016ae4a1fa396487d2a68aaff318e6d920",
+  "type": "message",
+  "status": "incomplete",
+  "content": [
+    {
+      "type": "output_text",
+      "annotations": [],
+      "logprobs": [],
+      "text": "Completed `submission/` with the self-contained 3D flight lab, shared physics module, articulated wings, inspection views, controls, telemetry, and documented source interpretation.\n\n"
+    }
+  ],
+  "phase": "final_answer",
+  "role": "assistant"
+}

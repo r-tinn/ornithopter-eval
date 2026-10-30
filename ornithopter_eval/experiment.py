@@ -106,13 +106,17 @@ def refresh_workbench(root, experiment):
         prefix = 'trials/'+t["id"]+'/'
         result = t.get("automated")
         score = str(result["passed"])+" / 20" if result else '—'
-        actions = '<a target="_blank" rel="noopener" href="'+prefix+'submission/index.html">Fly simulator ↗</a><a href="'+prefix+'evidence.html">Captures</a><a href="'+prefix+'grade/report.json">Checks</a><a href="'+prefix+'transcript.txt">Transcript</a><a href="'+prefix+'submission-source.txt">Source</a>' if t["status"] not in ("prepared","running") else '<span class="muted">Artifacts appear when this attempt finishes.</span>'
-        rows.append('<tr><td>'+str(t["repeat"])+'</td><td>'+html.escape(t["model"])+'</td><td><strong>'+score+'</strong></td><td><span class="badge">'+html.escape(t["status"])+'</span></td><td class="actions">'+actions+'</td></tr>')
+        simulator_label = 'Fly simulator ↗' if result and result['groups']['interaction']['passed'] else 'Open submission ↗'
+        actions = '<a target="_blank" rel="noopener" href="'+prefix+'submission/index.html">'+simulator_label+'</a><a href="'+prefix+'evidence.html">Captures</a><a href="'+prefix+'grade/report.json">Checks</a><a href="'+prefix+'transcript.txt">Transcript</a><a href="'+prefix+'submission-source.txt">Source</a>' if t["status"] not in ("prepared","running") else '<span class="muted">Artifacts appear when this attempt finishes.</span>'
+        reason = '<br><small>'+html.escape(t['reason'])+'</small>' if t.get('reason') else ''
+        rows.append('<tr><td>'+str(t["repeat"])+'</td><td>'+html.escape(t["model"])+'</td><td><strong>'+score+'</strong></td><td><span class="badge">'+html.escape(t["status"])+'</span>'+reason+'</td><td class="actions">'+actions+'</td></tr>')
     effort = html.escape(str(experiment["config"].get("reasoning_effort","default")))
     tokens = str(experiment["config"]["max_output_tokens_total"])
     body = '<p class="muted">Stanley’s Swan · '+TASK_VERSION+'</p><h1>Frontier model calibration</h1><p>Open each unchanged model submission to fly it yourself, or inspect what the graders captured.</p><p><strong>Automated checks only.</strong> Five visual checks remain ungraded. A 20/20 result is not a full-task pass.</p>'+cards+'<table><thead><tr><th>Repeat</th><th>Model</th><th>Automated</th><th>Attempt</th><th>Inspect</th></tr></thead><tbody>'+''.join(rows)+'</tbody></table><p class="muted">Same source packet, starter, '+effort+' reasoning and '+tokens+' total output tokens. No execution, testing or grader feedback during generation. Refresh this page for completed attempts.</p><p><a href="experiment.json">Protocol and provenance</a> · <a href="summary.json">Results JSON</a> · <a href="config.json">Fixed budget</a></p>'
     if (root / "artifacts.zip").exists():
         body += '<p><a href="artifacts.zip">Download all artifacts</a></p>'
+    if (root / "CALIBRATION.md").exists():
+        body = '<p><strong>Read before comparing scores:</strong> <a href="CALIBRATION.md">Calibration findings and known protocol problems</a>.</p>' + body
     _write_html(root / "index.html", _page("Frontier model calibration", body))
     return summary
 

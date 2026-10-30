@@ -178,13 +178,18 @@ def run_model(run, model, transport=create_response):
                 for item in output:
                     if item.get("type", "").endswith("_call") and item not in calls:
                         raise ValueError("Unsupported tool requested")
-                if response["status"] == "incomplete":
-                    reason = "incomplete_response"
-                    break  # Truncated patches are never silently applied.
+                incomplete = response["status"] == "incomplete"
                 for call in calls:
+                    # A response can hit its cap after finishing earlier file operations.
+                    # Retain those operations; never apply an unfinished or unmarked call.
+                    if incomplete and call.get("status") != "completed":
+                        continue
                     result = execute_call(policy, call)
                     history.append(result)
                     log.write(json.dumps({"event": "tool_result", "result": result}) + "\n")
+                if incomplete:
+                    reason = "incomplete_response"
+                    break
                 if not calls:
                     status, reason = "submitted", None
                     break

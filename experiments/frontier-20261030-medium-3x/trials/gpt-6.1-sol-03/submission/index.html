@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#14262c">
+  <title>Swan — Flight Lab</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="masthead">
+    <a class="brand" href="./index.html" aria-label="Swan Flight Lab home"><span class="brand-icon">⌁</span> SWAN <span class="brand-divider"></span><span class="brand-sub">FLIGHT LAB</span></a>
+    <div class="header-meta"><span class="live-dot"></span> EDUCATIONAL SIMULATION <span class="version">V3.0</span></div>
+  </header>
+  <main>
+    <div class="page-heading">
+      <div><p class="eyebrow">ARCHIVE TO AIRFRAME / EXPERIMENT 03</p><h1>A study in powered flight<span>.</span></h1></div>
+      <p class="intro">Historical proportions. New assumptions.<br>An interactive, cycle-averaged ornithopter.</p>
+    </div>
+    <div class="lab-layout">
+      <section class="viewport-panel" aria-label="Three dimensional flight inspection">
+        <div class="scene-toolbar">
+          <div class="scene-title"><span class="live-dot"></span> LIVE WORKSPACE</div>
+          <nav class="views" aria-label="Inspection views">
+            <button id="view-orbit" class="selected" aria-pressed="true">3D orbit</button>
+            <button data-testid="view-top" id="view-top" aria-pressed="false">Top</button>
+            <button data-testid="view-side" id="view-side" aria-pressed="false">Side</button>
+            <button data-testid="view-front" id="view-front" aria-pressed="false">Front</button>
+          </nav>
+        </div>
+        <div class="stage">
+          <canvas data-testid="scene" id="scene" aria-label="Orbitable articulated 3D swan ornithopter; drag to orbit and scroll to zoom" tabindex="0"></canvas>
+          <div class="scene-note"><span>SW–02</span><br>ARTICULATED DEMONSTRATOR</div>
+          <div class="scene-status"><span id="run-indicator"></span><span id="run-label">PAUSED</span></div>
+          <div class="axis-key"><b class="axis-x">X</b> forward <b class="axis-y">Y</b> up <b class="axis-z">Z</b> lateral</div>
+          <div class="orbit-hint">↔ Drag to orbit <span>·</span> Scroll to zoom</div>
+          <div class="scale-marker">1 m <i></i></div>
+        </div>
+        <div data-testid="telemetry" id="telemetry" class="telemetry" aria-live="off">
+          <div><span>AIRSPEED</span><strong id="speed">0.00 <small>m/s</small></strong></div>
+          <div><span>ALTITUDE · WORLD Y</span><strong id="altitude">0.20 <small>m</small></strong></div>
+          <div><span>SIMULATION TIME</span><strong id="sim-time">0.00 <small>s</small></strong></div>
+          <div><span>FLIGHT STATUS</span><strong id="flight-status" class="status-text">Grounded</strong></div>
+        </div>
+      </section>
+      <aside class="control-panel">
+        <div class="section-heading"><h2>Flight controls</h2><span>01</span></div>
+        <div class="transport">
+          <button data-testid="start" id="start" class="primary">▶ <span>Start</span></button>
+          <button data-testid="pause" id="pause">Ⅱ <span>Pause</span></button>
+        </div>
+        <div class="power-heading"><label for="throttle">DRIVE POWER</label><output id="throttle-value" for="throttle">0%</output></div>
+        <input data-testid="throttle" id="throttle" aria-label="Throttle" type="range" min="0" max="1" step="0.01" value="0">
+        <div class="range-labels"><span>OFF</span><span>400 W</span></div>
+        <div class="power-detail"><span>Mechanical input</span><strong id="power-value">0 W</strong></div>
+        <div class="divider"></div>
+        <div class="controls-heading">MANUAL INPUT</div>
+        <div class="key-row"><span>Pitch</span><div><kbd>↑</kbd><kbd>↓</kbd></div><output id="pitch-readout">0.0°</output></div>
+        <div class="key-row"><span>Bank</span><div><kbd>←</kbd><kbd>→</kbd></div><output id="bank-readout">0.0°</output></div>
+        <div class="key-row"><span>Ground brake</span><div><kbd class="space-key">SPACE</kbd></div><output id="brake-readout">OFF</output></div>
+        <p class="help-text">Hold an arrow to command attitude.<br>Release keys to hold pitch / centre bank.</p>
+        <div class="divider"></div>
+        <div class="controls-heading">LOAD A PRESET <span>PAUSED</span></div>
+        <button data-testid="reset" id="reset" class="preset"><span>↺ &nbsp; Ground reset</span><small>0 m/s · 0.2 m</small></button>
+        <button data-testid="approach" id="approach" class="preset"><span>↘ &nbsp; Landing approach</span><small>10 m/s · 2 m</small></button>
+        <details class="flight-guide">
+          <summary>Quick flight guide <span>＋</span></summary>
+          <p><b>Takeoff</b> — full power, Start. After 2 seconds, hold ↑ for 0.3 seconds, then release.</p>
+          <p><b>Landing</b> — load approach, Start, hold ↑ for 0.4 seconds, then release. No power needed.</p>
+          <p>No autopilot. Ground contact is at y = 0.2 m.</p>
+        </details>
+      </aside>
+    </div>
+    <section class="notes-grid" aria-label="Source and model notes">
+      <article><p class="eyebrow">02 / THE PLANFORM</p><h3>Drawn from the archive</h3><p><b>2.256 m span</b> · 0.614 m² wing area · AR 8.284.<br>Rounded “Say” dimensions from Stanley J. O. Tinn’s swan notes. Parallel-chord arms meet tapered hand wings at visible wrist joints.</p></article>
+      <article><p class="eyebrow">14 / THE ARTICULATION</p><h3>Two panels. One cycle.</h3><p>An assumed 2 Hz stroke articulates arm and hand separately. The conventional tail and fin follow the notes’ design proposal. Wing motion is illustrative, not a flow solution.</p></article>
+      <article class="assumption-card"><p class="eyebrow">MODEL BOUNDARY</p><h3>Explore, not certify</h3><p>6 kg point mass. Still air. Assumed 400 W drive.<br>This is an <b>educational approximation</b>, not a validated aircraft. New force and contact assumptions are documented in <a href="./interpretation.json">the interpretation record ↗</a>.</p></article>
+    </section>
+    <footer><span>SWAN FLIGHT LAB <b>/</b> FAMILY ARCHIVE → EDUCATIONAL MODEL</span><span>SI UNITS · FIXED STEP 1/120 s · NO EXTERNAL DEPENDENCIES</span></footer>
+  </main>
+  <script type="module" src="./app.mjs"></script>
+</body>
+</html>

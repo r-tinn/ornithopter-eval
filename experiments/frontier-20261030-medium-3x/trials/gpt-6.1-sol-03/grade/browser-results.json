@@ -1,0 +1,674 @@
+{
+  "source": [
+    {
+      "id": "span_m",
+      "pass": true,
+      "detail": {
+        "actual": 2.25552,
+        "expected": 2.25552,
+        "relative_tolerance": 0.005
+      }
+    },
+    {
+      "id": "wing_area_m2",
+      "pass": true,
+      "detail": {
+        "actual": 0.6140890944000001,
+        "expected": 0.6140890944,
+        "relative_tolerance": 0.005
+      }
+    },
+    {
+      "id": "wrist_span_m",
+      "pass": true,
+      "detail": {
+        "actual": 1.12776,
+        "expected": 1.12776,
+        "relative_tolerance": 0.005
+      }
+    },
+    {
+      "id": "shoulder_span_m",
+      "pass": true,
+      "detail": {
+        "actual": 0.1016,
+        "expected": 0.1016,
+        "relative_tolerance": 0.005
+      }
+    },
+    {
+      "id": "body_width_m",
+      "pass": true,
+      "detail": {
+        "actual": 0.2032,
+        "expected": 0.2032,
+        "relative_tolerance": 0.005
+      }
+    },
+    {
+      "id": "overall_length_m",
+      "pass": true,
+      "detail": {
+        "actual": 1.397,
+        "expected": 1.397,
+        "relative_tolerance": 0.005
+      }
+    },
+    {
+      "id": "aspect_ratio",
+      "pass": true,
+      "detail": {
+        "actual": 8.284417549167927,
+        "expected": 8.284417549167928,
+        "relative_tolerance": 0.005
+      }
+    }
+  ],
+  "physics": [
+    {
+      "id": "power_controls_thrust",
+      "pass": true,
+      "detail": {
+        "power_off": {
+          "lift": 22.567774219200007,
+          "drag": 1.9667900104706573,
+          "thrust": 0,
+          "power": 0,
+          "airspeed": 10,
+          "cl": 0.6,
+          "force": [
+            -1.9667900104706573,
+            -36.272125780799996,
+            0
+          ]
+        },
+        "power_on": {
+          "lift": 22.567774219200007,
+          "drag": 1.9667900104706573,
+          "thrust": 26,
+          "power": 400,
+          "airspeed": 10,
+          "cl": 0.6,
+          "force": [
+            24.033209989529343,
+            -36.272125780799996,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "lift_scales_with_speed_squared",
+      "pass": true,
+      "detail": {
+        "speed_10_lift": 22.567774219200007,
+        "speed_20_lift": 90.27109687680003,
+        "expected_ratio": 4,
+        "tolerance": 0.000001
+      }
+    },
+    {
+      "id": "matching_wind_removes_lift",
+      "pass": true,
+      "detail": {
+        "still_air_lift": 22.567774219200007,
+        "matching_wind_lift": 0,
+        "tolerance": 0.000001
+      }
+    },
+    {
+      "id": "ground_nonpenetration",
+      "pass": true,
+      "detail": {
+        "minimum_y": 0.2,
+        "contact_plane_y": 0.2,
+        "final": {
+          "position": [
+            19.387641166712804,
+            0.2,
+            0
+          ],
+          "velocity": [
+            9.393338930470616,
+            0,
+            0
+          ],
+          "pitch": 0,
+          "roll": 0,
+          "phase": 0,
+          "time": 1.9999999999999953,
+          "status": "landed"
+        }
+      }
+    },
+    {
+      "id": "powered_wingbeat_frequency",
+      "pass": true,
+      "detail": {
+        "samples": [
+          {
+            "steps": 12,
+            "actual": 1.626637061435917,
+            "expected": 1.6266370614359174
+          },
+          {
+            "steps": 25,
+            "actual": 2.987993877991495,
+            "expected": 2.9879938779914945
+          },
+          {
+            "steps": 44,
+            "actual": 4.977669225265029,
+            "expected": 4.977669225265029
+          }
+        ],
+        "tolerance": 0.000001
+      }
+    },
+    {
+      "id": "unpowered_wingbeat_stops",
+      "pass": true,
+      "detail": {
+        "initial_phase": 0.73,
+        "final_phase": 0.73
+      }
+    },
+    {
+      "id": "steady_glide_ratio",
+      "pass": true,
+      "detail": {
+        "actual_ratio": 11.474419790144363,
+        "expected_ratio": 11.474419790142969,
+        "forward_m": 32.11123663102688,
+        "height_lost_m": 2.798506348757428,
+        "initial": {
+          "position": [
+            0,
+            100,
+            0
+          ],
+          "velocity": [
+            16.055618315513495,
+            -1.3992531743788892,
+            0
+          ],
+          "pitch": -0.08693073497786764,
+          "roll": 0,
+          "phase": 0,
+          "time": 0,
+          "status": "flying"
+        },
+        "final": {
+          "position": [
+            32.11123663102688,
+            97.20149365124257,
+            0
+          ],
+          "velocity": [
+            16.055618315513495,
+            -1.3992531743788892,
+            0
+          ],
+          "pitch": -0.08693073497786764,
+          "roll": 0,
+          "phase": 0,
+          "time": 1.9999999999999953,
+          "status": "flying"
+        },
+        "relative_tolerance": 0.01
+      }
+    }
+  ],
+  "interaction": [
+    {
+      "id": "power_moves_forward",
+      "pass": true,
+      "detail": {
+        "neutral": {
+          "position": [
+            0,
+            0.2,
+            0
+          ],
+          "velocity": [
+            0,
+            0,
+            0
+          ],
+          "pitch": 0,
+          "roll": 0,
+          "phase": 0,
+          "time": 0.974999999999999,
+          "status": "grounded"
+        },
+        "powered": {
+          "position": [
+            4.159388888302743,
+            0.2,
+            0
+          ],
+          "velocity": [
+            7.757749314501303,
+            0,
+            0
+          ],
+          "pitch": 0,
+          "roll": 0,
+          "phase": 6.178465552059918,
+          "time": 0.9916666666666656,
+          "status": "grounded"
+        },
+        "minimum_difference_m": 0.1
+      }
+    },
+    {
+      "id": "pitch_input_changes_pitch",
+      "pass": true,
+      "detail": {
+        "neutral": {
+          "position": [
+            3.863153751762828,
+            1.3771605726077163,
+            0
+          ],
+          "velocity": [
+            10.204821283585822,
+            -2.071057643848515,
+            0
+          ],
+          "pitch": 0,
+          "roll": 0,
+          "phase": 0,
+          "time": 0.3833333333333337,
+          "status": "flying"
+        },
+        "pitched": {
+          "position": [
+            3.8602743780107422,
+            1.4476817298526858,
+            0
+          ],
+          "velocity": [
+            10.169624266582288,
+            -1.6252488378301124,
+            0
+          ],
+          "pitch": 0.19166666666666685,
+          "roll": 0,
+          "phase": 0,
+          "time": 0.3833333333333337,
+          "status": "flying"
+        },
+        "minimum_difference_rad": 0.1
+      }
+    },
+    {
+      "id": "pause_freezes_state",
+      "pass": true,
+      "detail": {
+        "before": {
+          "position": [
+            0,
+            2,
+            0
+          ],
+          "velocity": [
+            10,
+            -1,
+            0
+          ],
+          "pitch": 0,
+          "roll": 0,
+          "phase": 0,
+          "time": 0,
+          "status": "flying"
+        },
+        "paused": {
+          "position": [
+            3.863153751762828,
+            1.3771605726077163,
+            0
+          ],
+          "velocity": [
+            10.204821283585822,
+            -2.071057643848515,
+            0
+          ],
+          "pitch": 0,
+          "roll": 0,
+          "phase": 0,
+          "time": 0.3833333333333337,
+          "status": "flying"
+        },
+        "after": {
+          "position": [
+            3.863153751762828,
+            1.3771605726077163,
+            0
+          ],
+          "velocity": [
+            10.204821283585822,
+            -2.071057643848515,
+            0
+          ],
+          "pitch": 0,
+          "roll": 0,
+          "phase": 0,
+          "time": 0.3833333333333337,
+          "status": "flying"
+        }
+      }
+    },
+    {
+      "id": "reset_restores_state",
+      "pass": true,
+      "detail": {
+        "before": {
+          "position": [
+            4.1657780236117326,
+            1.380145943202739,
+            0
+          ],
+          "velocity": [
+            11.699614783430162,
+            -1.9664468256350678,
+            0
+          ],
+          "pitch": 0,
+          "roll": 0,
+          "phase": 4.817108735504349,
+          "time": 0.3833333333333337,
+          "status": "flying"
+        },
+        "after": {
+          "position": [
+            0,
+            0.2,
+            0
+          ],
+          "velocity": [
+            0,
+            0,
+            0
+          ],
+          "pitch": 0,
+          "roll": 0,
+          "phase": 0,
+          "time": 0,
+          "status": "grounded"
+        },
+        "controls": {
+          "throttle": 0,
+          "pitch": 0,
+          "bank": 0,
+          "brake": 0
+        }
+      }
+    },
+    {
+      "id": "takeoff",
+      "pass": true,
+      "detail": {
+        "samples": [
+          {
+            "position": [
+              73.67906603860979,
+              5.9620136306378635,
+              0
+            ],
+            "velocity": [
+              16.2785894688501,
+              2.4316491059335306,
+              0
+            ],
+            "pitch": 0.1416666666666667,
+            "roll": 0,
+            "phase": 6.073745796940214,
+            "time": 5.98333333333342,
+            "status": "flying"
+          },
+          {
+            "position": [
+              77.48527051022499,
+              6.534782007578045,
+              0
+            ],
+            "velocity": [
+              16.342575770801023,
+              2.4753618871975505,
+              0
+            ],
+            "pitch": 0.1416666666666667,
+            "roll": 0,
+            "phase": 2.7227136331111006,
+            "time": 6.216666666666765,
+            "status": "flying"
+          },
+          {
+            "position": [
+              81.71569353604731,
+              7.180067206717487,
+              0
+            ],
+            "velocity": [
+              16.405794650940514,
+              2.518096398447439,
+              0
+            ],
+            "pitch": 0.1416666666666667,
+            "roll": 0,
+            "phase": 5.96902604182055,
+            "time": 6.4750000000001116,
+            "status": "flying"
+          },
+          {
+            "position": [
+              85.96148776771766,
+              7.835691929403181,
+              0
+            ],
+            "velocity": [
+              16.461958761182128,
+              2.5557037376865863,
+              0
+            ],
+            "pitch": 0.1416666666666667,
+            "roll": 0,
+            "phase": 2.932153143350416,
+            "time": 6.733333333333458,
+            "status": "flying"
+          },
+          {
+            "position": [
+              89.94576093220894,
+              8.457288598550088,
+              0
+            ],
+            "velocity": [
+              16.50886790662455,
+              2.586868270834935,
+              0
+            ],
+            "pitch": 0.1416666666666667,
+            "roll": 0,
+            "phase": 5.969026041820546,
+            "time": 6.975000000000136,
+            "status": "flying"
+          }
+        ],
+        "minimum_height_m": 0.7
+      }
+    },
+    {
+      "id": "landing",
+      "pass": true,
+      "detail": {
+        "before": {
+          "position": [
+            0,
+            2,
+            0
+          ],
+          "velocity": [
+            10,
+            -1,
+            0
+          ],
+          "pitch": 0,
+          "roll": 0,
+          "phase": 0,
+          "time": 0,
+          "status": "flying"
+        },
+        "after": {
+          "position": [
+            24.46985326196977,
+            0.2,
+            0
+          ],
+          "velocity": [
+            9.830481971154303,
+            0,
+            0
+          ],
+          "pitch": 0.19166666666666685,
+          "roll": 0,
+          "phase": 0,
+          "time": 2.3833333333333275,
+          "status": "landed"
+        }
+      }
+    }
+  ],
+  "diagnostics": {
+    "performance": {
+      "scored": false,
+      "measurement": "requestAnimationFrame callback intervals, not presented frames",
+      "trials": [
+        {
+          "throttle": 0,
+          "samples": 120,
+          "elapsed_ms": 1000.0999999999999,
+          "callback_hz": 119.98800119988002,
+          "p95_interval_ms": 8.400000000000091,
+          "max_interval_ms": 9.199999999999989,
+          "simulation_seconds_per_wall_second": 1.008232510082324
+        },
+        {
+          "throttle": 1,
+          "samples": 120,
+          "elapsed_ms": 1000,
+          "callback_hz": 120,
+          "p95_interval_ms": 8.400000000000091,
+          "max_interval_ms": 9.199999999999989,
+          "simulation_seconds_per_wall_second": 0.9999999999999989
+        }
+      ]
+    },
+    "page_errors": [],
+    "blocked_requests": []
+  },
+  "evidence": {
+    "screenshots": [
+      "initial-page.png",
+      "inspection-top.png",
+      "inspection-side.png",
+      "flap-0.png",
+      "flap-1.png",
+      "flap-2.png",
+      "flap-3.png"
+    ],
+    "runtime": {
+      "node": "v24.19.0",
+      "browser": "151.0.7922.34",
+      "viewport": [
+        1280,
+        800
+      ],
+      "clock": "Playwright virtual clock"
+    },
+    "flapping_samples": [
+      {
+        "file": "flap-0.png",
+        "state": {
+          "position": [
+            0,
+            2,
+            0
+          ],
+          "velocity": [
+            10,
+            -1,
+            0
+          ],
+          "pitch": 0,
+          "roll": 0,
+          "phase": 0,
+          "time": 0,
+          "status": "flying"
+        }
+      },
+      {
+        "file": "flap-1.png",
+        "state": {
+          "position": [
+            1.1111613411158692,
+            1.8655046053220077,
+            0
+          ],
+          "velocity": [
+            10.47773075474354,
+            -1.4278575501981803,
+            0
+          ],
+          "pitch": 0,
+          "roll": 0,
+          "phase": 1.361356816555577,
+          "time": 0.10833333333333332,
+          "status": "flying"
+        }
+      },
+      {
+        "file": "flap-2.png",
+        "state": {
+          "position": [
+            2.45790593722283,
+            1.6630599462520765,
+            0
+          ],
+          "velocity": [
+            11.03368811088813,
+            -1.7620143874776715,
+            0
+          ],
+          "pitch": 0,
+          "roll": 0,
+          "phase": 2.932153143350474,
+          "time": 0.2333333333333333,
+          "status": "flying"
+        }
+      },
+      {
+        "file": "flap-3.png",
+        "state": {
+          "position": [
+            3.9710904484073484,
+            1.4128664655566274,
+            0
+          ],
+          "velocity": [
+            11.626125689060064,
+            -1.9530492463320794,
+            0
+          ],
+          "pitch": 0,
+          "roll": 0,
+          "phase": 4.60766922526503,
+          "time": 0.366666666666667,
+          "status": "flying"
+        }
+      }
+    ]
+  },
+  "infrastructure_error": null
+}

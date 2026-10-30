@@ -1,0 +1,264 @@
+{
+  "task_version": "swan-v3.0",
+  "status": "completed",
+  "models": {
+    "gpt-5.6-sol": {
+      "attempts": 3,
+      "graded_attempts": 3,
+      "mean_passed": 17.0,
+      "total_checks": 20,
+      "all_automated_passes": 0,
+      "range": [
+        17,
+        17
+      ]
+    },
+    "gpt-6.1-sol": {
+      "attempts": 3,
+      "graded_attempts": 3,
+      "mean_passed": 13.33,
+      "total_checks": 20,
+      "all_automated_passes": 2,
+      "range": [
+        0,
+        20
+      ]
+    }
+  },
+  "comparison_scope": "20 deterministic checks; all five visual checks remain separately ungraded.",
+  "full_task_pass_rate": null,
+  "note": "Three repeats per model are exploratory, not a definitive ranking.",
+  "trials": [
+    {
+      "id": "gpt-5.6-sol-01",
+      "model": "gpt-5.6-sol",
+      "repeat": 1,
+      "status": "submitted",
+      "automated": {
+        "passed": 17,
+        "total": 20,
+        "failed": [
+          "power_controls_thrust",
+          "lift_scales_with_speed_squared",
+          "matching_wind_removes_lift"
+        ],
+        "groups": {
+          "source": {
+            "passed": 7,
+            "total": 7
+          },
+          "physics": {
+            "passed": 4,
+            "total": 7
+          },
+          "interaction": {
+            "passed": 6,
+            "total": 6
+          }
+        }
+      },
+      "reason": null,
+      "usage": {
+        "input_tokens": 56472,
+        "output_tokens": 11920,
+        "requests": 4
+      },
+      "elapsed_seconds": 97.484,
+      "grading_status": "awaiting_review"
+    },
+    {
+      "id": "gpt-6.1-sol-01",
+      "model": "gpt-6.1-sol",
+      "repeat": 1,
+      "status": "budget_exhausted",
+      "automated": {
+        "passed": 0,
+        "total": 20,
+        "failed": [
+          "span_m",
+          "wing_area_m2",
+          "wrist_span_m",
+          "shoulder_span_m",
+          "body_width_m",
+          "overall_length_m",
+          "aspect_ratio",
+          "power_controls_thrust",
+          "lift_scales_with_speed_squared",
+          "matching_wind_removes_lift",
+          "ground_nonpenetration",
+          "powered_wingbeat_frequency",
+          "unpowered_wingbeat_stops",
+          "steady_glide_ratio",
+          "power_moves_forward",
+          "pitch_input_changes_pitch",
+          "pause_freezes_state",
+          "reset_restores_state",
+          "takeoff",
+          "landing"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 7
+          },
+          "physics": {
+            "passed": 0,
+            "total": 7
+          },
+          "interaction": {
+            "passed": 0,
+            "total": 6
+          }
+        }
+      },
+      "reason": "incomplete_response",
+      "usage": {
+        "input_tokens": 51169,
+        "output_tokens": 16000,
+        "requests": 6
+      },
+      "elapsed_seconds": 267.602,
+      "grading_status": "awaiting_review"
+    },
+    {
+      "id": "gpt-5.6-sol-02",
+      "model": "gpt-5.6-sol",
+      "repeat": 2,
+      "status": "submitted",
+      "automated": {
+        "passed": 17,
+        "total": 20,
+        "failed": [
+          "power_controls_thrust",
+          "lift_scales_with_speed_squared",
+          "matching_wind_removes_lift"
+        ],
+        "groups": {
+          "source": {
+            "passed": 7,
+            "total": 7
+          },
+          "physics": {
+            "passed": 4,
+            "total": 7
+          },
+          "interaction": {
+            "passed": 6,
+            "total": 6
+          }
+        }
+      },
+      "reason": null,
+      "usage": {
+        "input_tokens": 35109,
+        "output_tokens": 10130,
+        "requests": 3
+      },
+      "elapsed_seconds": 79.796,
+      "grading_status": "awaiting_review"
+    },
+    {
+      "id": "gpt-6.1-sol-02",
+      "model": "gpt-6.1-sol",
+      "repeat": 2,
+      "status": "submitted",
+      "automated": {
+        "passed": 20,
+        "total": 20,
+        "failed": [],
+        "groups": {
+          "source": {
+            "passed": 7,
+            "total": 7
+          },
+          "physics": {
+            "passed": 7,
+            "total": 7
+          },
+          "interaction": {
+            "passed": 6,
+            "total": 6
+          }
+        }
+      },
+      "reason": null,
+      "usage": {
+        "input_tokens": 78504,
+        "output_tokens": 15746,
+        "requests": 7
+      },
+      "elapsed_seconds": 223.217,
+      "grading_status": "awaiting_review"
+    },
+    {
+      "id": "gpt-5.6-sol-03",
+      "model": "gpt-5.6-sol",
+      "repeat": 3,
+      "status": "submitted",
+      "automated": {
+        "passed": 17,
+        "total": 20,
+        "failed": [
+          "power_controls_thrust",
+          "lift_scales_with_speed_squared",
+          "matching_wind_removes_lift"
+        ],
+        "groups": {
+          "source": {
+            "passed": 7,
+            "total": 7
+          },
+          "physics": {
+            "passed": 4,
+            "total": 7
+          },
+          "interaction": {
+            "passed": 6,
+            "total": 6
+          }
+        }
+      },
+      "reason": null,
+      "usage": {
+        "input_tokens": 55227,
+        "output_tokens": 10870,
+        "requests": 4
+      },
+      "elapsed_seconds": 88.103,
+      "grading_status": "awaiting_review"
+    },
+    {
+      "id": "gpt-6.1-sol-03",
+      "model": "gpt-6.1-sol",
+      "repeat": 3,
+      "status": "budget_exhausted",
+      "automated": {
+        "passed": 20,
+        "total": 20,
+        "failed": [],
+        "groups": {
+          "source": {
+            "passed": 7,
+            "total": 7
+          },
+          "physics": {
+            "passed": 7,
+            "total": 7
+          },
+          "interaction": {
+            "passed": 6,
+            "total": 6
+          }
+        }
+      },
+      "reason": "incomplete_response",
+      "usage": {
+        "input_tokens": 80410,
+        "output_tokens": 16000,
+        "requests": 7
+      },
+      "elapsed_seconds": 244.779,
+      "grading_status": "awaiting_review"
+    }
+  ]
+}

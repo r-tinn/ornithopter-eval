@@ -1,0 +1,373 @@
+FILE: index.html
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Swan Flight Lab</title>
+<style>
+  *{box-sizing:border-box} body{margin:0;background:#07131b;color:#e8f2f1;font:14px/1.35 system-ui,sans-serif;overflow:hidden}
+  header{height:58px;padding:9px 18px;background:#0d202b;border-bottom:1px solid #29414d;display:flex;align-items:center;gap:18px}
+  h1{font-size:20px;margin:0;letter-spacing:.06em} header p{margin:0;color:#9eb4ba;font-size:12px}
+  main{display:grid;grid-template-columns:minmax(600px,1fr) 320px;height:calc(100vh - 58px)}
+  .stage{position:relative;min-width:600px;background:#071017}
+  canvas{display:block;width:100%;height:100%;min-height:350px;cursor:grab} canvas:active{cursor:grabbing}
+  .badge{position:absolute;left:14px;top:12px;padding:6px 9px;border:1px solid #3d5c68;background:#0a1921cc;color:#bcd0d4;border-radius:4px;font-size:11px}
+  aside{background:#10232d;border-left:1px solid #2b4652;padding:16px;overflow:auto}
+  .group{margin-bottom:17px;padding-bottom:15px;border-bottom:1px solid #29414d}
+  .group h2{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:#82b8c4;margin:0 0 9px}
+  .row{display:flex;gap:7px;flex-wrap:wrap}
+  button{border:1px solid #466673;background:#173440;color:#eef7f6;padding:7px 10px;border-radius:4px;cursor:pointer}
+  button:hover,button.active{background:#276071;border-color:#77baca}
+  button.primary{background:#a95f29;border-color:#dc8a47} button:focus-visible,input:focus-visible{outline:2px solid #eec36b}
+  label{display:flex;justify-content:space-between;color:#bed0d3} input[type=range]{width:100%;accent-color:#d87935;margin:8px 0}
+  #telemetry{font:13px/1.7 ui-monospace,monospace;background:#08171e;border:1px solid #28444f;border-radius:4px;padding:10px;white-space:pre;color:#bdebdc}
+  .keys{display:grid;grid-template-columns:1fr 1fr;gap:5px;color:#a8bec3;font-size:12px}
+  kbd{background:#203943;border:1px solid #45606a;border-radius:3px;padding:1px 4px;color:white}
+  .note{font-size:11px;color:#92aab0}.warn{color:#e7bc74}
+  @media(max-width:900px){aside{width:280px}main{grid-template-columns:minmax(600px,1fr) 280px}}
+</style>
+</head>
+<body>
+<header><h1>SWAN FLIGHT LAB</h1><p>Cycle-averaged ornithopter explorer · SI units · source-informed geometry</p></header>
+<main>
+  <section class="stage">
+    <canvas data-testid="scene" aria-label="Interactive three dimensional swan ornithopter scene"></canvas>
+    <div class="badge">DRAG TO ORBIT · articulated inner + outer wings</div>
+  </section>
+  <aside>
+    <section class="group">
+      <h2>Simulation</h2>
+      <div class="row">
+        <button class="primary" data-testid="start">Start</button>
+        <button data-testid="pause">Pause</button>
+        <button data-testid="reset">Reset</button>
+        <button data-testid="approach">Approach</button>
+      </div>
+    </section>
+    <section class="group">
+      <h2>Drive</h2>
+      <label for="throttle">Throttle <output id="tv">0%</output></label>
+      <input data-testid="throttle" id="throttle" type="range" min="0" max="1" step="0.01" value="0">
+      <div class="keys"><span><kbd>↑</kbd>/<kbd>↓</kbd> pitch</span><span><kbd>←</kbd>/<kbd>→</kbd> bank</span><span><kbd>Space</kbd> brake</span></div>
+    </section>
+    <section class="group">
+      <h2>Inspection camera</h2>
+      <div class="row">
+        <button data-testid="view-top">Top</button>
+        <button data-testid="view-side">Side</button>
+        <button data-testid="view-front">Front</button>
+      </div>
+    </section>
+    <section class="group">
+      <h2>Telemetry</h2>
+      <div data-testid="telemetry" id="telemetry"></div>
+    </section>
+    <section class="note">
+      <p class="warn"><strong>Educational approximation.</strong> Powered thrust is an assumed 400 W flapping drive, not experimentally proven performance.</p>
+      <p>Dimensions follow the rounded “Say” values on source page 02. Page 14 informs the arm/hand wing distinction and conventional tail/fin. The force model is point-mass and cycle-averaged; panel motion is visual, not an unsteady-flow or structural solution.</p>
+    </section>
+  </aside>
+</main>
+<script type="module">
+import {parameters, forces, step} from "./physics.mjs";
+
+const canvas=document.querySelector("canvas"), ctx=canvas.getContext("2d");
+const tele=document.querySelector("#telemetry"), slider=document.querySelector("#throttle"), tv=document.querySelector("#tv");
+const env={wind:[0,0,0],rho:1.225};
+const initial=()=>({position:[0,0.2,0],velocity:[0,0,0],pitch:0,roll:0,phase:0,time:0,status:"grounded"});
+let state=initial(), controls={throttle:0,pitch:0,bank:0,brake:0}, running=false;
+let accumulator=0,last=performance.now(), cameraMode="orbit", az=.85,el=.48,dragging=false,lastMouse=[0,0];
+const keys=new Set();
+const copy=o=>JSON.parse(JSON.stringify(o));
+window.flightLab={getState:()=>copy(state),getControls:()=>copy(controls)};
+
+function resize(){
+  const r=canvas.getBoundingClientRect(), d=Math.min(devicePixelRatio||1,2);
+  const w=Math.round(r.width*d),h=Math.round(r.height*d);
+  if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;ctx.setTransform(d,0,0,d,0,0)}
+}
+function setControlsFromKeys(){
+  controls.pitch=(keys.has("ArrowUp")?1:0)-(keys.has("ArrowDown")?1:0);
+  controls.bank=(keys.has("ArrowRight")?1:0)-(keys.has("ArrowLeft")?1:0);
+  controls.brake=keys.has("Space")?1:0;
+}
+addEventListener("keydown",e=>{if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight","Space"].includes(e.code)){e.preventDefault();keys.add(e.code);setControlsFromKeys()}});
+addEventListener("keyup",e=>{keys.delete(e.code);setControlsFromKeys()});
+addEventListener("blur",()=>{keys.clear();setControlsFromKeys()});
+slider.addEventListener("input",()=>{controls.throttle=+slider.value;tv.value=Math.round(controls.throttle*100)+"%"});
+document.querySelector('[data-testid="start"]').onclick=()=>{running=true;last=performance.now()};
+document.querySelector('[data-testid="pause"]').onclick=()=>{running=false;accumulator=0};
+document.querySelector('[data-testid="reset"]').onclick=()=>{running=false;accumulator=0;state=initial();controls={throttle:0,pitch:0,bank:0,brake:0};keys.clear();slider.value=0;tv.value="0%";updateTelemetry();render()};
+document.querySelector('[data-testid="approach"]').onclick=()=>{running=false;accumulator=0;state={position:[0,2,0],velocity:[10,-1,0],pitch:0,roll:0,phase:0,time:0,status:"flying"};controls={throttle:0,pitch:0,bank:0,brake:0};keys.clear();slider.value=0;tv.value="0%";updateTelemetry();render()};
+for(const m of ["top","side","front"])document.querySelector(`[data-testid="view-${m}"]`).onclick=()=>{cameraMode=m;render()};
+canvas.addEventListener("pointerdown",e=>{dragging=true;lastMouse=[e.clientX,e.clientY];canvas.setPointerCapture(e.pointerId)});
+canvas.addEventListener("pointermove",e=>{if(!dragging)return;az+=(e.clientX-lastMouse[0])*.008;el=Math.max(-.1,Math.min(1.35,el+(e.clientY-lastMouse[1])*.006));lastMouse=[e.clientX,e.clientY];cameraMode="orbit";render()});
+canvas.addEventListener("pointerup",()=>dragging=false);
+
+const V={
+ add:(a,b)=>[a[0]+b[0],a[1]+b[1],a[2]+b[2]], sub:(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]],
+ mul:(a,s)=>[a[0]*s,a[1]*s,a[2]*s], dot:(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2],
+ cross:(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],
+ unit:a=>{const n=Math.hypot(...a)||1;return[a[0]/n,a[1]/n,a[2]/n]}
+};
+function bodyTransform(p){
+  let [x,y,z]=p, cr=Math.cos(state.roll),sr=Math.sin(state.roll);
+  [y,z]=[cr*y-sr*z,sr*y+cr*z];
+  const cp=Math.cos(state.pitch),sp=Math.sin(state.pitch);
+  [x,y]=[cp*x-sp*y,sp*x+cp*y];
+  return [x+state.position[0],y+state.position[1],z+state.position[2]];
+}
+function wingPoint(side, radial, x, outer=false){
+  const powered=controls.throttle>0;
+  const wave=powered?Math.sin(state.phase):0;
+  const inner=18*Math.PI/180*wave, rel=(outer?28*Math.PI/180*wave:0);
+  const root=parameters.shoulder_span_m/2, wrist=parameters.wrist_span_m/2;
+  let z,y;
+  if(radial<=wrist){z=side*(root+(radial-root)*Math.cos(inner));y=(radial-root)*Math.sin(inner)}
+  else {
+    const wz=side*(root+(wrist-root)*Math.cos(inner)), wy=(wrist-root)*Math.sin(inner);
+    const a=inner+rel; z=wz+side*(radial-wrist)*Math.cos(a);y=wy+(radial-wrist)*Math.sin(a);
+  }
+  return bodyTransform([x,y,z]);
+}
+function camera(){
+  let c,right,up;
+  if(cameraMode==="top"){c=[0,1,0];right=[0,0,1];up=[1,0,0]}
+  else if(cameraMode==="side"){c=[0,0,1];right=[1,0,0];up=[0,1,0]}
+  else if(cameraMode==="front"){c=[1,0,0];right=[0,0,-1];up=[0,1,0]}
+  else {c=V.unit([Math.cos(el)*Math.cos(az),Math.sin(el),Math.cos(el)*Math.sin(az)]);right=V.unit(V.cross([0,1,0],c));up=V.unit(V.cross(c,right))}
+  return {c,right,up};
+}
+function render(){
+  resize();const W=canvas.clientWidth,H=canvas.clientHeight,C=camera();
+  ctx.clearRect(0,0,W,H);
+  const sky=ctx.createLinearGradient(0,0,0,H);sky.addColorStop(0,"#8fb8c7");sky.addColorStop(.58,"#456b76");sky.addColorStop(1,"#172f36");ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);
+  const scale=Math.min(W/3.05,H/2.15), target=state.position;
+  const proj=p=>{const q=V.sub(p,target);return[W/2+V.dot(q,C.right)*scale,H/2-V.dot(q,C.up)*scale,V.dot(q,C.c)]};
+  // Moving world grid gives speed/depth cues while the camera tracks the aircraft.
+  ctx.lineWidth=1;
+  const gx=Math.floor(state.position[0]);
+  for(let i=-8;i<=8;i++){
+    const fade=.13+Math.max(0,1-Math.abs(i)/10)*.15;ctx.strokeStyle=`rgba(185,213,202,${fade})`;
+    let a=proj([gx+i,0,-5]),b=proj([gx+i,0,5]);ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke();
+    a=proj([gx-8,0,i*.6]);b=proj([gx+8,0,i*.6]);ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke();
+  }
+  const polys=[];
+  const poly=(pts,fill,stroke="#233b42")=>polys.push({pts:pts.map(proj),fill,stroke});
+  const span=parameters.span_m/2,wrist=parameters.wrist_span_m/2,root=parameters.shoulder_span_m/2;
+  for(const side of [-1,1]){
+    // Separate inner (arm) and outer (hand) surfaces share a visible wrist seam.
+    poly([wingPoint(side,root,.18),wingPoint(side,wrist,.15),wingPoint(side,wrist,-.16),wingPoint(side,root,-.17)],"#d8e1dd","#597278");
+    poly([wingPoint(side,wrist,.15,true),wingPoint(side,span,.035,true),wingPoint(side,span,-.035,true),wingPoint(side,wrist,-.16,true)],"#c8d6d3","#4e6870");
+  }
+  // Horizontal tail, definitely aft of wing roots.
+  poly([bodyTransform([-.54,.01,-.06]),bodyTransform([-.76,.01,-.34]),bodyTransform([-.82,.01,-.05]),bodyTransform([-.78,.01,.05]),bodyTransform([-.76,.01,.34]),bodyTransform([-.54,.01,.06])],"#b9cdca");
+  // Distinct vertical fin projecting above the aft body.
+  poly([bodyTransform([-.48,.04,0]),bodyTransform([-.74,.27,0]),bodyTransform([-.82,.04,0])],"#d88543","#633d2a");
+  // Faceted tapered body, nose at +x and aft extent preserving overall length.
+  const rings=[[.55,.015], [.32,.09],[0,.105],[-.38,.075],[-.847,.018]], seg=8;
+  for(let r=0;r<rings.length-1;r++)for(let j=0;j<seg;j++){
+    const a=2*Math.PI*j/seg,b=2*Math.PI*(j+1)/seg;
+    poly([[rings[r][0],Math.cos(a)*rings[r][1],Math.sin(a)*rings[r][1]],[rings[r+1][0],Math.cos(a)*rings[r+1][1],Math.sin(a)*rings[r+1][1]],[rings[r+1][0],Math.cos(b)*rings[r+1][1],Math.sin(b)*rings[r+1][1]],[rings[r][0],Math.cos(b)*rings[r][1],Math.sin(b)*rings[r][1]]].map(bodyTransform),r===0?"#f1f0dc":"#e4e8dc");
+  }
+  // Small dark beak/nose and ground skids.
+  poly([[.55,0,-.025],[.68,0,0],[.55,0,.025]].map(bodyTransform),"#263339");
+  for(const z of [-.055,.055]){poly([[.08,-.08,z],[-.18,-.08,z],[-.23,-.18,z],[.12,-.18,z]].map(bodyTransform),"#35474a")}
+  polys.sort((a,b)=>a.pts.reduce((s,p)=>s+p[2],0)/a.pts.length-b.pts.reduce((s,p)=>s+p[2],0)/b.pts.length);
+  for(const p of polys){ctx.beginPath();p.pts.forEach((q,i)=>i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]));ctx.closePath();ctx.fillStyle=p.fill;ctx.fill();ctx.strokeStyle=p.stroke;ctx.lineWidth=1.2;ctx.stroke()}
+  // Wrist joint markers emphasize articulation.
+  for(const side of [-1,1]){const q=proj(wingPoint(side,wrist,0));ctx.fillStyle="#e49b48";ctx.beginPath();ctx.arc(q[0],q[1],4,0,7);ctx.fill()}
+  ctx.fillStyle="#dce9e6";ctx.font="11px system-ui";ctx.fillText(cameraMode.toUpperCase()+" VIEW",14,H-16);
+}
+function updateTelemetry(){
+  const f=forces(state,controls,env);
+  tele.textContent=`SPEED     ${Math.hypot(...state.velocity).toFixed(2)} m/s\nAIR SPEED ${f.airspeed.toFixed(2)} m/s\nALTITUDE  ${Math.max(0,state.position[1]-.2).toFixed(2)} m\nSIM TIME  ${state.time.toFixed(2)} s\nPITCH     ${(state.pitch*180/Math.PI).toFixed(1)}°\nROLL      ${(state.roll*180/Math.PI).toFixed(1)}°\nSTATUS    ${String(state.status).toUpperCase()}`;
+}
+function frame(now){
+  const elapsed=Math.min(.1,(now-last)/1000);last=now;
+  if(running){
+    accumulator+=elapsed;
+    while(accumulator>=1/120){state=step(state,controls,env,1/120);accumulator-=1/120}
+    updateTelemetry();
+  }
+  render();requestAnimationFrame(frame);
+}
+updateTelemetry();requestAnimationFrame(frame);
+</script>
+</body>
+</html>
+
+
+FILE: interpretation.json
+{
+  "sources": [
+    {
+      "id": "02 / Unknown-2.jpg",
+      "used_for": "Rounded 'Say' dimensions: 7.4 ft span, 3.7 ft wrist span, 4 in shoulder span, 8 in maximum body width and 55 in overall length; the paragraph supplies total wing area 6.61 ft^2. The illustrated outline informs the parallel-chord inner and tapered outer panels."
+    },
+    {
+      "id": "14 / Unknown-14.jpg",
+      "used_for": "Qualitative distinction between arm/inner and hand/outer wing panels, and the proposal for a conventional tail, fin and rudder."
+    }
+  ],
+  "assumptions": [
+    "Conversions use exactly 1 ft = 0.3048 m and 1 in = 0.0254 m; aspect ratio is derived as span squared divided by area (about 8.284), consistent with the page's rounded 8.29.",
+    "Individual wing length is (span - shoulder span)/2, rather than the excluded printed wing-length entry.",
+    "The animated visual uses an assumed sinusoidal 18 degree inner stroke and an additional 28 degree outer-panel stroke at the specified 2 Hz powered phase; these angles are visual articulation only.",
+    "Mass, gravity, density, force polar, powered-drive efficiency, controls and contact rules are the task's new benchmark assumptions, not claims made by Stanley J. O. Tinn."
+  ],
+  "excluded_fields": [
+    "Page 02 '3.135 ft' wing length.",
+    "The missing table's 7.83 aspect-ratio comparison.",
+    "The crossed-out 14% outer-wing area argument.",
+    "Page 14 biological stroke-angle reference frames, elastic stiffness, vortex-lift landing hypothesis and unspecified curved-plate polar.",
+    "Any Standard Model Swan or earlier human-carrying simulator data."
+  ],
+  "limitations": [
+    "Historical photographs are design notes and observations, not a complete or validated blueprint.",
+    "This is a cycle-averaged point-mass educational model with independently animated panels, not a structural, unsteady-flow or aeroelastic solver.",
+    "Powered thrust is an assumed flapping drive represented by a power model and is not experimentally proven wing performance.",
+    "Tail and fin geometry is a clear qualitative visualization; exact shape, section and control effectiveness are not specified by the sources."
+  ]
+}
+
+
+FILE: physics.mjs
+// Swan Flight Lab's complete, shared point-mass model.  Source dimensions are
+// rounded values from page 02; all dynamics below are the benchmark assumptions.
+export const parameters = Object.freeze({
+  span_m: 2.25552,                 // 7.4 ft
+  wing_area_m2: 0.6140890944,      // 6.61 ft^2
+  wrist_span_m: 1.12776,           // 3.7 ft
+  shoulder_span_m: 0.1016,         // 4 in
+  body_width_m: 0.2032,            // 8 in
+  overall_length_m: 1.397,         // 55 in
+  aspect_ratio: 8.284417
+});
+
+const MASS = 6;
+const G = 9.80665;
+const GROUND = 0.2;
+const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+const mag = v => Math.hypot(v[0], v[1], v[2]);
+const scale = (v, s) => [v[0] * s, v[1] * s, v[2] * s];
+const add = (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
+const cross = (a, b) => [
+  a[1] * b[2] - a[2] * b[1],
+  a[2] * b[0] - a[0] * b[2],
+  a[0] * b[1] - a[1] * b[0]
+];
+const dot = (a, b) => a[0]*b[0] + a[1]*b[1] + a[2]*b[2];
+const unit = (v, fallback = [1, 0, 0]) => {
+  const m = mag(v);
+  return m > 1e-12 ? scale(v, 1/m) : fallback.slice();
+};
+
+export function forces(state, controls, environment) {
+  const wind = environment?.wind || [0, 0, 0];
+  const rho = Number.isFinite(environment?.rho) ? environment.rho : 1.225;
+  const throttle = clamp(Number(controls?.throttle) || 0, 0, 1);
+  const brake = clamp(Number(controls?.brake) || 0, 0, 1);
+  const air = [
+    state.velocity[0] - wind[0],
+    state.velocity[1] - wind[1],
+    state.velocity[2] - wind[2]
+  ];
+  const speed = mag(air);
+  const forward = unit(air, [1, 0, 0]);
+  const alpha = state.pitch - Math.atan2(air[1], Math.hypot(air[0], air[2]));
+  const cl = clamp(0.6 + 3 * alpha, -0.2, 1.4);
+  const cd = 0.035 + cl*cl / (Math.PI * 0.8 * parameters.aspect_ratio);
+  const qS = 0.5 * rho * speed * speed * parameters.wing_area_m2;
+  const liftN = qS * cl;
+  const dragN = qS * cd;
+
+  // Project world-up into the plane normal to the flow.  For exactly vertical
+  // flow, use a finite horizontal reference.
+  let lift0 = [0, 1, 0];
+  lift0 = add(lift0, scale(forward, -dot(lift0, forward)));
+  if (mag(lift0) < 1e-9) {
+    const ref = Math.abs(forward[2]) < 0.9 ? [0, 0, 1] : [1, 0, 0];
+    lift0 = add(ref, scale(forward, -dot(ref, forward)));
+  }
+  lift0 = unit(lift0, [0, 0, 1]);
+  const r = Number(state.roll) || 0;
+  // Rodrigues rotation around forward.
+  const liftDir = add(
+    add(scale(lift0, Math.cos(r)), scale(cross(forward, lift0), Math.sin(r))),
+    scale(forward, dot(forward, lift0) * (1 - Math.cos(r)))
+  );
+  const lift = scale(liftDir, liftN);
+  const drag = scale(forward, -dragN);
+  const power = 400 * throttle;
+  let thrustN = 0.65 * power / Math.max(speed, 5);
+  if (speed > 0) thrustN = Math.min(thrustN, 0.65 * power / speed);
+  const thrust = scale(forward, thrustN);
+  let total = add(add(lift, drag), thrust);
+  total[1] -= MASS * G;
+
+  const onGround = state.position[1] <= GROUND + 1e-9 && state.status !== "flying";
+  if (onGround && total[1] < 0) total[1] = 0; // normal support
+  if (onGround && brake > 0) {
+    const hv = Math.hypot(state.velocity[0], state.velocity[2]);
+    if (hv > 1e-10) {
+      total[0] -= 18 * brake * state.velocity[0] / hv;
+      total[2] -= 18 * brake * state.velocity[2] / hv;
+    }
+  }
+  return {
+    lift, drag, thrust, power, airspeed: speed, cl,
+    force: [total[0], total[1], total[2]]
+  };
+}
+
+export function step(state, controls, environment, dt) {
+  if (!Number.isFinite(dt) || dt <= 0 || dt > 0.05)
+    throw new RangeError("dt must be finite and in (0, 0.05]");
+  const s = {
+    position: state.position.slice(),
+    velocity: state.velocity.slice(),
+    pitch: Number(state.pitch) || 0,
+    roll: Number(state.roll) || 0,
+    phase: Number(state.phase) || 0,
+    time: Number(state.time) || 0,
+    status: state.status
+  };
+  const f = forces(s, controls, environment);
+  const oldVX = s.velocity[0], oldVZ = s.velocity[2];
+  for (let i = 0; i < 3; i++) s.velocity[i] += f.force[i] / MASS * dt;
+
+  const onGround = s.position[1] <= GROUND + 1e-9 && s.status !== "flying";
+  if (onGround && (Number(controls?.brake) || 0) > 0) {
+    // A Coulomb brake is not allowed to numerically reverse ground motion.
+    if (oldVX !== 0 && oldVX * s.velocity[0] < 0) s.velocity[0] = 0;
+    if (oldVZ !== 0 && oldVZ * s.velocity[2] < 0) s.velocity[2] = 0;
+  }
+  for (let i = 0; i < 3; i++) s.position[i] += s.velocity[i] * dt;
+
+  // Attitude is deliberately manual: no hidden stability or flight-path lock.
+  s.pitch = clamp(s.pitch + 0.5 * clamp(Number(controls?.pitch)||0, -1, 1) * dt,
+                  -0.35, 0.45);
+  const targetRoll = 0.6 * clamp(Number(controls?.bank)||0, -1, 1);
+  s.roll += clamp(targetRoll - s.roll, -2*dt, 2*dt);
+  if ((Number(controls?.throttle)||0) > 0)
+    s.phase += 4 * Math.PI * dt; // radians, exactly 2 cycles/s
+  s.time += dt;
+
+  if (s.status === "grounded" && s.position[1] > GROUND + 1e-7)
+    s.status = "flying";
+  if (state.status === "flying" && s.position[1] <= GROUND) {
+    const horizontal = Math.hypot(s.velocity[0], s.velocity[2]);
+    const safe = Math.abs(s.velocity[1]) <= 3 && horizontal <= 14 &&
+                 Math.abs(s.roll) <= 0.35;
+    s.status = safe ? "landed" : "crashed";
+    s.position[1] = GROUND;
+    s.velocity[1] = 0;
+  } else if (s.position[1] < GROUND) {
+    s.position[1] = GROUND;
+    if (s.velocity[1] < 0) s.velocity[1] = 0;
+  }
+  return s;
+}
+

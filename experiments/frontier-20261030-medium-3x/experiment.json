@@ -1,0 +1,275 @@
+{
+  "task_version": "swan-v3.0",
+  "created_utc": "2026-10-30T13:43:29.240656+00:00",
+  "git_commit": "b6c3703ff35304e269ee06118b304a52817d38e1",
+  "frozen_sha256": {
+    "ornithopter_eval/__init__.py": "cf2e15d3648bbebad0684ba37d53870ab138f103137e6aff4a07972396944741",
+    "ornithopter_eval/__main__.py": "0721b0f96c14c361c64b01bc477285c6dda68fdc635764c608a4c12358cd2166",
+    "ornithopter_eval/api.py": "a6911fc493250a712a8b1a9c3e78c8c88de68533395501f1dc991927940ab111",
+    "ornithopter_eval/checks.py": "9096a52ad0610d3a9c2d8390c4935ee001640643fbd1b47735e54385e7b6323b",
+    "ornithopter_eval/experiment.py": "0b85085dbecf9eb5ade3ed6ddb9c0a89f866d48e31187df63886dcae5b0f58a0",
+    "ornithopter_eval/grading.py": "798c38800dc5ee2c9de29e02d978af9565d701b2ed5b0dcd4670153842a58754",
+    "ornithopter_eval/policy.py": "e24cbe3c5026e4928660f1d1692c9b44c22d0c7a7652c390ec462d27f08f635e",
+    "ornithopter_eval/review.py": "5a45a5e4a364a11dd78cb7c23bf43b26fbf5bfd8f6c81d5668145ca2daec89c6",
+    "ornithopter_eval/runner.py": "66a8bf4c08d0792682ab276c47e700b8fb1fa9f1e249b1a1d4594343d41aad33",
+    "grader/browser.mjs": "bc7c6b83fd104851151311d60fe11b0ba4e357c271b790e21b0855df2ab7c2ca",
+    "task/SOURCE_GUIDE.md": "a2d3add8df37395b01c2218fbb34bc18a9cf33f489ec6547875bbcffb47f6869",
+    "task/TASK.md": "261c2c73858b7a29c89328d0bd4e98a4f113fc684c61056932473d200e597247",
+    "task/starter/index.html": "38d212328cf4a327fa3a7672e4c6f117dff120a853deec32cb10c4d090dbd92f",
+    "task/starter/interpretation.json": "3f5bbb3adf4b6d80d5628ffd76ac5a787640b2b3d433afbc5ce51d2b2d583aaa",
+    "task/starter/physics.mjs": "22849e61715281b480c5383f02466f779878f942da6b93213cfa7d2a277a584e",
+    "task/sources/Unknown-14.jpg": "889697309f83ec195a90d91974ff30e5374ab321284a759bbe8c929f5e8e405e",
+    "task/sources/Unknown-2.jpg": "5c0a94b3f137307104f8062c23c3a6a3c6366c88f2f18c8fafed9ee3ddf0cbd9"
+  },
+  "config_sha256": "f90d7bd673bf4f497b933a2b88950a924ff182da9636e924bb0f71067b169815",
+  "models": [
+    "gpt-5.6-sol",
+    "gpt-6.1-sol"
+  ],
+  "repeats": 3,
+  "config": {
+    "task_version": "swan-v3.0",
+    "max_output_tokens_total": 16000,
+    "max_output_tokens_per_response": 16000,
+    "max_requests": 24,
+    "max_wall_seconds": 900,
+    "max_submission_bytes": 2000000,
+    "reasoning_effort": "medium"
+  },
+  "status": "completed",
+  "protocol": "Two generators in parallel per round; 3 independent rounds; grading only after submission; no retries.",
+  "visual_review": "Not scored: previous image judge failed calibration.",
+  "trials": [
+    {
+      "id": "gpt-5.6-sol-01",
+      "model": "gpt-5.6-sol",
+      "repeat": 1,
+      "status": "submitted",
+      "automated": {
+        "passed": 17,
+        "total": 20,
+        "failed": [
+          "power_controls_thrust",
+          "lift_scales_with_speed_squared",
+          "matching_wind_removes_lift"
+        ],
+        "groups": {
+          "source": {
+            "passed": 7,
+            "total": 7
+          },
+          "physics": {
+            "passed": 4,
+            "total": 7
+          },
+          "interaction": {
+            "passed": 6,
+            "total": 6
+          }
+        }
+      },
+      "reason": null,
+      "usage": {
+        "input_tokens": 56472,
+        "output_tokens": 11920,
+        "requests": 4
+      },
+      "elapsed_seconds": 97.484,
+      "grading_status": "awaiting_review"
+    },
+    {
+      "id": "gpt-6.1-sol-01",
+      "model": "gpt-6.1-sol",
+      "repeat": 1,
+      "status": "budget_exhausted",
+      "automated": {
+        "passed": 0,
+        "total": 20,
+        "failed": [
+          "span_m",
+          "wing_area_m2",
+          "wrist_span_m",
+          "shoulder_span_m",
+          "body_width_m",
+          "overall_length_m",
+          "aspect_ratio",
+          "power_controls_thrust",
+          "lift_scales_with_speed_squared",
+          "matching_wind_removes_lift",
+          "ground_nonpenetration",
+          "powered_wingbeat_frequency",
+          "unpowered_wingbeat_stops",
+          "steady_glide_ratio",
+          "power_moves_forward",
+          "pitch_input_changes_pitch",
+          "pause_freezes_state",
+          "reset_restores_state",
+          "takeoff",
+          "landing"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 7
+          },
+          "physics": {
+            "passed": 0,
+            "total": 7
+          },
+          "interaction": {
+            "passed": 0,
+            "total": 6
+          }
+        }
+      },
+      "reason": "incomplete_response",
+      "usage": {
+        "input_tokens": 51169,
+        "output_tokens": 16000,
+        "requests": 6
+      },
+      "elapsed_seconds": 267.602,
+      "grading_status": "awaiting_review"
+    },
+    {
+      "id": "gpt-5.6-sol-02",
+      "model": "gpt-5.6-sol",
+      "repeat": 2,
+      "status": "submitted",
+      "automated": {
+        "passed": 17,
+        "total": 20,
+        "failed": [
+          "power_controls_thrust",
+          "lift_scales_with_speed_squared",
+          "matching_wind_removes_lift"
+        ],
+        "groups": {
+          "source": {
+            "passed": 7,
+            "total": 7
+          },
+          "physics": {
+            "passed": 4,
+            "total": 7
+          },
+          "interaction": {
+            "passed": 6,
+            "total": 6
+          }
+        }
+      },
+      "reason": null,
+      "usage": {
+        "input_tokens": 35109,
+        "output_tokens": 10130,
+        "requests": 3
+      },
+      "elapsed_seconds": 79.796,
+      "grading_status": "awaiting_review"
+    },
+    {
+      "id": "gpt-6.1-sol-02",
+      "model": "gpt-6.1-sol",
+      "repeat": 2,
+      "status": "submitted",
+      "automated": {
+        "passed": 20,
+        "total": 20,
+        "failed": [],
+        "groups": {
+          "source": {
+            "passed": 7,
+            "total": 7
+          },
+          "physics": {
+            "passed": 7,
+            "total": 7
+          },
+          "interaction": {
+            "passed": 6,
+            "total": 6
+          }
+        }
+      },
+      "reason": null,
+      "usage": {
+        "input_tokens": 78504,
+        "output_tokens": 15746,
+        "requests": 7
+      },
+      "elapsed_seconds": 223.217,
+      "grading_status": "awaiting_review"
+    },
+    {
+      "id": "gpt-5.6-sol-03",
+      "model": "gpt-5.6-sol",
+      "repeat": 3,
+      "status": "submitted",
+      "automated": {
+        "passed": 17,
+        "total": 20,
+        "failed": [
+          "power_controls_thrust",
+          "lift_scales_with_speed_squared",
+          "matching_wind_removes_lift"
+        ],
+        "groups": {
+          "source": {
+            "passed": 7,
+            "total": 7
+          },
+          "physics": {
+            "passed": 4,
+            "total": 7
+          },
+          "interaction": {
+            "passed": 6,
+            "total": 6
+          }
+        }
+      },
+      "reason": null,
+      "usage": {
+        "input_tokens": 55227,
+        "output_tokens": 10870,
+        "requests": 4
+      },
+      "elapsed_seconds": 88.103,
+      "grading_status": "awaiting_review"
+    },
+    {
+      "id": "gpt-6.1-sol-03",
+      "model": "gpt-6.1-sol",
+      "repeat": 3,
+      "status": "budget_exhausted",
+      "automated": {
+        "passed": 20,
+        "total": 20,
+        "failed": [],
+        "groups": {
+          "source": {
+            "passed": 7,
+            "total": 7
+          },
+          "physics": {
+            "passed": 7,
+            "total": 7
+          },
+          "interaction": {
+            "passed": 6,
+            "total": 6
+          }
+        }
+      },
+      "reason": "incomplete_response",
+      "usage": {
+        "input_tokens": 80410,
+        "output_tokens": 16000,
+        "requests": 7
+      },
+      "elapsed_seconds": 244.779,
+      "grading_status": "awaiting_review"
+    }
+  ]
+}

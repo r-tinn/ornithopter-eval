@@ -1,0 +1,321 @@
+{
+  "task_version": "swan-v3.0",
+  "submission_sha256": {
+    "index.html": "38d212328cf4a327fa3a7672e4c6f117dff120a853deec32cb10c4d090dbd92f",
+    "interpretation.json": "3f5bbb3adf4b6d80d5628ffd76ac5a787640b2b3d433afbc5ce51d2b2d583aaa",
+    "physics.mjs": "22849e61715281b480c5383f02466f779878f942da6b93213cfa7d2a277a584e"
+  },
+  "grader_sha256": {
+    "browser.mjs": "bc7c6b83fd104851151311d60fe11b0ba4e357c271b790e21b0855df2ab7c2ca",
+    "grading.py": "798c38800dc5ee2c9de29e02d978af9565d701b2ed5b0dcd4670153842a58754",
+    "checks.py": "9096a52ad0610d3a9c2d8390c4935ee001640643fbd1b47735e54385e7b6323b"
+  },
+  "passed": false,
+  "status": "awaiting_review",
+  "dimensions": {
+    "source": {
+      "kind": "deterministic",
+      "checks": [
+        {
+          "id": "span_m",
+          "question": "Is the exported span the source value in metres?",
+          "pass": false,
+          "detail": {
+            "actual": null,
+            "expected": 2.25552,
+            "relative_tolerance": 0.005
+          }
+        },
+        {
+          "id": "wing_area_m2",
+          "question": "Is the exported wing area the source value in square metres?",
+          "pass": false,
+          "detail": {
+            "actual": null,
+            "expected": 0.6140890944,
+            "relative_tolerance": 0.005
+          }
+        },
+        {
+          "id": "wrist_span_m",
+          "question": "Is the exported wrist span the source value in metres?",
+          "pass": false,
+          "detail": {
+            "actual": null,
+            "expected": 1.12776,
+            "relative_tolerance": 0.005
+          }
+        },
+        {
+          "id": "shoulder_span_m",
+          "question": "Is the exported shoulder span the source value in metres?",
+          "pass": false,
+          "detail": {
+            "actual": null,
+            "expected": 0.1016,
+            "relative_tolerance": 0.005
+          }
+        },
+        {
+          "id": "body_width_m",
+          "question": "Is the exported body width the source value in metres?",
+          "pass": false,
+          "detail": {
+            "actual": null,
+            "expected": 0.2032,
+            "relative_tolerance": 0.005
+          }
+        },
+        {
+          "id": "overall_length_m",
+          "question": "Is the exported overall length the source value in metres?",
+          "pass": false,
+          "detail": {
+            "actual": null,
+            "expected": 1.397,
+            "relative_tolerance": 0.005
+          }
+        },
+        {
+          "id": "aspect_ratio",
+          "question": "Is the exported aspect ratio b\u00b2/S from the selected source values?",
+          "pass": false,
+          "detail": {
+            "actual": null,
+            "expected": 8.284417549167928,
+            "relative_tolerance": 0.005
+          }
+        }
+      ],
+      "passed": false
+    },
+    "physics": {
+      "kind": "deterministic",
+      "checks": [
+        {
+          "id": "power_controls_thrust",
+          "question": "Does switching power off remove thrust?",
+          "pass": false,
+          "detail": {
+            "power_off": {
+              "error": "Error: Not implemented"
+            },
+            "power_on": {
+              "error": "Error: Not implemented"
+            }
+          }
+        },
+        {
+          "id": "lift_scales_with_speed_squared",
+          "question": "Does doubling airspeed quadruple positive lift at fixed attitude?",
+          "pass": false,
+          "detail": {
+            "speed_10_lift": null,
+            "speed_20_lift": null,
+            "expected_ratio": 4,
+            "tolerance": 1e-06
+          }
+        },
+        {
+          "id": "matching_wind_removes_lift",
+          "question": "Does wind matching aircraft velocity remove aerodynamic lift?",
+          "pass": false,
+          "detail": {
+            "still_air_lift": null,
+            "matching_wind_lift": null,
+            "tolerance": 1e-06
+          }
+        },
+        {
+          "id": "ground_nonpenetration",
+          "question": "Does a descending aircraft stay above the ground-contact plane?",
+          "pass": false,
+          "detail": {
+            "error": "Error: page.evaluate: Error: Not implemented\n    at Module.step (http://127.0.0.1:65051/physics.mjs:4:64)\n    at eval (eval at evaluate (:311:30), <anonymous>:4:26)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+          }
+        },
+        {
+          "id": "powered_wingbeat_frequency",
+          "question": "Does powered wingbeat phase follow the specified 2 Hz cycle?",
+          "pass": false,
+          "detail": {
+            "error": "Error: page.evaluate: Error: Not implemented\n    at Module.step (http://127.0.0.1:65051/physics.mjs:4:64)\n    at eval (eval at evaluate (:311:30), <anonymous>:4:26)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+          }
+        },
+        {
+          "id": "unpowered_wingbeat_stops",
+          "question": "Does wingbeat phase stop when power is removed?",
+          "pass": false,
+          "detail": {
+            "error": "Error: page.evaluate: Error: Not implemented\n    at Module.step (http://127.0.0.1:65051/physics.mjs:4:64)\n    at eval (eval at evaluate (:311:30), <anonymous>:4:26)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+          }
+        },
+        {
+          "id": "steady_glide_ratio",
+          "question": "Does steady unpowered flight lose the height predicted by the specified lift/drag ratio?",
+          "pass": false,
+          "detail": {
+            "error": "Error: Positive area and aspect ratio required"
+          }
+        }
+      ],
+      "passed": false
+    },
+    "interaction": {
+      "kind": "deterministic",
+      "checks": [
+        {
+          "id": "power_moves_forward",
+          "question": "Does full power move the aircraft forward compared with zero power?",
+          "pass": false,
+          "detail": {
+            "error": "TimeoutError: page.waitForFunction: Timeout 1500ms exceeded."
+          }
+        },
+        {
+          "id": "pitch_input_changes_pitch",
+          "question": "Does ArrowUp increase pitch compared with neutral input?",
+          "pass": false,
+          "detail": {
+            "error": "TimeoutError: page.waitForFunction: Timeout 1500ms exceeded."
+          }
+        },
+        {
+          "id": "pause_freezes_state",
+          "question": "Does Pause freeze the running simulation state?",
+          "pass": false,
+          "detail": {
+            "error": "TimeoutError: page.waitForFunction: Timeout 1500ms exceeded."
+          }
+        },
+        {
+          "id": "reset_restores_state",
+          "question": "Does Reset restore the specified initial state and zero throttle?",
+          "pass": false,
+          "detail": {
+            "error": "TimeoutError: page.waitForFunction: Timeout 1500ms exceeded."
+          }
+        },
+        {
+          "id": "takeoff",
+          "question": "Does the prescribed power and pitch sequence sustain flight above the runway?",
+          "pass": false,
+          "detail": {
+            "error": "TimeoutError: page.waitForFunction: Timeout 1500ms exceeded."
+          }
+        },
+        {
+          "id": "landing",
+          "question": "Does the prescribed approach sequence reach a safe touchdown?",
+          "pass": false,
+          "detail": {
+            "error": "TimeoutError: page.waitForFunction: Timeout 1500ms exceeded."
+          }
+        }
+      ],
+      "passed": false
+    },
+    "visual": {
+      "kind": "review",
+      "checks": [
+        {
+          "id": "wings_on_both_sides",
+          "question": "Is there a wing attached to each lateral side of the body?",
+          "pass": null
+        },
+        {
+          "id": "tail_behind_wings",
+          "question": "Is the tail aft of the wing roots?",
+          "pass": null
+        },
+        {
+          "id": "wings_transverse",
+          "question": "Do the wings extend across the body rather than along its nose-to-tail axis?",
+          "pass": null
+        },
+        {
+          "id": "fin_present",
+          "question": "Is a distinct tail fin visible?",
+          "pass": null
+        },
+        {
+          "id": "visible_flapping",
+          "question": "Do both rendered wingtips move vertically relative to their roots during a wingbeat?",
+          "pass": null
+        }
+      ],
+      "passed": null
+    }
+  },
+  "limitations": [
+    "Single task, no evidence of general benchmark validity.",
+    "Numeric checks test selected properties of an assumed model, not realistic aerodynamics or full equation compliance.",
+    "Browser checks observe the required production state hook; they do not independently prove mesh motion or truthful coupling.",
+    "Visual judgments cover five specific geometry/motion predicates; model judges can be wrong.",
+    "Real-clock callback timing is diagnostic only; it does not prove presented-frame rate or absence of jitter.",
+    "Browser isolation is defense in depth, not a hardened sandbox for hostile code."
+  ],
+  "attempt": {
+    "model": "gpt-6.1-sol",
+    "status": "budget_exhausted",
+    "reason": "incomplete_response",
+    "config": {
+      "task_version": "swan-v3.0",
+      "max_output_tokens_total": 16000,
+      "max_output_tokens_per_response": 16000,
+      "max_requests": 24,
+      "max_wall_seconds": 900,
+      "max_submission_bytes": 2000000,
+      "reasoning_effort": "medium"
+    },
+    "usage": {
+      "input_tokens": 51169,
+      "output_tokens": 16000,
+      "requests": 6
+    },
+    "elapsed_seconds": 267.602,
+    "input_sha256": {
+      "inputs/SOURCE_GUIDE.md": "a2d3add8df37395b01c2218fbb34bc18a9cf33f489ec6547875bbcffb47f6869",
+      "inputs/TASK.md": "261c2c73858b7a29c89328d0bd4e98a4f113fc684c61056932473d200e597247",
+      "inputs/sources/Unknown-14.jpg": "889697309f83ec195a90d91974ff30e5374ab321284a759bbe8c929f5e8e405e",
+      "inputs/sources/Unknown-2.jpg": "5c0a94b3f137307104f8062c23c3a6a3c6366c88f2f18c8fafed9ee3ddf0cbd9"
+    },
+    "runtime": {
+      "python": "3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]",
+      "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O"
+    }
+  },
+  "diagnostics": {
+    "inspection_error": "TimeoutError: page.waitForFunction: Timeout 1500ms exceeded.",
+    "performance": {
+      "scored": false,
+      "measurement": "requestAnimationFrame callback intervals, not presented frames",
+      "trials": [
+        {
+          "throttle": 0,
+          "error": "TimeoutError: locator.click: Timeout 1500ms exceeded.\nCall log:\n  - waiting for getByTestId('approach')\n"
+        },
+        {
+          "throttle": 1,
+          "error": "TimeoutError: locator.click: Timeout 1500ms exceeded.\nCall log:\n  - waiting for getByTestId('approach')\n"
+        }
+      ]
+    },
+    "page_errors": [],
+    "blocked_requests": []
+  },
+  "evidence": {
+    "screenshots": [
+      "initial-page.png"
+    ],
+    "runtime": {
+      "node": "v24.19.0",
+      "browser": "151.0.7922.34",
+      "viewport": [
+        1280,
+        800
+      ],
+      "clock": "Playwright virtual clock"
+    }
+  }
+}

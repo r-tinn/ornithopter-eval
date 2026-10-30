@@ -1,0 +1,31 @@
+{
+  "sources": [
+    {
+      "id": "02 / Unknown-2.jpg",
+      "used_for": "Rounded 'Say' dimensions: 7.4 ft span, 3.7 ft wrist span, 4 in shoulder span, 8 in maximum body width and 55 in overall length; the paragraph supplies total wing area 6.61 ft^2. The illustrated outline informs the parallel-chord inner and tapered outer panels."
+    },
+    {
+      "id": "14 / Unknown-14.jpg",
+      "used_for": "Qualitative distinction between arm/inner and hand/outer wing panels, and the proposal for a conventional tail, fin and rudder."
+    }
+  ],
+  "assumptions": [
+    "Conversions use exactly 1 ft = 0.3048 m and 1 in = 0.0254 m; aspect ratio is derived as span squared divided by area (about 8.284), consistent with the page's rounded 8.29.",
+    "Individual wing length is (span - shoulder span)/2, rather than the excluded printed wing-length entry.",
+    "The animated visual uses an assumed sinusoidal 18 degree inner stroke and an additional 28 degree outer-panel stroke at the specified 2 Hz powered phase; these angles are visual articulation only.",
+    "Mass, gravity, density, force polar, powered-drive efficiency, controls and contact rules are the task's new benchmark assumptions, not claims made by Stanley J. O. Tinn."
+  ],
+  "excluded_fields": [
+    "Page 02 '3.135 ft' wing length.",
+    "The missing table's 7.83 aspect-ratio comparison.",
+    "The crossed-out 14% outer-wing area argument.",
+    "Page 14 biological stroke-angle reference frames, elastic stiffness, vortex-lift landing hypothesis and unspecified curved-plate polar.",
+    "Any Standard Model Swan or earlier human-carrying simulator data."
+  ],
+  "limitations": [
+    "Historical photographs are design notes and observations, not a complete or validated blueprint.",
+    "This is a cycle-averaged point-mass educational model with independently animated panels, not a structural, unsteady-flow or aeroelastic solver.",
+    "Powered thrust is an assumed flapping drive represented by a power model and is not experimentally proven wing performance.",
+    "Tail and fin geometry is a clear qualitative visualization; exact shape, section and control effectiveness are not specified by the sources."
+  ]
+}

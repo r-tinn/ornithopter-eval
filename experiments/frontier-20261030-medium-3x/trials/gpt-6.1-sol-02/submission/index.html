@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#182e30">
+  <title>Swan — Flight Lab</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="masthead">
+    <a class="brand" href="./index.html" aria-label="Swan Flight Lab home"><span class="brand-mark">S<span>↗</span></span><span>SWAN<span class="brand-sub">FLIGHT LABORATORY</span></span></a>
+    <div class="edition"><span class="tiny-dot"></span> EXPERIMENTAL SERIES <b>03 / 001</b></div>
+    <span class="header-note">An exploration of articulated flight</span>
+  </header>
+  <main>
+    <section class="page-title">
+      <div><div class="eyebrow">THE ORNITHOPTER PROJECT <span> / </span> INTERACTIVE STUDY</div><h1>A different kind of flight.</h1></div>
+      <p>Historical proportions. Modern assumptions.<br>A small flight lab, with you at the controls.</p>
+    </section>
+    <div class="workspace">
+      <section class="viewport-card" aria-label="Interactive flight viewer">
+        <div class="viewer-toolbar"><span><i class="live-dot"></i> <b>3D FLIGHT VIEW</b><small id="camera-label">PERSPECTIVE</small></span><div class="view-buttons" aria-label="Camera views"><button id="orbit" class="selected">Orbit</button><button data-testid="view-top" id="top">Top</button><button data-testid="view-side" id="side">Side</button><button data-testid="view-front" id="front">Front</button></div></div>
+        <div class="canvas-wrap">
+          <canvas data-testid="scene" id="scene" aria-label="Three-dimensional articulated swan ornithopter. Drag to orbit and scroll to zoom."></canvas>
+          <div class="scene-caption"><span class="tag">SW–02</span><span>ARTICULATED WING STUDY<br><small>Arm + hand / conventional tail</small></span></div>
+          <div class="scene-status"><span id="run-indicator"></span><span id="run-label">SIMULATION PAUSED</span></div>
+          <div class="scene-bottom"><span>DRAG TO ORBIT <i>·</i> SCROLL TO ZOOM</span><span id="view-hint">FOLLOW CAMERA</span></div>
+        </div>
+        <div class="transport">
+          <div class="transport-buttons"><button class="primary" data-testid="start" id="start"><span>▶</span> Start</button><button data-testid="pause" id="pause"><span>Ⅱ</span> Pause</button><button class="text-button" data-testid="reset" id="reset">↺ Reset</button></div>
+          <button class="approach-button" data-testid="approach" id="approach">↘ Load approach <span>2 m / 10 m·s⁻¹</span></button>
+        </div>
+      </section>
+      <aside class="instrument-panel">
+        <section class="panel-section telemetry-section"><div class="section-heading"><h2>Flight instruments</h2><span class="micro">LIVE / SI</span></div>
+          <div data-testid="telemetry" id="telemetry" aria-live="off">
+            <div class="primary-reading"><span>AIRSPEED</span><strong id="speed">0.00 <small>m/s</small></strong><div class="speed-track"><i id="speed-bar"></i></div></div>
+            <div class="readings"><div><span>ALTITUDE</span><b id="altitude">0.20 <small>m</small></b></div><div><span>SIM TIME</span><b id="time">0.00 <small>s</small></b></div></div>
+            <div class="status-row"><span>FLIGHT STATUS</span><b id="status" class="status-chip">GROUNDED</b></div>
+            <div class="attitude-row"><span>Pitch <b id="pitch-value">0.0°</b></span><span>Bank <b id="bank-value">0.0°</b></span></div>
+          </div>
+        </section>
+        <section class="panel-section controls-section"><div class="section-heading"><h2>Power & control</h2><span class="micro">MANUAL</span></div>
+          <label class="throttle-label" for="throttle">Flapping drive <output id="throttle-output">0<span>%</span></output></label>
+          <input data-testid="throttle" id="throttle" type="range" min="0" max="1" step="0.01" value="0" aria-label="Throttle">
+          <div class="range-labels"><span>OFF</span><span>400 W</span></div>
+          <div class="keyboard-guide"><div><span><kbd>↑</kbd><kbd>↓</kbd></span><span>Pitch up / down</span></div><div><span><kbd>←</kbd><kbd>→</kbd></span><span>Bank left / right</span></div><div><span><kbd class="space-key">SPACE</kbd></span><span>Ground brake</span></div></div>
+          <p class="control-tip">Takeoff: full power, then gently pitch up.<br>Approach: power off, a short nose-up input.</p>
+        </section>
+      </aside>
+    </div>
+    <section class="study-strip">
+      <div class="study-intro"><span class="eyebrow">FROM THE ARCHIVE</span><h2>A swan, reinterpreted.</h2><p>Based on Stanley J. O. Tinn’s historical notes.<br>Dimensions from page 02; articulation from page 14.</p></div>
+      <div class="spec"><span>WINGSPAN</span><strong>2.256 <small>m</small></strong><p>7.4 ft · rounded “Say” value</p></div>
+      <div class="spec"><span>WING AREA</span><strong>0.614 <small>m²</small></strong><p>6.61 ft² · source estimate</p></div>
+      <div class="spec"><span>ASPECT RATIO</span><strong>8.28</strong><p>Derived · span² / area</p></div>
+      <button class="notes-button" id="notes-toggle" aria-expanded="false" aria-controls="notes">Model notes <span>↗</span></button>
+    </section>
+    <section id="notes" hidden>
+      <div><h3>01 / Reading the sources</h3><p>Page 02’s “Say” column gives span 7.4 ft, wrist span 3.7 ft, shoulder span 4 in, body width 8 in and overall length 55 in. Area is 6.61 ft². Individual wing length is (span − shoulder span) / 2; the inconsistent 3.135 ft entry is excluded. The missing 7.83 table and crossed-out 14% argument are not used.</p></div>
+      <div><h3>02 / A visible mechanism</h3><p>Page 14 distinguishes the arm and hand wing and proposes conventional tail / fin control. Here, the assumed arm stroke is 0.42 sin(phase) rad; the hand adds 0.36 sin(phase − 0.65) rad at the wrist. Both run at 2 Hz when powered. This illustration is not a reconstruction of a proven mechanism.</p></div>
+      <div><h3>03 / New benchmark assumptions</h3><p>6 kg point mass, 400 W maximum drive, 65% propulsive efficiency, density 1.225 kg/m³. Cycle-averaged lift and drag with a constant area, fixed 1/120 s steps and simple ground contact. No structural, unsteady-flow or aeroelastic solution. <a href="./interpretation.json">Full source interpretation ↗</a></p></div>
+    </section>
+    <footer><span class="warning-icon">i</span><span><b>Educational approximation.</b> Not a validated aircraft, aerodynamic prediction or flight-safety tool.</span><span class="footer-end">SOURCE-LED / ASSUMPTION-DRIVEN</span></footer>
+  </main>
+  <script type="module" src="./lab.mjs"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+{
+  "sources": [
+    {
+      "id": "02 / Unknown-2.jpg",
+      "used_for": "Swan silhouette; rounded Say values: span 7.4 ft, wrist span 3.7 ft (50% of span), shoulder span 4 in, maximum body width 8 in, overall length 55 in. Paragraph wing area 6.61 square feet. The stated AR 8.29 is only a rounding cross-check: 7.4 squared / 6.61 is about 8.2844. Central planform is approximately parallel-chord with smoothly tapering outer panels."
+    },
+    {
+      "id": "14 / Unknown-14.jpg",
+      "used_for": "Qualitative distinction between inner arm wing and outer hand wing; conventional tail, fin and rudder proposal. The model represents separate shoulder and wrist hinges, a horizontal tail and a distinct vertical fin/rudder. This page supplies no coefficients used in the benchmark."
+    },
+    {
+      "id": "SOURCE_GUIDE.md",
+      "used_for": "Priority of the rounded Say column, required source separation, exclusions and warning that the historical notes are not a validated blueprint."
+    }
+  ],
+  "assumptions": [
+    "Exact conversions: 1 ft = 0.3048 m; 1 in = 0.0254 m; square feet converted with 0.3048 squared. Individual exposed wing length = (span - shoulder_span)/2, not the inconsistent printed wing-length entry. Wrist and shoulder spans are full bilateral distances.",
+    "New task benchmark, not attributed to Stanley J. O. Tinn: mass 6 kg, gravity 9.80665 m/s^2, default density 1.225 kg/m^3; SI coordinates x forward, y up, z lateral.",
+    "The exact prescribed cycle-averaged polar is CL=clamp(0.6+3*alpha,-0.2,1.4), CD=0.035+CL^2/(pi*0.8*AR). Drag and thrust follow the relative-flow axis; lift is projected world-up rotated by roll. A projected lateral vector supplies the vertical-flow fallback.",
+    "New powered-drive assumption: 400 W mechanical input at full throttle and 65% propulsive efficiency; thrust 0.65*P/max(airspeed,5). This is not measured ornithopter performance.",
+    "New animation assumption: symmetric inner angle 0.42*sin(phase) radians; outer angle relative to inner 0.36*sin(phase-0.65) radians. Phase advances at 2 Hz whenever powered, independent of throttle magnitude, and freezes unpowered. Neutral phase retains the assumed wrist lag. Animation has no extra aerodynamic force contribution.",
+    "Visible wing chord is 12 inches in the central section, consistent with the Say average chord; outer chord tapers elliptically, with modest assumed aft sweep. Rounded feather marks, thickness, body cross sections, long neck, tail planform and fin shape are illustrative, not recovered engineering geometry.",
+    "Pitch-rate and bank controls, semi-implicit 1/120-second integration, point contact at y=0.2 m, support, 18 N maximum ground brake and touchdown limits are the new task specification. No imposed flight path, altitude lock, auto-level or hidden autopilot is present. Bank approaches the pilot's bank command as specified."
+  ],
+  "excluded_fields": [
+    "Page 02 wing length 3.135 ft: inconsistent; instead derive each exposed wing from span and shoulder span.",
+    "Page 02 missing table's 7.83 comparison and crossed-out 14% area argument.",
+    "Page 02 By scaling values are not substituted for the required rounded Say dimensions.",
+    "Page 14 biological stroke angles and their unresolved reference frames.",
+    "Page 14 elastic stiffness/resonance and frequency-change discussion.",
+    "Page 14 proposed vortex-lift landing behavior and unspecified curved-plate polar.",
+    "Missing appendices, the distinct Standard Model Swan, and previous human-carrying simulators."
+  ],
+  "limitations": [
+    "Educational approximation, not a physically validated aircraft or a flight-safety tool. Source photographs are historical observations and notes, not a complete blueprint.",
+    "Point-mass cycle-averaged dynamics: no unsteady flow, structural solution, aeroelasticity, wing inertia, stall hysteresis, ground effect or local wing-panel aerodynamics.",
+    "Articulated wings are independently animated for inspection; aerodynamic forces use a single constant reference area and the prescribed polar.",
+    "Tail and fin are visual conventional control surfaces; pitch and bank commands use the task's direct attitude-rate rules, not computed tail moments. No yaw/rudder actuation.",
+    "Ground contact applies to the point mass only; wings and tail have no individual collision constraints. Landing thresholds are simplified and crash damage is not simulated.",
+    "Any agreement with deterministic benchmark equations is not evidence of real-world flapping-flight performance."
+  ]
+}

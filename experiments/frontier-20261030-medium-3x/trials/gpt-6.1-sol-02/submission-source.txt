@@ -1,0 +1,561 @@
+FILE: index.html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#182e30">
+  <title>Swan — Flight Lab</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="masthead">
+    <a class="brand" href="./index.html" aria-label="Swan Flight Lab home"><span class="brand-mark">S<span>↗</span></span><span>SWAN<span class="brand-sub">FLIGHT LABORATORY</span></span></a>
+    <div class="edition"><span class="tiny-dot"></span> EXPERIMENTAL SERIES <b>03 / 001</b></div>
+    <span class="header-note">An exploration of articulated flight</span>
+  </header>
+  <main>
+    <section class="page-title">
+      <div><div class="eyebrow">THE ORNITHOPTER PROJECT <span> / </span> INTERACTIVE STUDY</div><h1>A different kind of flight.</h1></div>
+      <p>Historical proportions. Modern assumptions.<br>A small flight lab, with you at the controls.</p>
+    </section>
+    <div class="workspace">
+      <section class="viewport-card" aria-label="Interactive flight viewer">
+        <div class="viewer-toolbar"><span><i class="live-dot"></i> <b>3D FLIGHT VIEW</b><small id="camera-label">PERSPECTIVE</small></span><div class="view-buttons" aria-label="Camera views"><button id="orbit" class="selected">Orbit</button><button data-testid="view-top" id="top">Top</button><button data-testid="view-side" id="side">Side</button><button data-testid="view-front" id="front">Front</button></div></div>
+        <div class="canvas-wrap">
+          <canvas data-testid="scene" id="scene" aria-label="Three-dimensional articulated swan ornithopter. Drag to orbit and scroll to zoom."></canvas>
+          <div class="scene-caption"><span class="tag">SW–02</span><span>ARTICULATED WING STUDY<br><small>Arm + hand / conventional tail</small></span></div>
+          <div class="scene-status"><span id="run-indicator"></span><span id="run-label">SIMULATION PAUSED</span></div>
+          <div class="scene-bottom"><span>DRAG TO ORBIT <i>·</i> SCROLL TO ZOOM</span><span id="view-hint">FOLLOW CAMERA</span></div>
+        </div>
+        <div class="transport">
+          <div class="transport-buttons"><button class="primary" data-testid="start" id="start"><span>▶</span> Start</button><button data-testid="pause" id="pause"><span>Ⅱ</span> Pause</button><button class="text-button" data-testid="reset" id="reset">↺ Reset</button></div>
+          <button class="approach-button" data-testid="approach" id="approach">↘ Load approach <span>2 m / 10 m·s⁻¹</span></button>
+        </div>
+      </section>
+      <aside class="instrument-panel">
+        <section class="panel-section telemetry-section"><div class="section-heading"><h2>Flight instruments</h2><span class="micro">LIVE / SI</span></div>
+          <div data-testid="telemetry" id="telemetry" aria-live="off">
+            <div class="primary-reading"><span>AIRSPEED</span><strong id="speed">0.00 <small>m/s</small></strong><div class="speed-track"><i id="speed-bar"></i></div></div>
+            <div class="readings"><div><span>ALTITUDE</span><b id="altitude">0.20 <small>m</small></b></div><div><span>SIM TIME</span><b id="time">0.00 <small>s</small></b></div></div>
+            <div class="status-row"><span>FLIGHT STATUS</span><b id="status" class="status-chip">GROUNDED</b></div>
+            <div class="attitude-row"><span>Pitch <b id="pitch-value">0.0°</b></span><span>Bank <b id="bank-value">0.0°</b></span></div>
+          </div>
+        </section>
+        <section class="panel-section controls-section"><div class="section-heading"><h2>Power & control</h2><span class="micro">MANUAL</span></div>
+          <label class="throttle-label" for="throttle">Flapping drive <output id="throttle-output">0<span>%</span></output></label>
+          <input data-testid="throttle" id="throttle" type="range" min="0" max="1" step="0.01" value="0" aria-label="Throttle">
+          <div class="range-labels"><span>OFF</span><span>400 W</span></div>
+          <div class="keyboard-guide"><div><span><kbd>↑</kbd><kbd>↓</kbd></span><span>Pitch up / down</span></div><div><span><kbd>←</kbd><kbd>→</kbd></span><span>Bank left / right</span></div><div><span><kbd class="space-key">SPACE</kbd></span><span>Ground brake</span></div></div>
+          <p class="control-tip">Takeoff: full power, then gently pitch up.<br>Approach: power off, a short nose-up input.</p>
+        </section>
+      </aside>
+    </div>
+    <section class="study-strip">
+      <div class="study-intro"><span class="eyebrow">FROM THE ARCHIVE</span><h2>A swan, reinterpreted.</h2><p>Based on Stanley J. O. Tinn’s historical notes.<br>Dimensions from page 02; articulation from page 14.</p></div>
+      <div class="spec"><span>WINGSPAN</span><strong>2.256 <small>m</small></strong><p>7.4 ft · rounded “Say” value</p></div>
+      <div class="spec"><span>WING AREA</span><strong>0.614 <small>m²</small></strong><p>6.61 ft² · source estimate</p></div>
+      <div class="spec"><span>ASPECT RATIO</span><strong>8.28</strong><p>Derived · span² / area</p></div>
+      <button class="notes-button" id="notes-toggle" aria-expanded="false" aria-controls="notes">Model notes <span>↗</span></button>
+    </section>
+    <section id="notes" hidden>
+      <div><h3>01 / Reading the sources</h3><p>Page 02’s “Say” column gives span 7.4 ft, wrist span 3.7 ft, shoulder span 4 in, body width 8 in and overall length 55 in. Area is 6.61 ft². Individual wing length is (span − shoulder span) / 2; the inconsistent 3.135 ft entry is excluded. The missing 7.83 table and crossed-out 14% argument are not used.</p></div>
+      <div><h3>02 / A visible mechanism</h3><p>Page 14 distinguishes the arm and hand wing and proposes conventional tail / fin control. Here, the assumed arm stroke is 0.42 sin(phase) rad; the hand adds 0.36 sin(phase − 0.65) rad at the wrist. Both run at 2 Hz when powered. This illustration is not a reconstruction of a proven mechanism.</p></div>
+      <div><h3>03 / New benchmark assumptions</h3><p>6 kg point mass, 400 W maximum drive, 65% propulsive efficiency, density 1.225 kg/m³. Cycle-averaged lift and drag with a constant area, fixed 1/120 s steps and simple ground contact. No structural, unsteady-flow or aeroelastic solution. <a href="./interpretation.json">Full source interpretation ↗</a></p></div>
+    </section>
+    <footer><span class="warning-icon">i</span><span><b>Educational approximation.</b> Not a validated aircraft, aerodynamic prediction or flight-safety tool.</span><span class="footer-end">SOURCE-LED / ASSUMPTION-DRIVEN</span></footer>
+  </main>
+  <script type="module" src="./lab.mjs"></script>
+</body>
+</html>
+
+
+FILE: interpretation.json
+{
+  "sources": [
+    {
+      "id": "02 / Unknown-2.jpg",
+      "used_for": "Swan silhouette; rounded Say values: span 7.4 ft, wrist span 3.7 ft (50% of span), shoulder span 4 in, maximum body width 8 in, overall length 55 in. Paragraph wing area 6.61 square feet. The stated AR 8.29 is only a rounding cross-check: 7.4 squared / 6.61 is about 8.2844. Central planform is approximately parallel-chord with smoothly tapering outer panels."
+    },
+    {
+      "id": "14 / Unknown-14.jpg",
+      "used_for": "Qualitative distinction between inner arm wing and outer hand wing; conventional tail, fin and rudder proposal. The model represents separate shoulder and wrist hinges, a horizontal tail and a distinct vertical fin/rudder. This page supplies no coefficients used in the benchmark."
+    },
+    {
+      "id": "SOURCE_GUIDE.md",
+      "used_for": "Priority of the rounded Say column, required source separation, exclusions and warning that the historical notes are not a validated blueprint."
+    }
+  ],
+  "assumptions": [
+    "Exact conversions: 1 ft = 0.3048 m; 1 in = 0.0254 m; square feet converted with 0.3048 squared. Individual exposed wing length = (span - shoulder_span)/2, not the inconsistent printed wing-length entry. Wrist and shoulder spans are full bilateral distances.",
+    "New task benchmark, not attributed to Stanley J. O. Tinn: mass 6 kg, gravity 9.80665 m/s^2, default density 1.225 kg/m^3; SI coordinates x forward, y up, z lateral.",
+    "The exact prescribed cycle-averaged polar is CL=clamp(0.6+3*alpha,-0.2,1.4), CD=0.035+CL^2/(pi*0.8*AR). Drag and thrust follow the relative-flow axis; lift is projected world-up rotated by roll. A projected lateral vector supplies the vertical-flow fallback.",
+    "New powered-drive assumption: 400 W mechanical input at full throttle and 65% propulsive efficiency; thrust 0.65*P/max(airspeed,5). This is not measured ornithopter performance.",
+    "New animation assumption: symmetric inner angle 0.42*sin(phase) radians; outer angle relative to inner 0.36*sin(phase-0.65) radians. Phase advances at 2 Hz whenever powered, independent of throttle magnitude, and freezes unpowered. Neutral phase retains the assumed wrist lag. Animation has no extra aerodynamic force contribution.",
+    "Visible wing chord is 12 inches in the central section, consistent with the Say average chord; outer chord tapers elliptically, with modest assumed aft sweep. Rounded feather marks, thickness, body cross sections, long neck, tail planform and fin shape are illustrative, not recovered engineering geometry.",
+    "Pitch-rate and bank controls, semi-implicit 1/120-second integration, point contact at y=0.2 m, support, 18 N maximum ground brake and touchdown limits are the new task specification. No imposed flight path, altitude lock, auto-level or hidden autopilot is present. Bank approaches the pilot's bank command as specified."
+  ],
+  "excluded_fields": [
+    "Page 02 wing length 3.135 ft: inconsistent; instead derive each exposed wing from span and shoulder span.",
+    "Page 02 missing table's 7.83 comparison and crossed-out 14% area argument.",
+    "Page 02 By scaling values are not substituted for the required rounded Say dimensions.",
+    "Page 14 biological stroke angles and their unresolved reference frames.",
+    "Page 14 elastic stiffness/resonance and frequency-change discussion.",
+    "Page 14 proposed vortex-lift landing behavior and unspecified curved-plate polar.",
+    "Missing appendices, the distinct Standard Model Swan, and previous human-carrying simulators."
+  ],
+  "limitations": [
+    "Educational approximation, not a physically validated aircraft or a flight-safety tool. Source photographs are historical observations and notes, not a complete blueprint.",
+    "Point-mass cycle-averaged dynamics: no unsteady flow, structural solution, aeroelasticity, wing inertia, stall hysteresis, ground effect or local wing-panel aerodynamics.",
+    "Articulated wings are independently animated for inspection; aerodynamic forces use a single constant reference area and the prescribed polar.",
+    "Tail and fin are visual conventional control surfaces; pitch and bank commands use the task's direct attitude-rate rules, not computed tail moments. No yaw/rudder actuation.",
+    "Ground contact applies to the point mass only; wings and tail have no individual collision constraints. Landing thresholds are simplified and crash damage is not simulated.",
+    "Any agreement with deterministic benchmark equations is not evidence of real-world flapping-flight performance."
+  ]
+}
+
+
+FILE: lab.mjs
+import {parameters as p, forces, step} from './physics.mjs';
+
+const $ = id => document.getElementById(id);
+const canvas = $('scene'), ctx = canvas.getContext('2d');
+const environment = {wind:[0,0,0], rho:1.225};
+const initial = () => ({position:[0,0.2,0],velocity:[0,0,0],pitch:0,roll:0,phase:0,time:0,status:'grounded'});
+let state = initial(), controls = {throttle:0,pitch:0,bank:0,brake:0}, running = false;
+let accumulator = 0, lastFrame = null;
+const held = new Set();
+window.flightLab = {
+  getState: () => JSON.parse(JSON.stringify(state)),
+  getControls: () => JSON.parse(JSON.stringify(controls))
+};
+function setRunning(value) {
+  running = value;
+  accumulator = 0;
+  lastFrame = null;
+  $('run-label').textContent = value ? 'SIMULATION RUNNING' : 'SIMULATION PAUSED';
+  document.querySelector('.scene-status').classList.toggle('running', value);
+  $('start').setAttribute('aria-pressed', String(value));
+  $('pause').setAttribute('aria-pressed', String(!value));
+}
+function power(value) {
+  controls.throttle = value;
+  $('throttle').value = value;
+  $('throttle').style.setProperty('--fill', `${value*100}%`);
+  $('throttle-output').innerHTML = `${Math.round(value*100)}<span>%</span>`;
+}
+function clearKeys() {
+  held.clear();
+  controls.pitch = controls.bank = controls.brake = 0;
+}
+function load(approach) {
+  setRunning(false);
+  clearKeys();
+  state = approach ? {...initial(),position:[0,2,0],velocity:[10,-1,0],status:'flying'} : initial();
+  power(0);
+  updateTelemetry();
+  render();
+}
+$('start').onclick = () => setRunning(true);
+$('pause').onclick = () => setRunning(false);
+$('reset').onclick = () => load(false);
+$('approach').onclick = () => load(true);
+$('throttle').addEventListener('input', e => power(Number(e.target.value)));
+function setKeys() {
+  controls.pitch = Number(held.has('ArrowUp'))-Number(held.has('ArrowDown'));
+  controls.bank = Number(held.has('ArrowRight'))-Number(held.has('ArrowLeft'));
+  controls.brake = Number(held.has('Space'));
+}
+const keyCodes = ['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'];
+window.addEventListener('keydown', e => {
+  if (!keyCodes.includes(e.code)) return;
+  e.preventDefault();
+  held.add(e.code);
+  setKeys();
+});
+window.addEventListener('keyup', e => {
+  if (!keyCodes.includes(e.code)) return;
+  e.preventDefault();
+  held.delete(e.code);
+  setKeys();
+});
+window.addEventListener('blur', clearKeys);
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) { clearKeys(); accumulator = 0; lastFrame = null; }
+});
+$('notes-toggle').onclick = () => {
+  const open = $('notes').hidden;
+  $('notes').hidden = !open;
+  $('notes-toggle').setAttribute('aria-expanded', String(open));
+};
+function updateTelemetry() {
+  const air = forces(state, controls, environment);
+  $('speed').innerHTML = `${air.airspeed.toFixed(2)} <small>m/s</small>`;
+  $('altitude').innerHTML = `${state.position[1].toFixed(2)} <small>m</small>`;
+  $('time').innerHTML = `${state.time.toFixed(2)} <small>s</small>`;
+  $('status').textContent = state.status.toUpperCase();
+  $('status').classList.toggle('airborne', state.status === 'flying');
+  $('status').classList.toggle('crash', state.status === 'crashed');
+  $('pitch-value').textContent = `${(state.pitch*180/Math.PI).toFixed(1)}°`;
+  $('bank-value').textContent = `${(state.roll*180/Math.PI).toFixed(1)}°`;
+  $('speed-bar').style.width = `${Math.min(100,air.airspeed/20*100)}%`;
+}
+
+// A small dependency-free 3D renderer. All aircraft vertices are in metres.
+// Every camera uses this same articulated mesh, transformed by actual attitude.
+const add = (a,b) => a.map((x,i)=>x+b[i]);
+const sub = (a,b) => a.map((x,i)=>x-b[i]);
+const mul = (a,s) => a.map(x=>x*s);
+const dot = (a,b) => a.reduce((n,x,i)=>n+x*b[i],0);
+const cross = (a,b) => [a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+const unit = a => mul(a,1/(Math.hypot(...a)||1));
+let cameraMode = 'orbit', azimuth = 0.85, elevation = 0.48, zoom = 1;
+let width = 800, height = 423, camera;
+function chooseView(mode) {
+  cameraMode = mode; zoom = 1;
+  for (const id of ['orbit','top','side','front']) $(id).classList.toggle('selected', id === mode);
+  $('camera-label').textContent = mode === 'orbit' ? 'PERSPECTIVE' : `${mode.toUpperCase()} / ORTHOGRAPHIC`;
+  $('view-hint').textContent = mode === 'orbit' ? 'FOLLOW CAMERA' : `${mode.toUpperCase()} INSPECTION`;
+  render();
+}
+for (const mode of ['orbit','top','side','front']) $(mode).onclick = () => chooseView(mode);
+let drag = null;
+canvas.addEventListener('pointerdown', e => {
+  drag = {x:e.clientX,y:e.clientY};
+  canvas.setPointerCapture(e.pointerId);
+});
+canvas.addEventListener('pointermove', e => {
+  if (!drag) return;
+  if (cameraMode !== 'orbit') chooseView('orbit');
+  azimuth += (e.clientX-drag.x)*0.008;
+  elevation = Math.max(-0.05, Math.min(1.48,elevation+(e.clientY-drag.y)*0.006));
+  drag = {x:e.clientX,y:e.clientY};
+  render();
+});
+canvas.addEventListener('pointerup', () => drag = null);
+canvas.addEventListener('pointercancel', () => drag = null);
+canvas.addEventListener('wheel', e => {
+  e.preventDefault();
+  zoom = Math.max(0.65,Math.min(1.8,zoom*Math.exp(-e.deltaY*.001)));
+  render();
+}, {passive:false});
+function resize() {
+  const bounds = canvas.getBoundingClientRect();
+  width = bounds.width; height = bounds.height;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width = Math.round(width*dpr); canvas.height = Math.round(height*dpr);
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  render();
+}
+new ResizeObserver(resize).observe(canvas);
+function setupCamera() {
+  const target = add(state.position,[0.06,0.05,0]);
+  let offset, up = [0,1,0];
+  if (cameraMode === 'top') {offset=[0,4,0];up=[1,0,0];}
+  else if (cameraMode === 'side') offset=[0,0,4];
+  else if (cameraMode === 'front') offset=[4,0,0];
+  else offset=[3.8*Math.cos(elevation)*Math.cos(azimuth),3.8*Math.sin(elevation),3.8*Math.cos(elevation)*Math.sin(azimuth)];
+  const position = add(target,offset), forward = unit(sub(target,position));
+  const right = unit(cross(forward,up)), realUp = unit(cross(right,forward));
+  camera = {position,forward,right,up:realUp,orthographic:cameraMode!=='orbit', scale:Math.min(width/3.0,height/1.95)*zoom, focal:Math.min(width*1.12,height*1.82)*zoom};
+}
+function project(v) {
+  const d = sub(v,camera.position), depth = dot(d,camera.forward);
+  const scale = camera.orthographic ? camera.scale : camera.focal/depth;
+  return {x:width/2+dot(d,camera.right)*scale, y:height*0.51-dot(d,camera.up)*scale, depth, scale};
+}
+function world(v) {
+  // Roll around body x, then pitch about z, then translate.
+  const cr=Math.cos(state.roll),sr=Math.sin(state.roll),cp=Math.cos(state.pitch),sp=Math.sin(state.pitch);
+  const y=v[1]*cr-v[2]*sr,z=v[1]*sr+v[2]*cr;
+  return add([v[0]*cp-y*sp,v[0]*sp+y*cp,z],state.position);
+}
+let faces = [], strokes = [], dots = [];
+function face(vertices,color,edge='#394943',lineWidth=0.65) {
+  const verticesWorld = vertices.map(world);
+  const normal = unit(cross(sub(verticesWorld[1],verticesWorld[0]),sub(verticesWorld[2],verticesWorld[0])));
+  const lighting = 0.76+0.24*Math.abs(dot(normal,unit([0.2,1,0.5])));
+  faces.push({vertices:verticesWorld,color,edge,lineWidth,lighting});
+}
+function line(vertices,color='#57685c',lineWidth=0.8) {strokes.push({vertices:vertices.map(world),color,lineWidth});}
+function joint(v,r,color) { dots.push({v:world(v),r,color}); }
+function tube(rings,color) {
+  const n=12, vertices=rings.map(([x,y,ry,rz])=>Array.from({length:n},(_,i)=>[x,y+Math.cos(i*2*Math.PI/n)*ry,Math.sin(i*2*Math.PI/n)*rz]));
+  for(let k=0;k<vertices.length-1;k++)for(let i=0;i<n;i++)face([vertices[k][i],vertices[k+1][i],vertices[k+1][(i+1)%n],vertices[k][(i+1)%n]],color,'#667367',0.4);
+  face([...vertices[0]].reverse(),color);face(vertices.at(-1),color);
+}
+function mesh() {
+  faces=[];strokes=[];dots=[];
+  const shoulder=p.shoulder_span_m/2, wrist=p.wrist_span_m/2;
+  const arm=wrist-shoulder, hand=(p.span_m-p.wrist_span_m)/2;
+  const a=0.42*Math.sin(state.phase), b=0.36*Math.sin(state.phase-0.65);
+  const chord=0.3048;
+  for (const side of [-1,1]) {
+    function wingPoint(x,s,isOuter=false) {
+      if (!isOuter) return [x,0.035+s*Math.sin(a),side*(shoulder+s*Math.cos(a))];
+      return [x,0.035+arm*Math.sin(a)+s*Math.sin(a+b),side*(shoulder+arm*Math.cos(a)+s*Math.cos(a+b))];
+    }
+    // Parallel-chord inboard panels; softly curved ellipse-like hand panels.
+    for(let i=0;i<5;i++) {
+      const s0=arm*i/5,s1=arm*(i+1)/5;
+      const v=[wingPoint(.05+chord/2,s0),wingPoint(.05+chord/2,s1),wingPoint(.05-chord/2,s1),wingPoint(.05-chord/2,s0)];
+      face(v,i===0?'#c9cbb6':'#ece9d7');
+      line([wingPoint(.105,s0),wingPoint(.105,s1)],'#a7af92',1.2);
+      line([wingPoint(-.08,s0),wingPoint(-.08,s1)],'#c0c2aa',0.7);
+    }
+    const steps=18;
+    const outerEdges = t => {
+      const center=.05-.11*t;
+      const c=chord*Math.sqrt(Math.max(0,1-t*t));
+      return [center+c/2,center-c/2];
+    };
+    for(let i=0;i<steps;i++) {
+      const t0=i/steps,t1=(i+1)/steps;
+      const [f0,r0]=outerEdges(t0),[f1,r1]=outerEdges(t1);
+      const v=[wingPoint(f0,t0*hand,true),wingPoint(f1,t1*hand,true),wingPoint(r1,t1*hand,true),wingPoint(r0,t0*hand,true)];
+      face(v,i>=14?'#d37b50':i>=11?'#d6c5a5':'#f1eddb','#8d937c',0.5);
+      line([wingPoint(f0*.38+r0*.62,t0*hand,true),wingPoint(r0,t0*hand,true)],'#9caa8e',0.65);
+    }
+    line([wingPoint(.105,0),wingPoint(.105,arm),wingPoint(.105,0,true),wingPoint(-.055,hand,true)],'#8e9a79',1.7);
+    joint(wingPoint(.05,0),.025,'#c47a4c');
+    joint(wingPoint(.05,0,true),.023,'#d88653');
+    line([wingPoint(.05,0,true),wingPoint(-.06,.08,true)],'#b2603d',2);
+  }
+  // Tapered body with a slender, forward-reaching swan neck.
+  tube([[-.37,.015,.025,.035],[-.23,.01,.075,.083],[-.06,.025,.10,p.body_width_m/2],[.13,.04,.083,.075],[.25,.045,.04,.038],[.55,.055,.026,.025],[.79,.065,.023,.022],[.84,.075,.033,.029],[p.overall_length_m-.5,.068,.008,.008]],'#e9e5d3');
+  line([[.26,.077,0],[.57,.085,0],[.79,.095,0]],'#baa887',1);
+  // Dark equipment saddle and contrasting nose/beak.
+  face([[-.13,.125,-.045],[.065,.125,-.045],[.10,.119,.045],[-.13,.125,.045]],'#354d46','#273b35');
+  line([[-.11,.129,0],[.07,.129,0]],'#d48750',2);
+  tube([[.85,.076,.022,.023],[.897,.068,.004,.006]],'#d18651');
+  joint([.826,.09,.026],.006,'#1b3334');
+  joint([.826,.09,-.026],.006,'#1b3334');
+  // Tail behind wing roots. Both sides of the stabilizer and a raised fin.
+  for(const s of [-1,1]) {
+    face([[-.24,.025,0],[-.36,.035,s*.25],[-.5,.025,s*.18],[-.46,.022,0]],'#b9c6ad','#637863');
+    face([[-.39,.032,s*.231],[-.5,.025,s*.18],[-.46,.022,0],[-.40,.028,0]],'#d17c4e','#7d795d');
+    line([[-.40,.034,0],[-.39,.037,s*.231]],'#63745f',0.8);
+  }
+  face([[-.245,.04,0],[-.37,.32,0],[-.43,.32,0],[-.50,.035,0]],'#d19a6d','#8c7050',0.8);
+  face([[-.43,.32,.001],[-.50,.035,.001],[-.455,.035,.001],[-.395,.28,.001]],'#d76e44','#9e6544',0.6);
+  line([[-.405,.28,.003],[-.465,.038,.003]],'#755d45',1);
+  // Small mechanical keel (not wheels) reinforces the model's three dimensions.
+  face([[-.17,-.055,-.02],[.15,-.03,-.02],[.08,-.11,-.02],[-.12,-.11,-.02]],'#718573');
+}
+function path(points) {
+  ctx.beginPath();ctx.moveTo(points[0].x,points[0].y);
+  for(let i=1;i<points.length;i++)ctx.lineTo(points[i].x,points[i].y);
+}
+function worldLine(a,b,color,lw=1) {
+  const aa=project(a),bb=project(b);
+  if(aa.depth<.12||bb.depth<.12)return;
+  ctx.strokeStyle=color;ctx.lineWidth=lw;
+  path([aa,bb]);ctx.stroke();
+}
+function groundPolygon(v,color) {
+  const points=v.map(project);
+  if(points.some(v=>v.depth<.15))return;
+  path(points);ctx.closePath();ctx.fillStyle=color;ctx.fill();
+}
+function drawGround() {
+  // Real world-space runway and metric grid slide underneath the moving model.
+  const x0=Math.floor(state.position[0]/5)*5,z0=Math.floor(state.position[2]/5)*5;
+  groundPolygon([[x0-20,0,-1.9],[x0+30,0,-1.9],[x0+30,0,1.9],[x0-20,0,1.9]],'#3a514d');
+  for(let i=-20;i<=30;i++)worldLine([x0+i,0,z0-20],[x0+i,0,z0+20],i%5===0?'#53645a77':'#53645a33',i%5===0?.9:.55);
+  for(let i=-20;i<=20;i++)worldLine([x0-20,0,z0+i],[x0+30,0,z0+i],i%5===0?'#53645a77':'#53645a33',i%5===0?.9:.55);
+  worldLine([x0-20,.001,-1.85],[x0+30,.001,-1.85],'#a3a88b88',1);
+  worldLine([x0-20,.001,1.85],[x0+30,.001,1.85],'#a3a88b88',1);
+  for(let i=-10;i<15;i++){
+    const x=x0+i*2;
+    worldLine([x,.002,0],[x+.8,.002,0],'#b4b39699',2);
+    worldLine([x,.002,-1.85],[x,.002,-1.7],'#a3a88b66',1);
+    worldLine([x,.002,1.85],[x,.002,1.7],'#a3a88b66',1);
+  }
+  // A translucent planform shadow on the actual y=0 ground plane.
+  const shadowOpacity=Math.max(.045,.19-state.position[1]*.012);
+  for(const shape of faces) {
+    if(shape.vertices.length<3)continue;
+    const shadow=shape.vertices.map(v=>[v[0]-.2*v[1],.004,v[2]+.16*v[1]]);
+    groundPolygon(shadow,`rgba(13,27,26,${shadowOpacity})`);
+  }
+}
+function shade(hex, lighting) {
+  const rgb=[1,3,5].map(i=>Math.round(parseInt(hex.slice(i,i+2),16)*lighting));
+  return `rgb(${rgb.join(',')})`;
+}
+function render() {
+  if(!ctx)return;
+  setupCamera();
+  const bg=ctx.createLinearGradient(0,0,0,height);
+  bg.addColorStop(0,'#253c3f');bg.addColorStop(.65,'#354c49');bg.addColorStop(1,'#40554c');
+  ctx.fillStyle=bg;ctx.fillRect(0,0,width,height);
+  mesh();
+  drawGround();
+  // Faces, structural lines and hinge caps share one depth-sorted render queue.
+  const queue=[];
+  for(const f of faces) {
+    const ps=f.vertices.map(project);
+    if(ps.some(v=>v.depth<.1))continue;
+    queue.push({type:'face',data:f,ps,depth:ps.reduce((s,v)=>s+v.depth,0)/ps.length});
+  }
+  for(const s of strokes) {
+    const ps=s.vertices.map(project);
+    if(ps.some(v=>v.depth<.1))continue;
+    queue.push({type:'line',data:s,ps,depth:ps.reduce((n,v)=>n+v.depth,0)/ps.length-.002});
+  }
+  for(const d of dots) {const point=project(d.v);queue.push({type:'dot',data:d,ps:[point],depth:point.depth-.025});}
+  queue.sort((a,b)=>b.depth-a.depth);
+  ctx.lineJoin='round';ctx.lineCap='round';
+  for(const q of queue) {
+    const d=q.data;
+    if(q.type==='dot') {
+      if(q.ps[0].depth<.1)continue;
+      ctx.beginPath();ctx.arc(q.ps[0].x,q.ps[0].y,Math.max(1,d.r*q.ps[0].scale),0,2*Math.PI);
+      ctx.fillStyle=d.color;ctx.fill();ctx.strokeStyle='#57664d';ctx.lineWidth=.7;ctx.stroke();
+    } else {
+      path(q.ps);
+      if(q.type==='face'){
+        ctx.closePath();ctx.fillStyle=shade(d.color,d.lighting);ctx.fill();
+        ctx.strokeStyle=d.edge;ctx.lineWidth=d.lineWidth;ctx.stroke();
+      }else{ctx.strokeStyle=d.color;ctx.lineWidth=d.lineWidth;ctx.stroke();}
+    }
+  }
+  drawCompass();
+}
+function drawCompass() {
+  const origin={x:width-44,y:height-52};
+  const start=project(state.position);
+  for(const [v,label,color] of [[[.22,0,0],'X','#c29568'],[[0,.22,0],'Y','#b6c9a5'],[[0,0,.22],'Z','#91b6b2']]) {
+    const endpoint=project(add(state.position,v));
+    const dx=endpoint.x-start.x,dy=endpoint.y-start.y;
+    if(Math.hypot(dx,dy)<4)continue;
+    ctx.strokeStyle=color;ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(origin.x,origin.y);ctx.lineTo(origin.x+dx*.65,origin.y+dy*.65);ctx.stroke();
+    ctx.fillStyle=color;ctx.font='8px Arial';ctx.fillText(label,origin.x+dx*.82-3,origin.y+dy*.82+3);
+  }
+}
+function frame(now) {
+  if(lastFrame===null)lastFrame=now;
+  const elapsed=Math.min(.1,(now-lastFrame)/1000);lastFrame=now;
+  if(running && !document.hidden) {
+    accumulator+=elapsed;
+    while(accumulator>=1/120) {
+      state=step(state,controls,environment,1/120);
+      accumulator-=1/120;
+    }
+    updateTelemetry();
+  }
+  render();
+  requestAnimationFrame(frame);
+}
+power(0);setRunning(false);updateTelemetry();resize();requestAnimationFrame(frame);
+
+
+FILE: physics.mjs
+// Source dimensions: page 02, rounded "Say" column; area from its paragraph.
+// Everything below the dimensions is the task's NEW educational benchmark.
+const ft = 0.3048, inch = 0.0254;
+export const parameters = Object.freeze({
+  span_m: 7.4 * ft,
+  wing_area_m2: 6.61 * ft * ft,
+  wrist_span_m: 3.7 * ft,
+  shoulder_span_m: 4 * inch,
+  body_width_m: 8 * inch,
+  overall_length_m: 55 * inch,
+  aspect_ratio: (7.4 * 7.4) / 6.61
+});
+export const mass = 6;
+export const gravity = 9.80665;
+export const ground = 0.2;
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const norm = v => Math.hypot(...v);
+const dot = (a, b) => a.reduce((s, x, i) => s + x * b[i], 0);
+const cross = (a, b) => [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]];
+const scale = (v, s) => v.map(x => x*s);
+const add = (a, b) => a.map((x, i) => x+b[i]);
+const input = c => ({
+  throttle: clamp(c.throttle ?? 0, 0, 1),
+  pitch: clamp(c.pitch ?? 0, -1, 1),
+  bank: clamp(c.bank ?? 0, -1, 1),
+  brake: clamp(c.brake ?? 0, 0, 1)
+});
+
+export function forces(state, controls = {}, environment = {}) {
+  const c = input(controls);
+  const wind = environment.wind ?? [0, 0, 0];
+  const rho = environment.rho ?? 1.225;
+  const air = state.velocity.map((v, i) => v-wind[i]);
+  const airspeed = norm(air);
+  const forward = airspeed > 1e-12 ? scale(air, 1/airspeed) : [1, 0, 0];
+  const alpha = state.pitch - Math.atan2(air[1], Math.hypot(air[0], air[2]));
+  const cl = clamp(0.6 + 3*alpha, -0.2, 1.4);
+  const cd = 0.035 + cl*cl / (Math.PI*0.8*parameters.aspect_ratio);
+  const qS = 0.5*rho*airspeed*airspeed*parameters.wing_area_m2;
+  const lift = qS*cl, drag = qS*cd;
+  const power = 400*c.throttle;
+  const thrust = 0.65*power / Math.max(airspeed, 5);
+  // Project up into the flow-normal plane. Near vertical use projected +z.
+  let up = add([0, 1, 0], scale(forward, -forward[1]));
+  if (norm(up) < 1e-9) up = add([0, 0, 1], scale(forward, -forward[2]));
+  up = scale(up, 1/norm(up));
+  // Rodrigues rotation around the relative-flow direction.
+  const liftDirection = add(scale(up, Math.cos(state.roll)),
+    scale(cross(forward, up), Math.sin(state.roll)));
+  let force = add(add(scale(liftDirection, lift), scale(forward, thrust-drag)), [0, -mass*gravity, 0]);
+  if (state.position[1] <= ground && state.velocity[1] <= 0) {
+    force[1] = Math.max(0, force[1]);
+    const h = Math.hypot(state.velocity[0], state.velocity[2]);
+    if (h > 0) {
+      force[0] -= 18*c.brake*state.velocity[0]/h;
+      force[2] -= 18*c.brake*state.velocity[2]/h;
+    }
+  }
+  return {lift, drag, thrust, power, airspeed, cl, force};
+}
+
+export function step(state, controls = {}, environment = {}, dt) {
+  if (!Number.isFinite(dt) || dt <= 0 || dt > 0.05)
+    throw new RangeError('dt must be finite and in (0, 0.05] seconds');
+  const c = input(controls);
+  const next = {...state, position: [...state.position], velocity: [...state.velocity]};
+  if (state.status === 'crashed') return next;
+  const f = forces(state, c, environment).force;
+  next.velocity = state.velocity.map((v, i) => v + f[i]*dt/mass);
+  // Limit the ground-brake impulse, not the aerodynamic acceleration.
+  if (state.position[1] <= ground && state.velocity[1] <= 0 && c.brake > 0) {
+    const h = Math.hypot(state.velocity[0], state.velocity[2]);
+    if (h > 0) {
+      const direction = [state.velocity[0]/h, 0, state.velocity[2]/h];
+      const impulse = 18*c.brake*dt/mass;
+      const unbraked = add(next.velocity, scale(direction, impulse));
+      const available = Math.max(0, dot(unbraked, direction));
+      next.velocity = add(unbraked, scale(direction, -Math.min(impulse, available)));
+    }
+  }
+  next.position = state.position.map((p, i) => p + next.velocity[i]*dt);
+  next.pitch = clamp(state.pitch + 0.5*c.pitch*dt, -0.35, 0.45);
+  const rollError = 0.6*c.bank-state.roll;
+  next.roll = state.roll + clamp(rollError, -2*dt, 2*dt);
+  next.phase = c.throttle > 0 ? (state.phase + 4*Math.PI*dt) % (2*Math.PI) : state.phase;
+  next.time = state.time + dt;
+  if (next.position[1] <= ground) {
+    next.position[1] = ground;
+    if (state.status === 'flying' || state.position[1] > ground) {
+      const safe = Math.max(0, -next.velocity[1]) <= 3 &&
+        Math.hypot(next.velocity[0], next.velocity[2]) <= 14 && Math.abs(next.roll) <= 0.35;
+      next.status = safe ? 'landed' : 'crashed';
+      if (!safe) next.velocity = [0, 0, 0];
+    }
+    next.velocity[1] = Math.max(0, next.velocity[1]);
+  } else {
+    next.status = 'flying';
+  }
+  return next;
+}
+
+
+FILE: style.css
+@import none;
+:root{--ink:#203b3d;--muted:#7c8580;--paper:#f3f2eb;--line:#dddfd5;--orange:#ce613d;--white:#fffef9}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif;font-size:14px}button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #e29a57;outline-offset:3px}button{transition:background .16s,color .16s}button:hover{background:#e2e7db}a{color:inherit}.masthead{height:77px;background:#1a3032;color:#f5f1e4;display:flex;align-items:center;padding:0 38px;gap:55px}.brand{text-decoration:none;display:flex;align-items:center;gap:13px;font-size:24px;font-weight:700;letter-spacing:4px}.brand-mark{font-family:Georgia,serif;font-style:italic;font-size:36px;border-right:1px solid #526260;padding-right:17px;letter-spacing:-7px}.brand-mark span{font-style:normal;font-size:25px;color:#d97952}.brand-sub{display:block;font-size:8px;letter-spacing:2.6px;margin-top:4px;font-weight:400}.edition{font-size:9px;letter-spacing:1.8px;color:#aeb9b2;display:flex;gap:12px;align-items:center}.edition b{color:#e4e6db;font-weight:400;letter-spacing:1px;padding-left:8px}.tiny-dot{width:5px;height:5px;border-radius:50%;background:#cc7954}.header-note{margin-left:auto;font-size:11px;color:#aeb9b2;font-family:Georgia,serif;font-style:italic}main{max-width:1600px;margin:auto;padding:27px 38px 0}.page-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}.eyebrow{font-size:9px;letter-spacing:1.7px;font-weight:600;color:#6b7973}.eyebrow span{padding:0 9px;color:#acb1a6}h1{font-family:Georgia,'Times New Roman',serif;font-size:36px;letter-spacing:-1.2px;font-weight:400;margin:8px 0 0}.page-title p{font-size:12px;line-height:1.7;color:#7d857d;margin:6px 0 0}.workspace{display:grid;grid-template-columns:minmax(600px,1fr) 278px;gap:18px}.viewport-card{background:var(--white);border:1px solid #d8ddd2;border-radius:5px;overflow:hidden;min-width:0}.viewer-toolbar{height:46px;display:flex;justify-content:space-between;align-items:center;padding:0 15px;border-bottom:1px solid #d5dbd0}.viewer-toolbar>span{display:flex;align-items:center;gap:8px}.viewer-toolbar b{font-size:9px;letter-spacing:1.1px}.live-dot{width:5px;height:5px;background:#b8714b;border-radius:50%}.viewer-toolbar small{font-size:8px;color:#8b948b;letter-spacing:1px;margin-left:9px}.view-buttons{display:flex;gap:3px;background:#eceee5;border-radius:4px;padding:3px}.view-buttons button{background:none;color:#69786f;border:0;font-size:10px;padding:6px 11px;border-radius:3px}.view-buttons button.selected{background:#fffef9;box-shadow:0 1px 3px #243b3b1c;color:#273f39}.canvas-wrap{position:relative;background:#283f40;height:423px;overflow:hidden}canvas{display:block;width:100%;height:100%;min-width:600px;min-height:350px;touch-action:none;cursor:grab}canvas:active{cursor:grabbing}.scene-caption{position:absolute;top:22px;left:22px;display:flex;gap:10px;color:#dfdfce;font-size:9px;line-height:1.6;letter-spacing:1.3px;pointer-events:none}.scene-caption small{font-size:9px;color:#90a5a0;letter-spacing:.4px}.tag{border:1px solid #71847a;height:24px;padding:3px 7px;font-size:9px;color:#e2d3b9}.scene-status{position:absolute;right:19px;top:25px;display:flex;gap:7px;align-items:center;font-size:8px;letter-spacing:1.1px;color:#b6c5b9;pointer-events:none}.scene-status>span:first-child{height:5px;width:5px;border-radius:50%;background:#c58a66}.scene-status.running>span:first-child{background:#9cc0a0}.scene-bottom{position:absolute;bottom:16px;left:21px;right:20px;display:flex;justify-content:space-between;color:#99ada4;font-size:8px;letter-spacing:1.1px;pointer-events:none}.scene-bottom i{font-style:normal;padding:0 8px;color:#6d8981}.transport{height:61px;padding:11px 14px;display:flex;justify-content:space-between;align-items:center}.transport-buttons{display:flex;gap:7px;align-items:center}.transport button{border:1px solid #d9dfd2;color:var(--ink);background:transparent;border-radius:3px;padding:9px 13px;font-size:11px}.transport button span{font-size:9px;margin-right:5px}.transport .primary{background:#ca613e;color:#fff6e8;border-color:#ca613e}.transport .primary:hover{background:#b25132}.transport .text-button{border-color:transparent;color:#7c877d;padding:9px}.transport .approach-button{font-size:10px;background:#f0f2e9;padding:9px 11px}.approach-button span{color:#879182;font-size:8px!important;margin:0 0 0 7px!important}.instrument-panel{background:#fffef9;border:1px solid #d8ddd2;border-radius:5px}.panel-section{padding:19px 20px}.section-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}h2{font-size:13px;font-weight:500;margin:0}.micro{font-size:8px;color:#939c8d;letter-spacing:1px}.primary-reading>span,.readings>div>span,.status-row>span{display:block;font-size:8px;letter-spacing:1.1px;color:#8b9485}.primary-reading strong{display:block;font-size:38px;line-height:1.4;font-weight:400;font-variant-numeric:tabular-nums;letter-spacing:-1.5px}.primary-reading small{font-size:12px;color:#929a8e;letter-spacing:0;margin-left:5px}.speed-track{height:3px;background:#e7eadd;margin:5px 0 18px}.speed-track i{height:100%;display:block;background:#cf744c;width:0}.readings{display:grid;grid-template-columns:1fr 1fr;gap:12px}.readings>div+div{border-left:1px solid #e4e6da;padding-left:19px}.readings b{font-size:24px;display:block;font-weight:400;margin-top:8px;font-variant-numeric:tabular-nums;letter-spacing:-.7px}.readings small{font-size:10px;color:#98a08f;letter-spacing:0}.status-row{display:flex;align-items:center;justify-content:space-between;border-top:1px solid #e6e8dd;margin-top:19px;padding-top:14px}.status-chip{font-size:8px;font-weight:500;color:#61755e;background:#edf0e3;border:1px solid #dce2d2;border-radius:3px;padding:5px 8px;letter-spacing:.6px}.status-chip.airborne{color:#39786f;background:#e8f0e9}.status-chip.crash{color:#ae4939;background:#fae6df}.attitude-row{display:flex;justify-content:space-between;font-size:9px;color:#929b8d;margin-top:13px}.attitude-row b{font-weight:400;color:#5f7467;margin-left:5px}.controls-section{border-top:1px solid #dfe3d7;padding-top:19px}.controls-section .section-heading{margin-bottom:19px}.throttle-label{font-size:11px;display:flex;justify-content:space-between;align-items:center;color:#6c7b6e}.throttle-label output{font-size:17px;font-variant-numeric:tabular-nums;color:#bd603d}.throttle-label output span{font-size:10px;margin-left:2px}input[type=range]{width:100%;height:18px;margin:12px 0 0;appearance:none;background:transparent;cursor:pointer}input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:5px;background:linear-gradient(to right,#ce6c44 var(--fill,0%),#e3e6d9 var(--fill,0%))}input[type=range]::-webkit-slider-thumb{appearance:none;margin-top:-5px;width:14px;height:14px;border-radius:50%;background:#c96640;box-shadow:0 0 0 3px #fffef9}input[type=range]::-moz-range-track{height:4px;background:#e3e6d9}input[type=range]::-moz-range-thumb{width:13px;height:13px;border:0;background:#c96640;border-radius:50%}.range-labels{display:flex;justify-content:space-between;font-size:8px;letter-spacing:.8px;color:#9a9f91}.keyboard-guide{margin-top:19px;display:grid;gap:7px}.keyboard-guide>div{display:flex;align-items:center;font-size:10px;color:#7a8676;gap:10px}.keyboard-guide>div>span:first-child{width:61px;display:flex;gap:4px}kbd{font:10px Arial;border:1px solid #dfe3d6;background:#f4f5ed;border-radius:3px;display:inline-flex;align-items:center;justify-content:center;min-width:25px;height:21px;color:#6b7c6c;box-shadow:0 1px 0 #dfe3d6}.space-key{font-size:7px;letter-spacing:.6px;padding:0 11px}.control-tip{font-size:9px;color:#8d9686;line-height:1.7;margin:17px 0 0}.study-strip{display:flex;align-items:center;justify-content:space-between;padding:25px 0 23px;border-bottom:1px solid #dce0d3;gap:20px}.study-intro{padding-right:20px}.study-intro .eyebrow{font-size:8px}.study-intro h2{font-family:Georgia,serif;font-size:20px;margin:6px 0 7px}.study-intro p{font-size:10px;line-height:1.6;color:#8b9386;margin:0}.spec{border-left:1px solid #dce0d3;padding-left:24px}.spec>span{font-size:8px;letter-spacing:1.1px;color:#879180}.spec strong{display:block;font-size:26px;font-weight:400;margin-top:5px;letter-spacing:-.6px}.spec small{font-size:12px;color:#8b9684;letter-spacing:0}.spec p{font-size:9px;color:#8d9685;margin:6px 0 0}.notes-button{border:1px solid #d5dccd;background:transparent;border-radius:3px;padding:11px 13px;color:#687d69;font-size:10px;white-space:nowrap}.notes-button span{padding-left:15px;color:#bb6544}footer{display:flex;align-items:center;gap:9px;font-size:9px;color:#8b9387;padding:17px 0 20px}footer b{font-weight:500;color:#62755f}.warning-icon{display:inline-flex;border:1px solid #96a28b;border-radius:50%;height:13px;width:13px;justify-content:center;align-items:center;font-family:Georgia,serif;font-size:10px}.footer-end{margin-left:auto;font-size:7px;letter-spacing:1.3px;color:#9ba38f}#notes{padding:25px 0;border-bottom:1px solid #dce0d3;gap:30px;grid-template-columns:repeat(3,1fr)}#notes:not([hidden]){display:grid}#notes h3{font-size:12px;font-weight:500}#notes p{font-size:11px;color:#788574;line-height:1.8}#notes a{color:#b26040}
+@media(min-width:1450px){.canvas-wrap{height:490px}.panel-section{padding:24px}.keyboard-guide{gap:10px}.control-tip{margin-top:24px}}@media(max-width:1050px){main{padding-left:20px;padding-right:20px}.masthead{padding:0 20px}.edition{display:none}.workspace{grid-template-columns:minmax(600px,1fr) 250px;gap:12px}.panel-section{padding:18px 15px}.viewer-toolbar small{display:none}.spec{padding-left:15px}.study-strip{gap:15px}.study-intro{padding-right:0}.notes-button{padding:10px 8px}.approach-button span{display:none}}@media(max-width:900px){.workspace{display:flex;flex-direction:column}.instrument-panel{display:grid;grid-template-columns:1fr 1fr}.controls-section{border-top:0;border-left:1px solid #dfe3d7}.page-title p{display:none}.study-strip{flex-wrap:wrap}.canvas-wrap{height:440px}.header-note{display:none}.study-intro{width:100%}.footer-end{display:none}#notes:not([hidden]){grid-template-columns:1fr}.viewport-card{overflow:auto}}@media(prefers-reduced-motion:reduce){button{transition:none}}
+

@@ -12,7 +12,12 @@ The current delivery is validated offline. Live image tests caught the three
 selected rendering defects, but the tested judge model also gave contradictory
 wing-presence verdicts for an identical image. Its calibration is therefore
 **not passed**; use human review or calibrate another judge before model rankings.
-**No live generator attempt has been tested yet.**
+The first live comparison ran **three repeats each of GPT-5.6 Sol and GPT-6.1 Sol,
+both at medium reasoning**. It exposed a force-output ambiguity and an
+incomplete-response handling defect; the raw scores do not establish a clean
+model ranking. [Results and findings](experiments/frontier-20261030-medium-3x/CALIBRATION.md)
+and [all six saved attempts](experiments/frontier-20261030-medium-3x/index.html)
+are included for independent inspection.
 There is no claim of general benchmark validity or real-world aircraft validity.
 
 The two selected family source photographs and reference preview are included
@@ -118,6 +123,11 @@ The initial comparison reports **20 deterministic checks**. Five visual checks
 remain ungraded because the previously tested image judge failed calibration.
 Passing 20/20 therefore does not mean passing the full task. Three repeats are
 exploratory; results are reported as observed, without tuning to a desired ranking.
+
+Current harness code retains completed file operations from an otherwise
+incomplete response and rejects unfinished operations. The first published batch
+used the earlier all-or-nothing handling; its original outputs and scores are
+preserved, with the effect documented in its calibration notes.
 
 To publish a portable copy, including a ZIP of all artifacts:
 

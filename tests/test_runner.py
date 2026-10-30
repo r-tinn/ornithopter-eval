@@ -63,6 +63,25 @@ class RunnerTests(unittest.TestCase):
         self.assertEqual(result["status"],"budget_exhausted")
         self.assertFalse((self.run/"submission/bad.js").exists())
 
+    def test_incomplete_response_keeps_completed_patches_without_applying_partial_patch(self):
+        calls=[]
+        def transport(*args,**kwargs):
+            calls.append(1)
+            return response([
+                {"type":"apply_patch_call","call_id":"p1","status":"completed","operation":
+                 {"type":"create_file","path":"submission/complete.js","diff":"+const complete=true;"}},
+                {"type":"apply_patch_call","call_id":"p2","status":"in_progress","operation":
+                 {"type":"create_file","path":"submission/partial.js","diff":"+const partial="}}],
+                status="incomplete")
+        result=run_model(self.run,"offline-test",transport)
+        self.assertEqual(len(calls),1)
+        self.assertEqual(result["status"],"budget_exhausted")
+        self.assertEqual((self.run/"submission/complete.js").read_text(),"const complete=true;\n")
+        self.assertFalse((self.run/"submission/partial.js").exists())
+        events=[json.loads(line) for line in (self.run/"events.jsonl").read_text().splitlines()]
+        outputs=[e['result'] for e in events if e['event']=='tool_result']
+        self.assertEqual([r['call_id'] for r in outputs],['p1'])
+
     def test_transport_error_is_not_a_model_score(self):
         def fail(*a,**kw):
             raise APIError("offline transport failure")

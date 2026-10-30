@@ -1,0 +1,41 @@
+{
+  "sources": [
+    {
+      "id": "02 / Unknown-2.jpg",
+      "used_for": "Swan outline and rounded Say column: span 7.4 ft, wrist span 3.7 ft (50% span), shoulder span 4 in, maximum body width 8 in, overall length 55 in. The paragraph supplies total wing area 6.61 ft^2. Exact conversions are 0.3048 m/ft and 0.0254 m/in. Aspect ratio is computed as span squared divided by area, about 8.284, consistent with the printed 8.29 rounding cross-check. The outline informs a long forward neck, narrow shoulders, approximately parallel-chord inner panels and smoothly tapered outer panels."
+    },
+    {
+      "id": "14 / Unknown-14.jpg",
+      "used_for": "Qualitative distinction between inner/arm and outer/hand wing, and the proposal for conventional tail/fin/rudder control. This motivates independently articulated panel geometry and a visible aft tail and vertical fin, not a numeric aerodynamic or structural model."
+    },
+    {
+      "id": "SOURCE_GUIDE.md",
+      "used_for": "Selection of rounded dimensions, separation of historical observations from the new benchmark assumptions, and explicit exclusions."
+    }
+  ],
+  "assumptions": [
+    "The benchmark supplies the new mass 6 kg, gravity 9.80665 m/s^2, default density 1.225 kg/m^3, lift law, induced-drag polar, efficiency 0.8, 400 W full-throttle mechanical drive, 0.65 propulsive efficiency, control rates and contact rules. These are not claims by Stanley J. O. Tinn.",
+    "A point-mass, cycle-averaged SI simulation uses x forward, y up, z lateral, current-state forces and semi-implicit Euler at 1/120 s in the browser. Wind is subtracted from world velocity. The browser defaults to still air.",
+    "Individual root-to-tip wing length is (7.4 ft minus 4 in)/2, not the excluded wing-length entry. Each wrist lies at half of the 3.7 ft wrist span. The central panel chord is approximately 12 in, consistent with the rounded chord entry; the hand panels taper with an approximate elliptical envelope. Source area, not tessellated display area, drives forces.",
+    "The display stroke is a new illustrative assumption: symmetric arm angle 0.28*sin(phase) rad and hand angle relative to arm 0.48*sin(phase-0.65) rad, at the specified 2 Hz while powered. The hand panels therefore rotate independently about their wrists. No biological stroke frame is inferred. Phase freezes without power and while paused.",
+    "A faceted fuselage, long swan-like neck, short tail, conventional vertical fin with rudder seam, wing spars and feather-like panel seams are display approximations. Tail and fin are not separately solved aerodynamic surfaces; pitch and bank use the benchmark control law. Overall nose-to-tail length and maximum body width use source dimensions.",
+    "Ground contact acts at the point-mass position y=0.2 m. A bounded braking impulse supplies up to 18 N without reversing horizontal velocity. The drawn wings and body do not undergo separate collision or structural simulation.",
+    "For exactly vertical relative flow, world-x is projected onto the flow-normal plane to obtain a finite lift reference. Zero-speed forward direction is world-x. A crashed state is terminal until a preset is loaded."
+  ],
+  "excluded_fields": [
+    "Page 02: the 3.135 ft wing-length entry; individual wing length is derived from total span and shoulder span instead.",
+    "Page 02: the missing table's 7.83 comparison and the crossed-out 14% area argument.",
+    "Page 02: scaled-column dimensions are not substituted for the requested rounded Say values; printed AR 8.29 is a cross-check, not an independent force input.",
+    "Page 14: biological arm/hand stroke-angle reference frames, elastic stiffness and resonance estimates.",
+    "Page 14: vortex-lift landing hypothesis, unspecified curved-plate polar, and biological thrust/lift observations as quantitative force laws.",
+    "Missing appendices, the distinct Standard Model Swan, and previous human-carrying simulators are not supplied and are not used."
+  ],
+  "limitations": [
+    "Educational approximation, not a validated ornithopter blueprint or a prediction of a real swan's performance.",
+    "The assumed powered flapping drive is not experimentally proven wing performance. Propulsive power is bounded by 0.65 times mechanical input power.",
+    "No unsteady flow, aeroelasticity, dynamic stall, structural stress, panel-resolved aerodynamics or wake solver. Animated wing motion does not generate extra instantaneous lift or thrust.",
+    "No yaw/rudder actuation, wheels, water interaction or per-part ground collision. Bank tilts lift; there is no hidden autopilot, altitude lock or prescribed flight path.",
+    "Historical photographs do not determine exact airfoil sections, fin shape, joint mechanisms or manufacturing details. Those visual choices are explicitly illustrative.",
+    "Numerical agreement with the benchmark equations is not evidence of real-world physical validity."
+  ]
+}
