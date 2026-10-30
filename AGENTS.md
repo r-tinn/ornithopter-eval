@@ -28,3 +28,11 @@ Default generator runs to medium reasoning and 32,000 total output tokens,
 including reasoning. Token-budget notices are limited to the 50% and 75% usage
 thresholds; do not send ongoing token, time or request-count updates. Retain
 the original settings for published cohorts.
+
+The intended next eval is a mechanical ornithopter inside a supplied lightweight
+world. The swan studies inform wing proportions/mechanics, not a literal animal
+design target. Keep only hills, a few trees and two landing strips; bundle all
+needed files here so the original project is never a runtime dependency. No
+other aircraft or complicated scenery systems are needed. The v4 candidate is
+for task/scaffold/grader review before another model calibration; do not present
+its handwritten reference fixture as a model result or legacy v3 scores as v4.

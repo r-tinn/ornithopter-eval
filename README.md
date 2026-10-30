@@ -1,5 +1,27 @@
 # Ornithopter Eval
 
+**The intended next task is a mechanical aircraft inside a fixed, lightweight
+flight world.** The [v4 review candidate](candidate/mechanical-v4/README.md)
+includes standalone hills, 48 simple trees, two landing strips, controls and
+cameras. Only aircraft geometry, articulation and flight dynamics are model work.
+The [revised brief](docs/REVISED_BRIEF.md), [candidate task](candidate/mechanical-v4/TASK.md),
+[source re-audit](candidate/mechanical-v4/SOURCE_AUDIT.md) and
+[19 proposed binary checks](candidate/mechanical-v4/GRADERS.md) are ready for review.
+
+```sh
+python3 -m ornithopter_eval prepare-world runs/mechanical-v4-review --reference
+python3 -m ornithopter_eval serve-world runs/mechanical-v4-review --port 8766
+```
+
+Open `http://127.0.0.1:8766/`. The aircraft in this preview is a handwritten,
+withheld integration fixture. The environment, renderer and license are copied
+into this repository; the old project is not needed to prepare or run it.
+V4 is a review candidate, with no model scores or completed grader calibration.
+The existing `run`/`compare` commands below still implement the previous v3 task;
+they do not run this candidate. The original trials are retained unchanged.
+
+## Previous task and calibration
+
 **Can an AI turn Stanley J. O. Tinn's old sketches and calculations into a working
 3D flight lab, without running or testing its code first?**
 

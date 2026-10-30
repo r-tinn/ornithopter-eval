@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ornithopter · shared flight world</title><link rel="stylesheet" href="./environment/style.css"></head>
+<body><main>
+<header><div><p class="eyebrow">STANLEY J. O. TINN · MECHANICAL FLIGHT STUDY</p><h1>From paper to flight.</h1></div><span class="tag">V4 · WORLD &amp; TASK REVIEW</span></header>
+<section class="flight" aria-label="Flight simulator"><div id="viewport"><canvas data-testid="scene" aria-label="3D flight world"></canvas><div class="scene-caption"><span id="camera-label">CHASE VIEW</span><span>HILLS · 48 TREES · TWO LANDING STRIPS</span></div><div id="flight-status">Loading shared world…</div></div>
+<aside><p class="eyebrow">FLIGHT DECK</p><h2 id="field-label">Valley strip</h2><div class="instruments"><div><span>AIRSPEED</span><strong id="speed">0.0 <small>m/s</small></strong></div><div><span>HEIGHT ABOVE GROUND</span><strong id="height">0.0 <small>m</small></strong></div></div><pre data-testid="telemetry"></pre>
+<label class="power">Motor power <output id="power-label">0%</output><input data-testid="throttle" type="range" min="0" max="1" step=".01" value="0"></label>
+<div class="buttons"><button data-testid="start">Start</button><button data-testid="pause">Pause</button><button data-testid="reset">Reset</button><button data-testid="approach">Approach</button></div>
+<p class="eyebrow subsection">CAMERA</p><div class="views"><button data-view="chase" class="selected">Chase</button><button data-view="orbit">Inspect</button><button data-view="top" data-testid="view-top">Top</button><button data-view="side" data-testid="view-side">Side</button><button data-view="front" data-testid="view-front">Front</button><button data-view="world">World</button></div>
+<p class="eyebrow subsection">AIRFIELD</p><div class="views"><button data-field="valley" class="selected">Valley</button><button data-field="meadow">Meadow</button></div>
+<p class="help"><kbd>W</kbd> / <kbd>S</kbd> power · <kbd>↑</kbd> / <kbd>↓</kbd> pitch<br><kbd>←</kbd> / <kbd>→</kbd> bank · <kbd>A</kbd> / <kbd>D</kbd> rudder<br><kbd>Space</kbd> brake · <kbd>P</kbd> pause · <kbd>R</kbd> reset<br>Drag to orbit in Inspect. Scroll to zoom.</p>
+</aside></section>
+<footer><p><strong>The world stays fixed. The aircraft is the task.</strong><br>Source studies inform wing mechanics and proportions. Aircraft dimensions, mass and propulsion are stated engineering assumptions.</p><p id="fixture-note">Shared scaffold · aircraft implementation pending.</p><details><summary>Scene footprint</summary><pre id="resources"></pre></details></footer>
+</main><script type="module" src="./environment/platform.mjs"></script></body></html>

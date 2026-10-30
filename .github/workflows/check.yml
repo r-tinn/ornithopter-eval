@@ -31,6 +31,7 @@ jobs:
           if [ -f task/sources/Unknown-2.jpg ] && [ -f task/sources/Unknown-14.jpg ]; then
             python3 -m unittest discover -s tests -v
             python3 -m ornithopter_eval validate
+            python3 -m ornithopter_eval validate-world
           else
             python3 -m unittest discover -s tests -p test_policy.py -v
             python3 -m unittest discover -s tests -p test_review.py -v
@@ -41,5 +42,7 @@ jobs:
         if: always()
         with:
           name: offline-evaluation-evidence
-          path: runs/validation-*
+          path: |
+            runs/validation-*
+            runs/world-review-*
           retention-days: 7

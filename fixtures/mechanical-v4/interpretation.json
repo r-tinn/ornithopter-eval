@@ -1,0 +1,16 @@
+{
+  "sources": [
+    {"id": "02", "used_for": "AR from the rounded span and original area; wrist fraction from the same column; inner/outer planform context."},
+    {"id": "14", "used_for": "Articulated panels and conventional tail/fin/rudder engineering context."}
+  ],
+  "biomimetic_translation": [
+    "Transfer AR=7.4²/6.61 and wrist fraction=3.7/7.4 to the assumed 3 m mechanical span.",
+    "The fixture is an open structural airframe, motor, two-panel wings, conventional tail and wheeled landing gear."
+  ],
+  "engineering_assumptions": [
+    "3 m span, 2 m length, 6 kg, 400 W mechanical drive and 2 Hz cycle are new assumptions.",
+    "The published cycle-averaged polar, efficiency, contact geometry and rudder side-force rule are educational approximations."
+  ],
+  "excluded_fields": ["Erroneous 3.135 ft wing length", "Missing 7.83 comparison", "Crossed-out area argument", "Biological body dimensions as aircraft specifications", "Unspecified spring/curved-plate model"],
+  "limitations": ["Handwritten withheld integration fixture, not a model result", "Not a validated aircraft, full unsteady solver or reconstruction of the entire mechanism"]
+}

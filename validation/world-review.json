@@ -1,0 +1,307 @@
+{
+  "kind": "shared-world-and-withheld-fixture-review",
+  "model_trial": false,
+  "passed": true,
+  "checks": [
+    {
+      "id": "small_fixed_world",
+      "pass": true,
+      "detail": {
+        "mode": "chase",
+        "field": "valley",
+        "ready": true,
+        "running": false,
+        "terrain_triangles": 8192,
+        "trees": 48,
+        "airfields": 2,
+        "draw_calls": 29,
+        "triangles": 11358,
+        "render_frames": 1,
+        "paused_rendering": "on demand",
+        "external_assets": false
+      }
+    },
+    {
+      "id": "fixture_geometry_bounded",
+      "pass": true,
+      "detail": {
+        "triangles": 1638,
+        "wheel_clearances": [
+          3.576278384542775e-09,
+          3.576278384542775e-09,
+          3.576278384542775e-09
+        ]
+      }
+    },
+    {
+      "id": "actual_wheels_rest_on_strip",
+      "pass": true,
+      "detail": {
+        "triangles": 1638,
+        "wheel_clearances": [
+          3.576278384542775e-09,
+          3.576278384542775e-09,
+          3.576278384542775e-09
+        ]
+      }
+    },
+    {
+      "id": "paused_scene_stops_drawing",
+      "pass": true,
+      "detail": {
+        "before": 1,
+        "after": 1
+      }
+    },
+    {
+      "id": "Valley_fixture_takeoff",
+      "pass": true,
+      "detail": {
+        "rest": {
+          "position": [
+            -230,
+            2.66544854649282,
+            -165
+          ],
+          "velocity": [
+            0,
+            0,
+            0
+          ],
+          "pitch": 0,
+          "roll": 0,
+          "heading": 0,
+          "phase": 0,
+          "time": 0,
+          "status": "grounded"
+        },
+        "airborne": {
+          "position": [
+            -149.33203516461262,
+            14.776034073417174,
+            -165
+          ],
+          "velocity": [
+            13.867658217179876,
+            2.8957414941550543,
+            0
+          ],
+          "pitch": 0.15000000000000005,
+          "roll": 0,
+          "heading": 0,
+          "phase": 6.178465552059865,
+          "time": 6.991666666666804,
+          "status": "flying"
+        },
+        "geometry": {
+          "triangles": 1638,
+          "wheel_clearances": [
+            12.161196573538595,
+            12.004286534441315,
+            12.004286534441315
+          ]
+        }
+      }
+    },
+    {
+      "id": "Valley_pause_preserves_state",
+      "pass": true,
+      "detail": {
+        "position": [
+          -149.33203516461262,
+          14.776034073417174,
+          -165
+        ],
+        "velocity": [
+          13.867658217179876,
+          2.8957414941550543,
+          0
+        ],
+        "pitch": 0.15000000000000005,
+        "roll": 0,
+        "heading": 0,
+        "phase": 6.178465552059865,
+        "time": 6.991666666666804,
+        "status": "flying"
+      }
+    },
+    {
+      "id": "Valley_fixture_landing",
+      "pass": true,
+      "detail": {
+        "landed": {
+          "position": [
+            -128.07737923781238,
+            2.6654485464928204,
+            -165
+          ],
+          "velocity": [
+            8.313751149944624,
+            0,
+            0
+          ],
+          "pitch": 0,
+          "roll": 0,
+          "heading": 0,
+          "phase": 0,
+          "time": 5.98333333333342,
+          "status": "landed"
+        },
+        "geometry": {
+          "triangles": 1638,
+          "wheel_clearances": [
+            3.5762788286319847e-09,
+            3.5762788286319847e-09,
+            3.5762788286319847e-09
+          ]
+        }
+      }
+    },
+    {
+      "id": "Meadow_fixture_takeoff",
+      "pass": true,
+      "detail": {
+        "rest": {
+          "position": [
+            690,
+            1.6847854995501397,
+            285
+          ],
+          "velocity": [
+            0,
+            0,
+            0
+          ],
+          "pitch": 0,
+          "roll": 0,
+          "heading": 0,
+          "phase": 0,
+          "time": 0,
+          "status": "grounded"
+        },
+        "airborne": {
+          "position": [
+            770.9493447142167,
+            13.443378364695203,
+            285
+          ],
+          "velocity": [
+            14.026396301096712,
+            2.846728933542625,
+            0
+          ],
+          "pitch": 0.1416666666666667,
+          "roll": 0,
+          "heading": 0,
+          "phase": 5.969026041820546,
+          "time": 6.975000000000136,
+          "status": "flying"
+        },
+        "geometry": {
+          "triangles": 1638,
+          "wheel_clearances": [
+            11.851523556410362,
+            11.703270612343129,
+            11.703270612343129
+          ]
+        }
+      }
+    },
+    {
+      "id": "Meadow_pause_preserves_state",
+      "pass": true,
+      "detail": {
+        "position": [
+          770.9493447142167,
+          13.443378364695203,
+          285
+        ],
+        "velocity": [
+          14.026396301096712,
+          2.846728933542625,
+          0
+        ],
+        "pitch": 0.1416666666666667,
+        "roll": 0,
+        "heading": 0,
+        "phase": 5.969026041820546,
+        "time": 6.975000000000136,
+        "status": "flying"
+      }
+    },
+    {
+      "id": "Meadow_fixture_landing",
+      "pass": true,
+      "detail": {
+        "landed": {
+          "position": [
+            771.9226207621874,
+            1.6847854995501397,
+            285
+          ],
+          "velocity": [
+            8.313751149944624,
+            0,
+            0
+          ],
+          "pitch": 0,
+          "roll": 0,
+          "heading": 0,
+          "phase": 0,
+          "time": 5.98333333333342,
+          "status": "landed"
+        },
+        "geometry": {
+          "triangles": 1638,
+          "wheel_clearances": [
+            3.576278384542775e-09,
+            3.576278384542775e-09,
+            3.576278384542775e-09
+          ]
+        }
+      }
+    },
+    {
+      "id": "no_external_assets",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "id": "no_page_errors",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "external_requests": [],
+  "screenshots": [
+    "preview-chase.png",
+    "preview-world.png",
+    "preview-inspect.png",
+    "preview-flight.png"
+  ],
+  "runtime": {
+    "browser": "151.0.7922.34",
+    "viewport": [
+      1440,
+      1000
+    ],
+    "clock": "Playwright virtual clock",
+    "fps_scored": false
+  },
+  "shared_sha256": {
+    "environment/platform.mjs": "ef5d2798219092c4606556f3a2e5a87355dca5b85f6f529fea7883bbd71cddaa",
+    "environment/style.css": "21db9f38d2ab3f0c10c667245fed2748689382465c4164e281bed102b2b7f5ed",
+    "environment/vendor/THREE-LICENSE.txt": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+    "environment/vendor/three.core.min.js": "05b2609338c76cd65daf74f3ac515bc9a5045e1b3b33edc07d8c9bd55250fa90",
+    "environment/vendor/three.module.min.js": "86bcee248b64f44bcfc23c331ae74619061957d59cab040171dcb6fb5900beb6",
+    "environment/world.mjs": "a9508dc6e6cc844211fce7c800ae8a1ae422adb961c700e7533169815b4abcb7",
+    "index.html": "cc3859c2e59abd4a4d22abe9e19df2bf95c5d8d29ad0a3f470c7ed066322dc88"
+  },
+  "fixture_sha256": {
+    "aircraft.mjs": "ac470febf2bef16a039504ce2e8b676dcbee88ded3ff1f8490dce3c4a2facb45",
+    "physics.mjs": "56a39afc71e9ab29b6d55754c0063a2f9021e29a53c6b04ea1738182823d1530",
+    "interpretation.json": "ea86958f2e53162a9d21a8e90126969b0aea0b22a0db40e579a63b867162dc66"
+  },
+  "reviewer_sha256": "821db24745dadbff7514282315ab32afc80a967a4b3473d8283bf79cb8db990b"
+}

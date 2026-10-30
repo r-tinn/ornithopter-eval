@@ -1,0 +1,33 @@
+{
+  "library": "three",
+  "version": "0.185.1",
+  "license": "MIT",
+  "files": {
+    "three.module.min.js": {
+      "bytes": 365552,
+      "sha256": "86bcee248b64f44bcfc23c331ae74619061957d59cab040171dcb6fb5900beb6"
+    },
+    "three.core.min.js": {
+      "bytes": 385386,
+      "sha256": "05b2609338c76cd65daf74f3ac515bc9a5045e1b3b33edc07d8c9bd55250fa90"
+    }
+  },
+  "environment_adaptation": {
+    "source_project": "Family-owned original Ornithopter project",
+    "files": [
+      "lib/world.ts",
+      "lib/physics.ts"
+    ],
+    "source_sha256": {
+      "lib/world.ts": "3d90afb2fe6683cc2e6cdf4508eb20f9811fd4b0c5d4ecf799f50e6aef9da902",
+      "lib/physics.ts": "de2a4b735ad38dfac1a557c155fea1eca197a9ef60aed248f0a4555ad6f7666e"
+    },
+    "copied_concepts": [
+      "procedural hill height function",
+      "terrain palette",
+      "instanced conifer construction",
+      "runway shape and markings"
+    ],
+    "runtime_dependency_on_source_project": false
+  }
+}
