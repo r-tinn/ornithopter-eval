@@ -34,6 +34,8 @@ library. Browser testing uses a pinned Playwright version and its matching Chrom
 The selected photographs are versioned in `task/sources/`. Their hashes are
 checked against `task/source-manifest.json`; preserve the original bytes.
 The CI workflow runs unit tests and the full offline browser calibration.
+It pins Ubuntu 22.04 to support the bundled Chromium sandbox without changing
+the host's AppArmor policy or disabling browser sandboxing.
 
 ```sh
 pnpm install --frozen-lockfile

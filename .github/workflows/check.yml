@@ -6,7 +6,9 @@ permissions:
   contents: read
 jobs:
   validate:
-    runs-on: ubuntu-latest
+    # Newer Ubuntu images restrict user namespaces for unpackaged Chromium.
+    # Keep Chromium's sandbox enabled on a supported, fixed runner image.
+    runs-on: ubuntu-22.04
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
