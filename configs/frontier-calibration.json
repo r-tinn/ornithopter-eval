@@ -1,0 +1,9 @@
+{
+  "task_version": "swan-v3.0",
+  "max_output_tokens_total": 16000,
+  "max_output_tokens_per_response": 16000,
+  "max_requests": 24,
+  "max_wall_seconds": 900,
+  "max_submission_bytes": 2000000,
+  "reasoning_effort": "medium"
+}

@@ -92,6 +92,10 @@ try {
   page.on('pageerror',error=>errors.push(String(error).slice(0,500)));
   await page.clock.install({time:new Date('2026-01-01T00:00:00Z')});
   await page.goto(base+'/index.html');
+  if(!results.evidence.screenshots.includes('initial-page.png')){
+   await page.screenshot({path:path.join(artifactDir,'initial-page.png')});
+   results.evidence.screenshots.push('initial-page.png');
+  }
   await page.clock.pauseAt(new Date('2026-01-02T00:00:00Z'));
   await page.clock.runFor(32); // Establish animation timing while the initial state is paused.
   await page.waitForFunction(()=>typeof window.flightLab?.getState==='function');

@@ -77,8 +77,11 @@ def image_input(path):
 
 
 def initial_input(run):
+    config = json.loads((run / "manifest.json").read_text())["config"]
+    budget = "\n\nAttempt limits: " + json.dumps(config,sort_keys=True) + ". Output-token limits include reasoning."
     content = [{"type": "input_text", "text": (run / "inputs/TASK.md").read_text() +
                "\n\n" + (run / "inputs/SOURCE_GUIDE.md").read_text() +
+               budget +
                "\n\nStarter files: submission/index.html, submission/physics.mjs, "
                "submission/interpretation.json. Images follow, labelled in filename order."}]
     for path in sorted((run / "inputs/sources").glob("*.jpg")):
@@ -147,6 +150,12 @@ def run_model(run, model, transport=create_response):
                            "max_output_tokens": min(tokens, config["max_output_tokens_per_response"])}
                 if config.get("reasoning_effort"):
                     payload["reasoning"] = {"effort": config["reasoning_effort"]}
+                log.write(json.dumps({"event":"request","index":usage["requests"]+1,
+                    "model":model,"max_output_tokens":payload["max_output_tokens"],
+                    "reasoning":payload.get("reasoning"),"tools":payload["tools"],
+                    "instructions":payload["instructions"],
+                    "input_sha256":hashlib.sha256(json.dumps(history,sort_keys=True).encode()).hexdigest()})+"\n")
+                log.flush()
                 response = transport(payload, timeout=max(1, remaining))
                 usage["requests"] += 1
                 log.write(json.dumps({"event": "response", "response": response}) + "\n")

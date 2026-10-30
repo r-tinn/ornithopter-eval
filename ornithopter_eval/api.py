@@ -34,7 +34,17 @@ def create_response(payload, timeout=120):
         with urllib.request.urlopen(request, timeout=timeout) as response:
             return json.load(response)
     except urllib.error.HTTPError as exc:
-        # Avoid writing request headers, credentials, or entire server responses to logs.
-        raise APIError(f"Responses API returned HTTP {exc.code}; no automatic retry") from None
+        # Keep useful protocol diagnostics, never headers or a complete response body.
+        detail = ""
+        try:
+            error = json.loads(exc.read(8192)).get("error", {})
+            fields = {name:str(error[name]).replace(key,"[redacted]")[:600]
+                      for name in ("code","param","message") if error.get(name)}
+            detail = "; " + json.dumps(fields) if fields else ""
+        except (ValueError,AttributeError,OSError):
+            pass
+        finally:
+            exc.close()
+        raise APIError(f"Responses API returned HTTP {exc.code}{detail}; no automatic retry") from None
     except (OSError, ValueError) as exc:
         raise APIError(f"Responses API transport failed ({type(exc).__name__}); no automatic retry") from None

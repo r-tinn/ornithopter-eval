@@ -96,6 +96,39 @@ attempt manifest, and response/tool-result events. They are ignored by Git to
 avoid publishing trial outputs inadvertently. The harness never logs API headers
 or passes API credentials into the submission's browser environment.
 
+## Repeated frontier-model calibration
+
+The comparison fixes **medium reasoning** for both explicit model IDs, 16,000
+total output tokens per attempt (including reasoning), 24 requests and 900 seconds.
+It runs two independent generators per round, then grades their unchanged output.
+There are no automatic retries or revisions after grading.
+
+```sh
+python3 -m ornithopter_eval compare --models gpt-5.6-sol gpt-6.1-sol --repeats 3 --config configs/frontier-calibration.json --output runs/frontier-medium-3x
+python3 -m ornithopter_eval serve-artifacts runs/frontier-medium-3x --port 8765
+```
+
+Open `http://127.0.0.1:8765/` for all six simulators, grader screenshots, reports,
+readable transcripts and source files. Each attempt retains its exact input,
+budget, usage, response/tool events and submission hashes. Protocol and grader
+hashes are frozen before the first round. An API or grading failure stays visible
+and stops later rounds; it is never scored as a model failure.
+
+The initial comparison reports **20 deterministic checks**. Five visual checks
+remain ungraded because the previously tested image judge failed calibration.
+Passing 20/20 therefore does not mean passing the full task. Three repeats are
+exploratory; results are reported as observed, without tuning to a desired ranking.
+
+To publish a portable copy, including a ZIP of all artifacts:
+
+```sh
+python3 -m ornithopter_eval export runs/frontier-medium-3x experiments/frontier-medium-3x
+python3 -m ornithopter_eval serve-artifacts experiments/frontier-medium-3x --port 8765
+```
+
+Export verifies copied bytes. The local viewer serves only that artifact folder;
+the repository's API key is never served or passed to a simulator.
+
 ## Complete the five image checks
 
 V3 reports individual pass/fail results: seven source parameters, seven physics

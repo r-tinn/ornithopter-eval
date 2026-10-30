@@ -8,6 +8,7 @@ from pathlib import Path
 from .api import APIError, get_api_key
 from .checks import TASK_VERSION
 from .grading import grade_submission
+from .experiment import export_experiment, run_experiment, serve_artifacts
 from .review import apply_review, audit_consistency, judge
 from .runner import ROOT, DEFAULT_CONFIG, prepare, run_model, verify_sources, write_json
 
@@ -130,6 +131,9 @@ def main(argv=None):
     p = commands.add_parser("review");p.add_argument("grade_dir");p.add_argument("review_json");p.add_argument("--reviewer",required=True)
     p = commands.add_parser("validate");p.add_argument("--node",default="node")
     p = commands.add_parser("audit-reviews");p.add_argument("reviews",nargs="+")
+    p = commands.add_parser("compare");p.add_argument("--models",nargs=2,required=True);p.add_argument("--repeats",type=int,default=3);p.add_argument("--output",required=True);p.add_argument("--config",default=str(ROOT / "configs/frontier-calibration.json"));p.add_argument("--node",default="node")
+    p = commands.add_parser("export");p.add_argument("source");p.add_argument("destination")
+    p = commands.add_parser("serve-artifacts");p.add_argument("directory");p.add_argument("--port",type=int,default=8765)
     commands.add_parser("verify-sources")
     args = parser.parse_args(argv)
     try:
@@ -166,6 +170,14 @@ def main(argv=None):
             result = audit_consistency([(path,json.loads(Path(path).read_text())) for path in args.reviews])
             print(json.dumps(result,indent=2))
             return 0 if result["consistent"] else 1
+        elif args.command == "compare":
+            result = run_experiment(args.output,args.models,args.repeats,args.config,node=args.node)
+            print(json.dumps({"status":result["status"],"models":result["models"]},indent=2))
+            return 0 if result["status"]=="completed" else 1
+        elif args.command == "export":
+            print(export_experiment(args.source,args.destination))
+        elif args.command == "serve-artifacts":
+            serve_artifacts(args.directory,args.port)
         else:
             print(json.dumps(verify_sources(),indent=2))
     except (APIError,ValueError,OSError,KeyError,TypeError) as exc:
