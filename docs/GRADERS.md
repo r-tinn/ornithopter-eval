@@ -201,6 +201,15 @@ fresh sandboxed Chromium profile with external requests blocked, restrictive CSP
 a clean environment and process timeout. It never runs submitted Node/Python
 code on the host. This is not a hardened environment for hostile code.
 
+New generator budgets default to 32,000 total output tokens across the attempt,
+including reasoning, generated code/tool calls and final text, with explicit
+medium reasoning. The harness attaches a brief token-only notice to the next
+normal request after crossing 50% and 75% usage, each at most once. Both crossings
+are combined if necessary. Counts come from API usage on completed responses;
+notices cannot arrive mid-response or after an exhausted attempt. They introduce
+no extra API requests, no time/request-count reports and no grader feedback.
+The exact notice policy is saved in the configuration, events and manifest.
+
 validate sends the calibration reference through a mocked Responses transport
 and the real patch adapter, then runs real browser grading. Deliberate defects
 check that their corresponding binary verifier fails: wrong source units,

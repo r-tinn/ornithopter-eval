@@ -23,8 +23,10 @@ There is no claim of general benchmark validity or real-world aircraft validity.
 The current task is **swan-v3.1**: the task and starter require scalar `lift`,
 `drag` and `thrust` in newtons, with signed lift and a separate total-force vector.
 The first live cohort remains archived as swan-v3.0 with its original grades.
-The 16,000-token budgets are unchanged; a larger budget and automatic usage
-updates are recommendations for the next calibration, not applied retroactively.
+New generator runs default to **32,000 total output tokens, including reasoning**,
+with **medium reasoning** explicitly requested for every model. The harness sends
+only two token-budget checkpoints, after crossing 50% and 75% usage. The first
+16,000-token cohort retains its original settings and scores.
 
 The two selected family source photographs and reference preview are included
 with permission and retain their original attribution.
@@ -84,11 +86,21 @@ python3 -m ornithopter_eval grade runs/model-a-01/submission --output runs/model
 ```
 
 Repeat with a different explicit model ID and a fresh output directory to compare
-models. `configs/pilot.json` fixes 16,000 total output tokens (including reported
+models. `configs/pilot.json` fixes 32,000 total output tokens (including reported
 reasoning tokens), 24 API exchanges and 900 seconds. Repeated input usage is logged
-separately. Set the same explicit reasoning setting in the config when comparing
-models that support it. Each attempt has one instruction; exchanges for file
+separately. Medium reasoning is the explicit default, including when a custom
+config omits the setting or leaves it null. Each attempt has one instruction; exchanges for file
 operations are allowed. No execution or grading feedback is returned to the model.
+
+The allowance covers reasoning, generated code/tool calls and final text across
+the entire attempt. Each API request is capped at the remaining allowance.
+Budget notices occur only after a completed response crosses 50% or 75%, once
+per threshold, and are attached to the next normal request. If one response
+crosses both thresholds, one notice combines them. There are no extra API calls,
+per-exchange updates, time updates or request-count updates. A long response may
+cross a threshold before a notice can be delivered; a cutoff or final submission
+does not trigger another request just to deliver a notice. Notices are retained
+in the event log and readable transcript.
 
 The “shell” is a **virtual inspector**, implemented in Python: `ls`, `cat`, and
 `head` over permitted files. It never invokes Bash, Python, Node or a shell
@@ -109,7 +121,7 @@ or passes API credentials into the submission's browser environment.
 
 ## Repeated frontier-model calibration
 
-The comparison fixes **medium reasoning** for both explicit model IDs, 16,000
+The comparison fixes **medium reasoning** for both explicit model IDs, 32,000
 total output tokens per attempt (including reasoning), 24 requests and 900 seconds.
 It runs two independent generators per round, then grades their unchanged output.
 There are no automatic retries or revisions after grading.

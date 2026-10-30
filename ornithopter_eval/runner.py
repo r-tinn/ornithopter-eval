@@ -46,6 +46,12 @@ def prepare(output, config_path=DEFAULT_CONFIG):
             raise ValueError(f"Invalid budget: {key}")
     if config.get("task_version") != TASK_VERSION:
         raise ValueError("Unsupported task version")
+    config["reasoning_effort"] = config.get("reasoning_effort") or "medium"
+    percentages = config.setdefault("output_token_notice_percentages", [50, 75])
+    if (not isinstance(percentages, list) or
+        any(type(p) is not int or not 0 < p < 100 for p in percentages) or
+        percentages != sorted(set(percentages))):
+        raise ValueError("Output-token notice percentages must be distinct, ascending integers between 1 and 99")
     output.mkdir(parents=True)
     (output / "inputs/sources").mkdir(parents=True)
     for name in ("TASK.md", "SOURCE_GUIDE.md"):
@@ -64,7 +70,7 @@ def prepare(output, config_path=DEFAULT_CONFIG):
         "implementation_sha256": {str(p.relative_to(ROOT)): digest(p)
             for pattern in ("ornithopter_eval/*.py", "grader/*.mjs") for p in sorted(ROOT.glob(pattern))},
         "runtime": {"python":sys.version, "platform":platform.platform()},
-        "protocol": "one instruction; file operations only; no execution or grader feedback",
+        "protocol": "one instruction; file operations only; no execution or grader feedback; configured token-only checkpoints",
         "status": "prepared", "model": None,
     })
     return output
@@ -78,7 +84,8 @@ def image_input(path):
 
 def initial_input(run):
     config = json.loads((run / "manifest.json").read_text())["config"]
-    budget = "\n\nAttempt limits: " + json.dumps(config,sort_keys=True) + ". Output-token limits include reasoning."
+    budget = "\n\nAttempt limits: " + json.dumps(config,sort_keys=True) + \
+        ". The total output-token budget spans ALL responses, including reasoning, code/tool calls and final text."
     content = [{"type": "input_text", "text": (run / "inputs/TASK.md").read_text() +
                "\n\n" + (run / "inputs/SOURCE_GUIDE.md").read_text() +
                budget +
@@ -130,6 +137,7 @@ def run_model(run, model, transport=create_response):
     policy = FilePolicy(run, config["max_submission_bytes"])
     history = initial_input(run)
     usage = {"input_tokens": 0, "output_tokens": 0, "requests": 0}
+    notified = set()
     started = time.monotonic()
     manifest.update(model=model, status="running")
     write_json(run / "manifest.json", manifest)
@@ -142,14 +150,24 @@ def run_model(run, model, transport=create_response):
                 if remaining <= 0 or tokens < 16:
                     reason = "wall_time_limit" if remaining <= 0 else "output_token_limit"
                     break
+                crossed = [p for p in config.get("output_token_notice_percentages", [50, 75])
+                           if p not in notified and usage["output_tokens"] * 100 >= config["max_output_tokens_total"] * p]
+                if crossed:
+                    thresholds = ", ".join(f"{p}%" for p in crossed)
+                    notice = (f"Output-token budget checkpoint ({thresholds} crossed): "
+                              f"{usage['output_tokens']:,}/{config['max_output_tokens_total']:,} used; "
+                              f"{tokens:,} remaining. Counts include reasoning and all generated output.")
+                    history.append({"role":"developer", "content":[{"type":"input_text", "text":notice}]})
+                    notified.update(crossed)
+                    log.write(json.dumps({"event":"budget_notice", "percentages":crossed,
+                        "output_tokens_used":usage["output_tokens"],"output_tokens_remaining":tokens,"text":notice})+"\n")
                 payload = {"model": model, "input": history, "store": False,
                            "include": ["reasoning.encrypted_content"],
                            "instructions": "Follow the task's file-only tool policy. "
                            "The shell is virtual and cannot execute programs. Submit once; no verification.",
                            "tools": [{"type": "apply_patch"}, {"type": "shell", "environment": {"type": "local"}}],
                            "max_output_tokens": min(tokens, config["max_output_tokens_per_response"])}
-                if config.get("reasoning_effort"):
-                    payload["reasoning"] = {"effort": config["reasoning_effort"]}
+                payload["reasoning"] = {"effort": config.get("reasoning_effort") or "medium"}
                 log.write(json.dumps({"event":"request","index":usage["requests"]+1,
                     "model":model,"max_output_tokens":payload["max_output_tokens"],
                     "reasoning":payload.get("reasoning"),"tools":payload["tools"],
@@ -196,6 +214,7 @@ def run_model(run, model, transport=create_response):
     except (APIError, ValueError, OSError) as exc:
         status, reason = "infrastructure_error", str(exc)
     manifest.update(status=status, reason=reason, usage=usage,
+                    output_token_notice_percentages_sent=sorted(notified),
                     elapsed_seconds=round(time.monotonic() - started, 3),
                     submission_sha256={str(p.relative_to(run / "submission")): digest(p)
                                        for p in sorted((run / "submission").rglob("*")) if p.is_file()})

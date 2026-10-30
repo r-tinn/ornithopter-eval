@@ -47,6 +47,8 @@ def write_transcript(run):
                 parts.append("\nREQUEST\n" + json.dumps(event,indent=2))
             elif event["event"] == "tool_result":
                 parts.append("\nTOOL RESULT\n" + json.dumps(event["result"],indent=2))
+            elif event["event"] == "budget_notice":
+                parts.append("\nBUDGET NOTICE\n" + event["text"])
             elif event["event"] == "response":
                 response = event["response"]
                 parts.append("\nRESPONSE " + str(response.get("id")) + " / " + str(response.get("status")))

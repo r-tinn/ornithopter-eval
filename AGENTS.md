@@ -23,3 +23,8 @@ commit keys, expose them in outputs, or pass them to evaluated submissions.
 
 Prefer focused binary checks and report their exact scope. Preserve failed
 judge calibration and conflicting judgments; do not select retries to hide them.
+
+Default generator runs to medium reasoning and 32,000 total output tokens,
+including reasoning. Token-budget notices are limited to the 50% and 75% usage
+thresholds; do not send ongoing token, time or request-count updates. Retain
+the original settings for published cohorts.

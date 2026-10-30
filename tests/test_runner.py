@@ -5,7 +5,7 @@ import unittest
 from pathlib import Path
 
 from ornithopter_eval.api import APIError
-from ornithopter_eval.runner import prepare, run_model, verify_sources, execute_call
+from ornithopter_eval.runner import prepare, run_model, verify_sources, execute_call, initial_input
 from ornithopter_eval.policy import FilePolicy
 from ornithopter_eval.grading import grade_submission
 
@@ -127,6 +127,106 @@ class RunnerTests(unittest.TestCase):
         result=run_model(self.run,"offline-test",transport)
         self.assertEqual(len(count),2)
         self.assertEqual(result["status"],"budget_exhausted")
+
+    def test_default_budget_is_32000_with_explicit_medium_and_reasoning_included(self):
+        config=json.loads((self.run/'manifest.json').read_text())['config']
+        self.assertEqual(config['max_output_tokens_total'],32000)
+        self.assertEqual(config['max_output_tokens_per_response'],32000)
+        self.assertEqual(config['reasoning_effort'],'medium')
+        self.assertEqual(config['output_token_notice_percentages'],[50,75])
+        self.assertIn('including reasoning, code/tool calls and final text',initial_input(self.run)[0]['content'][0]['text'])
+        sent=[]
+        run_model(self.run,'offline-test',lambda payload,**kw:sent.append(copy.deepcopy(payload)) or response([]))
+        self.assertEqual(sent[0]['reasoning'],{'effort':'medium'})
+        self.assertEqual(sent[0]['max_output_tokens'],32000)
+
+    def test_missing_or_null_reasoning_defaults_to_explicit_medium(self):
+        original=json.loads((self.run/'manifest.json').read_text())['config']
+        for setting in ('missing','null'):
+            with self.subTest(setting=setting):
+                config=copy.deepcopy(original)
+                config.pop('output_token_notice_percentages')
+                if setting=='missing':config.pop('reasoning_effort')
+                else:config['reasoning_effort']=None
+                path=Path(self.temp.name)/(setting+'.json')
+                path.write_text(json.dumps(config))
+                run=prepare(Path(self.temp.name)/setting,path)
+                recorded=json.loads((run/'manifest.json').read_text())['config']
+                self.assertEqual(recorded['reasoning_effort'],'medium')
+                self.assertEqual(recorded['output_token_notice_percentages'],[50,75])
+                sent=[]
+                run_model(run,'offline-test',lambda payload,**kw:sent.append(copy.deepcopy(payload)) or response([]))
+                self.assertEqual(sent[0]['reasoning'],{'effort':'medium'})
+
+    def test_notices_only_at_half_and_three_quarters_including_reasoning(self):
+        sent=[];costs=iter([10000,6000,3000,5000,1000])
+        def transport(payload,**kwargs):
+            sent.append(copy.deepcopy(payload))
+            output=[] if len(sent)==5 else [{'type':'shell_call','call_id':str(len(sent)),
+                                            'action':{'commands':['ls submission']}}]
+            item=response(output,tokens=next(costs))
+            item['usage']['output_tokens_details']={'reasoning_tokens':item['usage']['output_tokens']//2}
+            return item
+        result=run_model(self.run,'offline-test',transport)
+        self.assertEqual(result['status'],'submitted')
+        self.assertEqual(len(sent),5)
+        self.assertTrue(all(p['reasoning']=={'effort':'medium'} for p in sent))
+        self.assertEqual([p['max_output_tokens'] for p in sent],[32000,22000,16000,13000,8000])
+        self.assertEqual([sum(i.get('role')=='developer' for i in p['input']) for p in sent],[0,0,1,1,2])
+        events=[json.loads(line) for line in (self.run/'events.jsonl').read_text().splitlines()]
+        notices=[e for e in events if e['event']=='budget_notice']
+        self.assertEqual([e['percentages'] for e in notices],[[50],[75]])
+        self.assertEqual([e['output_tokens_used'] for e in notices],[16000,24000])
+        self.assertEqual([e['output_tokens_remaining'] for e in notices],[16000,8000])
+        self.assertEqual(result['output_token_notice_percentages_sent'],[50,75])
+        for notice in notices:
+            self.assertNotIn('requests',notice['text'])
+            self.assertNotIn('seconds',notice['text'])
+        from ornithopter_eval.experiment import write_transcript
+        write_transcript(self.run)
+        self.assertEqual((self.run/'transcript.txt').read_text().count('BUDGET NOTICE'),2)
+
+    def test_thresholds_crossed_in_one_response_share_one_notice(self):
+        sent=[]
+        def transport(payload,**kwargs):
+            sent.append(copy.deepcopy(payload))
+            if len(sent)==1:
+                return response([{'type':'shell_call','call_id':'s1','action':{'commands':['ls submission']}}],tokens=25000)
+            return response([])
+        result=run_model(self.run,'offline-test',transport)
+        events=[json.loads(line) for line in (self.run/'events.jsonl').read_text().splitlines()]
+        notices=[e for e in events if e['event']=='budget_notice']
+        self.assertEqual(len(sent),2)
+        self.assertEqual(len(notices),1)
+        self.assertEqual(notices[0]['percentages'],[50,75])
+        self.assertEqual(notices[0]['output_tokens_remaining'],7000)
+        self.assertEqual(sent[1]['max_output_tokens'],7000)
+        self.assertEqual(result['output_token_notice_percentages_sent'],[50,75])
+
+    def test_submission_or_cutoff_never_creates_extra_request_for_a_notice(self):
+        for status,tokens in [('completed',25000),('incomplete',32000)]:
+            with self.subTest(status=status):
+                run=prepare(Path(self.temp.name)/status)
+                sent=[]
+                def transport(payload,**kwargs):
+                    sent.append(copy.deepcopy(payload))
+                    return response([],status=status,tokens=tokens)
+                result=run_model(run,'offline-test',transport)
+                self.assertEqual(len(sent),1)
+                self.assertEqual(result['output_token_notice_percentages_sent'],[])
+                self.assertEqual(result['status'],'submitted' if status=='completed' else 'budget_exhausted')
+
+    def test_invalid_notice_thresholds_rejected_before_preparation(self):
+        original=json.loads((self.run/'manifest.json').read_text())['config']
+        for index,percentages in enumerate(([75,50],[50,50],[0,75],[50,100],[True,75],None)):
+            with self.subTest(percentages=percentages):
+                config={**original,'output_token_notice_percentages':percentages}
+                path=Path(self.temp.name)/f'invalid-{index}.json'
+                path.write_text(json.dumps(config))
+                output=Path(self.temp.name)/f'invalid-{index}'
+                with self.assertRaisesRegex(ValueError,'notice percentages'):
+                    prepare(output,path)
+                self.assertFalse(output.exists())
 
 
 if __name__ == "__main__":
