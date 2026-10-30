@@ -1,5 +1,5 @@
 {
-  "task_version": "swan-v3.0",
+  "task_version": "swan-v3.1",
   "max_output_tokens_total": 16000,
   "max_output_tokens_per_response": 8000,
   "max_requests": 24,

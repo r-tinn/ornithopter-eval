@@ -86,6 +86,7 @@ def write_trial_pages(run):
 
 
 def refresh_workbench(root, experiment):
+    version = experiment["task_version"]
     summaries = {}
     for model in experiment["models"]:
         trials = [t for t in experiment["trials"] if t["model"] == model]
@@ -94,7 +95,7 @@ def refresh_workbench(root, experiment):
             "mean_passed":round(sum(t["passed"] for t in valid)/len(valid),2) if valid else None,
             "total_checks":20, "all_automated_passes":sum(t["passed"]==20 for t in valid),
             "range":[min(t["passed"] for t in valid),max(t["passed"] for t in valid)] if valid else None}
-    summary = {"task_version":TASK_VERSION,"status":experiment["status"],"models":summaries,
+    summary = {"task_version":version,"status":experiment["status"],"models":summaries,
                "comparison_scope":"20 deterministic checks; all five visual checks remain separately ungraded.",
                "full_task_pass_rate":None,"note":"Three repeats per model are exploratory, not a definitive ranking.",
                "trials":experiment["trials"]}
@@ -112,7 +113,7 @@ def refresh_workbench(root, experiment):
         rows.append('<tr><td>'+str(t["repeat"])+'</td><td>'+html.escape(t["model"])+'</td><td><strong>'+score+'</strong></td><td><span class="badge">'+html.escape(t["status"])+'</span>'+reason+'</td><td class="actions">'+actions+'</td></tr>')
     effort = html.escape(str(experiment["config"].get("reasoning_effort","default")))
     tokens = str(experiment["config"]["max_output_tokens_total"])
-    body = '<p class="muted">Stanley’s Swan · '+TASK_VERSION+'</p><h1>Frontier model calibration</h1><p>Open each unchanged model submission to fly it yourself, or inspect what the graders captured.</p><p><strong>Automated checks only.</strong> Five visual checks remain ungraded. A 20/20 result is not a full-task pass.</p>'+cards+'<table><thead><tr><th>Repeat</th><th>Model</th><th>Automated</th><th>Attempt</th><th>Inspect</th></tr></thead><tbody>'+''.join(rows)+'</tbody></table><p class="muted">Same source packet, starter, '+effort+' reasoning and '+tokens+' total output tokens. No execution, testing or grader feedback during generation. Refresh this page for completed attempts.</p><p><a href="experiment.json">Protocol and provenance</a> · <a href="summary.json">Results JSON</a> · <a href="config.json">Fixed budget</a></p>'
+    body = '<p class="muted">Stanley’s Swan · '+html.escape(version)+'</p><h1>Frontier model calibration</h1><p>Open each unchanged model submission to fly it yourself, or inspect what the graders captured.</p><p><strong>Automated checks only.</strong> Five visual checks remain ungraded. A 20/20 result is not a full-task pass.</p>'+cards+'<table><thead><tr><th>Repeat</th><th>Model</th><th>Automated</th><th>Attempt</th><th>Inspect</th></tr></thead><tbody>'+''.join(rows)+'</tbody></table><p class="muted">Same source packet, starter, '+effort+' reasoning and '+tokens+' total output tokens. No execution, testing or grader feedback during generation. Refresh this page for completed attempts.</p><p><a href="experiment.json">Protocol and provenance</a> · <a href="summary.json">Results JSON</a> · <a href="config.json">Fixed budget</a></p>'
     if (root / "artifacts.zip").exists():
         body += '<p><a href="artifacts.zip">Download all artifacts</a></p>'
     if (root / "CALIBRATION.md").exists():

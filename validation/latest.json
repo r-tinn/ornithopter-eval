@@ -1,6 +1,7 @@
 {
-  "task_version": "swan-v3.0",
+  "task_version": "swan-v3.1",
   "offline_validation_passed": true,
+  "scalar_vector_contract_calibration_passed": true,
   "live_api_tested": false,
   "multimodal_judge_tested_live": false,
   "note": "Calibration detects these selected defects; it is not independent scientific validation.",
@@ -164,6 +165,42 @@
         "physics": {
           "passed": false,
           "failed": [
+            "matching_wind_removes_lift"
+          ],
+          "ungraded": []
+        },
+        "interaction": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "visual": {
+          "passed": null,
+          "failed": [],
+          "ungraded": [
+            "wings_on_both_sides",
+            "tail_behind_wings",
+            "wings_transverse",
+            "fin_present",
+            "visible_flapping"
+          ]
+        }
+      }
+    },
+    "vector_forces": {
+      "status": "awaiting_review",
+      "passed": false,
+      "dimensions": {
+        "source": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "physics": {
+          "passed": false,
+          "failed": [
+            "power_controls_thrust",
+            "lift_scales_with_speed_squared",
             "matching_wind_removes_lift"
           ],
           "ungraded": []

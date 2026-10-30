@@ -1,6 +1,6 @@
 """The complete checklist. Every verdict is boolean; null means ungraded."""
 
-TASK_VERSION = "swan-v3.0"
+TASK_VERSION = "swan-v3.1"
 CHECKS = {
     "source": {
         "span_m": "Is the exported span the source value in metres?",

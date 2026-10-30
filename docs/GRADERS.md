@@ -1,4 +1,4 @@
-# Binary grading contract — swan-v3.0
+# Binary grading contract — swan-v3.1
 
 This pilot has one construction task and **25 required pass/fail checks**.
 There are no weights, percentages, aesthetic scores or partial-credit rubrics.
@@ -33,6 +33,16 @@ force calculation uses that declaration. No points are awarded for merely
 populating documentation fields.
 
 ## Physics: seven questions
+
+The model-visible task and starter explicitly type the force API. `lift` is
+the signed scalar L in newtons; `drag` and `thrust` are nonnegative scalar
+magnitudes in newtons. Only `force` is a world-frame three-component vector,
+including gravity. The three force checks reject arrays and report a field/type
+diagnostic. They do not silently take vector magnitudes or erase negative lift.
+
+This clarification is versioned as swan-v3.1. The first swan-v3.0 model cohort
+and its force-representation ambiguity remain preserved under `experiments/`;
+they are not retroactively rescored against the clarified instructions.
 
 The old v1 numerical oracle independently reimplemented the specified equations
 and compared the complete force output. That checked equation agreement, not
@@ -203,6 +213,10 @@ The reference must pass all 20 automated checks; image checks remain ungraded
 until a human or live judge reviews them. These selected mutations establish
 sensitivity to those defects only. They do not establish scientific validity,
 complete task coverage, judge accuracy or model rankings.
+
+A vector-return fixture keeps the same net force and dynamics but returns
+component arrays for lift/drag/thrust. All three scalar force checks must fail
+with explicit contract diagnostics while its source and interaction checks pass.
 
 Infrastructure errors and grader-wide timeouts carry no task verdict. Missing
 review never becomes a fabricated pass. Versions v1, v2 and v3 have incompatible

@@ -20,6 +20,12 @@ and [all six saved attempts](experiments/frontier-20261030-medium-3x/index.html)
 are included for independent inspection.
 There is no claim of general benchmark validity or real-world aircraft validity.
 
+The current task is **swan-v3.1**: the task and starter require scalar `lift`,
+`drag` and `thrust` in newtons, with signed lift and a separate total-force vector.
+The first live cohort remains archived as swan-v3.0 with its original grades.
+The 16,000-token budgets are unchanged; a larger budget and automatic usage
+updates are recommendations for the next calibration, not applied retroactively.
+
 The two selected family source photographs and reference preview are included
 with permission and retain their original attribution.
 

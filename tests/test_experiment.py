@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 
 from ornithopter_eval.checks import CHECKS,TASK_VERSION
-from ornithopter_eval.experiment import automated_result, export_experiment, run_experiment
+from ornithopter_eval.experiment import automated_result, export_experiment, refresh_workbench, run_experiment
 from ornithopter_eval.runner import ROOT,write_json
 
 
@@ -42,6 +42,11 @@ class ExperimentTests(unittest.TestCase):
             exported=export_experiment(root,Path(temp)/"export")
             self.assertTrue((exported/"artifacts.zip").is_file())
             self.assertEqual((exported/"trials/model-a-01/submission/index.html").read_bytes(),(root/"trials/model-a-01/submission/index.html").read_bytes())
+            historical=json.loads((root/'experiment.json').read_text())
+            historical['task_version']='swan-v3.0'
+            refreshed=refresh_workbench(root,historical)
+            self.assertEqual(refreshed['task_version'],'swan-v3.0')
+            self.assertIn('swan-v3.0',(root/'index.html').read_text())
 
     def test_infrastructure_failure_is_preserved_and_stops_later_rounds(self):
         from ornithopter_eval.api import APIError

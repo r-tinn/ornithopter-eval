@@ -6,6 +6,9 @@ const [base, artifactDir] = process.argv.slice(2);
 const results = {source:[],physics:[],interaction:[],diagnostics:{},evidence:{screenshots:[]},infrastructure_error:null};
 const add=(group,id,pass,detail)=>results[group].push({id,pass:pass===true,detail});
 const near=(a,b,tolerance=1e-6)=>Number.isFinite(a)&&Number.isFinite(b)&&Math.abs(a-b)<=tolerance*Math.max(1,Math.abs(b));
+const scalarIssues=(field,samples)=>Object.entries(samples).flatMap(([sample,value])=>
+ Number.isFinite(value)?[]:[{sample,field,expected:'finite number (scalar newtons)',
+ actual_type:Array.isArray(value)?'array':typeof value}]);
 const finite=s=>s&&['position','velocity'].every(k=>Array.isArray(s[k])&&s[k].length===3&&s[k].every(Number.isFinite))&&['pitch','roll','phase','time'].every(k=>Number.isFinite(s[k]));
 const initial=()=>({position:[0,30,0],velocity:[10,0,0],pitch:0,roll:0,phase:0,time:0,status:'flying'});
 const environment={wind:[0,0,0],rho:1.225};
@@ -36,13 +39,15 @@ try {
   },{state,throttle,env});
   const still=initial(),off=await force(still,0),on=await force(still,1);
   add('physics','power_controls_thrust',near(off.thrust,0)&&Number.isFinite(on.thrust)&&on.thrust>0,
-   {power_off:off,power_on:on});
+   {power_off:off,power_on:on,contract_errors:scalarIssues('thrust',{power_off:off.thrust,power_on:on.thrust})});
   const fast=await force({...still,velocity:[20,0,0]},0);
   add('physics','lift_scales_with_speed_squared',Number.isFinite(off.lift)&&off.lift>0&&near(fast.lift,4*off.lift),
-   {speed_10_lift:off.lift??null,speed_20_lift:fast.lift??null,expected_ratio:4,tolerance:1e-6});
+   {speed_10_lift:off.lift??null,speed_20_lift:fast.lift??null,expected_ratio:4,tolerance:1e-6,
+    contract_errors:scalarIssues('lift',{speed_10:off.lift,speed_20:fast.lift})});
   const matching=await force(still,0,{...environment,wind:[10,0,0]});
   add('physics','matching_wind_removes_lift',Number.isFinite(off.lift)&&off.lift>0&&near(matching.lift,0),
-   {still_air_lift:off.lift??null,matching_wind_lift:matching.lift??null,tolerance:1e-6});
+   {still_air_lift:off.lift??null,matching_wind_lift:matching.lift??null,tolerance:1e-6,
+    contract_errors:scalarIssues('lift',{still_air:off.lift,matching_wind:matching.lift})});
   async function numeric(id,test){
    try{const {pass,...detail}=await test();add('physics',id,pass,detail);}
    catch(error){add('physics',id,false,{error:String(error).slice(0,1000)});}

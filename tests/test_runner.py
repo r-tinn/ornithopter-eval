@@ -31,6 +31,16 @@ class RunnerTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             prepare(self.run)
 
+    def test_previous_task_config_is_rejected_without_creating_attempt(self):
+        config=json.loads((self.run/'manifest.json').read_text())['config']
+        config['task_version']='swan-v3.0'
+        config_path=Path(self.temp.name)/'previous-config.json'
+        config_path.write_text(json.dumps(config))
+        target=Path(self.temp.name)/'previous-task'
+        with self.assertRaisesRegex(ValueError,'Unsupported task version'):
+            prepare(target,config_path)
+        self.assertFalse(target.exists())
+
     def test_mocked_responses_loop_and_native_patch(self):
         calls=[]
         def transport(payload, timeout):

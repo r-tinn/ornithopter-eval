@@ -1,4 +1,4 @@
-# Swan Flight Lab — swan-v3.0
+# Swan Flight Lab — swan-v3.1
 
 Build a dependency-free interactive 3D ornithopter flight lab from the two source
 photographs and SOURCE_GUIDE.md. Deliver a self-contained static site in
@@ -56,7 +56,21 @@ Drag opposes relative flow and thrust follows it. Lift is perpendicular to
 relative flow: project world-up onto that perpendicular plane, normalize,
 then rotate about the forward vector by roll. Use a finite fallback for vertical
 flow. Gravity is [0,-mass*g,0]. Return
-`{lift,drag,thrust,power,airspeed,cl,force:[fx,fy,fz]}` (force includes gravity).
+an object with this exact field contract (all numbers must be finite):
+
+| Field | JavaScript type | Meaning |
+|---|---|---|
+| `lift` | `number` | Signed aerodynamic lift L in newtons, including the sign of CL. |
+| `drag` | `number` | Nonnegative aerodynamic drag magnitude D in newtons. |
+| `thrust` | `number` | Nonnegative thrust magnitude T in newtons. |
+| `power` | `number` | Mechanical power P in watts. |
+| `airspeed` | `number` | Nonnegative relative-air-speed magnitude in m/s. |
+| `cl` | `number` | Signed, dimensionless lift coefficient CL. |
+| `force` | `[number, number, number]` | Total world-frame force `[fx,fy,fz]` in newtons, including gravity. |
+
+`lift`, `drag` and `thrust` are scalar values, never component arrays. Resolve
+their directions internally when constructing `force`. In particular, negative
+CL produces negative `lift`; do not replace it with an absolute magnitude.
 
 For dt in (0,0.05], advance with semi-implicit Euler (velocity before position).
 Pitch changes at `0.5*controls.pitch` rad/s, clamped to [-0.35,0.45]. Roll approaches

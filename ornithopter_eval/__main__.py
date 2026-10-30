@@ -33,6 +33,8 @@ def validate(node):
                 "free_thrust":("physics.mjs", "0.65*power / Math.max(airspeed,5)", "52"),
                 "linear_lift":("physics.mjs", "0.5 * environment.rho * airspeed ** 2", "0.5 * environment.rho * airspeed"),
                 "ignored_wind":("physics.mjs", "v - environment.wind[i]", "v"),
+                "vector_forces":("physics.mjs", "return {lift,drag,thrust,power,airspeed,cl,force};",
+                    "return {lift:[0,lift,0],drag:[-drag,0,0],thrust:[thrust,0,0],power,airspeed,cl,force};"),
                 "broken_step":("physics.mjs", "s.velocity = state.velocity.map((v,i) => v + f[i]/mass*dt);", "s.velocity = [0,0,0];"),
                 "broken_pause":("app.mjs", "$('pause').onclick=()=>{paused=true;accumulator=0;draw();};", "$('pause').onclick=()=>{};"),
                 "ground_clip":("physics.mjs", "s.position[1] = 0.2;", "// Ground clamp deliberately removed."),
@@ -83,6 +85,9 @@ def validate(node):
             target.write_text(source.replace(mutation[1],mutation[2]))
             if name == "static_wings":
                 target.write_text(target.read_text().replace("const outer=controls.throttle>0?0.35*Math.sin(state.phase-0.7):0;", "const outer=0;"))
+            if name == "vector_forces":
+                app = submission / "app.mjs"
+                app.write_text(app.read_text().replace("f.lift.toFixed(1)","Math.hypot(...f.lift).toFixed(1)"))
         report = grade_submission(submission,root / name / "grade",node=node)
         reports[name] = summarize(report)
         print(name+": "+json.dumps(reports[name]),flush=True)
@@ -95,7 +100,14 @@ def validate(node):
                     "wrong_wingbeat":("physics","powered_wingbeat_frequency"),
                     "unpowered_flapping":("physics","unpowered_wingbeat_stops"),
                     "zero_drag":("physics","steady_glide_ratio")})
-    success = (all(reports["reference"]["dimensions"].get(k,{}).get("passed") is True
+    vector_report = json.loads((root / "vector_forces/grade/report.json").read_text())
+    force_checks = {"power_controls_thrust","lift_scales_with_speed_squared","matching_wind_removes_lift"}
+    vector_contract_passed = (all(vector_report["dimensions"].get(k,{}).get("passed") is True for k in ("source","interaction"))
+        and set(reports["vector_forces"]["dimensions"].get("physics",{}).get("failed",[]))==force_checks
+        and all(c.get("detail",{}).get("contract_errors")
+            and all(e["actual_type"]=="array" for e in c["detail"]["contract_errors"])
+            for c in vector_report["dimensions"].get("physics",{}).get("checks",[]) if c["id"] in force_checks))
+    success = (vector_contract_passed and all(reports["reference"]["dimensions"].get(k,{}).get("passed") is True
                    for k in ("source","physics","interaction")) and
                all(check in reports[name]["dimensions"].get(group,{}).get("failed",[])
                    for name,(group,check) in targets.items()) and
@@ -107,6 +119,7 @@ def validate(node):
                    for k,n in (("source",7),("physics",7),("interaction",6))) and
                all(r["status"]=="awaiting_review" for r in reports.values()))
     result = {"task_version":TASK_VERSION,"offline_validation_passed":success,
+              "scalar_vector_contract_calibration_passed":vector_contract_passed,
               "live_api_tested":False,"multimodal_judge_tested_live":False,
               "note":"Calibration detects these selected defects; it is not independent scientific validation.",
               "visual_mutants_awaiting_review":{"static_wings":"visible_flapping", "missing_fin":"fin_present", "lengthwise_wings":"wings_transverse"},
