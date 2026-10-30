@@ -43,6 +43,45 @@ try {
   const matching=await force(still,0,{...environment,wind:[10,0,0]});
   add('physics','matching_wind_removes_lift',Number.isFinite(off.lift)&&off.lift>0&&near(matching.lift,0),
    {still_air_lift:off.lift??null,matching_wind_lift:matching.lift??null,tolerance:1e-6});
+  async function numeric(id,test){
+   try{const {pass,...detail}=await test();add('physics',id,pass,detail);}
+   catch(error){add('physics',id,false,{error:String(error).slice(0,1000)});}
+  }
+  const advance=async(state,throttle,count)=>probe.evaluate(({state,throttle,count})=>{
+   const samples=[];
+   for(let i=0;i<count;i++){
+    state=window.subject.step(state,{throttle,pitch:0,bank:0,brake:0},{wind:[0,0,0],rho:1.225},1/120);
+    samples.push(state);
+   }
+   return samples;
+  },{state,throttle,count});
+  await numeric('ground_nonpenetration',async()=>{
+   const samples=await advance({...initial(),position:[0,0.21,0],velocity:[10,-2,0]},0,240);
+   const heights=samples.map(s=>s.position?.[1]);
+   return {pass:samples.every(finite)&&heights.every(y=>y>=0.2-1e-9)&&heights.some(y=>near(y,0.2)),
+    minimum_y:Math.min(...heights),contact_plane_y:0.2,final:samples.at(-1)};
+  });
+  await numeric('powered_wingbeat_frequency',async()=>{
+   const samples=await advance({...initial(),phase:0.37},1,44);
+   const observed=[12,25,44].map(n=>({steps:n,actual:samples[n-1]?.phase,expected:(0.37+4*Math.PI*n/120)%(2*Math.PI)}));
+   return {pass:observed.every(s=>near(s.actual,s.expected)),samples:observed,tolerance:1e-6};
+  });
+  await numeric('unpowered_wingbeat_stops',async()=>{
+   const samples=await advance({...initial(),phase:0.73},0,44);
+   return {pass:samples.every(s=>near(s.phase,0.73)),initial_phase:0.73,final_phase:samples.at(-1)?.phase};
+  });
+  await numeric('steady_glide_ratio',async()=>{
+   if(!(params.wing_area_m2>0&&params.aspect_ratio>0))throw Error('Positive area and aspect ratio required');
+   const cl=0.6,cd=0.035+cl**2/(Math.PI*0.8*params.aspect_ratio),gamma=Math.atan(cd/cl);
+   const speed=Math.sqrt(2*6*9.80665*Math.cos(gamma)/(1.225*params.wing_area_m2*cl));
+   const start={...initial(),position:[0,100,0],velocity:[speed*Math.cos(gamma),-speed*Math.sin(gamma),0],pitch:-gamma};
+   const samples=await advance(start,0,240),end=samples.at(-1);
+   const forward=end.position[0]-start.position[0],heightLost=start.position[1]-end.position[1];
+   const actual=forward/heightLost,expected=cl/cd;
+   return {pass:samples.every(finite)&&forward>1&&heightLost>0.1&&near(actual,expected,0.01),
+    actual_ratio:actual,expected_ratio:expected,forward_m:forward,height_lost_m:heightLost,
+    initial:start,final:end,relative_tolerance:0.01};
+  });
  }catch(error){results.diagnostics.module_error=String(error).slice(0,1500);}
  await probe.close();
 
@@ -126,8 +165,49 @@ try {
   await inspection.clock.runFor(32);
   await inspection.getByTestId('scene').screenshot({path:path.join(artifactDir,'inspection-top.png')});
   results.evidence.screenshots.push('inspection-top.png');
+  await inspection.getByTestId('view-side').click();await inspection.clock.runFor(32);
+  await inspection.getByTestId('scene').screenshot({path:path.join(artifactDir,'inspection-side.png')});
+  results.evidence.screenshots.push('inspection-side.png');
+  await inspection.getByTestId('approach').click();await inspection.getByTestId('view-front').click();
+  await throttle(inspection,1);await inspection.getByTestId('start').click();
+  results.evidence.flapping_samples=[];
+  for(let i=0;i<4;i++){
+   if(i)await inspection.clock.runFor(128);
+   const file='flap-'+i+'.png';
+   await inspection.getByTestId('scene').screenshot({path:path.join(artifactDir,file)});
+   results.evidence.screenshots.push(file);
+   results.evidence.flapping_samples.push({file,state:await state(inspection)});
+  }
  }catch(error){results.diagnostics.inspection_error=String(error).slice(0,1500);}
  finally{if(inspection)await inspection.close();}
+ // Real-clock callback timing is advisory. It is not presented-frame/GPU measurement.
+ // Playwright clock emulation applies to the context, so use a separate real-clock context.
+ const performanceContext=await browser.newContext({viewport:{width:1280,height:800},serviceWorkers:'block',acceptDownloads:false});
+ await performanceContext.route('**/*',route=>route.request().url().startsWith(base+'/')?route.continue():route.abort());
+ results.diagnostics.performance={scored:false,measurement:'requestAnimationFrame callback intervals, not presented frames',trials:[]};
+ for(const power of [0,1]){
+  let page;
+  try{
+   page=await performanceContext.newPage();page.setDefaultTimeout(1500);await page.goto(base+'/index.html');
+   await page.getByTestId('approach').click();await throttle(page,power);await page.getByTestId('start').click();
+   const data=await page.evaluate(()=>new Promise(resolve=>{
+    const deltas=[];let start,last;const stateStart=window.flightLab.getState();
+    function sample(now){
+     if(start===undefined){start=now;last=now;requestAnimationFrame(sample);return;}
+     deltas.push(now-last);last=now;
+     if(now-start<1000){requestAnimationFrame(sample);return;}
+     resolve({frame_intervals_ms:deltas,wall_ms:now-start,simulation_seconds:window.flightLab.getState().time-stateStart.time});
+    }
+    requestAnimationFrame(sample);
+   }));
+   const sorted=[...data.frame_intervals_ms].sort((a,b)=>a-b),n=sorted.length;
+   results.diagnostics.performance.trials.push({throttle:power,samples:n,elapsed_ms:data.wall_ms,
+    callback_hz:n*1000/data.wall_ms,p95_interval_ms:sorted[Math.ceil(0.95*n)-1],max_interval_ms:sorted.at(-1),
+    simulation_seconds_per_wall_second:data.simulation_seconds/(data.wall_ms/1000)});
+  }catch(error){results.diagnostics.performance.trials.push({throttle:power,error:String(error).slice(0,800)});}
+  finally{if(page)await page.close();}
+ }
+ await performanceContext.close();
  results.diagnostics.page_errors=errors;
  results.diagnostics.blocked_requests=blocked;
  await context.close();

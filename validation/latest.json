@@ -1,9 +1,14 @@
 {
-  "task_version": "swan-v2.0",
+  "task_version": "swan-v3.0",
   "offline_validation_passed": true,
   "live_api_tested": false,
   "multimodal_judge_tested_live": false,
   "note": "Calibration detects these selected defects; it is not independent scientific validation.",
+  "visual_mutants_awaiting_review": {
+    "static_wings": "visible_flapping",
+    "missing_fin": "fin_present",
+    "lengthwise_wings": "wings_transverse"
+  },
   "reports": {
     "reference": {
       "status": "awaiting_review",
@@ -29,7 +34,10 @@
           "failed": [],
           "ungraded": [
             "wings_on_both_sides",
-            "tail_behind_wings"
+            "tail_behind_wings",
+            "wings_transverse",
+            "fin_present",
+            "visible_flapping"
           ]
         }
       }
@@ -60,7 +68,10 @@
           "failed": [],
           "ungraded": [
             "wings_on_both_sides",
-            "tail_behind_wings"
+            "tail_behind_wings",
+            "wings_transverse",
+            "fin_present",
+            "visible_flapping"
           ]
         }
       }
@@ -77,7 +88,8 @@
         "physics": {
           "passed": false,
           "failed": [
-            "power_controls_thrust"
+            "power_controls_thrust",
+            "steady_glide_ratio"
           ],
           "ungraded": []
         },
@@ -94,7 +106,10 @@
           "failed": [],
           "ungraded": [
             "wings_on_both_sides",
-            "tail_behind_wings"
+            "tail_behind_wings",
+            "wings_transverse",
+            "fin_present",
+            "visible_flapping"
           ]
         }
       }
@@ -111,7 +126,8 @@
         "physics": {
           "passed": false,
           "failed": [
-            "lift_scales_with_speed_squared"
+            "lift_scales_with_speed_squared",
+            "steady_glide_ratio"
           ],
           "ungraded": []
         },
@@ -128,7 +144,10 @@
           "failed": [],
           "ungraded": [
             "wings_on_both_sides",
-            "tail_behind_wings"
+            "tail_behind_wings",
+            "wings_transverse",
+            "fin_present",
+            "visible_flapping"
           ]
         }
       }
@@ -159,7 +178,10 @@
           "failed": [],
           "ungraded": [
             "wings_on_both_sides",
-            "tail_behind_wings"
+            "tail_behind_wings",
+            "wings_transverse",
+            "fin_present",
+            "visible_flapping"
           ]
         }
       }
@@ -174,8 +196,11 @@
           "ungraded": []
         },
         "physics": {
-          "passed": true,
-          "failed": [],
+          "passed": false,
+          "failed": [
+            "ground_nonpenetration",
+            "steady_glide_ratio"
+          ],
           "ungraded": []
         },
         "interaction": {
@@ -192,7 +217,10 @@
           "failed": [],
           "ungraded": [
             "wings_on_both_sides",
-            "tail_behind_wings"
+            "tail_behind_wings",
+            "wings_transverse",
+            "fin_present",
+            "visible_flapping"
           ]
         }
       }
@@ -223,7 +251,246 @@
           "failed": [],
           "ungraded": [
             "wings_on_both_sides",
-            "tail_behind_wings"
+            "tail_behind_wings",
+            "wings_transverse",
+            "fin_present",
+            "visible_flapping"
+          ]
+        }
+      }
+    },
+    "ground_clip": {
+      "status": "awaiting_review",
+      "passed": false,
+      "dimensions": {
+        "source": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "physics": {
+          "passed": false,
+          "failed": [
+            "ground_nonpenetration"
+          ],
+          "ungraded": []
+        },
+        "interaction": {
+          "passed": false,
+          "failed": [
+            "landing"
+          ],
+          "ungraded": []
+        },
+        "visual": {
+          "passed": null,
+          "failed": [],
+          "ungraded": [
+            "wings_on_both_sides",
+            "tail_behind_wings",
+            "wings_transverse",
+            "fin_present",
+            "visible_flapping"
+          ]
+        }
+      }
+    },
+    "wrong_wingbeat": {
+      "status": "awaiting_review",
+      "passed": false,
+      "dimensions": {
+        "source": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "physics": {
+          "passed": false,
+          "failed": [
+            "powered_wingbeat_frequency"
+          ],
+          "ungraded": []
+        },
+        "interaction": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "visual": {
+          "passed": null,
+          "failed": [],
+          "ungraded": [
+            "wings_on_both_sides",
+            "tail_behind_wings",
+            "wings_transverse",
+            "fin_present",
+            "visible_flapping"
+          ]
+        }
+      }
+    },
+    "unpowered_flapping": {
+      "status": "awaiting_review",
+      "passed": false,
+      "dimensions": {
+        "source": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "physics": {
+          "passed": false,
+          "failed": [
+            "unpowered_wingbeat_stops"
+          ],
+          "ungraded": []
+        },
+        "interaction": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "visual": {
+          "passed": null,
+          "failed": [],
+          "ungraded": [
+            "wings_on_both_sides",
+            "tail_behind_wings",
+            "wings_transverse",
+            "fin_present",
+            "visible_flapping"
+          ]
+        }
+      }
+    },
+    "zero_drag": {
+      "status": "awaiting_review",
+      "passed": false,
+      "dimensions": {
+        "source": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "physics": {
+          "passed": false,
+          "failed": [
+            "steady_glide_ratio"
+          ],
+          "ungraded": []
+        },
+        "interaction": {
+          "passed": false,
+          "failed": [
+            "landing"
+          ],
+          "ungraded": []
+        },
+        "visual": {
+          "passed": null,
+          "failed": [],
+          "ungraded": [
+            "wings_on_both_sides",
+            "tail_behind_wings",
+            "wings_transverse",
+            "fin_present",
+            "visible_flapping"
+          ]
+        }
+      }
+    },
+    "static_wings": {
+      "status": "awaiting_review",
+      "passed": null,
+      "dimensions": {
+        "source": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "physics": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "interaction": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "visual": {
+          "passed": null,
+          "failed": [],
+          "ungraded": [
+            "wings_on_both_sides",
+            "tail_behind_wings",
+            "wings_transverse",
+            "fin_present",
+            "visible_flapping"
+          ]
+        }
+      }
+    },
+    "missing_fin": {
+      "status": "awaiting_review",
+      "passed": null,
+      "dimensions": {
+        "source": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "physics": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "interaction": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "visual": {
+          "passed": null,
+          "failed": [],
+          "ungraded": [
+            "wings_on_both_sides",
+            "tail_behind_wings",
+            "wings_transverse",
+            "fin_present",
+            "visible_flapping"
+          ]
+        }
+      }
+    },
+    "lengthwise_wings": {
+      "status": "awaiting_review",
+      "passed": null,
+      "dimensions": {
+        "source": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "physics": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "interaction": {
+          "passed": true,
+          "failed": [],
+          "ungraded": []
+        },
+        "visual": {
+          "passed": null,
+          "failed": [],
+          "ungraded": [
+            "wings_on_both_sides",
+            "tail_behind_wings",
+            "wings_transverse",
+            "fin_present",
+            "visible_flapping"
           ]
         }
       }
@@ -250,7 +517,11 @@
           "failed": [
             "power_controls_thrust",
             "lift_scales_with_speed_squared",
-            "matching_wind_removes_lift"
+            "matching_wind_removes_lift",
+            "ground_nonpenetration",
+            "powered_wingbeat_frequency",
+            "unpowered_wingbeat_stops",
+            "steady_glide_ratio"
           ],
           "ungraded": []
         },
@@ -271,7 +542,10 @@
           "failed": [],
           "ungraded": [
             "wings_on_both_sides",
-            "tail_behind_wings"
+            "tail_behind_wings",
+            "wings_transverse",
+            "fin_present",
+            "visible_flapping"
           ]
         }
       }

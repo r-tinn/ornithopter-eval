@@ -55,9 +55,10 @@ def grade_submission(submission, output, node="node", timeout=60):
                                 "checks.py":digest(ROOT / "ornithopter_eval/checks.py")},
               "passed":None, "status":"partial", "dimensions":{},
               "limitations":["Single task, no evidence of general benchmark validity.",
-                             "Force checks test three properties of an assumed model, not realistic aerodynamics or full equation compliance.",
+                             "Numeric checks test selected properties of an assumed model, not realistic aerodynamics or full equation compliance.",
                              "Browser checks observe the required production state hook; they do not independently prove mesh motion or truthful coupling.",
-                             "Two visual judgments cover wing placement and tail position only; model judges can be wrong.",
+                             "Visual judgments cover five specific geometry/motion predicates; model judges can be wrong.",
+                             "Real-clock callback timing is diagnostic only; it does not prove presented-frame rate or absence of jitter.",
                              "Browser isolation is defense in depth, not a hardened sandbox for hostile code."]}
     manifest_path = submission.parent / "manifest.json"
     if manifest_path.exists():

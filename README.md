@@ -5,15 +5,18 @@
 
 This is a small, reproducible **single-task pilot** measuring source interpretation
 and simulator implementation. It includes two audited original photographs, a
-bounded task, a Responses API harness, 16 automated binary checks, two focused
+bounded task, a Responses API harness, 20 automated binary checks, five focused
 image-review questions, and a newly written calibration simulator.
 
-The current delivery is validated offline. A small text-only Responses API check
-has passed. **No live generator attempt or image-judge call has been tested yet.**
+The current delivery is validated offline. Live image tests caught the three
+selected rendering defects, but the tested judge model also gave contradictory
+wing-presence verdicts for an identical image. Its calibration is therefore
+**not passed**; use human review or calibrate another judge before model rankings.
+**No live generator attempt has been tested yet.**
 There is no claim of general benchmark validity or real-world aircraft validity.
 
-The historical source photographs and generated preview are currently kept local
-pending approval for public sharing. The code can be published independently.
+The two selected family source photographs and reference preview are included
+with permission and retain their original attribution.
 
 ## Start here
 
@@ -21,19 +24,16 @@ pending approval for public sharing. The code can be published independently.
 - [Why these sources were selected](docs/SOURCE_AUDIT.md)
 - [Binary checks, evidence and limitations](docs/GRADERS.md)
 - [Latest offline calibration results](validation/latest.json)
+- [Live image calibration and consistency failure](validation/live-images.json)
 
 ## Setup
 
 Use Python 3.10+, Node.js 22+ and pnpm 11.19.0. Python uses only the standard
 library. Browser testing uses a pinned Playwright version and its matching Chromium.
 
-If the original photographs are absent from your checkout, obtain the authorized
-source packet from the repository owner and place `Unknown-2.jpg` and
-`Unknown-14.jpg` in `task/sources/`. Preserve the original bytes; their hashes are
-checked against `task/source-manifest.json`. Do not substitute unrelated images.
-Full task preparation, runner tests and browser calibration require this packet.
-The code-only CI path runs file-policy, local-config and review-protocol tests
-and explicitly skips dataset-dependent checks.
+The selected photographs are versioned in `task/sources/`. Their hashes are
+checked against `task/source-manifest.json`; preserve the original bytes.
+The CI workflow runs unit tests and the full offline browser calibration.
 
 ```sh
 pnpm install --frozen-lockfile
@@ -94,15 +94,17 @@ attempt manifest, and response/tool-result events. They are ignored by Git to
 avoid publishing trial outputs inadvertently. The harness never logs API headers
 or passes API credentials into the submission's browser environment.
 
-## Complete the two image checks
+## Complete the five image checks
 
-V2 reports individual pass/fail results: seven source parameters, three simple
-force relationships and six UI cause-and-effect checks. There are no weights or
-visual-quality scores. Two image questions remain **ungraded** until reviewed:
-is there a wing on each side, and is the tail behind the wing roots?
+V3 reports individual pass/fail results: seven source parameters, seven physics
+checks and six UI cause-and-effect checks. Physics now includes ground contact,
+powered/unpowered wingbeat timing and steady glide ratio. There are no weights
+or visual-quality scores.
 
-Each question gets its own LLM call with one source photo and a standard top-view
-screenshot. Use a separately selected image-capable model:
+Five image questions cover wings on both sides, tail position, transverse wing
+orientation, fin presence and visible flapping. Each gets its own LLM call with
+only the relevant view or short frame sequence; source comparisons also receive
+the original photo. Use a separately selected image-capable model:
 
 ```sh
 python3 -m ornithopter_eval judge runs/model-a-01/submission runs/model-a-01/grade --model YOUR_JUDGE_MODEL_ID
@@ -116,11 +118,16 @@ python3 -m ornithopter_eval review runs/model-a-01/grade my-review.json --review
 ```
 
 Reports retain each boolean verdict, failed-check evidence, screenshot,
-submission hashes and reviewer metadata. A full task pass requires all 18 checks.
+submission hashes and reviewer metadata. A full task pass requires all 25 checks.
 An unreviewed check is null; an infrastructure failure is never a model score.
 Fixed Playwright actions use a virtual clock and observe the production state
 hook. They establish narrow input-to-state behaviour; they do not independently
-prove mesh motion or realistic flight. LLM answers still require calibration.
+prove truthful coupling or realistic flight. Rendered flapping is checked from
+four images separately from the numeric phase. LLM answers still require calibration.
+
+Real-clock callback timing and simulation speed are recorded as diagnostics.
+Frame-rate and running-scene jitter do not affect pass/fail until a hardware and
+camera protocol is defined. Wheels and rudder actuation are outside this task.
 
 ## Repository layout
 

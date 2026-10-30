@@ -1,4 +1,4 @@
-# Source packet: swan-v2.0
+# Source packet: swan-v3.0
 
 These two unchanged photographs come from Stanley J. O. Tinn's family archive.
 They are historical design notes and observations, not a complete or validated

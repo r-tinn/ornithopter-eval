@@ -1,4 +1,4 @@
-# Swan Flight Lab — swan-v2.0
+# Swan Flight Lab — swan-v3.0
 
 Build a dependency-free interactive 3D ornithopter flight lab from the two source
 photographs and SOURCE_GUIDE.md. Deliver a self-contained static site in
@@ -82,11 +82,20 @@ inspection view. State clearly that this is an educational approximation.
 
 Required `data-testid` elements:
 `scene` (canvas, at least 600×350 CSS pixels at a 1280×800 viewport),
-`start`, `pause`, `reset`, `approach`, `view-top`, `throttle` (range 0..1), and `telemetry`.
+`start`, `pause`, `reset`, `approach`, `view-top`, `view-side`, `view-front`,
+`throttle` (range 0..1), and `telemetry`.
 `view-top` switches to a view directly above the actual model, nose pointing up
 the screen, with both wings and the tail unobscured. Show the complete aircraft.
 Do not substitute a separate illustration for this view. It supports two binary
-image checks: a wing on each side of the body, and a tail aft of the wing roots.
+image checks: a wing on each side of the body, wings extending laterally across
+the body, and a tail aft of the wing roots. `view-side` shows the actual model
+from its side, nose pointing right, with the tail fin unobscured. The fin must be
+a distinct surface projecting above the aft body; its exact angle/shape is not
+specified by the sources. `view-front` looks along the body axis from in front,
+with world-up pointing up the screen, showing both wings and their roots.
+Keep the model centred as it moves. These views render the same production
+geometry and animation. A powered approach will be sampled from the front at
+roughly 0, 0.125, 0.25 and 0.375 s to check visible wingtip motion relative to roots.
 ArrowUp/ArrowDown change pitch, ArrowLeft/ArrowRight change bank; Space brakes.
 Telemetry displays speed, altitude, simulation time and status, updates while
 running and freezes on pause. Handle key release and focus loss.
@@ -110,6 +119,16 @@ The force checks ask only whether zero throttle removes thrust (positive at
 full throttle), doubling horizontal airspeed from 10 to 20 m/s quadruples
 positive lift at zero pitch/roll, and wind [10,0,0] removes lift at velocity
 [10,0,0]. These focused checks do not cover every equation above.
+
+Additional deterministic checks sample powered phase at non-cycle-aligned times
+against the specified 2 Hz cycle, require phase to stay fixed without power,
+and check that descent never takes the point-mass contact position below y=0.2 m.
+The unpowered glide check starts in steady trim at zero angle of attack in still
+air, then runs 2 s at 1/120 s steps. Horizontal distance divided by height lost
+must agree within 1% with CL/CD from the specified polar (CL=0.6). The trim speed
+is sqrt(2*mass*g*cos(gamma)/(rho*S*CL)), gamma=atan(CD/CL), pitch=-gamma.
+This tests the assumed equations, not measured real-world gliding performance.
+Wheels and rudder/yaw actuation are not required by this task.
 
 Expose `window.flightLab = {getState(), getControls()}` returning JSON-safe
 copies of the actual state and controls used by the render/physics loop. This is

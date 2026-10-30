@@ -8,5 +8,20 @@
     "pass": false,
     "reason": "Template only: with nose up, check for a tail attached below the wing-root region. Replace this verdict and reason.",
     "evidence": ["Unknown-2.jpg", "inspection-top.png"]
+  },
+  "wings_transverse": {
+    "pass": false,
+    "reason": "Template only: check that root-to-tip direction is primarily left/right in the nose-up view.",
+    "evidence": ["Unknown-2.jpg", "inspection-top.png"]
+  },
+  "fin_present": {
+    "pass": false,
+    "reason": "Template only: check for a distinct fin above the aft body in the side view.",
+    "evidence": ["inspection-side.png"]
+  },
+  "visible_flapping": {
+    "pass": false,
+    "reason": "Template only: compare both wingtips against their roots across the four front-view frames.",
+    "evidence": ["flap-0.png", "flap-1.png", "flap-2.png", "flap-3.png"]
   }
 }

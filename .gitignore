@@ -8,4 +8,5 @@ runs/
 !runs/.gitkeep
 .DS_Store
 task/sources/*.jpg
-validation/reference-inspection.png
+!task/sources/Unknown-2.jpg
+!task/sources/Unknown-14.jpg

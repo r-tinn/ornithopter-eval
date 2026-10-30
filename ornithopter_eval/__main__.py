@@ -8,7 +8,7 @@ from pathlib import Path
 from .api import APIError, get_api_key
 from .checks import TASK_VERSION
 from .grading import grade_submission
-from .review import apply_review, judge
+from .review import apply_review, audit_consistency, judge
 from .runner import ROOT, DEFAULT_CONFIG, prepare, run_model, verify_sources, write_json
 
 
@@ -34,6 +34,13 @@ def validate(node):
                 "ignored_wind":("physics.mjs", "v - environment.wind[i]", "v"),
                 "broken_step":("physics.mjs", "s.velocity = state.velocity.map((v,i) => v + f[i]/mass*dt);", "s.velocity = [0,0,0];"),
                 "broken_pause":("app.mjs", "$('pause').onclick=()=>{paused=true;accumulator=0;draw();};", "$('pause').onclick=()=>{};"),
+                "ground_clip":("physics.mjs", "s.position[1] = 0.2;", "// Ground clamp deliberately removed."),
+                "wrong_wingbeat":("physics.mjs", "4*Math.PI*dt", "2*Math.PI*dt"),
+                "unpowered_flapping":("physics.mjs", "controls.throttle>0 ? 4*Math.PI*dt : 0", "4*Math.PI*dt"),
+                "zero_drag":("physics.mjs", "const drag = q * parameters.wing_area_m2 *", "const drag = 0 * parameters.wing_area_m2 *"),
+                "static_wings":("app.mjs", "const inner=controls.throttle>0?0.45*Math.sin(state.phase):0;", "const inner=0;"),
+                "missing_fin":("app.mjs", "shape([[-0.48,0,0],[-0.7,0.3,0],[-0.7,0,0]],'#b0c6bb','#6e8f81');", "// Fin deliberately removed."),
+                "lengthwise_wings":("app.mjs", "return [x,inboard*Math.sin(inner)+outboard*Math.sin(inner+outer),side*(root+inboard*Math.cos(inner)+outboard*Math.cos(inner+outer))];", "return [side*(root+inboard*Math.cos(inner)+outboard*Math.cos(inner+outer)),inboard*Math.sin(inner)+outboard*Math.sin(inner+outer),x];"),
                 "empty_starter":None}
     reports = {}
     for name, mutation in fixtures.items():
@@ -73,6 +80,8 @@ def validate(node):
             if source.count(mutation[1]) != 1:
                 raise ValueError(f"Mutation anchor changed: {name}")
             target.write_text(source.replace(mutation[1],mutation[2]))
+            if name == "static_wings":
+                target.write_text(target.read_text().replace("const outer=controls.throttle>0?0.35*Math.sin(state.phase-0.7):0;", "const outer=0;"))
         report = grade_submission(submission,root / name / "grade",node=node)
         reports[name] = summarize(report)
         print(name+": "+json.dumps(reports[name]),flush=True)
@@ -81,17 +90,25 @@ def validate(node):
                "ignored_wind":("physics","matching_wind_removes_lift"),
                "broken_step":("interaction","power_moves_forward"),
                "broken_pause":("interaction","pause_freezes_state")}
+    targets.update({"ground_clip":("physics","ground_nonpenetration"),
+                    "wrong_wingbeat":("physics","powered_wingbeat_frequency"),
+                    "unpowered_flapping":("physics","unpowered_wingbeat_stops"),
+                    "zero_drag":("physics","steady_glide_ratio")})
     success = (all(reports["reference"]["dimensions"].get(k,{}).get("passed") is True
                    for k in ("source","physics","interaction")) and
                all(check in reports[name]["dimensions"].get(group,{}).get("failed",[])
                    for name,(group,check) in targets.items()) and
                "power_moves_forward" in reports["free_thrust"]["dimensions"].get("interaction",{}).get("failed",[]) and
+               all(reports[name]["dimensions"].get(group,{}).get("passed") is True
+                   for name in ("static_wings","missing_fin","lengthwise_wings")
+                   for group in ("source","physics","interaction")) and
                all(len(reports["empty_starter"]["dimensions"].get(k,{}).get("failed",[]))==n
-                   for k,n in (("source",7),("physics",3),("interaction",6))) and
+                   for k,n in (("source",7),("physics",7),("interaction",6))) and
                all(r["status"]=="awaiting_review" for r in reports.values()))
     result = {"task_version":TASK_VERSION,"offline_validation_passed":success,
               "live_api_tested":False,"multimodal_judge_tested_live":False,
               "note":"Calibration detects these selected defects; it is not independent scientific validation.",
+              "visual_mutants_awaiting_review":{"static_wings":"visible_flapping", "missing_fin":"fin_present", "lengthwise_wings":"wings_transverse"},
               "reports":reports}
     write_json(root / "summary.json",result)
     (ROOT / "validation").mkdir(exist_ok=True)
@@ -112,6 +129,7 @@ def main(argv=None):
     p = commands.add_parser("judge");p.add_argument("submission");p.add_argument("grade_dir");p.add_argument("--model",required=True)
     p = commands.add_parser("review");p.add_argument("grade_dir");p.add_argument("review_json");p.add_argument("--reviewer",required=True)
     p = commands.add_parser("validate");p.add_argument("--node",default="node")
+    p = commands.add_parser("audit-reviews");p.add_argument("reviews",nargs="+")
     commands.add_parser("verify-sources")
     args = parser.parse_args(argv)
     try:
@@ -144,6 +162,10 @@ def main(argv=None):
             print(json.dumps(summarize(report),indent=2))
         elif args.command == "validate":
             return validate(args.node)
+        elif args.command == "audit-reviews":
+            result = audit_consistency([(path,json.loads(Path(path).read_text())) for path in args.reviews])
+            print(json.dumps(result,indent=2))
+            return 0 if result["consistent"] else 1
         else:
             print(json.dumps(verify_sources(),indent=2))
     except (APIError,ValueError,OSError,KeyError,TypeError) as exc:

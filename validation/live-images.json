@@ -1,0 +1,127 @@
+{
+  "task_version": "swan-v3.0",
+  "model": "gpt-4.1-mini-2025-04-14",
+  "scope": "Five image predicates, reference plus three rendering-only negative controls; 20 live judge calls.",
+  "selected_defects_detected": true,
+  "consistency_audit": {
+    "consistent": false,
+    "identical_input_groups": 4,
+    "conflicts": [
+      {
+        "check_id": "wings_on_both_sides",
+        "input_sha256": "d6515614ea0a9d7f0b6ef77f1268cc5b7bbfd8e13cebbdc0c02b1971a0977465",
+        "observations": [
+          {
+            "case": "reference",
+            "pass": true,
+            "reason": "The generated screenshot shows a wing clearly attached on both the left and right sides of the central body with the nose pointing up.",
+            "evidence": [
+              "inspection-top.png"
+            ]
+          },
+          {
+            "case": "static_wings",
+            "pass": false,
+            "reason": "The generated screenshot (inspection-top.png) shows wings only on one side of the central body but not clearly on both left and right sides.",
+            "evidence": [
+              "inspection-top.png"
+            ]
+          }
+        ]
+      }
+    ],
+    "limitation": "Consistency is necessary, not sufficient: identical wrong judgments can still be consistent."
+  },
+  "calibration_passed": false,
+  "expected_negative_checks": {
+    "static_wings": "visible_flapping",
+    "missing_fin": "fin_present",
+    "lengthwise_wings": "wings_transverse"
+  },
+  "results": {
+    "reference": {
+      "passed": true,
+      "visual_checks": {
+        "wings_on_both_sides": true,
+        "tail_behind_wings": true,
+        "wings_transverse": true,
+        "fin_present": true,
+        "visible_flapping": true
+      }
+    },
+    "static_wings": {
+      "passed": false,
+      "visual_checks": {
+        "wings_on_both_sides": false,
+        "tail_behind_wings": true,
+        "wings_transverse": true,
+        "fin_present": true,
+        "visible_flapping": false
+      }
+    },
+    "missing_fin": {
+      "passed": false,
+      "visual_checks": {
+        "wings_on_both_sides": true,
+        "tail_behind_wings": true,
+        "wings_transverse": true,
+        "fin_present": false,
+        "visible_flapping": true
+      }
+    },
+    "lengthwise_wings": {
+      "passed": false,
+      "visual_checks": {
+        "wings_on_both_sides": false,
+        "tail_behind_wings": false,
+        "wings_transverse": false,
+        "fin_present": true,
+        "visible_flapping": false
+      }
+    }
+  },
+  "evidence_sha256": {
+    "reference": {
+      "Unknown-2.jpg": "5c0a94b3f137307104f8062c23c3a6a3c6366c88f2f18c8fafed9ee3ddf0cbd9",
+      "flap-0.png": "647cdd8ea81ad83aac12bf959acf3b62bcdda39bd56ac4f1c90d4b14b4a86942",
+      "flap-1.png": "db0c358a914fe943ddb86c01967911af2be67e84ebd9f2cdeb44ed8672dd6750",
+      "flap-2.png": "a4e93c22e2078f075226c1aa876a1b97ed8e3abe60caef817c8c47615d7999a6",
+      "flap-3.png": "c8fefbd97149543cb5c29efa610477ecdea8e4db351d34b7ce08efe20ae0b7fb",
+      "inspection-side.png": "2f7a8b6da45bebcad79f3815c6cfbbaf90129b01eadfe7390b20db5360bfa11e",
+      "inspection-top.png": "2ce8ebc1facba8041e072d4e3fb9ea48726df2a131d5b332731fac76576f793b"
+    },
+    "static_wings": {
+      "Unknown-2.jpg": "5c0a94b3f137307104f8062c23c3a6a3c6366c88f2f18c8fafed9ee3ddf0cbd9",
+      "flap-0.png": "6b07eec297125c6397122238e15cbaba0bcde598e4ecc15328c1d659b7d21843",
+      "flap-1.png": "075037931d6fec71ce039e140c53507b9ffa26919ae57b941e26aabf02f42099",
+      "flap-2.png": "c493576249df50791f0c8cad71b9adcda21e52bd1d865020217839076696db56",
+      "flap-3.png": "f23eedd5204c2762177c149e41794e3de55c8e94a18f33d7967389612b040666",
+      "inspection-side.png": "2f7a8b6da45bebcad79f3815c6cfbbaf90129b01eadfe7390b20db5360bfa11e",
+      "inspection-top.png": "2ce8ebc1facba8041e072d4e3fb9ea48726df2a131d5b332731fac76576f793b"
+    },
+    "missing_fin": {
+      "Unknown-2.jpg": "5c0a94b3f137307104f8062c23c3a6a3c6366c88f2f18c8fafed9ee3ddf0cbd9",
+      "flap-0.png": "0e08cba30b108d3d66ad48bebd23152784608c0a18c4f784761f590ec34a7e5c",
+      "flap-1.png": "fa2fd7d605d41fbb574407af25c3b0fb199c409b3da4c1aeac94e469ed0093d4",
+      "flap-2.png": "f04d77c9253ccddcd53d99261e07df99490005b1e924dc7660b31163307d70c0",
+      "flap-3.png": "ed15853c5ee8de2cd1c74704dbfd1f951cb2f37e3182e9bca34dcbea0eabeb99",
+      "inspection-side.png": "123d759997b76d556e7ea4943e914bb0aa2de43ff5c2cbbce541cae63a660530",
+      "inspection-top.png": "6d8a5601e5f6f670319050465f2bef9c8095620727e7fd89bd7d0cac22f45b83"
+    },
+    "lengthwise_wings": {
+      "Unknown-2.jpg": "5c0a94b3f137307104f8062c23c3a6a3c6366c88f2f18c8fafed9ee3ddf0cbd9",
+      "flap-0.png": "326565659777586d4ae2ac3ee03220d9a12b69e0e992938f5a627d00ef3d0415",
+      "flap-1.png": "f658096b6d048f5d71b0f084a1bcc4bec24e7cddb6fd6ca30e175759abc02caa",
+      "flap-2.png": "d8c3f2c5e90663e56744140536ce5db98dc6c4f90b56c6e33720475ffeb13874",
+      "flap-3.png": "1e90ea2808c7abeb79460ef2e4c89b4638c77e15e9ff9e7c51eb4d78a2df6445",
+      "inspection-side.png": "a2574eb37353396142efd072698d87fb684764e6e71e064206539497ae2ba71e",
+      "inspection-top.png": "3281ecd40241d02ddc0831428279908b4d73b03038eb232f2b3f3ec4431679a0"
+    }
+  },
+  "usage_totals": {
+    "input_tokens": 58284,
+    "output_tokens": 946
+  },
+  "generator_attempt_tested_live": false,
+  "limitation": "A contradictory wing-presence result on identical input fails judge calibration. Selected defect detection alone is insufficient for rankings."
+}
