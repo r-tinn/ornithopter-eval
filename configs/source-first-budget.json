@@ -1,0 +1,10 @@
+{
+  "profile_id": "source-first-constrained-v1",
+  "max_output_tokens_total": 20000,
+  "max_output_tokens_per_response": 20000,
+  "max_requests": 24,
+  "max_wall_seconds": 900,
+  "max_submission_bytes": 2000000,
+  "reasoning_effort": "medium",
+  "output_token_notice_percentages": [50, 75]
+}

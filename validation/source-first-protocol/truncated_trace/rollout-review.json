@@ -1,0 +1,11 @@
+{
+  "id": "no_verification_tools",
+  "policy_version": "targeted-files-only-v1",
+  "pass": null,
+  "status": "evidence_unavailable",
+  "violations": [],
+  "observed_tool_calls": 0,
+  "scope": "Observed tool requests only. Blocked out-of-policy requests fail. File rereads, patch feedback and mental review are allowed; private reasoning is not inspected.",
+  "events_sha256": "e2d8451ea3d4c1b43ea5d74a08e80705e00633a1c322024c2878d2f99eba1a71",
+  "reason": "Missing or mismatched harness trace seal; no compliance pass inferred"
+}

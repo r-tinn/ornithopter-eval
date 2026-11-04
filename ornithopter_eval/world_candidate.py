@@ -60,8 +60,8 @@ def prepare_world(output, reference=False, task_version=MECHANICAL_VERSION):
     return output
 
 
-def prepare_world_trial(output, config_path):
-    config = json.loads(Path(config_path).read_text())
+def prepare_world_trial(output, config_path, *, config=None):
+    config = json.loads(Path(config_path).read_text()) if config is None else config
     version=config.get('task_version')
     if version not in (MECHANICAL_VERSION,PILOTED_VERSION):
         raise ValueError('Unsupported mechanical task version')

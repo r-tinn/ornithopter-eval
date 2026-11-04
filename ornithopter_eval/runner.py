@@ -11,6 +11,8 @@ from pathlib import Path
 from .api import APIError, create_response
 from .policy import FilePolicy, PolicyError
 from .checks import TASK_VERSION, MECHANICAL_VERSIONS
+from .protocol import load_config
+from .rollout import POLICY_VERSION, ProtocolViolation, audit_rollout
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONFIG = ROOT / "configs/pilot.json"
@@ -34,15 +36,15 @@ def verify_sources():
     return selected
 
 
-def prepare(output, config_path=DEFAULT_CONFIG):
+def prepare(output, config_path=DEFAULT_CONFIG, *, generation_profile=None):
     output = Path(output).resolve()
     if output.exists():
         raise ValueError("Run directory already exists; each attempt requires a fresh directory")
     selected = verify_sources()
-    config = json.loads(Path(config_path).read_text())
+    config = load_config(config_path, generation_profile)
     if config.get("task_version") in MECHANICAL_VERSIONS:
         from .world_candidate import prepare_world_trial
-        return prepare_world_trial(output, config_path)
+        return prepare_world_trial(output, config_path, config=config)
     for key in ("max_output_tokens_total", "max_output_tokens_per_response", "max_requests",
                 "max_wall_seconds", "max_submission_bytes"):
         if type(config.get(key)) is not int or config[key] <= 0:
@@ -89,7 +91,12 @@ def initial_input(run):
     manifest = json.loads((run / "manifest.json").read_text())
     config = manifest["config"]
     budget = "\n\nAttempt limits: " + json.dumps(config,sort_keys=True) + \
-        ". The total output-token budget spans ALL responses, including reasoning, code/tool calls and final text."
+        ". These attempt limits override any historical budget numbers in the task prose. " + \
+        "The total output-token budget spans ALL responses, including reasoning, code/tool calls and final text. " + \
+        "The shell tool is a virtual file reader: only ls PATH, cat PATH and head -n N PATH are available. " + \
+        "Use targeted reads and declared file edits only. Do not request execution, syntax checks, builds, tests, " + \
+        "browser previews, HTTP requests or grader feedback. Blocked out-of-policy requests are recorded. " + \
+        "Reading your edited files and reasoning about them are allowed; do not claim executed verification."
     mechanical = manifest.get("task_version") in MECHANICAL_VERSIONS
     api = ("\n\n" + (run / "inputs/AIRCRAFT_API.md").read_text() +
            "\n\nENGINEERING ASSUMPTIONS\n" + (run / "inputs/engineering.json").read_text()) if mechanical else ""
@@ -154,6 +161,7 @@ def run_model(run, model, transport=create_response):
     manifest.update(model=model, status="running")
     write_json(run / "manifest.json", manifest)
     status, reason = "budget_exhausted", "request_limit"
+    undispatched = []
     try:
         with (run / "events.jsonl").open("x") as log:
             for _ in range(config["max_requests"]):
@@ -176,7 +184,10 @@ def run_model(run, model, transport=create_response):
                 payload = {"model": model, "input": history, "store": False,
                            "include": ["reasoning.encrypted_content"],
                            "instructions": "Follow the task's file-only tool policy. "
-                           "The shell is virtual and cannot execute programs. Submit once; no verification.",
+                           "The shell is virtual: only ls PATH, cat PATH and head -n N PATH, within inputs/ or submission/. "
+                           "Edits use apply_patch on declared writable files. Do not request tests, syntax checks, builds, "
+                           "code execution, browser/HTTP access or grader feedback. Blocked attempts violate the file-only protocol. "
+                           "File rereads, patch-error correction and mental review are allowed. Submit once.",
                            "tools": [{"type": "apply_patch"}, {"type": "shell", "environment": {"type": "local"}}],
                            "max_output_tokens": min(tokens, config["max_output_tokens_per_response"])}
                 payload["reasoning"] = {"effort": config.get("reasoning_effort") or "medium"}
@@ -199,6 +210,8 @@ def run_model(run, model, transport=create_response):
                     raise ValueError("Response did not complete")
                 if time.monotonic() - started > config["max_wall_seconds"]:
                     reason = "wall_time_limit"
+                    undispatched = [x.get('call_id') for x in response.get('output', [])
+                                    if x.get('type') in ('apply_patch_call', 'shell_call')]
                     break
                 output = response.get("output", [])
                 history.extend(output)
@@ -207,7 +220,8 @@ def run_model(run, model, transport=create_response):
                     raise ValueError("Too many tool calls in one response")
                 for item in output:
                     if item.get("type", "").endswith("_call") and item not in calls:
-                        raise ValueError("Unsupported tool requested")
+                        undispatched = [x.get('call_id') for x in output if x.get('type', '').endswith('_call')]
+                        raise ProtocolViolation("Unsupported tool requested")
                 incomplete = response["status"] == "incomplete"
                 for call in calls:
                     # A response can hit its cap after finishing earlier file operations.
@@ -223,15 +237,26 @@ def run_model(run, model, transport=create_response):
                 if not calls:
                     status, reason = "submitted", None
                     break
+    except ProtocolViolation as exc:
+        status, reason = 'protocol_violation', str(exc)
     except (APIError, ValueError, OSError) as exc:
         status, reason = "infrastructure_error", str(exc)
     for name, expected in manifest.get("readonly_sha256", {}).items():
         if not (run / "submission" / name).is_file() or digest(run / "submission" / name) != expected:
             status, reason = "infrastructure_error", "Shared world changed: " + name
+    with (run / 'events.jsonl').open('a') as log:
+        log.write(json.dumps({'event': 'run_end', 'status': status, 'reason': reason,
+                              'usage': usage, 'undispatched_call_ids': undispatched}) + '\n')
     manifest.update(status=status, reason=reason, usage=usage,
+                    rollout_policy_version=POLICY_VERSION, events_sha256=digest(run / 'events.jsonl'),
                     output_token_notice_percentages_sent=sorted(notified),
                     elapsed_seconds=round(time.monotonic() - started, 3),
                     submission_sha256={str(p.relative_to(run / "submission")): digest(p)
                                        for p in sorted((run / "submission").rglob("*")) if p.is_file()})
     write_json(run / "manifest.json", manifest)
+    review = audit_rollout(run)
+    write_json(run / 'rollout-review.json', review)
+    manifest['rollout_review'] = {'file': 'rollout-review.json', 'pass': review['pass'], 'status': review['status'],
+                                 'sha256': digest(run / 'rollout-review.json')}
+    write_json(run / 'manifest.json', manifest)
     return manifest

@@ -1,0 +1,138 @@
+{
+  "kind": "source-first protocol calibration; offline harness fixtures, not model submissions",
+  "model_api_calls": 0,
+  "unit_tests_passed": 73,
+  "rollout_cases": {
+    "targeted_read": {
+      "expected": true,
+      "actual": true,
+      "events_sha256": "87790b32a3e7fe13aca8ba8b0b9bdc4050789f310712fbf123ec63faece29ada",
+      "evidence": "validation/source-first-protocol/targeted_read"
+    },
+    "missing_file_read": {
+      "expected": true,
+      "actual": true,
+      "events_sha256": "dd2f8a4a470ac17ee9e5b9700c461341e4b42adbe468adef92b445949a044c3a",
+      "evidence": "validation/source-first-protocol/missing_file_read"
+    },
+    "attempt_test": {
+      "expected": false,
+      "actual": false,
+      "events_sha256": "9166c487ca579845728efe4c708f73f8004d6748b1fa7e44a3bb30cdb12e3758",
+      "evidence": "validation/source-first-protocol/attempt_test"
+    },
+    "attempt_syntax_check": {
+      "expected": false,
+      "actual": false,
+      "events_sha256": "6e15e6c76660dd22fcf1dc6686bc2158bb04db706120aab68e161d23e2e9c26b",
+      "evidence": "validation/source-first-protocol/attempt_syntax_check"
+    },
+    "attempt_interpreter": {
+      "expected": false,
+      "actual": false,
+      "events_sha256": "531c670975d98bb60d91634bdced948c5da506474aa3f578af2fb0586484775b",
+      "evidence": "validation/source-first-protocol/attempt_interpreter"
+    },
+    "attempt_http": {
+      "expected": false,
+      "actual": false,
+      "events_sha256": "6927ea4ba410514b71d840c1f12162af96c6e3cb9f9b50669c40adf2a5066887",
+      "evidence": "validation/source-first-protocol/attempt_http"
+    },
+    "attempt_pipeline": {
+      "expected": false,
+      "actual": false,
+      "events_sha256": "74b2723869baf4d3703d1bd71475d2fbbb9f43b0b5cd72351a88a18e8015130b",
+      "evidence": "validation/source-first-protocol/attempt_pipeline"
+    },
+    "truncated_trace": {
+      "expected": null,
+      "actual": null,
+      "status": "evidence_unavailable",
+      "evidence": "validation/source-first-protocol/truncated_trace"
+    }
+  },
+  "new_rubric": {
+    "outcomes": 7,
+    "performance_targets": 6,
+    "file_only_validity_targets": 1,
+    "implemented": [
+      "wheel_rotation_axis",
+      "no_verification_tools"
+    ],
+    "other_five_physics_graders": "specification only; require new source-first model and calibration"
+  },
+  "budget_profile": {
+    "profile_id": "source-first-constrained-v1",
+    "max_output_tokens_total": 20000,
+    "max_output_tokens_per_response": 20000,
+    "max_requests": 24,
+    "max_wall_seconds": 900,
+    "max_submission_bytes": 2000000,
+    "reasoning_effort": "medium",
+    "output_token_notice_percentages": [
+      50,
+      75
+    ]
+  },
+  "implementation_sha256": {
+    "ornithopter_eval/rollout.py": "93cc8b789d10f019babfb88bede307128615774ff828a71dd0eab0656aa27214",
+    "ornithopter_eval/protocol.py": "88e7419e80efd08b6572dc4d62b3d3cfdeca456df80c24a1225805eb0447ee19",
+    "ornithopter_eval/runner.py": "e5a65fc690a38e2d202496b03889412469d3668193fc2c5d7388f132bb309844",
+    "tests/test_rollout.py": "0e5c18700fa525d1d71928cc23020fd4d090a35a43ad3d009b3eb171680209e4",
+    "grader/wheel-axis.mjs": "a887902fa5c75256c18ee468a15da99c118fc9b8f4ce3366863481fa1d6bdb37",
+    "tests/wheel-axis.test.mjs": "c373d0f777fe3a1f5328122b52af6a9b7e5d74d4026305616c8f2b89299b32df",
+    "tests/test_experiment.py": "1f684bdbd3300398f27ade61c576fddceb6269966ad95bf635a9d86a75196fcd"
+  },
+  "previous_unit_test_runs": [
+    72
+  ],
+  "trusted_wheel_angle_fixture_tests_passed": 2,
+  "wheel_axis_regression_history": [
+    {
+      "archive_unchanged": true,
+      "original_grades_changed": false,
+      "results": [
+        {
+          "model": "gpt-6.1-sol",
+          "pass": true,
+          "max_misalignment_deg": 0
+        },
+        {
+          "model": "gpt-5.6-sol",
+          "pass": false,
+          "max_misalignment_deg": 89.99999999999999
+        }
+      ],
+      "evidence_directory": "runs/source-first-wheel-regression-20261104",
+      "raw_report_sha256": "dc08d1ba12408197f61499fa76968239ddc4e71dcf8d61c39e42fcc2ca94f74b",
+      "grader_sha256": {
+        "wheel-axis.mjs": "e7acad9440a30bf1c7f8c8f83fa41a0f20688c5bbbdeb9d0d6e081b7d7db0faa",
+        "wheel-axis-review.mjs": "de3addee8ba18c0fada16f94f7ec37912f18ee3499dbb405dfdc7702d4af6f78"
+      }
+    }
+  ],
+  "wheel_axis_regression": {
+    "archive_unchanged": true,
+    "original_grades_changed": false,
+    "input_coverage": "Explicit wheel_angle=distance/radius added; no-steering axle predicate unchanged.",
+    "results": [
+      {
+        "model": "gpt-6.1-sol",
+        "pass": true,
+        "max_misalignment_deg": 0
+      },
+      {
+        "model": "gpt-5.6-sol",
+        "pass": false,
+        "max_misalignment_deg": 89.99999999999999
+      }
+    ],
+    "evidence_directory": "runs/source-first-wheel-regression-20261104-v2",
+    "raw_report_sha256": "020cf55127bbf0cb08bcc5e31201b2396e6641d1e0d5b92adeaedb4304d51b53",
+    "grader_sha256": {
+      "wheel-axis.mjs": "a887902fa5c75256c18ee468a15da99c118fc9b8f4ce3366863481fa1d6bdb37",
+      "wheel-axis-review.mjs": "de3addee8ba18c0fada16f94f7ec37912f18ee3499dbb405dfdc7702d4af6f78"
+    }
+  }
+}

@@ -24,8 +24,14 @@ commit keys, expose them in outputs, or pass them to evaluated submissions.
 Prefer focused binary checks and report their exact scope. Preserve failed
 judge calibration and conflicting judgments; do not select retries to hide them.
 
-Default generator runs to medium reasoning and 32,000 total output tokens,
-including reasoning. Token-budget notices are limited to the 50% and 75% usage
+For the next source-first protocol, use medium reasoning and 20,000 total output
+tokens including reasoning, via configs/source-first-budget.json. Preserve the
+explicit 32,000-token configurations for historical/v5 reproduction. Do not
+silently reinterpret a saved task/config as the new protocol.
+The next rubric has seven binary outcomes: six task graders including the
+existing wheel_rotation_axis regression, plus no_verification_tools as a separate
+validity result, not an easy performance point.
+Token-budget notices are limited to the 50% and 75% usage
 thresholds; do not send ongoing token, time or request-count updates. Retain
 the original settings for published cohorts.
 

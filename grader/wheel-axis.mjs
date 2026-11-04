@@ -38,7 +38,7 @@ export async function wheelRotationAxis({submission_url}){
     const controls={throttle:1,pitch:0,bank:0,rudder:0,brake:0};
     for(const status of ['grounded','flying'])for(let i=0;i<=8;i++){
       const distance=i*Math.PI/4*radius;
-      const state={position:[distance,status==='flying'?100:.82,0],velocity:[10,0,0],pitch:0,roll:0,heading:0,phase:.37,time:distance/10,status};
+      const state={position:[distance,status==='flying'?100:.82,0],velocity:[10,0,0],pitch:0,roll:0,heading:0,phase:.37,time:distance/10,wheel_angle:distance/radius,status};
       A.updateAircraft(aircraft,state,controls);aircraft.root.updateMatrixWorld(true);
       const inverseRoot=new T.Matrix4().copy(aircraft.root.matrixWorld).invert();
       const axes=wheels.map((wheel,index)=>{

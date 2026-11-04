@@ -155,15 +155,18 @@ def main(argv=None):
     p = commands.add_parser("validate-mechanical");p.add_argument("--node",default="node")
     p = commands.add_parser("validate-piloted");p.add_argument("--node",default="node")
     p = commands.add_parser("audit-wheels");p.add_argument("experiment");p.add_argument("--output",required=True);p.add_argument("--node",default="node")
+    p = commands.add_parser('audit-rollout');p.add_argument('run');p.add_argument('--output',required=True)
+    for name in ('prepare', 'run', 'compare'):
+        commands.choices[name].add_argument('--generation-profile', help='Explicit budget overlay; preserves the task version and original configuration')
     commands.add_parser("verify-sources")
     args = parser.parse_args(argv)
     try:
         if args.command == "prepare":
-            print(prepare(args.output,args.config))
+            print(prepare(args.output,args.config,generation_profile=args.generation_profile))
         elif args.command == "run":
             if not get_api_key():
                 raise APIError("Set OPENAI_API_KEY locally; no run or API call was created")
-            run = prepare(args.output,args.config)
+            run = prepare(args.output,args.config,generation_profile=args.generation_profile)
             result = run_model(run,args.model)
             print(json.dumps(result,indent=2))
             return 0 if result["status"]=="submitted" else 1
@@ -194,7 +197,7 @@ def main(argv=None):
             print(json.dumps(result,indent=2))
             return 0 if result["consistent"] else 1
         elif args.command == "compare":
-            result = run_experiment(args.output,args.models,args.repeats,args.config,node=args.node)
+            result = run_experiment(args.output,args.models,args.repeats,args.config,node=args.node,generation_profile=args.generation_profile)
             print(json.dumps({"status":result["status"],"models":result["models"]},indent=2))
             return 0 if result["status"]=="completed" else 1
         elif args.command == "export":
@@ -220,6 +223,16 @@ def main(argv=None):
         elif args.command == "validate-piloted":
             from .piloted_validation import validate_piloted
             validate_piloted(args.node)
+        elif args.command == 'audit-rollout':
+            from .rollout import audit_rollout
+            target = Path(args.output)
+            if target.exists():
+                raise ValueError('Review already exists; preserve it and use a fresh output path')
+            result = audit_rollout(args.run)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            write_json(target, result)
+            print(json.dumps(result, indent=2))
+            return 0 if result['pass'] is True else 1
         elif args.command == "audit-wheels":
             from .wheel_audit import audit_wheels
             result=audit_wheels(args.experiment,args.output,args.node)

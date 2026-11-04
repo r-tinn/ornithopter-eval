@@ -15,6 +15,7 @@ from .api import create_response, get_api_key
 from .checks import CHECKS, TASK_VERSION, MECHANICAL_VERSION, MECHANICAL_VERSIONS, PILOTED_VERSION, checklist
 from .grading import grade_submission
 from .runner import ROOT, digest, initial_input, prepare, run_model, write_json
+from .protocol import load_config
 
 AUTOMATED = ("source", "physics", "interaction")
 
@@ -117,6 +118,8 @@ def refresh_workbench(root, experiment):
         score = str(result["passed"])+" / "+str(total) if result else '—'
         simulator_label = 'Fly simulator ↗' if result and result['groups']['interaction']['passed'] else 'Open submission ↗'
         actions = '<a target="_blank" rel="noopener" href="'+prefix+'submission/index.html">'+simulator_label+'</a><a href="'+prefix+'evidence.html">Captures</a><a href="'+prefix+'grade/report.json">Checks</a><a href="'+prefix+'transcript.txt">Transcript</a><a href="'+prefix+'submission-source.txt">Source</a>' if t["status"] not in ("prepared","running") else '<span class="muted">Artifacts appear when this attempt finishes.</span>'
+        if (root / prefix / 'rollout-review.json').is_file():
+            actions += '<a href="'+prefix+'rollout-review.json">File-only audit</a>'
         reason = '<br><small>'+html.escape(t['reason'])+'</small>' if t.get('reason') else ''
         rows.append('<tr><td>'+str(t["repeat"])+'</td><td>'+html.escape(t["model"])+'</td><td><strong>'+score+'</strong></td><td><span class="badge">'+html.escape(t["status"])+'</span>'+reason+'</td><td class="actions">'+actions+'</td></tr>')
     effort = html.escape(str(experiment["config"].get("reasoning_effort","default")))
@@ -130,7 +133,7 @@ def refresh_workbench(root, experiment):
     return summary
 
 
-def run_experiment(output, models, repeats, config_path, node="node", transport=create_response, grader=grade_submission):
+def run_experiment(output, models, repeats, config_path, node="node", transport=create_response, grader=grade_submission, generation_profile=None):
     root = Path(output).resolve()
     if root.exists():
         raise ValueError("Experiment directory already exists; preserve all previous attempts")
@@ -140,7 +143,7 @@ def run_experiment(output, models, repeats, config_path, node="node", transport=
         raise ValueError("Repeats must be between 1 and 20")
     if transport is create_response and not get_api_key():
         raise ValueError("A local API key is required; no experiment was created")
-    config = json.loads(Path(config_path).read_text())
+    config = load_config(config_path, generation_profile)
     version = config.get("task_version")
     if version not in (TASK_VERSION, MECHANICAL_VERSION,PILOTED_VERSION):
         raise ValueError("Unsupported task version")
@@ -148,7 +151,10 @@ def run_experiment(output, models, repeats, config_path, node="node", transport=
               ("ornithopter_eval/*.py","grader/*.mjs","task/*.md","task/starter/*","task/sources/*.jpg","candidate/mechanical-v4/**/*","candidate/mechanical-v5/**/*")
               for p in sorted(ROOT.glob(pattern)) if p.is_file()}
     root.mkdir(parents=True)
-    shutil.copyfile(config_path, root / "config.json")
+    if generation_profile is None:
+        shutil.copyfile(config_path, root / "config.json")
+    else:
+        write_json(root / 'config.json', config)
     config = json.loads((root / "config.json").read_text())
     try:
         commit = subprocess.check_output(["git","rev-parse","HEAD"],cwd=ROOT,text=True).strip()
@@ -189,6 +195,7 @@ def run_experiment(output, models, repeats, config_path, node="node", transport=
                 try:
                     manifest = future.result()
                     trial.update(status=manifest["status"],reason=manifest.get("reason"),usage=manifest.get("usage"),elapsed_seconds=manifest.get("elapsed_seconds"))
+                    trial['rollout_review'] = manifest.get('rollout_review')
                     if manifest["status"] in ("submitted","budget_exhausted"):
                         report = (grader(run / "submission",run / "grade",node=node,task_version=version)
                                   if grader is grade_submission else grader(run / "submission",run / "grade",node=node))

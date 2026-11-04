@@ -1,5 +1,21 @@
 # Ornithopter Eval
 
+The next source-first revision uses [seven focused binary graders](docs/SOURCE_FIRST_GRADERS.md):
+wing-cycle forces, elastic/inertial exchange, wing-induced pitch, power-limited
+flight, unpowered glide, wheel rotation axis and file-only tool use. Five new
+physics scenarios still require implementation/calibration. The existing wheel
+regression and the new deterministic rollout auditor are implemented.
+
+The [constrained generation profile](configs/source-first-budget.json) sets
+20,000 total output tokens including reasoning, medium effort and 50%/75%
+notices. It keeps the existing 900 s operational timeout. Use
+`--generation-profile configs/source-first-budget.json` with `prepare`, `run`
+or `compare`; the resolved profile/hash is saved without rewriting historical
+configs. This changes the generation budget, not the task/rubric version.
+New attempts save `rollout-review.json` and the gallery links its file-only
+audit. Blocked out-of-policy tool requests fail; missing trace evidence stays
+unavailable. Old model trials and their scores remain unchanged.
+
 **Source-faithfulness review, 4 November 2026:** the v5 prototype has important
 omissions from Stanley's notes despite passing its software checks. The human
 pilot and engine are compatible with his stated aim; the source mechanics need

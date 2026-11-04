@@ -4,6 +4,8 @@ Status: corrected design brief following the 4 November 2026 source audit.
 Expanded with a lightweight implementation approach on 4 November 2026.
 This is not an implemented simulator or a newly calibrated task version.
 The executable v5 prototype does not yet meet this brief.
+The next scoring scheme is [seven focused binary graders](SOURCE_FIRST_GRADERS.md):
+six task targets, including the wheel-axis regression, plus file-only validity.
 
 ## Authority
 
@@ -319,24 +321,26 @@ parameters. If this aircraft cannot take off within the engine limit under the
 source-consistent model, report that result and revisit the added assumptions;
 do not change the notes' principles or invent lift to obtain a passing fixture.
 
-Keep the supplied lightweight world, cameras, two strips and few trees. Keep
-medium reasoning, 32,000 total output tokens including reasoning and one-shot
-generation without execution. These are evaluation conditions, not aircraft
+Keep the supplied lightweight world, cameras, two strips and few trees. Use
+medium reasoning, **20,000 total output tokens including reasoning**, and
+one-shot generation with targeted file reads/edits only. No execution, syntax
+checks, builds, tests, browser access or grader feedback during generation.
+Reading edited files and mental review remain allowed. Blocked out-of-policy
+tool requests fail the seventh grader. Deliver token notices only at 50% and
+75%; retain the existing 900 s operational timeout rather than adding an
+aggressive latency deadline. These are evaluation conditions, not aircraft
 physics. Bundle all source/scaffold files needed by the eventual task here.
 
 ## Grader consequences
 
-Keep narrowly targeted binary checks, but make their predicates test the source
-principles above. Examples include a known trajectory's required force, actual
-outer-area reduction on recovery, sensitivity to fore-and-aft motion, separate
-section behaviour, elastic energy return with zero damping, energy loss with
-damping, mass-dependent inertia, and force-derived glide accounting. Use common
-states and controlled interventions. Do not assume every intervention improves
-thrust or every powered turn descends.
-
-Retain useful existing pilot, mass, fuel, wheel-axis, contact, geometry/motion
-coupling and banking checks. Reconsider the prescribed global NACA response,
-fixed sinusoidal mechanism and arbitrary glide envelope before calibration.
+Use exactly the seven rows in [SOURCE_FIRST_GRADERS.md](SOURCE_FIRST_GRADERS.md).
+Score the six task targets and report the file-only validity result separately.
+Remove the easy standalone points; retain useful pilot, geometry, source-number
+and UI observations as non-scoring diagnostics and required deliverables.
+The wheel-axis check remains a scored regression. Keep the force-comparison
+panel inspectable without awarding a separate easy point for printing a formula.
+Use controlled interventions, independent expectations and retained raw evidence.
+Do not assume every intervention improves thrust or every powered turn descends.
 Calibrate each new check against a correct fixture and a deliberate defect.
 Passing the old 28 checks cannot establish compliance with this revised brief.
 

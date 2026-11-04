@@ -1,0 +1,11 @@
+{
+  "id": "no_verification_tools",
+  "policy_version": "targeted-files-only-v1",
+  "pass": true,
+  "status": "completed",
+  "violations": [],
+  "observed_tool_calls": 1,
+  "scope": "Observed tool requests only. Blocked out-of-policy requests fail. File rereads, patch feedback and mental review are allowed; private reasoning is not inspected.",
+  "events_sha256": "dd2f8a4a470ac17ee9e5b9700c461341e4b42adbe468adef92b445949a044c3a",
+  "reason": "Only allowed file operations requested"
+}

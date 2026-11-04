@@ -1,0 +1,135 @@
+{
+  "task_version": "mechanical-v5-draft",
+  "status": "submitted",
+  "reference_fixture": false,
+  "not_a_model_submission": true,
+  "editable_files": [
+    "submission/aircraft.mjs",
+    "submission/physics.mjs",
+    "submission/kinematics.mjs",
+    "submission/interpretation.json"
+  ],
+  "readonly_sha256": {
+    "environment/engineering.mjs": "7f6d9ee792326ef38ed917d42ffeef28655705a9824a8c1d5e31459081670fa3",
+    "environment/mechanism.mjs": "8a3d20081900e7b859673c88712978a894e65946bb8eff85c3fe8369a47e621e",
+    "environment/platform.mjs": "4494cf585db5af884161c19fe2d71fbfeadb9bd8f787211502966e7043092175",
+    "environment/style.css": "21db9f38d2ab3f0c10c667245fed2748689382465c4164e281bed102b2b7f5ed",
+    "environment/vendor/THREE-LICENSE.txt": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+    "environment/vendor/three.core.min.js": "05b2609338c76cd65daf74f3ac515bc9a5045e1b3b33edc07d8c9bd55250fa90",
+    "environment/vendor/three.module.min.js": "86bcee248b64f44bcfc23c331ae74619061957d59cab040171dcb6fb5900beb6",
+    "environment/view-motion.mjs": "a01247f64b5244a8223f490b10044296c779284e6fa685e75344421499ef92b1",
+    "environment/world.mjs": "a6b172f743a1f07ca60d543b32604774124a1034478a25b794f7730c22846c00",
+    "index.html": "976bfa114d0a0925ea208963ad804bb2f6fe27a97a8caa3aa04689bc0b934018"
+  },
+  "input_sha256": {
+    "inputs/AIRCRAFT_API.md": "17712f9b00d996c2df05dd9556c8ae859c2df9362889c23c4885a25e3ee279b6",
+    "inputs/ENGINEERING_NOTES.md": "75866e65cce8ce894c220323f46cda10112ab65634a5df0b3687c9a909f49c2b",
+    "inputs/SOURCE_GUIDE.md": "6c6e00e5fb710cfce9685a9e882bb8dba1abe896288fa94949594881b11f1ab4",
+    "inputs/TASK.md": "289330ad6f005c1dc9d6b96dd84d403e8062f91264ab4f1e09db3de234cae662",
+    "inputs/engineering.json": "05924f0bf71088687fc05f3525c0c8614682df701a2c0e3676238cf47974a2f3",
+    "inputs/sources/Unknown-14.jpg": "889697309f83ec195a90d91974ff30e5374ab321284a759bbe8c929f5e8e405e",
+    "inputs/sources/Unknown-2.jpg": "5c0a94b3f137307104f8062c23c3a6a3c6366c88f2f18c8fafed9ee3ddf0cbd9"
+  },
+  "config": {
+    "task_version": "mechanical-v5-draft",
+    "max_output_tokens_total": 20000,
+    "max_output_tokens_per_response": 20000,
+    "max_requests": 24,
+    "max_wall_seconds": 900,
+    "max_submission_bytes": 2000000,
+    "reasoning_effort": "medium",
+    "output_token_notice_percentages": [
+      50,
+      75
+    ],
+    "generation_profile": {
+      "id": "source-first-constrained-v1",
+      "sha256": "39039e1cae4a5628da5c7ad26e90485cc89e2a40f1d94730b375c10598fab264"
+    }
+  },
+  "grading_status": "provisional smoke checklist; 5 visual checks ungraded",
+  "runtime_dependencies": "Only files inside this packet; no original-project paths, package install or network assets",
+  "model": "offline-policy-fixture-not-a-model",
+  "created_utc": "2026-11-04T20:13:18.500544+00:00",
+  "starter_sha256": {
+    "submission/aircraft.mjs": "a8d74bf688691be65471b67c2cae2b8422beffe8df3d20e1f37f6d157e73f3b7",
+    "submission/environment/engineering.mjs": "7f6d9ee792326ef38ed917d42ffeef28655705a9824a8c1d5e31459081670fa3",
+    "submission/environment/mechanism.mjs": "8a3d20081900e7b859673c88712978a894e65946bb8eff85c3fe8369a47e621e",
+    "submission/environment/platform.mjs": "4494cf585db5af884161c19fe2d71fbfeadb9bd8f787211502966e7043092175",
+    "submission/environment/style.css": "21db9f38d2ab3f0c10c667245fed2748689382465c4164e281bed102b2b7f5ed",
+    "submission/environment/vendor/THREE-LICENSE.txt": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+    "submission/environment/vendor/three.core.min.js": "05b2609338c76cd65daf74f3ac515bc9a5045e1b3b33edc07d8c9bd55250fa90",
+    "submission/environment/vendor/three.module.min.js": "86bcee248b64f44bcfc23c331ae74619061957d59cab040171dcb6fb5900beb6",
+    "submission/environment/view-motion.mjs": "a01247f64b5244a8223f490b10044296c779284e6fa685e75344421499ef92b1",
+    "submission/environment/world.mjs": "a6b172f743a1f07ca60d543b32604774124a1034478a25b794f7730c22846c00",
+    "submission/index.html": "976bfa114d0a0925ea208963ad804bb2f6fe27a97a8caa3aa04689bc0b934018",
+    "submission/interpretation.json": "f929fe8d5a737d35febccd19f40536813cf56773ef0f9a288be1c5b7e2357678",
+    "submission/kinematics.mjs": "7acc4c13c33367ccb838d49db4b4d65d0b4c2d865d633041094f05cc943ae92c",
+    "submission/physics.mjs": "bbf4fed62f97d9b810940959098e3fc528ab9f3166c46db1fea70294164f98f4"
+  },
+  "implementation_sha256": {
+    "ornithopter_eval/__init__.py": "cf2e15d3648bbebad0684ba37d53870ab138f103137e6aff4a07972396944741",
+    "ornithopter_eval/__main__.py": "e844e7ea91240d7f5e609e3ea7fe508c986a13d605c93ca6056089f64fa9f657",
+    "ornithopter_eval/api.py": "a6911fc493250a712a8b1a9c3e78c8c88de68533395501f1dc991927940ab111",
+    "ornithopter_eval/checks.py": "26ef9793692f61a16964c14a647f72bb99ef8ba3b4b7c1f43a20880da2fa0ec9",
+    "ornithopter_eval/experiment.py": "b80011e15e0354051e245fbe754c90e6c2e8abaea8def0442bffeb179272c514",
+    "ornithopter_eval/grading.py": "1facce7abed6b0ff0cd3f7ac2681d10330a675ba7fffda4886631c71d8febfbb",
+    "ornithopter_eval/mechanical_validation.py": "24a8c6056495ca1f824aba23c9a81e0d99d43c1ff089ede8f55e176b7e791acf",
+    "ornithopter_eval/piloted_validation.py": "3084546e776e08e841cf85e74988cc21dbb9baba94421762ae6e0a66a26864e2",
+    "ornithopter_eval/playback.py": "cb164ebd1fffc592d6ce098b89850ee771eb8c02e01293017be6aa873a1b080e",
+    "ornithopter_eval/policy.py": "e24cbe3c5026e4928660f1d1692c9b44c22d0c7a7652c390ec462d27f08f635e",
+    "ornithopter_eval/protocol.py": "88e7419e80efd08b6572dc4d62b3d3cfdeca456df80c24a1225805eb0447ee19",
+    "ornithopter_eval/review.py": "e17056c632454ec278253bc277eb434c87c34078ac5c17ae41615112ca4acdf1",
+    "ornithopter_eval/rollout.py": "93cc8b789d10f019babfb88bede307128615774ff828a71dd0eab0656aa27214",
+    "ornithopter_eval/runner.py": "e5a65fc690a38e2d202496b03889412469d3668193fc2c5d7388f132bb309844",
+    "ornithopter_eval/wheel_audit.py": "aea5a4ae64be7e05a2f024ce00a28333539ac0c8b2f8949d603ebbfb9a396ed2",
+    "ornithopter_eval/world_candidate.py": "9210d8e30650ac73765c0395455f7949a0a485876ea44734a41da72d390ed8fd",
+    "grader/browser.mjs": "8bdbaf053d9668016dc3f645a08966260f1d7efa58f4d68806c63e05d1804fe5",
+    "grader/mechanical-v4.mjs": "ed8228ed362e8f034428cf1eb7aed2a6b9e91c3da608ae82bba374b65f7f3c75",
+    "grader/piloted-geometry.mjs": "4b496b69f698b6071bac04f1cd7dbcaa716178bdd251a6ab6e22d85e73980ec4",
+    "grader/piloted-numeric.mjs": "a72938b7567ef400b6b36a6a3cb0857af15f70046e8d7482a1851c43871011c0",
+    "grader/piloted-v5.mjs": "b40e7a2d484a4bac144094b154b16d205ecf7740dd7220cbe6cad2fc27358872",
+    "grader/playback-review.mjs": "043192a78cbe9839ef2f3260bfee4f2329744804d66ab93d2664103c26f90011",
+    "grader/wheel-axis-review.mjs": "de3addee8ba18c0fada16f94f7ec37912f18ee3499dbb405dfdc7702d4af6f78",
+    "grader/wheel-axis.mjs": "e7acad9440a30bf1c7f8c8f83fa41a0f20688c5bbbdeb9d0d6e081b7d7db0faa",
+    "grader/world-review.mjs": "39fa58db05188cdd2d2d66bd47d32d76430e93ab65b6103040a18cda3fe1471c"
+  },
+  "runtime": {
+    "python": "3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]",
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O"
+  },
+  "protocol": "one instruction; only declared aircraft files writable; no execution or grader feedback; token-only checkpoints",
+  "calibration_fixture": true,
+  "reason": null,
+  "usage": {
+    "input_tokens": 0,
+    "output_tokens": 2,
+    "requests": 2
+  },
+  "rollout_policy_version": "targeted-files-only-v1",
+  "events_sha256": "dd2f8a4a470ac17ee9e5b9700c461341e4b42adbe468adef92b445949a044c3a",
+  "output_token_notice_percentages_sent": [],
+  "elapsed_seconds": 0.004,
+  "submission_sha256": {
+    "aircraft.mjs": "a8d74bf688691be65471b67c2cae2b8422beffe8df3d20e1f37f6d157e73f3b7",
+    "environment/engineering.mjs": "7f6d9ee792326ef38ed917d42ffeef28655705a9824a8c1d5e31459081670fa3",
+    "environment/mechanism.mjs": "8a3d20081900e7b859673c88712978a894e65946bb8eff85c3fe8369a47e621e",
+    "environment/platform.mjs": "4494cf585db5af884161c19fe2d71fbfeadb9bd8f787211502966e7043092175",
+    "environment/style.css": "21db9f38d2ab3f0c10c667245fed2748689382465c4164e281bed102b2b7f5ed",
+    "environment/vendor/THREE-LICENSE.txt": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+    "environment/vendor/three.core.min.js": "05b2609338c76cd65daf74f3ac515bc9a5045e1b3b33edc07d8c9bd55250fa90",
+    "environment/vendor/three.module.min.js": "86bcee248b64f44bcfc23c331ae74619061957d59cab040171dcb6fb5900beb6",
+    "environment/view-motion.mjs": "a01247f64b5244a8223f490b10044296c779284e6fa685e75344421499ef92b1",
+    "environment/world.mjs": "a6b172f743a1f07ca60d543b32604774124a1034478a25b794f7730c22846c00",
+    "index.html": "976bfa114d0a0925ea208963ad804bb2f6fe27a97a8caa3aa04689bc0b934018",
+    "interpretation.json": "f929fe8d5a737d35febccd19f40536813cf56773ef0f9a288be1c5b7e2357678",
+    "kinematics.mjs": "7acc4c13c33367ccb838d49db4b4d65d0b4c2d865d633041094f05cc943ae92c",
+    "physics.mjs": "bbf4fed62f97d9b810940959098e3fc528ab9f3166c46db1fea70294164f98f4"
+  },
+  "rollout_review": {
+    "file": "rollout-review.json",
+    "pass": true,
+    "status": "completed",
+    "sha256": "cd3802380925e4ef7be93cdd99089d1e0e69d33558ced9aef94e6206918f1443"
+  }
+}

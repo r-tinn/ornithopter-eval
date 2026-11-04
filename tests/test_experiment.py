@@ -18,6 +18,24 @@ def fake_grade(submission,output,node):
 
 
 class ExperimentTests(unittest.TestCase):
+    def test_generation_profile_is_frozen_for_both_models_without_changing_task(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp)/'constrained';calls=[]
+            config=ROOT/'configs/frontier-calibration.json';before=config.read_bytes()
+            def transport(payload,timeout):
+                calls.append(payload)
+                return {'status':'completed','output':[],'usage':{'input_tokens':10,'output_tokens':1}}
+            result=run_experiment(root,['model-a','model-b'],1,config,transport=transport,grader=fake_grade,
+                                  generation_profile=ROOT/'configs/source-first-budget.json')
+            self.assertEqual(result['task_version'],TASK_VERSION)
+            self.assertEqual(len(calls),2)
+            self.assertTrue(all(p['max_output_tokens']==20000 for p in calls))
+            saved=json.loads((root/'config.json').read_text())
+            self.assertEqual(saved['max_output_tokens_total'],20000)
+            self.assertEqual(saved['generation_profile']['id'],'source-first-constrained-v1')
+            self.assertEqual(config.read_bytes(),before)
+            self.assertIn('File-only audit',(root/'index.html').read_text())
+
     def test_six_independent_attempts_with_identical_input_and_medium_reasoning(self):
         with tempfile.TemporaryDirectory() as temp:
             root=Path(temp)/"experiment";calls=[]
