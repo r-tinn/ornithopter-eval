@@ -28,7 +28,7 @@ For the next source-first protocol, use medium reasoning and a 240-second
 generation deadline, via configs/source-first-time.json. No benchmark token or
 request-count cap. Preserve the old token profiles for reproduction. Do not
 silently reinterpret a saved task/config as the new protocol.
-The next rubric has eight outcomes: six binary task graders including the
+The current v6 rubric has eight outcomes: six binary task graders including the
 existing wheel_rotation_axis regression, plus no_verification_tools as a separate
 validity result, and a separate human aesthetic_realism rating from 1 to 5 after
 the owner flies the submission. Never invent a human rating or combine it into
@@ -37,10 +37,8 @@ Time-budget notices are limited to the 50% and 75% thresholds (120 and 180 s),
 delivered at the next exchange; do not send ongoing usage updates. Retain
 the original settings for published cohorts.
 
-The intended next eval is a mechanical ornithopter inside a supplied lightweight
+The current eval is a mechanical ornithopter inside a supplied lightweight
 world. The swan studies inform wing proportions/mechanics, not a literal animal
 design target. Keep only hills, a few trees and two landing strips; bundle all
 needed files here so the original project is never a runtime dependency. No
-other aircraft or complicated scenery systems are needed. The v4 candidate is
-for task/scaffold/grader review before another model calibration; do not present
-its handwritten reference fixture as a model result or legacy v3 scores as v4.
+other aircraft or complicated scenery systems are needed. The source-first v6 task uses nine photos (02,08–15), a 55kg pilot and revised favourable 177.5kg wet budget. Do not present an author reference fixture as a model result. Use configs/source-first-v6.json for new cohorts; all six task graders must pass the author reference and reject the documented targeted mutants before a model cohort.

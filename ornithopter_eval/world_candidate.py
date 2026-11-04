@@ -13,7 +13,7 @@ from pathlib import Path
 
 from .experiment import ArtifactServer
 from .policy import FilePolicy, PolicyError
-from .checks import MECHANICAL_VERSION,MECHANICAL_VERSIONS,PILOTED_VERSION,checklist
+from .checks import MECHANICAL_VERSION,MECHANICAL_VERSIONS,PILOTED_VERSION,SOURCE_FIRST_VERSION,checklist
 from .runner import ROOT, digest, verify_sources, write_json
 from .protocol import validate_config
 
@@ -23,14 +23,19 @@ PILOTED_EDITABLE = ('aircraft.mjs', 'physics.mjs', 'kinematics.mjs', 'interpreta
 
 
 def prepare_world(output, reference=False, task_version=MECHANICAL_VERSION):
-    if task_version not in (MECHANICAL_VERSION,PILOTED_VERSION):
+    if task_version not in (MECHANICAL_VERSION,PILOTED_VERSION,SOURCE_FIRST_VERSION):
         raise ValueError('Unsupported candidate version')
-    candidate=ROOT/'candidate/mechanical-v5' if task_version==PILOTED_VERSION else CANDIDATE
-    editable=PILOTED_EDITABLE if task_version==PILOTED_VERSION else EDITABLE
+    candidate=ROOT/'candidate'/('mechanical-v6' if task_version==SOURCE_FIRST_VERSION else 'mechanical-v5') if task_version in (PILOTED_VERSION,SOURCE_FIRST_VERSION) else CANDIDATE
+    editable=PILOTED_EDITABLE if task_version in (PILOTED_VERSION,SOURCE_FIRST_VERSION) else EDITABLE
     output = Path(output).resolve()
     if output.exists():
         raise ValueError('Use a fresh output directory; existing review packets are preserved')
     sources = verify_sources()
+    source_directory=ROOT/'task/sources'
+    if task_version==SOURCE_FIRST_VERSION:
+        selected=json.loads((candidate/'source-selection.json').read_text());sources=selected['sources'];source_directory=ROOT/selected['source_directory']
+        for source in sources:
+            if digest(source_directory/source['file'])!=source['sha256']:raise ValueError('Source photo changed: '+source['file'])
     output.mkdir(parents=True)
     inputs = output / 'inputs'
     inputs.mkdir()
@@ -38,9 +43,11 @@ def prepare_world(output, reference=False, task_version=MECHANICAL_VERSION):
     for name in ('TASK.md','SOURCE_GUIDE.md','AIRCRAFT_API.md','engineering.json','ENGINEERING_NOTES.md'):
         if (candidate/name).is_file():
             shutil.copyfile(candidate / name, inputs / name)
+    if task_version==SOURCE_FIRST_VERSION:
+        shutil.copyfile(candidate/'GRADERS.md',inputs/'GRADERS.md')
     (inputs / 'sources').mkdir()
     for source in sources:
-        shutil.copyfile(ROOT / 'task/sources' / source['file'],inputs / 'sources' / source['file'])
+        shutil.copyfile(source_directory / source['file'],inputs / 'sources' / source['file'])
     submission = output / 'submission'
     shutil.copytree(candidate / 'scaffold',submission)
     if reference:
@@ -55,7 +62,7 @@ def prepare_world(output, reference=False, task_version=MECHANICAL_VERSION):
         'editable_files':['submission/'+name for name in editable],
         'readonly_sha256':{name:sha for name,sha in hashes.items() if name not in editable},
         'input_sha256':{str(p.relative_to(output)):digest(p) for p in sorted(inputs.rglob('*')) if p.is_file()},
-        'config':{'max_output_tokens_total':32000,'reasoning_effort':'medium','output_token_notice_percentages':[50,75]},
+        'config':json.loads((ROOT/'configs/source-first-v6.json').read_text()) if task_version==SOURCE_FIRST_VERSION else {'max_output_tokens_total':32000,'reasoning_effort':'medium','output_token_notice_percentages':[50,75]},
         'grading_status':'proposed checklist for review; not a scored model trial',
         'runtime_dependencies':'Only files inside this packet; no original-project paths, package install or network assets',
     })
@@ -65,7 +72,7 @@ def prepare_world(output, reference=False, task_version=MECHANICAL_VERSION):
 def prepare_world_trial(output, config_path, *, config=None):
     config = json.loads(Path(config_path).read_text()) if config is None else config
     version=config.get('task_version')
-    if version not in (MECHANICAL_VERSION,PILOTED_VERSION):
+    if version not in (MECHANICAL_VERSION,PILOTED_VERSION,SOURCE_FIRST_VERSION):
         raise ValueError('Unsupported mechanical task version')
     validate_config(config)
     output = prepare_world(output,task_version=version)

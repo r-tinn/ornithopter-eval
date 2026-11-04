@@ -137,7 +137,7 @@ def validate(node):
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Ornithopter evaluation and shared-world review")
     commands = parser.add_subparsers(dest="command",required=True)
-    cli_config=str(ROOT/'configs/mechanical-v5-timed.json')
+    cli_config=str(ROOT/'configs/source-first-v6.json')
     p = commands.add_parser("prepare");p.add_argument("output");p.add_argument("--config",default=cli_config)
     p = commands.add_parser("run");p.add_argument("--model",required=True);p.add_argument("--output",required=True);p.add_argument("--config",default=cli_config)
     p = commands.add_parser("grade");p.add_argument("submission");p.add_argument("--output",required=True);p.add_argument("--node",default="node");p.add_argument('--task-version')

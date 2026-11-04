@@ -1,12 +1,10 @@
 # Source-first requirements for the next ornithopter task
 
-Status: corrected design brief following the 4 November 2026 source audit.
-Expanded with a lightweight implementation approach on 4 November 2026.
-This is not an implemented simulator or a newly calibrated task version.
-The executable v5 prototype does not yet meet this brief.
-The next scoring scheme is [eight graders](SOURCE_FIRST_GRADERS.md): six binary
-task targets, including the wheel-axis regression, file-only validity and a
-separate human aesthetic-realism score from 1 to 5.
+Status: implemented as [mechanical-v6](../candidate/mechanical-v6/TASK.md), with
+nine original source photographs, a coupled reduced model and six calibrated
+binary task graders. The normative numerical task/API/assumptions are in that
+packet; the discussion below records the design principles and approach.
+File-only validity and human aesthetic realism (1–5) remain separate.
 
 ## Visual design
 
@@ -40,8 +38,7 @@ For the next packet, include photo 02 for geometry and photos 09–15 for the
 method, cycle mechanics, sections, controls and work accounting. Photo 13's
 opening continuation is part of the wing-action argument even though its later
 figure depicts a goshawk. Include photo 08 as section-data context if that chart
-is used. Supply scoped readable guidance for uncertain passages. This is the
-planned source selection; v5's executable packet has not yet been changed.
+is used. Supply scoped readable guidance for uncertain passages. This source selection is now bundled in v6.
 
 ## Principles the task must retain
 
@@ -320,17 +317,15 @@ Publish one small parameter set covering the two section models, mass/inertia
 distribution, spring/damping, torque limit, phase curves, exposed-area rule and
 glide transition. Label every new value and its basis. Verify that the combined
 reference respects the mass and power scenario, then freeze it for the cohort.
-These implementation suggestions do not themselves supply or validate that
-parameter set. No new simulator or grading implementation is implied by this
-expanded brief.
+The frozen completion and actual calibration are now in candidate/mechanical-v6 and validation/source-first-v6. Earlier suggestions here are explanatory; the runnable packet fixes exact parameters and tolerances.
 
 ## Additional scenario details
 
 Retain a visible adult pilot and a petrol-powered machine. Photos 09, 10 and 15
 explicitly envisage a powered, human-carrying ornithopter. The 55 kg pilot, 14 m
-span, 6 m body, component budget totalling 228.5 kg wet, finite fuel and 16 kW
+span, 6 m body, component budget totalling 177.5 kg wet, finite fuel and 16 kW
 shaft cap are provisional scenario inputs, not recovered notebook values.
-They can fill missing numbers, subject to a source-consistent feasibility check.
+They can fill missing numbers, checked for internal feasibility in the labelled author reference, not experimentally validated.
 Mass and span alone do not establish feasibility or determine spring/inertia
 parameters. If this aircraft cannot take off within the engine limit under the
 source-consistent model, report that result and revisit the added assumptions;

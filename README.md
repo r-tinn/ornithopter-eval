@@ -1,69 +1,52 @@
 # Ornithopter Eval
 
-The next source-first revision uses [eight graders](docs/SOURCE_FIRST_GRADERS.md):
-wing-cycle forces, elastic/inertial exchange, wing-induced pitch, power-limited
-flight, unpowered glide, wheel rotation axis, file-only tool use and a **human
-aesthetic realism rating (1–5)** entered after flying each submission. Report
-six binary task outcomes, protocol validity and human rating separately. Five new
-physics scenarios still require implementation/calibration. The existing wheel
-regression and the new deterministic rollout auditor are implemented.
+The runnable task is [source-first v6](candidate/mechanical-v6/TASK.md). A fresh
+model receives **nine original notebook photographs (02,08–15)** plus clearly
+labelled engineering completions:55kg adult pilot,14m span,**177.5kg initial all-up
+mass**,16kW petrol engine and finite fuel. Read [the numerical assumptions and
+feasibility changes](candidate/mechanical-v6/ENGINEERING_NOTES.md).
 
-The [timed generation profile](configs/source-first-time.json) sets a **4-minute
-generation deadline**, medium effort and no benchmark token or request-count cap.
-Time notices arrive at the next exchange after **2 and 3 minutes**. The latest
-mechanical runs took 129 and 190 seconds; the harder revised task still needs
-calibration. [Timing basis and limits](analysis/time-budget.json). Use
-`--generation-profile configs/source-first-time.json` with `prepare`, `run`
-or `compare`; the resolved profile/hash is saved without rewriting historical
-configs. CLI `prepare`, `run` and `compare` now default to
-[mechanical-v5-timed.json](configs/mechanical-v5-timed.json). This changes the
-generation budget, not the physics task/rubric version. Explicit historical
-configs keep their original limits; the low-level legacy `prepare()` helper
-retains its old packet default for v3 fixture reproduction.
-New attempts save `rollout-review.json` and the gallery links its file-only
-audit. Blocked out-of-policy tool requests fail; missing trace evidence stays
-unavailable. Old model trials and their scores remain unchanged.
+The model creates a mechanical ornithopter in the supplied lightweight hills,
+trees and two-strip world. Shared geometry/mass bookkeeping supports closing
+outer leaves, distinct region camber and sections, real spring/wing inertia,
+whole-aircraft CG movement and coupled wing/body pitch. Forces and work follow
+the actual linked motion. No original-project runtime dependency.
 
-New packets include a [visual design brief](task/DESIGN_BRIEF.md) requesting a
-compelling, realistic mechanical design faithful to the sketches. Run
-`python3 -m ornithopter_eval serve-artifacts experiments/mechanical-v4-smoke-20261030 --port 8769`
-and click **Rate aesthetic realism · 1–5** in the gallery. Fly a submission first,
-then save your score and optional notes. Reviews persist in Git-ignored
-`reviews/aesthetics/`, preserve revisions and bind to unchanged submission hashes.
-Export them from the review page. The historical cohort's original scores,
-prompts and ZIP remain unchanged; any new human rating is separate.
+There are **six binary task graders**:wing-cycle forces/production geometry,
+elastic/inertial energy,wing/body pitch,finite-power takeoff/bank,unpowered glide
+balance,and actual wheel rotation axis. **File-only tool validity** is separate.
+**Human aesthetic realism (1–5)** is entered after you fly the simulator.
+[Exact probes/tolerances](candidate/mechanical-v6/GRADERS.md) and
+[positive/negative calibration](validation/source-first-v6/summary.json) are saved.
+The reference passes six; all seven targeted defects are rejected. This checks
+an educational reduced model, not a flight-validated aircraft design.
 
-**Source-faithfulness review, 4 November 2026:** the v5 prototype has important
-omissions from Stanley's notes despite passing its software checks. The human
-pilot and engine are compatible with his stated aim; the source mechanics need
-to lead the next revision. Read [the audit](audits/source-compatibility-20261104/REPORT.md)
-and [corrected requirements and implementation guidance](docs/SOURCE_FIRST_REQUIREMENTS.md). The current
-simulator and all prior results are preserved; source-first compliance is not
-yet established.
-
-The current review candidate is a [human-piloted mechanical ornithopter](candidate/mechanical-v5/README.md):
-55 kg visible adult pilot, 14 m span, 228.5 kg initial all-up mass, a petrol engine
-with a 16 kW shaft limit, finite fuel and propulsion derived from actual wing
-motion. [Engineering basis and uncertainties](candidate/mechanical-v5/ENGINEERING_NOTES.md)
-distinguish measured reference data from our hypothetical aircraft assumptions.
+New CLI runs use **240 seconds**, **medium reasoning**, and **no benchmark token
+or request cap**. The model knows the deadline upfront. Warnings arrive at the
+next exchange after120/180s. Only targeted virtual file reads and declared
+patches are allowed; no execution, tests, browser or grader feedback. Completed
+files survive cutoff; late edits are discarded.
 
 ```sh
-python3 -m ornithopter_eval prepare-piloted runs/piloted-review --reference
-python3 -m ornithopter_eval serve-world runs/piloted-review --port 8768
-python3 -m ornithopter_eval validate-piloted
+python3 -m ornithopter_eval compare --models gpt-5.6-sol gpt-6.1-sol --repeats 1 --config configs/source-first-v6.json --output runs/source-first-v6-comparison
+python3 -m ornithopter_eval serve-artifacts runs/source-first-v6-comparison --port 8772
 ```
 
-The preview is a labelled **handwritten reference fixture**, not a model result.
-V5 has [28 automated binary checks and five pending visual questions](candidate/mechanical-v5/GRADERS.md).
-[Calibration results](validation/piloted-v5.json) include fourteen positive/negative
-variants. [Development calibration history](validation/piloted-v5-development.json)
-also retains the earlier empty-starter infrastructure failure and the earlier,
-narrower rubric. [Performance and sensitivity diagnostics](analysis/piloted-performance.json)
-are reproducible with `node analysis/piloted_performance.mjs runs/piloted-review runs/piloted-performance-new.json`.
-The code runner accepts only labelled reference packets for this diagnostic.
-No v5 model cohort has been run. CLI prepare/run/compare now default to the v5
-physics task with the new four-minute budget by default. Use explicit
-`--config configs/mechanical-v5-smoke.json` for the older 32,000-token budget.
+The gallery links each playable submission, six grader results, captured views,
+raw transcript,source,and file-only audit. **Rate aesthetic realism ·1–5** opens
+the human review UI. Scores bind to complete submission hashes and retain every
+revision. Local ledgers are Git-ignored in reviews/aesthetics; export JSON from
+the review page. No automatic aesthetic judgment is substituted for yours.
+
+Every new packet contains all nine original images,the added assumptions,
+source interpretation guide,the public probe specification and visual design
+brief. No live key is passed to a submission or committed. Generation logs,
+manifest hashes,grader trajectories and screenshots are retained for inspection.
+
+For a labelled author reference (never a model result), call
+`prepare_world(...,reference=True,task_version=SOURCE_FIRST_VERSION)` from the
+Python preparation API. Author mutant calibration is reproducible with
+`PYTHONPATH=. python3 analysis/calibrate_source_first.py runs/new-calibration --node /path/to/node`.
 
 ## Preserved v4 task and results
 

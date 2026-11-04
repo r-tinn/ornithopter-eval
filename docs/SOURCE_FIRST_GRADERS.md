@@ -1,9 +1,10 @@
 # Eight graders for the source-first revision
 
-This replaces the proposed many-check scoring scheme **for the next task**.
-It does not rescore archived attempts or relabel v5's 28 checks. The old 15/15
-model results used v4; no frontier model has completed the source-first revision.
-Its difficulty or saturation is not yet established.
+The runnable task is [mechanical-v6-source-first](../candidate/mechanical-v6/TASK.md).
+Its [exact public probes and tolerances](../candidate/mechanical-v6/GRADERS.md)
+and independent browser grader implement all six task targets. Positive and
+seven targeted negative author fixtures are calibrated before the model cohort.
+These are checks of a declared educational reduction, not flight validation.
 
 There are six binary task outcomes, one binary file-only validity outcome and
 one human aesthetic-realism score. Report performance as **x/6**, protocol
@@ -18,11 +19,11 @@ never an inferred pass or an automatic model failure.
 
 | # / ID | Single target | Probe and failure it must catch | Status |
 |---|---|---|---|
-| 1. `wing_cycle_force_coupling` | Does the visible working/recovery mechanism produce the forces implied by its actual motion and separate inner/outer section models? | At published phases/flows, independently reconstruct exposed geometry, velocities and forces from the frozen source-consistent model; compare with production geometry and force output. Catch decorative folding, unchanged force area, missing sweep/camber or a substituted shared polar. | Specification; new mechanism, coefficients and oracle needed. |
-| 2. `elastic_inertial_exchange` | Does the spring exchange energy with the actual moving wing/body inertia without unaccounted energy creation or loss? | Release a displaced isolated mechanism with motor, air and damping disabled. Reconstruct kinetic/spring energy from mass geometry during real movement; add known damping and check its loss. Catch prescribed-speed animation, omitted wing inertia or a decorative spring/energy counter. | Specification; coupled reference needed. |
-| 3. `wing_body_pitch_coupling` | Does wing motion produce the pitching response predicted by the coupled model with neutral pilot input? | Compare matched states with a controlled fore/aft-motion intervention. Independently calculate coupling/moments and compare initial acceleration and a short integration. Catch control-only pitch or automatic flow alignment. No universal response sign is assumed. | Specification; coupled reference needed. |
-| 4. `power_limited_flight` | Can the aircraft complete a published takeoff-and-banked-flight scenario within its finite engine/fuel allowance? | Retain the full production trajectory, forces, work and fuel history. Fixed pilot/mass, engine cap, runway and trim/maneuver. Catch free thrust, power-limit bypass or hidden bank lift compensation. Powered turns need not always descend. | Specification; source-consistent feasibility and scenario bounds needed. |
-| 5. `unpowered_glide_balance` | Does the deliberately configured glide lose mechanical energy at the rate predicted by its aerodynamic losses? | Published speed/trim cases, zero motor input, force-derived descent and reconstructed energy loss. Include residual wing/spring motion. Catch altitude hold, zero drag and hidden propulsion. No arbitrary 6–14 L/D window. | Specification; new glide/loss model needed. |
+| 1. `wing_cycle_force_coupling` | Does the visible working/recovery mechanism produce the forces implied by its actual motion and separate inner/outer section models? | At published phases/flows, independently reconstruct exposed geometry, velocities and forces from the frozen source-consistent model; compare with production geometry and force output. Catch decorative folding, unchanged force area, missing sweep/camber or a substituted shared polar. | **Implemented**; independent geometry, section/force reconstruction and actual production vertices. |
+| 2. `elastic_inertial_exchange` | Does the spring exchange energy with the actual moving wing/body inertia without unaccounted energy creation or loss? | Release a displaced isolated mechanism with motor, air and damping disabled. Reconstruct kinetic/spring energy from mass geometry during real movement; add known damping and check its loss. Catch prescribed-speed animation, omitted wing inertia or a decorative spring/energy counter. | **Implemented**; actual mass-point energy and coupled reference. |
+| 3. `wing_body_pitch_coupling` | Does wing motion produce the pitching response predicted by the coupled model with neutral pilot input? | Compare matched states with a controlled fore/aft-motion intervention. Independently calculate coupling/moments and compare initial acceleration and a short integration. Catch control-only pitch or automatic flow alignment. No universal response sign is assumed. | **Implemented**; actual mass-point energy and coupled reference. |
+| 4. `power_limited_flight` | Can the aircraft complete a published takeoff-and-banked-flight scenario within its finite engine/fuel allowance? | Retain the full production trajectory, forces, work and fuel history. Fixed pilot/mass, engine cap, runway and trim/maneuver. Catch free thrust, power-limit bypass or hidden bank lift compensation. Powered turns need not always descend. | **Implemented**; source-consistent author takeoff/bank trajectory and finite power/fuel accounting. |
+| 5. `unpowered_glide_balance` | Does the deliberately configured glide lose mechanical energy at the rate predicted by its aerodynamic losses? | Published speed/trim cases, zero motor input, force-derived descent and reconstructed energy loss. Include residual wing/spring motion. Catch altitude hold, zero drag and hidden propulsion. No arbitrary 6–14 L/D window. | **Implemented**; derived trim and perturbed-speed force/energy balance. |
 | 6. `wheel_rotation_axis` | Does each rendered wheel rotate about its axle during straight travel and airborne motion? | Reuse `grader/wheel-axis.mjs`: infer the tyre's thin axis from transformed production geometry; every axle stays within 1° of aircraft lateral z with steering neutral. Supply both travel distance and `wheel_angle` so either animation convention is exercised. Must retain the saved GPT-5.6 failure and GPT-6.1 pass. | **Implemented existing regression**, with explicit wheel-angle input coverage. |
 | 7. `no_verification_tools` | Did the generator request only declared file reads and edits throughout its recorded attempt? | Audit every observed tool request and matched result. Any out-of-policy request fails even if blocked. Missing/inconsistent evidence cannot pass. No LLM judge or inspection of encrypted reasoning. | **Implemented** in `ornithopter_eval/rollout.py`, recorded automatically on new runs. |
 | 8. `aesthetic_realism` | After flying it, how convincing, compelling and faithful to the source sketches is the mechanical aircraft? | Owner enters 1–5 in the local review UI, considering proportions, coherent materials/construction, readable mechanisms, pilot scale and movement. No LLM proxy or automatic default. | **Implemented** human-rating UI and append-only local ledger; no model submission has been rated by the authoring agent. |
@@ -48,8 +49,7 @@ panel remains required and inspectable; printing its formula earns no point.
 Publish exact scenario states, interventions, tolerances, time windows and model
 parameters before generation. Expected results must come from independent
 equations and geometry, not candidate energy counters or self-reported success.
-Tolerances must reflect numerical/geometry error of the frozen model. They are
-**not yet fixed for graders 1–5**, which must not be presented as runnable.
+Tolerances reflect numerical/geometry error of the frozen model. They are fixed for the runnable v6 task in its GRADERS.md, with retained positive/negative calibration evidence.
 
 Each needs an inspected positive reference and a targeted broken variant it
 rejects. Preserve failures and conflicting judgments. V5's handwritten reference
@@ -151,5 +151,4 @@ python3 -m ornithopter_eval prepare runs/timed-harness-review --config configs/m
 python3 -m ornithopter_eval audit-rollout runs/FINISHED_RUN --output runs/rollout-recheck.json
 ```
 
-The first command does not prepare the revised physics task. The full eight-row
-rubric remains a review specification until the missing physics work is complete.
+The command above is a v5 budget-only reproduction. To prepare the revised task, use `python3 -m ornithopter_eval prepare runs/source-first-packet --config configs/source-first-v6.json`.

@@ -17,7 +17,7 @@ class PilotedTests(unittest.TestCase):
         from ornithopter_eval.__main__ import main
         with tempfile.TemporaryDirectory() as temp,redirect_stdout(io.StringIO()):
             root=Path(temp)/'trial'
-            main(['prepare',str(root)])
+            main(['prepare',str(root),'--config',str(ROOT/'configs/mechanical-v5-timed.json')])
             self.assertEqual(json.loads((root/'manifest.json').read_text())['task_version'],PILOTED_VERSION)
             config=json.loads((root/'manifest.json').read_text())['config']
             self.assertEqual(config['max_wall_seconds'],240)

@@ -13,7 +13,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 from .api import create_response, get_api_key
-from .checks import CHECKS, TASK_VERSION, MECHANICAL_VERSION, MECHANICAL_VERSIONS, PILOTED_VERSION, checklist
+from .checks import CHECKS, TASK_VERSION, MECHANICAL_VERSION, MECHANICAL_VERSIONS, PILOTED_VERSION, SOURCE_FIRST_VERSION, checklist
 from .grading import grade_submission
 from .runner import ROOT, digest, initial_input, prepare, run_model, write_json
 from .protocol import load_config
@@ -41,7 +41,7 @@ def automated_result(report):
 
 def write_transcript(run):
     parts = ["INITIAL INSTRUCTION\n", initial_input(run)[0]["content"][0]["text"],
-             "\nImages: inputs/sources/Unknown-2.jpg, inputs/sources/Unknown-14.jpg\n"]
+             "\nImages: " + ', '.join(str(p.relative_to(run)) for p in sorted((run/'inputs/sources').glob('*.jpg'))) + '\n']
     path = run / "events.jsonl"
     if path.exists():
         for line in path.read_text().splitlines():
@@ -100,16 +100,24 @@ def refresh_workbench(root, experiment):
     summaries = {}
     for model in experiment["models"]:
         trials = [t for t in experiment["trials"] if t["model"] == model]
-        valid = [t["automated"] for t in trials if t.get("automated") is not None]
+        valid = [t["automated"] for t in trials if t.get("automated") is not None and
+                 (version!=SOURCE_FIRST_VERSION or (t.get('rollout_review') or {}).get('pass') is True)]
         summaries[model] = {"attempts":len(trials), "graded_attempts":len(valid),
             "mean_passed":round(sum(t["passed"] for t in valid)/len(valid),2) if valid else None,
             "total_checks":total, "all_automated_passes":sum(t["passed"]==total for t in valid),
             "range":[min(t["passed"] for t in valid),max(t["passed"] for t in valid)] if valid else None}
+        if version==SOURCE_FIRST_VERSION:
+            summaries[model]['protocol_valid_attempts']=sum((t.get('rollout_review') or {}).get('pass') is True for t in trials)
+            summaries[model]['protocol_invalid_attempts']=sum((t.get('rollout_review') or {}).get('pass') is False for t in trials)
+            summaries[model]['aesthetic_realism']='Human review pending; separate from task score'
     summary = {"task_version":version,"status":experiment["status"],"models":summaries,
                "comparison_scope":f"{total} deterministic checks; {visual_count} visual checks remain separately ungraded.",
                "full_task_pass_rate":None,"note":f"{experiment['repeats']} repeat(s) per model; exploratory, not a definitive ranking.",
                "trials":experiment["trials"]}
     write_json(root / "summary.json", summary)
+    if version==SOURCE_FIRST_VERSION:
+        summary['comparison_scope']='Six binary task outcomes; aggregates include valid file-only attempts only. Report protocol invalid rate separately. Human aesthetic realism 1–5 is separate and ungraded until the owner reviews.'
+        write_json(root/'summary.json',summary)
     write_json(root / "experiment.json", experiment)
     cards = ''.join('<div class="card"><strong>'+html.escape(model)+'</strong><div class="score">'+str(s["mean_passed"] if s["mean_passed"] is not None else '—')+' <small>/ '+str(total)+'</small></div><span class="muted">Mean automated checks · '+str(s["graded_attempts"])+' / '+str(s["attempts"])+' graded</span></div>' for model,s in summaries.items())
     rows = []
@@ -122,6 +130,9 @@ def refresh_workbench(root, experiment):
         if (root / prefix / 'rollout-review.json').is_file():
             actions += '<a href="'+prefix+'rollout-review.json">File-only audit</a>'
         reason = '<br><small>'+html.escape(t['reason'])+'</small>' if t.get('reason') else ''
+        if version==SOURCE_FIRST_VERSION:
+            protocol=(t.get('rollout_review') or {}).get('pass')
+            reason+='<br><small>File-only: '+('pass' if protocol is True else 'fail — excluded from mean' if protocol is False else 'unavailable')+'</small>'
         rows.append('<tr><td>'+str(t["repeat"])+'</td><td>'+html.escape(t["model"])+'</td><td><strong>'+score+'</strong></td><td><span class="badge">'+html.escape(t["status"])+'</span>'+reason+'</td><td class="actions">'+actions+'</td></tr>')
     effort = html.escape(str(experiment["config"].get("reasoning_effort","default")))
     tokens = str(experiment["config"]["max_output_tokens_total"])
@@ -130,6 +141,9 @@ def refresh_workbench(root, experiment):
     body = '<p class="muted">'+('Mechanical ornithopter' if version in MECHANICAL_VERSIONS else 'Stanley’s Swan')+' · '+html.escape(version)+'</p><h1>Frontier model calibration</h1><p>Open each unchanged model submission to fly it yourself, or inspect what the graders captured.</p><p><strong>Automated checks only.</strong> '+str(visual_count)+' visual checks remain ungraded. Passing all automated checks is not a full-task pass.</p>'+cards+'<table><thead><tr><th>Repeat</th><th>Model</th><th>Automated</th><th>Attempt</th><th>Inspect</th></tr></thead><tbody>'+''.join(rows)+'</tbody></table><p class="muted">Same source packet, starter, '+effort+' reasoning and '+budget+'. No execution, testing or grader feedback during generation. Refresh this page for completed attempts.</p><p><a href="experiment.json">Protocol and provenance</a> · <a href="summary.json">Results JSON</a> · <a href="config.json">Fixed budget</a></p>'
     if (root / "artifacts.zip").exists():
         body += '<p><a href="artifacts.zip">Download all artifacts</a></p>'
+    if version==SOURCE_FIRST_VERSION:
+        body=body.replace('<strong>Automated checks only.</strong> 0 visual checks remain ungraded. Passing all automated checks is not a full-task pass.',
+                          '<strong>Six binary task graders.</strong> File-only validity is separate. Your 1–5 aesthetic realism score awaits your own flight and review. Means include protocol-valid attempts only; the table retains every raw result.')
     if (root / "CALIBRATION.md").exists():
         body = '<p><strong>Read before comparing scores:</strong> <a href="CALIBRATION.md">Calibration findings and known protocol problems</a>.</p>' + body
     _write_html(root / "index.html", _page("Frontier model calibration", body))
@@ -148,10 +162,10 @@ def run_experiment(output, models, repeats, config_path, node="node", transport=
         raise ValueError("A local API key is required; no experiment was created")
     config = load_config(config_path, generation_profile)
     version = config.get("task_version")
-    if version not in (TASK_VERSION, MECHANICAL_VERSION,PILOTED_VERSION):
+    if version not in (TASK_VERSION, MECHANICAL_VERSION,PILOTED_VERSION,SOURCE_FIRST_VERSION):
         raise ValueError("Unsupported task version")
     frozen = {str(p.relative_to(ROOT)):digest(p) for pattern in
-              ("ornithopter_eval/*.py","ornithopter_eval/*.html","grader/*.mjs","task/*.md","task/starter/*","task/sources/*.jpg","candidate/mechanical-v4/**/*","candidate/mechanical-v5/**/*")
+              ("ornithopter_eval/*.py","ornithopter_eval/*.html","grader/*.mjs","task/*.md","task/starter/*","task/sources/*.jpg","candidate/mechanical-v4/**/*","candidate/mechanical-v5/**/*","candidate/mechanical-v6/**/*","audits/source-compatibility-20261104/sources/*.jpg")
               for p in sorted(ROOT.glob(pattern)) if p.is_file()}
     root.mkdir(parents=True)
     if generation_profile is None:

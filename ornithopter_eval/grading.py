@@ -8,7 +8,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 from .runner import ROOT, digest, write_json
-from .checks import CHECKS, TASK_VERSION, MECHANICAL_VERSION, MECHANICAL_VERSIONS, PILOTED_VERSION, checklist, normalize_checks, refresh_verdict
+from .checks import CHECKS, TASK_VERSION, MECHANICAL_VERSION, MECHANICAL_VERSIONS, PILOTED_VERSION, SOURCE_FIRST_VERSION, checklist, normalize_checks, refresh_verdict
 
 
 class SubmissionServer(http.server.BaseHTTPRequestHandler):
@@ -46,7 +46,7 @@ def grade_submission(submission, output, node="node", timeout=None, task_version
     if timeout is None:
         timeout = 120 if task_version in MECHANICAL_VERSIONS else 60
     checks = checklist(task_version)
-    browser_file = "piloted-v5.mjs" if task_version==PILOTED_VERSION else ("mechanical-v4.mjs" if task_version in MECHANICAL_VERSIONS else "browser.mjs")
+    browser_file = 'source-first-v6.mjs' if task_version==SOURCE_FIRST_VERSION else ("piloted-v5.mjs" if task_version==PILOTED_VERSION else ("mechanical-v4.mjs" if task_version in MECHANICAL_VERSIONS else "browser.mjs"))
     submission, output = Path(submission).resolve(), Path(output).resolve()
     if not submission.is_dir():
         raise ValueError("Submission directory missing")
@@ -70,6 +70,13 @@ def grade_submission(submission, output, node="node", timeout=None, task_version
     if task_version==PILOTED_VERSION:
         report['grader_sha256'].update({p.name:digest(p) for p in (ROOT/'grader').glob('piloted-*.mjs')})
         report['grader_sha256']['expected_engineering.json']=digest(ROOT/'candidate/mechanical-v5/engineering.json')
+    if task_version==SOURCE_FIRST_VERSION:
+        report['grader_sha256'].update({p.name:digest(p) for p in (ROOT/'grader').glob('source-*.mjs')})
+        report['grader_sha256']['expected_engineering.json']=digest(ROOT/'candidate/mechanical-v6/engineering.json')
+        report['score_scope']='Six binary task outcomes only; file-only protocol and human aesthetic realism are separate.'
+        report['aesthetic_realism']={'kind':'human','score':None,'range':[1,5]}
+        rollout=submission.parent/'rollout-review.json'
+        if rollout.is_file():report['file_only_validity']=json.loads(rollout.read_text())
     manifest_path = submission.parent / "manifest.json"
     if manifest_path.exists():
         attempt = json.loads(manifest_path.read_text())

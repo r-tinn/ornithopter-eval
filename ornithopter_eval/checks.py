@@ -78,7 +78,8 @@ VISUAL_CHECKS = {
 MECHANICAL_LEGACY_VERSION = "mechanical-v4-draft"
 MECHANICAL_VERSION = "mechanical-v4.1"
 PILOTED_VERSION = "mechanical-v5-draft"
-MECHANICAL_VERSIONS = (MECHANICAL_LEGACY_VERSION, MECHANICAL_VERSION, PILOTED_VERSION)
+SOURCE_FIRST_VERSION = 'mechanical-v6-source-first'
+MECHANICAL_VERSIONS = (MECHANICAL_LEGACY_VERSION, MECHANICAL_VERSION, PILOTED_VERSION, SOURCE_FIRST_VERSION)
 MECHANICAL_CHECKS = {
     "source": {
         "aspect_ratio_from_study": "Does aspect ratio preserve 7.4²/6.61 within 0.5%?",
@@ -156,6 +157,14 @@ PILOTED_CHECKS['source']['mechanical_area_consistent']='Does the actual wing are
 
 
 def checklist(version):
+    if version == SOURCE_FIRST_VERSION:
+        return {'source':{}, 'physics':{
+            'wing_cycle_force_coupling':'Do the source-linked production surfaces and distinct section models produce the independently reconstructed forces?',
+            'elastic_inertial_exchange':'Do the actual moving wing masses exchange spring/kinetic energy consistently, including known damping?',
+            'wing_body_pitch_coupling':'Do coupled wing/body accelerations and a short neutral-input response match the independent mass-matrix model?',
+            'power_limited_flight':'Does the aircraft complete the published takeoff/bank scenario using the finite engine and fuel allowance?',
+            'unpowered_glide_balance':'Does the configured motor-off glide descend with force-derived aerodynamic energy loss?'},
+            'interaction':{'wheel_rotation_axis':MECHANICAL_CHECKS['interaction']['wheel_rotation_axis']},'visual':{}}
     if version == PILOTED_VERSION:
         return PILOTED_CHECKS
     if version == MECHANICAL_VERSION:

@@ -1,0 +1,95 @@
+{
+  "task_version": "mechanical-v6-source-first",
+  "kind": "handwritten author mutant calibration, not model trials",
+  "all_targeted_defects_rejected": true,
+  "results": [
+    {
+      "variant": "no_recovery_closing",
+      "target": "wing_cycle_force_coupling",
+      "rejected": true,
+      "evidence": "no_recovery_closing/result.json"
+    },
+    {
+      "variant": "shared_section_table",
+      "target": "wing_cycle_force_coupling",
+      "rejected": true,
+      "evidence": "shared_section_table/result.json"
+    },
+    {
+      "variant": "no_spring_torque",
+      "target": "elastic_inertial_exchange",
+      "rejected": true,
+      "evidence": "no_spring_torque/result.json"
+    },
+    {
+      "variant": "no_inertial_pitch_reaction",
+      "target": "wing_body_pitch_coupling",
+      "rejected": true,
+      "evidence": "no_inertial_pitch_reaction/result.json"
+    },
+    {
+      "variant": "overpowered_engine",
+      "target": "power_limited_flight",
+      "rejected": true,
+      "evidence": "overpowered_engine/result.json"
+    },
+    {
+      "variant": "glide_altitude_hold",
+      "target": "unpowered_glide_balance",
+      "rejected": true,
+      "evidence": "glide_altitude_hold/result.json"
+    },
+    {
+      "variant": "wrong_wheel_axis",
+      "target": "wheel_rotation_axis",
+      "rejected": true,
+      "evidence": "wrong_wheel_axis/result.json"
+    }
+  ],
+  "live_model_calls": 0,
+  "positive_reference_all_six_pass": true,
+  "positive_evidence": "positive/report.json",
+  "source_photographs": 9,
+  "python_unit_tests_passed": 86,
+  "javascript_tests_passed": 8,
+  "development_history": {
+    "directory": "runs/source-v6-reference-development",
+    "records": [
+      "first-flight.json",
+      "motion-sensitivity.json",
+      "twist-sensitivity.json",
+      "second-flight.json",
+      "third-flight.json",
+      "fourth-flight.json",
+      "fifth-flight.json",
+      "sixth-flight.json",
+      "seventh-flight.json"
+    ],
+    "note": "All author experiments retained; early mass/motion/governor/contact choices failed self-launch or stable takeoff. No model ranking was used to select parameters."
+  },
+  "glide_trim": {
+    "alpha_body_rad": 0.1493781345714254,
+    "pitch_rad": 0.013083471741963809,
+    "velocity_m_s": [
+      10.73000270276694,
+      -1.4715654536564426,
+      0
+    ],
+    "speed_m_s": 10.830441490806408,
+    "flight_path_rad": -0.1362946628294616,
+    "derived_lift_to_drag": 7.291556536683965,
+    "derivation": "Solve zero pitching moment, D/L flight-path angle and vertical balance in the frozen extended-wing model; not a notebook reading."
+  },
+  "limits": [
+    "Independent equations verify the specified reduction, not empirical aircraft validity.",
+    "Author fixture is not a model result.",
+    "Human aesthetic scores remain ungraded."
+  ],
+  "ui_smoke": {
+    "ready": true,
+    "force_plot_lines": 2,
+    "glide_preset_matches_derived_trim": true,
+    "browser_errors": [],
+    "local_screenshot": "runs/source-v6-ui-final/analysis-panel.png"
+  }
+}

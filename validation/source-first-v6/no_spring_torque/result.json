@@ -1,0 +1,840 @@
+{
+  "physics": [
+    {
+      "id": "elastic_inertial_exchange",
+      "pass": false,
+      "detail": {
+        "pass": false,
+        "cases": [
+          {
+            "damping": 0,
+            "pass": false,
+            "initial_energy_J": 154.24597201813037,
+            "final_energy_J": 154.24597201813037,
+            "integrated_damping_J": 0,
+            "max_energy_residual_J": 0,
+            "max_speed_rad_s": 0,
+            "records": [
+              {
+                "time": 0.004166666666666667,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.05416666666666666,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.10416666666666666,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.15416666666666673,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.20416666666666689,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.254166666666667,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.3041666666666668,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.35416666666666663,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.40416666666666645,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.4541666666666663,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.5041666666666661,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.5541666666666659,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.6041666666666657,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.6541666666666656,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.7041666666666654,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.7541666666666652,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.804166666666665,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.8541666666666649,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.9041666666666647,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.9541666666666645,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.0041666666666644,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.0541666666666643,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.104166666666664,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.154166666666664,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.2041666666666637,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.2541666666666635,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.3041666666666634,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.3541666666666632,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.404166666666663,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.4541666666666628,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.5041666666666627,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.5541666666666625,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.6041666666666623,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.6541666666666621,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.704166666666662,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.7541666666666618,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.8041666666666616,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.8541666666666614,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.9041666666666612,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.954166666666661,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 2.004166666666661,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 2.0541666666666636,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 2.104166666666666,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 2.1541666666666686,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 2.204166666666671,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 2.2541666666666735,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 2.304166666666676,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 2.3541666666666785,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 2.404166666666681,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 2.4541666666666835,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              }
+            ]
+          },
+          {
+            "damping": 1,
+            "pass": false,
+            "initial_energy_J": 154.24597201813037,
+            "final_energy_J": 154.24597201813037,
+            "integrated_damping_J": 0,
+            "max_energy_residual_J": 0,
+            "max_speed_rad_s": 0,
+            "records": [
+              {
+                "time": 0.004166666666666667,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.05416666666666666,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.10416666666666666,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.15416666666666673,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.20416666666666689,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.254166666666667,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.3041666666666668,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.35416666666666663,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.40416666666666645,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.4541666666666663,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.5041666666666661,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.5541666666666659,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.6041666666666657,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.6541666666666656,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.7041666666666654,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.7541666666666652,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.804166666666665,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.8541666666666649,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.9041666666666647,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 0.9541666666666645,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.0041666666666644,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.0541666666666643,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.104166666666664,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.154166666666664,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.2041666666666637,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.2541666666666635,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.3041666666666634,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.3541666666666632,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.404166666666663,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.4541666666666628,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.5041666666666627,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.5541666666666625,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.6041666666666623,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.6541666666666621,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.704166666666662,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.7541666666666618,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.8041666666666616,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.8541666666666614,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.9041666666666612,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 1.954166666666661,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 2.004166666666661,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 2.0541666666666636,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 2.104166666666666,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 2.1541666666666686,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 2.204166666666671,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 2.2541666666666735,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 2.304166666666676,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 2.3541666666666785,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 2.404166666666681,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              },
+              {
+                "time": 2.4541666666666835,
+                "phase": 0.25,
+                "omega": 0,
+                "kinetic_J": 0,
+                "spring_J": 154.24597201813037,
+                "loss_J": 0
+              }
+            ]
+          }
+        ],
+        "tolerance": "0.5% initial elastic energy + 0.1 J; nontrivial motion; damped case loses >1 J"
+      }
+    }
+  ],
+  "diagnostics": {
+    "reference_equations": "Independent mass points, centroid, inertia, local sections and coupled E-L solve; no candidate counters/helpers used as expectations."
+  },
+  "geometry": []
+}
