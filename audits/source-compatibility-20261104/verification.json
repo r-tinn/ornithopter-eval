@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-04",
+  "purpose": "Verify the audit artifacts; not certify source fidelity or aircraft physics",
+  "python_unit_tests": {
+    "passed": 62,
+    "failed": 0,
+    "offline_only": true
+  },
+  "original_photo_hashes_verified": 15,
+  "model_packet_source_hashes_verified": 2,
+  "local_document_links_verified": 57,
+  "recomputed_arithmetic": true,
+  "runtime_geometry_checked": {
+    "strip_count": 16,
+    "planform_matches_audit": true,
+    "panel_area_matches_effective_area": true,
+    "fore_aft_motion_absent": true
+  },
+  "source_fidelity_passed": false,
+  "runtime_and_grader_code_changed": false,
+  "model_api_trials_run": 0,
+  "legacy_results_changed": false
+}

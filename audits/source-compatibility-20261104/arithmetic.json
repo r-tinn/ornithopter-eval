@@ -1,0 +1,56 @@
+{
+  "kind": "Source compatibility audit: reproducible arithmetic and byte integrity only",
+  "source_fidelity_passed": false,
+  "reason": "Material source principles are omitted/replaced in v5; see REPORT.md.",
+  "full_aircraft_feasibility_established": false,
+  "original_hashes_verified": 15,
+  "selected_v5_photos": [
+    "02",
+    "14"
+  ],
+  "reviewer_transcription": {
+    "span_ft": 7.4,
+    "wrist_span_ft": 3.7,
+    "area_ft2": 6.61,
+    "printed_AR": 8.29,
+    "rounded_inner_chord_in": 12
+  },
+  "derived": {
+    "aspect_ratio": 8.284417549167928,
+    "printed_AR_relative_difference": 0.0006738495252005539,
+    "wrist_fraction": 0.5,
+    "span_m": 14,
+    "effective_wing_area_m2": 23.65887509130752,
+    "dry_mass_sum_kg": 224.9,
+    "fuel_mass_kg": 3.5999999999999996,
+    "wet_mass_kg": 228.5,
+    "wing_loading_kg_m2": 9.658109234616692,
+    "current_linear_taper_root_chord_m": 2.107694885639868,
+    "source_rounded_chord_scaled_to_current_span_m": 1.8918918918918919,
+    "current_chord_excess_fraction": 0.11406729669535887,
+    "current_inner_stroke_bounds_deg": [
+      -8.021409131831525,
+      17.188733853924695
+    ],
+    "current_outer_relative_stroke_amplitude_deg": 14.896902673401405,
+    "ideal_frequency_ratio_for_20_percent_stiffness_increase": 1.0954451150103321,
+    "ideal_stiffness_ratio_for_10_percent_frequency_increase": 1.2100000000000002
+  },
+  "limitations": [
+    "Arithmetic does not establish a faithful mechanism or feasible piloted aircraft.",
+    "Source passages were visually interpreted by the assistant, not verified by this script.",
+    "Chord comparison is explanatory, not a new hidden grading target.",
+    "The source describes biological observations, revisions and incomplete proposals; not every visible number is a final requirement."
+  ],
+  "input_sha256": {
+    "task/source-manifest.json": "aff268838e5f75db7cb68c5c23f2f6bdffeb966d235feadd6e4c073406efc646",
+    "candidate/mechanical-v5/TASK.md": "289330ad6f005c1dc9d6b96dd84d403e8062f91264ab4f1e09db3de234cae662",
+    "candidate/mechanical-v5/SOURCE_GUIDE.md": "6c6e00e5fb710cfce9685a9e882bb8dba1abe896288fa94949594881b11f1ab4",
+    "candidate/mechanical-v5/engineering.json": "05924f0bf71088687fc05f3525c0c8614682df701a2c0e3676238cf47974a2f3",
+    "candidate/mechanical-v5/scaffold/environment/mechanism.mjs": "8a3d20081900e7b859673c88712978a894e65946bb8eff85c3fe8369a47e621e",
+    "fixtures/mechanical-v5/kinematics.mjs": "71c50269276c948ff45ce6806b6cdc540472700206dd1a8c5d82912aedc648b3",
+    "fixtures/mechanical-v5/physics.mjs": "0e26e616563edc731e54ad0a4a1be8e15a89cedef66c1fb97be9635ca5c10886",
+    "candidate/mechanical-v5/GRADERS.md": "1c045218b6da3571d210570b7baf0f482ffa6ff46e82c0182bbb2b0c0713fe8e",
+    "audits/source-compatibility-20261104/inventory.json": "5eed95790989f76ed4f8628762fb0970cae48b0270c837c218e90709dc8f91f4"
+  }
+}

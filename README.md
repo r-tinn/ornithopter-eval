@@ -1,5 +1,13 @@
 # Ornithopter Eval
 
+**Source-faithfulness review, 4 November 2026:** the v5 prototype has important
+omissions from Stanley's notes despite passing its software checks. The human
+pilot and engine are compatible with his stated aim; the source mechanics need
+to lead the next revision. Read [the audit](audits/source-compatibility-20261104/REPORT.md)
+and [corrected requirements](docs/SOURCE_FIRST_REQUIREMENTS.md). The current
+simulator and all prior results are preserved; source-first compliance is not
+yet established.
+
 The current review candidate is a [human-piloted mechanical ornithopter](candidate/mechanical-v5/README.md):
 55 kg visible adult pilot, 14 m span, 228.5 kg initial all-up mass, a petrol engine
 with a 16 kW shaft limit, finite fuel and propulsion derived from actual wing

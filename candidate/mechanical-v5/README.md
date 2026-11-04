@@ -1,5 +1,13 @@
 # Piloted mechanical ornithopter — v5 draft
 
+**Source audit, 4 November:** this executable prototype does not yet implement
+all the principles in Stanley's notes. Its pilot/engine/mass additions are
+compatible in intent, but important source mechanics were omitted or replaced.
+See [the findings](SOURCE_AUDIT.md) and
+[the corrected source-first requirements](../../docs/SOURCE_FIRST_REQUIREMENTS.md).
+The task/physics below remain available for inspection, not certified as the
+completed source-first eval. No further model calibration has been run.
+
 This candidate replaces the small unmanned v4 aircraft for future work. It adds
 a visible 55 kg adult, a 228.5 kg wet mass budget, finite petrol fuel, a shaft-work
 limit and wing-motion-derived propulsion. It bundles all runtime files.
