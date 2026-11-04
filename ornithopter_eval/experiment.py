@@ -234,27 +234,35 @@ class ArtifactServer(http.server.BaseHTTPRequestHandler):
         pass
 
     def do_GET(self):
-        name = unquote(urlsplit(self.path).path).lstrip("/") or "index.html"
+        url = urlsplit(self.path)
+        name = unquote(url.path).lstrip("/") or "index.html"
         path = self.server.artifact_root / name
         allowed = {".html":"text/html",".mjs":"text/javascript",".js":"text/javascript",".css":"text/css",
                    ".json":"application/json",".jsonl":"text/plain",".txt":"text/plain",".log":"text/plain",
                    ".md":"text/plain",".png":"image/png",".jpg":"image/jpeg",".zip":"application/zip"}
         if (not path.resolve().is_relative_to(self.server.artifact_root) or any(part.startswith(".") for part in Path(name).parts)
-            or any(p.is_symlink() for p in (path,*path.parents)) or not path.is_file() or path.suffix not in allowed):
+            or any(p.is_symlink() for p in (path,*path.parents)) or path.suffix not in allowed):
             self.send_error(404);return
-        body = path.read_bytes()
+        playback = getattr(self.server,"camera_playback",None)
+        body = playback.response(name,url.query) if playback else None
+        if body is None:
+            if not path.is_file():
+                self.send_error(404);return
+            body = path.read_bytes()
         self.send_response(200)
         self.send_header("Content-Type",allowed[path.suffix]);self.send_header("Content-Length",str(len(body)))
         self.send_header("Content-Security-Policy","default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'")
         self.send_header("Cache-Control","no-store");self.end_headers();self.wfile.write(body)
 
 
-def serve_artifacts(root, port=8765):
+def serve_artifacts(root, port=8765, camera_updates=True):
     root = Path(root).resolve()
     if not (root / "experiment.json").is_file() or not (root / "index.html").is_file():
         raise ValueError("Select an experiment artifact directory")
     server = http.server.ThreadingHTTPServer(("127.0.0.1",port),ArtifactServer)
     server.artifact_root = root
+    from .playback import configure_camera_playback
+    configure_camera_playback(server,root,camera_updates)
     print(f"Artifact workbench: http://127.0.0.1:{server.server_port}/",flush=True)
     try:
         server.serve_forever()

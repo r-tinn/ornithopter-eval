@@ -1,0 +1,142 @@
+{
+  "kind": "interactive-camera-regression",
+  "model_trial": false,
+  "passed": true,
+  "checks": [
+    {
+      "id": "gpt-5.6-sol-01_labelled_camera_update",
+      "pass": true
+    },
+    {
+      "id": "gpt-5.6-sol-01_centred_stable_flight",
+      "pass": true,
+      "detail": {
+        "max_errors": {
+          "side": 0,
+          "distance": 1.1546319456101628e-14,
+          "centre": 0,
+          "pose": 0
+        },
+        "sample_count": 90
+      }
+    },
+    {
+      "id": "gpt-5.6-sol-01_pause_stops_drawing",
+      "pass": true
+    },
+    {
+      "id": "gpt-5.6-sol-01_behind_after_turn",
+      "pass": true,
+      "detail": {
+        "camera": [
+          -126.68441672804741,
+          23.380122230937776,
+          -165.46869853251562
+        ],
+        "target": [
+          -118.11608018820739,
+          20.730122230937774,
+          -163.96084942201335
+        ],
+        "up": [
+          0,
+          1,
+          0
+        ],
+        "render_position": [
+          -119.00245983025981,
+          20.580122230937775,
+          -164.11683381275498
+        ],
+        "aircraft_position": [
+          -119.00245983025981,
+          20.580122230937775,
+          -164.11683381275498
+        ],
+        "aircraft_screen": [
+          0,
+          -0.11009399170704894,
+          0.8793337076044301
+        ],
+        "render_heading": 0.17419562273499015,
+        "render_time": 9.11166666666679,
+        "interpolation_alpha": 0.4000000000000034
+      }
+    },
+    {
+      "id": "gpt-6.1-sol-01_labelled_camera_update",
+      "pass": true
+    },
+    {
+      "id": "gpt-6.1-sol-01_centred_stable_flight",
+      "pass": true,
+      "detail": {
+        "max_errors": {
+          "side": 0,
+          "distance": 1.1546319456101628e-14,
+          "centre": 0,
+          "pose": 0
+        },
+        "sample_count": 90
+      }
+    },
+    {
+      "id": "gpt-6.1-sol-01_pause_stops_drawing",
+      "pass": true
+    },
+    {
+      "id": "gpt-6.1-sol-01_behind_after_turn",
+      "pass": true,
+      "detail": {
+        "camera": [
+          -127.32980584313773,
+          23.82735463824715,
+          -165.46558582018497
+        ],
+        "target": [
+          -118.76474015348248,
+          21.17735463824715,
+          -163.93926680638398
+        ],
+        "up": [
+          0,
+          1,
+          0
+        ],
+        "render_position": [
+          -119.65078143172268,
+          21.02735463824715,
+          -164.0971618767772
+        ],
+        "aircraft_position": [
+          -119.65078143172268,
+          21.02735463824715,
+          -164.0971618767772
+        ],
+        "aircraft_screen": [
+          0,
+          -0.11009399170704702,
+          0.8793337076044301
+        ],
+        "render_heading": 0.17635163307044355,
+        "render_time": 9.127666666666789,
+        "interpolation_alpha": 0.3200000000000035
+      }
+    },
+    {
+      "id": "no_page_errors",
+      "pass": true,
+      "detail": []
+    }
+  ],
+  "screenshots": [
+    "gpt-5.6-sol-01-chase.png",
+    "gpt-6.1-sol-01-chase.png"
+  ],
+  "errors": [],
+  "fps_claimed": false,
+  "browser": "151.0.7922.34",
+  "full_evidence_sha256": "63932801e00efb4091afd5abac72577494002f1a69515cf90400e2b81da50b8c",
+  "full_evidence_directory": "runs/camera-review-20261104",
+  "reviewer_sha256": "043192a78cbe9839ef2f3260bfee4f2329744804d66ab93d2664103c26f90011"
+}

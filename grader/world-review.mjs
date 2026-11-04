@@ -18,7 +18,12 @@ try{
   const state=()=>page.evaluate(()=>flightLab.getState());
   const diagnostics=()=>page.evaluate(()=>flightLab.getDiagnostics());
   const geometry=()=>page.evaluate(()=>flightLab.getGeometryDiagnostics());
+  const centred=async id=>{
+    const v=await page.evaluate(()=>flightLab.getViewDiagnostics()),[x,y,z]=v.render_position,c=Math.cos(v.render_heading),s=Math.sin(v.render_heading),dx=v.camera[0]-x,dz=v.camera[2]-z;
+    check(id,Math.abs(-dx*s+dz*c)<1e-8&&Math.abs(dx*c+dz*s+7.8)<1e-8&&JSON.stringify(v.up)==='[0,1,0]',v);
+  };
   const initial=await diagnostics();
+  await centred('chase_directly_behind_at_rest');
   check('small_fixed_world',initial.terrain_triangles===8192&&initial.trees===48&&initial.airfields===2,initial);
   const mesh=await geometry();
   check('fixture_geometry_bounded',mesh.triangles>0&&mesh.triangles<=12000,mesh);
@@ -37,10 +42,15 @@ try{
     await page.clock.runFor(2000);await page.keyboard.down('ArrowUp');await page.clock.runFor(300);await page.keyboard.up('ArrowUp');
     await page.clock.runFor(4700);
     const airborne=await state(),meshAir=await geometry();
+    await centred(field+'_chase_tracks_rendered_airframe');
     check(field+'_fixture_takeoff',airborne.status==='flying'&&meshAir.wheel_clearances.every(x=>x>.7),{rest,airborne,geometry:meshAir});
     await page.getByTestId('pause').click();await page.clock.runFor(34);
     if(field==='Valley'){
       const file='preview-flight.png';await page.screenshot({path:path.join(output,file),fullPage:true});report.screenshots.push(file);
+    }
+    if(field==='Valley'){
+      await page.getByTestId('start').click();await page.keyboard.down('KeyD');await page.clock.runFor(600);await page.keyboard.up('KeyD');
+      await centred('chase_stays_centred_during_turn');await page.getByTestId('pause').click();await page.clock.runFor(34);
     }
     const paused=await state();await page.clock.runFor(500);
     check(field+'_pause_preserves_state',JSON.stringify(paused)===JSON.stringify(await state()),paused);

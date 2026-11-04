@@ -3,6 +3,7 @@ import * as T from './vendor/three.module.min.js';
 import {AIRFIELDS,WORLD,createWorld,surfaceHeight} from './world.mjs';
 import * as physics from '../physics.mjs';
 import {createAircraft,updateAircraft} from '../aircraft.mjs';
+import {PHYSICS_DT,FRAME_MS,copyPose,interpolatePose,chaseView,nextFrameDeadline} from './view-motion.mjs';
 
 const $=s=>document.querySelector(s),canvas=$('[data-testid=scene]'),viewport=$('#viewport');
 const scene=new T.Scene();scene.background=new T.Color(0xb8cece);scene.fog=new T.Fog(0xb8cece,700,3100);
@@ -16,14 +17,15 @@ const shadow=new T.Mesh(new T.CircleGeometry(1,16),new T.MeshBasicMaterial({colo
 shadow.rotation.x=-Math.PI/2;shadow.scale.set(1.3,.65,1);scene.add(shadow);
 const environment={wind:[0,0,0],rho:1.225,surfaceHeight};
 const controls={throttle:0,pitch:0,bank:0,rudder:0,brake:0};
-let state,aircraft,ready=false,running=false,mode='chase',field=AIRFIELDS[0],last=0,lastDraw=0,accumulator=0,frame=null,dirty=true,snap=true;
+let state,previousState,renderState,aircraft,ready=false,running=false,mode='chase',field=AIRFIELDS[0],last=null,nextDraw=0,accumulator=0,frame=null,dirty=true;
 let orbitYaw=2.4,orbitPitch=.38,orbitDistance=6.5,drag=null,lastUI=0;
 const keys=new Set(),position=new T.Vector3(),target=new T.Vector3(),desired=new T.Vector3();
 function setStatus(message){$('#flight-status').textContent=message;}
 function preset(approach=false){
   const x=approach?field.x-65:field.x+field.start,z=field.z;
   state={position:[x,surfaceHeight(x,z)+.82+(approach?2:0),z],velocity:approach?[10,-1,0]:[0,0,0],pitch:0,roll:0,heading:0,phase:0,time:0,status:approach?'flying':'grounded'};
-  Object.assign(controls,{throttle:0,pitch:0,bank:0,rudder:0,brake:0});keys.clear();running=false;accumulator=0;last=0;snap=true;
+  previousState=copyPose(state);renderState=copyPose(state);
+  Object.assign(controls,{throttle:0,pitch:0,bank:0,rudder:0,brake:0});keys.clear();running=false;accumulator=0;last=null;nextDraw=0;
   $('[data-testid=throttle]').value='0';$('#field-label').textContent=field.name;lastUI=0;
   requestDraw();
 }
@@ -39,34 +41,37 @@ try{
   if(!Array.isArray(aircraft.wheels)||aircraft.wheels.length!==3||aircraft.wheels.some(w=>!w?.isMesh||aircraft.root.getObjectById(w.id)!==w))throw Error('Return the three actual wheel meshes.');
   scene.add(aircraft.root);ready=true;
 }catch(error){fail(error);shadow.visible=false;}
-function draw(dt){
+function draw(){
+  if(running)interpolatePose(previousState,state,accumulator/PHYSICS_DT,renderState);
+  else copyPose(state,renderState);
   if(ready){
     try{
-      updateAircraft(aircraft,state,controls);
-      aircraft.root.position.fromArray(state.position);
-      aircraft.root.rotation.set(state.roll,-state.heading,state.pitch,'YZX');
-      shadow.position.set(state.position[0],surfaceHeight(state.position[0],state.position[2])+.025,state.position[2]);
-      shadow.material.opacity=.13/(1+Math.max(0,state.position[1]-surfaceHeight(state.position[0],state.position[2])-.82)*.3);
+      updateAircraft(aircraft,renderState,controls);
+      aircraft.root.position.fromArray(renderState.position);
+      aircraft.root.rotation.set(renderState.roll,-renderState.heading,renderState.pitch,'YZX');
+      shadow.position.set(renderState.position[0],surfaceHeight(renderState.position[0],renderState.position[2])+.025,renderState.position[2]);
+      shadow.material.opacity=.13/(1+Math.max(0,renderState.position[1]-surfaceHeight(renderState.position[0],renderState.position[2])-.82)*.3);
     }catch(error){fail(error);}
   }
-  position.fromArray(state.position);camera.up.set(0,1,0);
+  position.fromArray(renderState.position);camera.up.set(0,1,0);
   const near=mode==='world'?2:.5;
   if(camera.near!==near){camera.near=near;camera.updateProjectionMatrix();}
-  const yaw=-state.heading,scale=(physics.parameters.span_m||3)/3;
+  const yaw=-renderState.heading,scale=(physics.parameters.span_m||3)/3;
   if(mode==='world'){
     desired.set(-700,650,1000);target.set(250,0,10);
+  }else if(mode==='chase'){
+    // Camera and airframe share the same interpolated pose, with no lateral offset
+    // or independently delayed camera position / immediate look-at mismatch.
+    chaseView(position,renderState.heading,scale,surfaceHeight,desired,target);
   }else{
-    const offsets={chase:[-7.8,2.8,3.9],top:[0,7.4,0],side:[0,.2,7],front:[6.3,.2,0]};
+    const offsets={top:[0,7.4,0],side:[0,.2,7],front:[6.3,.2,0]};
     if(mode==='orbit')desired.set(Math.cos(orbitYaw)*Math.cos(orbitPitch),Math.sin(orbitPitch),Math.sin(orbitYaw)*Math.cos(orbitPitch)).multiplyScalar(orbitDistance);
-    else desired.fromArray(offsets[mode]??offsets.chase).multiplyScalar(scale);
+    else desired.fromArray(offsets[mode]??offsets.side).multiplyScalar(scale);
     desired.applyAxisAngle(new T.Vector3(0,1,0),yaw).add(position);target.copy(position);
-    if(mode==='chase')target.add(new T.Vector3(.9,.15,0).applyAxisAngle(new T.Vector3(0,1,0),yaw));
-    if(mode==='top')camera.up.set(Math.cos(state.heading),0,Math.sin(state.heading));
+    if(mode==='top')camera.up.set(Math.cos(renderState.heading),0,Math.sin(renderState.heading));
   }
   desired.y=Math.max(desired.y,surfaceHeight(desired.x,desired.z)+.35);
-  if(snap||mode!=='chase')camera.position.copy(desired);
-  else camera.position.lerp(desired,1-Math.exp(-Math.max(dt,1/120)*7));
-  camera.lookAt(target);snap=false;renderer.render(scene,camera);
+  camera.position.copy(desired);camera.lookAt(target);renderer.render(scene,camera);
   if(state.time-lastUI>.1||!running){
     const speed=Math.hypot(...state.velocity),height=state.position[1]-surfaceHeight(state.position[0],state.position[2])-.82;
     $('#speed').innerHTML=speed.toFixed(1)+' <small>m/s</small>';
@@ -80,7 +85,7 @@ function draw(dt){
   }
 }
 function animate(now){
-  frame=null;const elapsed=last?Math.min((now-last)/1000,.15):0;last=now;
+  frame=null;const elapsed=last===null?0:Math.min((now-last)/1000,.15);last=now;
   if(running&&ready){
     controls.throttle=Math.min(1,Math.max(0,controls.throttle+((keys.has('KeyW')?1:0)-(keys.has('KeyS')?1:0))*elapsed*.55));
     controls.pitch=(keys.has('ArrowUp')?1:0)-(keys.has('ArrowDown')?1:0);
@@ -88,22 +93,22 @@ function animate(now){
     controls.rudder=(keys.has('KeyD')?1:0)-(keys.has('KeyA')?1:0);controls.brake=keys.has('Space')?1:0;
     $('[data-testid=throttle]').value=String(controls.throttle);accumulator+=elapsed;
     try{
-      while(accumulator>=1/120){state=physics.step(state,controls,environment,1/120);accumulator-=1/120;}
+      while(accumulator>=PHYSICS_DT){copyPose(state,previousState);state=physics.step(state,controls,environment,PHYSICS_DT);accumulator-=PHYSICS_DT;}
       if(!state?.position?.every(Number.isFinite)||!state.velocity?.every(Number.isFinite))throw Error('Non-finite aircraft state.');
       if(state.status==='crashed')running=false;
     }catch(error){fail(error);}
     dirty=true;
   }
-  if(dirty&&(!running||now-lastDraw>=1000/WORLD.frame_hz-.5)){draw(elapsed);lastDraw=now;dirty=false;}
-  if(running||dirty)frame=requestAnimationFrame(animate);else last=0;
+  if(dirty&&(!running||now+.5>=nextDraw)){draw();nextDraw=nextFrameDeadline(now,nextDraw,FRAME_MS);dirty=false;}
+  if(running||dirty)frame=requestAnimationFrame(animate);else last=null;
 }
 function pause(){running=false;keys.clear();controls.pitch=controls.bank=controls.rudder=controls.brake=0;accumulator=0;requestDraw();}
-function start(){if(ready&&state.status!=='crashed'){running=true;last=0;requestDraw();}}
+function start(){if(ready&&state.status!=='crashed'){copyPose(state,previousState);running=true;last=null;nextDraw=0;requestDraw();}}
 $('[data-testid=start]').onclick=start;$('[data-testid=pause]').onclick=pause;
 $('[data-testid=reset]').onclick=()=>preset(false);$('[data-testid=approach]').onclick=()=>preset(true);
 $('[data-testid=throttle]').oninput=e=>{controls.throttle=+e.target.value;requestDraw();};
 for(const button of document.querySelectorAll('[data-view]'))button.onclick=()=>{
-  mode=button.dataset.view;$('#camera-label').textContent=mode.toUpperCase()+' VIEW';snap=true;
+  mode=button.dataset.view;$('#camera-label').textContent=mode.toUpperCase()+' VIEW';
   for(const b of document.querySelectorAll('[data-view]'))b.classList.toggle('selected',b===button);requestDraw();
 };
 for(const button of document.querySelectorAll('[data-field]'))button.onclick=()=>{
@@ -137,7 +142,14 @@ function geometryDiagnostics(){
   });
   return {triangles,wheel_clearances:clearances};
 }
-window.flightLab={getState:()=>structuredClone(state),getControls:()=>({...controls}),getGeometryDiagnostics:geometryDiagnostics,
+function viewDiagnostics(){
+  const projected=position.clone().project(camera);
+  return {camera:camera.position.toArray(),target:target.toArray(),up:camera.up.toArray(),
+    render_position:renderState.position.slice(),aircraft_position:aircraft?.root.position.toArray(),
+    aircraft_screen:projected.toArray(),render_heading:renderState.heading,render_time:renderState.time,
+    interpolation_alpha:running?accumulator/PHYSICS_DT:1};
+}
+window.flightLab={getViewDiagnostics:viewDiagnostics,getState:()=>structuredClone(state),getControls:()=>({...controls}),getGeometryDiagnostics:geometryDiagnostics,
   getDiagnostics:()=>({mode,field:field.id,ready,running,terrain_triangles:world.terrainTriangles,trees:world.treeCount,airfields:AIRFIELDS.length,draw_calls:renderer.info.render.calls,triangles:renderer.info.render.triangles,render_frames:renderer.info.render.frame,paused_rendering:'on demand',external_assets:false})};
 if(physics.parameters.fixture_only)$('#fixture-note').textContent='Preview aircraft: a handwritten calibration fixture, withheld from evaluated models. Educational approximation.';
 preset(false);

@@ -146,7 +146,7 @@ def main(argv=None):
     p = commands.add_parser("audit-reviews");p.add_argument("reviews",nargs="+")
     p = commands.add_parser("compare");p.add_argument("--models",nargs=2,required=True);p.add_argument("--repeats",type=int,default=3);p.add_argument("--output",required=True);p.add_argument("--config",default=str(ROOT / "configs/frontier-calibration.json"));p.add_argument("--node",default="node")
     p = commands.add_parser("export");p.add_argument("source");p.add_argument("destination")
-    p = commands.add_parser("serve-artifacts");p.add_argument("directory");p.add_argument("--port",type=int,default=8765)
+    p = commands.add_parser("serve-artifacts");p.add_argument("directory");p.add_argument("--port",type=int,default=8765);p.add_argument("--original-camera",action="store_true",help="Serve the exact archived camera without playback updates")
     p = commands.add_parser("prepare-world");p.add_argument("output");p.add_argument("--reference",action="store_true")
     p = commands.add_parser("serve-world");p.add_argument("directory");p.add_argument("--port",type=int,default=8766)
     p = commands.add_parser("validate-world");p.add_argument("--node",default="node")
@@ -194,7 +194,7 @@ def main(argv=None):
         elif args.command == "export":
             print(export_experiment(args.source,args.destination))
         elif args.command == "serve-artifacts":
-            serve_artifacts(args.directory,args.port)
+            serve_artifacts(args.directory,args.port,camera_updates=not args.original_camera)
         elif args.command == "prepare-world":
             from .world_candidate import prepare_world
             print(prepare_world(args.output,args.reference))

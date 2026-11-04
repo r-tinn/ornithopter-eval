@@ -57,10 +57,18 @@ Approach places it 2 m above that resting height, with velocity [10,-1,0],
 zero attitude, zero throttle and flying status. Both presets pause the simulation.
 
 The platform's window.flightLab exposes read-only copies through getState(),
-getControls(), getDiagnostics() and getGeometryDiagnostics(). The last reports
+getControls(), getDiagnostics(), getViewDiagnostics() and getGeometryDiagnostics(). The last reports
 actual mesh triangle counts and transformed wheel-to-surface clearance, computed
 from the mounted geometry rather than a second declared contact height.
 These are supplied production observation
 hooks. The evaluated aircraft owns forces, stepping and articulation; the
 shared platform owns start/pause/reset, UI, state mounting and camera behaviour.
 Those supplied UI functions are scaffold regression tests, not model scores.
+
+The shared renderer interpolates position, orientation and wingbeat phase between
+fixed physics steps. The aircraft and chase camera use that same display pose;
+`getState()` continues to report the authoritative physics state. The chase camera
+is centred behind the horizontal heading and keeps a level horizon.
+`getViewDiagnostics()` exposes the actual camera, displayed aircraft position
+and projected screen position for shared-renderer regression checks. These
+presentation diagnostics earn no model points and do not change force integration.

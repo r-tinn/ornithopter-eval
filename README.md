@@ -34,6 +34,17 @@ model submissions. Use a fresh output directory. Medium reasoning, 32,000 total
 output tokens including reasoning, no execution during generation and no retries.
 The original v3 trials and their configuration are retained unchanged.
 
+Interactive v4 playback now uses a centred chase camera and interpolates the
+visible aircraft and camera together between physics steps. The server labels
+this camera update; it does not rewrite the saved submissions, grades, captures,
+ZIP or their hashes. Each trial offers an **Original camera** link. To serve the
+archived camera throughout, add `--original-camera` to `serve-artifacts`.
+Playback provenance is available at `/viewer-camera.json` on the local server.
+[Camera regression evidence](validation/camera-review.json) covers both saved
+model aircraft. `node --test tests/view-motion.test.mjs` checks interpolation,
+angle wrapping and render scheduling across simulated 30–165 Hz callbacks;
+these checks do not establish a hardware-independent frame rate.
+
 ## Previous task and calibration
 
 **Can an AI turn Stanley J. O. Tinn's old sketches and calculations into a working

@@ -4,6 +4,45 @@
   "passed": true,
   "checks": [
     {
+      "id": "chase_directly_behind_at_rest",
+      "pass": true,
+      "detail": {
+        "camera": [
+          -237.8,
+          5.465448546492819,
+          -165
+        ],
+        "target": [
+          -229.1,
+          2.81544854649282,
+          -165
+        ],
+        "up": [
+          0,
+          1,
+          0
+        ],
+        "render_position": [
+          -230,
+          2.66544854649282,
+          -165
+        ],
+        "aircraft_position": [
+          -230,
+          2.66544854649282,
+          -165
+        ],
+        "aircraft_screen": [
+          0,
+          -0.11009399170704894,
+          0.8793337076044301
+        ],
+        "render_heading": 0,
+        "render_time": 0,
+        "interpolation_alpha": 1
+      }
+    },
+    {
       "id": "small_fixed_world",
       "pass": true,
       "detail": {
@@ -14,8 +53,8 @@
         "terrain_triangles": 8192,
         "trees": 48,
         "airfields": 2,
-        "draw_calls": 29,
-        "triangles": 11358,
+        "draw_calls": 31,
+        "triangles": 11382,
         "render_frames": 1,
         "paused_rendering": "on demand",
         "external_assets": false
@@ -51,6 +90,45 @@
       "detail": {
         "before": 1,
         "after": 1
+      }
+    },
+    {
+      "id": "Valley_chase_tracks_rendered_airframe",
+      "pass": true,
+      "detail": {
+        "camera": [
+          -157.24297643035007,
+          17.552868141463936,
+          -165
+        ],
+        "target": [
+          -148.54297643035005,
+          14.902868141463935,
+          -165
+        ],
+        "up": [
+          0,
+          1,
+          0
+        ],
+        "render_position": [
+          -149.44297643035006,
+          14.752868141463935,
+          -165
+        ],
+        "aircraft_position": [
+          -149.44297643035006,
+          14.752868141463935,
+          -165
+        ],
+        "aircraft_screen": [
+          0,
+          -0.11009399170704798,
+          0.8793337076044301
+        ],
+        "render_heading": 0,
+        "render_time": 6.983666666666804,
+        "interpolation_alpha": 0.04000000000002932
       }
     },
     {
@@ -96,11 +174,50 @@
         "geometry": {
           "triangles": 1638,
           "wheel_clearances": [
-            12.161196573538595,
-            12.004286534441315,
-            12.004286534441315
+            12.18629019408384,
+            12.02938015498656,
+            12.02938015498656
           ]
         }
+      }
+    },
+    {
+      "id": "chase_stays_centred_during_turn",
+      "pass": true,
+      "detail": {
+        "camera": [
+          -148.9768579377007,
+          19.272615749810303,
+          -165.51660002880803
+        ],
+        "target": [
+          -140.36286764957498,
+          16.6226157498103,
+          -164.29628395660535
+        ],
+        "up": [
+          0,
+          1,
+          0
+        ],
+        "render_position": [
+          -141.2539700931742,
+          16.472615749810302,
+          -164.42252355028148
+        ],
+        "aircraft_position": [
+          -141.2539700931742,
+          16.472615749810302,
+          -164.42252355028148
+        ],
+        "aircraft_screen": [
+          0,
+          -0.11009399170704702,
+          0.8793337076044301
+        ],
+        "render_heading": 0.1407302829166586,
+        "render_time": 7.5753333333335,
+        "interpolation_alpha": 0.04000000000000267
       }
     },
     {
@@ -108,20 +225,20 @@
       "pass": true,
       "detail": {
         "position": [
-          -149.33203516461262,
-          14.776034073417174,
-          -165
+          -141.14386510506662,
+          16.495950288866556,
+          -164.40670831451837
         ],
         "velocity": [
-          13.867658217179876,
-          2.8957414941550543,
-          0
+          13.763123513446624,
+          2.916817382032132,
+          1.9769044703865966
         ],
         "pitch": 0.15000000000000005,
         "roll": 0,
-        "heading": 0,
-        "phase": 6.178465552059865,
-        "time": 6.991666666666804,
+        "heading": 0.14266199262471035,
+        "phase": 1.0471975511965308,
+        "time": 7.5833333333335,
         "status": "flying"
       }
     },
@@ -158,6 +275,45 @@
       }
     },
     {
+      "id": "Meadow_chase_tracks_rendered_airframe",
+      "pass": true,
+      "detail": {
+        "camera": [
+          762.757023569652,
+          16.572205094521255,
+          285
+        ],
+        "target": [
+          771.4570235696519,
+          13.922205094521255,
+          285
+        ],
+        "up": [
+          0,
+          1,
+          0
+        ],
+        "render_position": [
+          770.557023569652,
+          13.772205094521254,
+          285
+        ],
+        "aircraft_position": [
+          770.557023569652,
+          13.772205094521254,
+          285
+        ],
+        "aircraft_screen": [
+          9.629481106715697e-15,
+          -0.11009399170704894,
+          0.8793337076044301
+        ],
+        "render_heading": 0,
+        "render_time": 6.983666666666804,
+        "interpolation_alpha": 0.04000000000002932
+      }
+    },
+    {
       "id": "Meadow_fixture_takeoff",
       "pass": true,
       "detail": {
@@ -181,28 +337,28 @@
         },
         "airborne": {
           "position": [
-            770.9493447142167,
-            13.443378364695203,
+            770.6679648353894,
+            13.795371026474493,
             285
           ],
           "velocity": [
-            14.026396301096712,
-            2.846728933542625,
+            13.867658217179876,
+            2.8957414941550543,
             0
           ],
-          "pitch": 0.1416666666666667,
+          "pitch": 0.15000000000000005,
           "roll": 0,
           "heading": 0,
-          "phase": 5.969026041820546,
-          "time": 6.975000000000136,
+          "phase": 6.178465552059865,
+          "time": 6.991666666666804,
           "status": "flying"
         },
         "geometry": {
           "triangles": 1638,
           "wheel_clearances": [
-            11.851523556410362,
-            11.703270612343129,
-            11.703270612343129
+            12.18629019408384,
+            12.02938015498656,
+            12.02938015498656
           ]
         }
       }
@@ -212,20 +368,20 @@
       "pass": true,
       "detail": {
         "position": [
-          770.9493447142167,
-          13.443378364695203,
+          770.6679648353894,
+          13.795371026474493,
           285
         ],
         "velocity": [
-          14.026396301096712,
-          2.846728933542625,
+          13.867658217179876,
+          2.8957414941550543,
           0
         ],
-        "pitch": 0.1416666666666667,
+        "pitch": 0.15000000000000005,
         "roll": 0,
         "heading": 0,
-        "phase": 5.969026041820546,
-        "time": 6.975000000000136,
+        "phase": 6.178465552059865,
+        "time": 6.991666666666804,
         "status": "flying"
       }
     },
@@ -290,11 +446,12 @@
     "fps_scored": false
   },
   "shared_sha256": {
-    "environment/platform.mjs": "ef5d2798219092c4606556f3a2e5a87355dca5b85f6f529fea7883bbd71cddaa",
+    "environment/platform.mjs": "2f9bbcbde3f9a3fbbb9d68e110aaeee259586de643c6a7d3f713af146bfd3980",
     "environment/style.css": "21db9f38d2ab3f0c10c667245fed2748689382465c4164e281bed102b2b7f5ed",
     "environment/vendor/THREE-LICENSE.txt": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
     "environment/vendor/three.core.min.js": "05b2609338c76cd65daf74f3ac515bc9a5045e1b3b33edc07d8c9bd55250fa90",
     "environment/vendor/three.module.min.js": "86bcee248b64f44bcfc23c331ae74619061957d59cab040171dcb6fb5900beb6",
+    "environment/view-motion.mjs": "de6f50f40f1a40ccaf401344c162659adb0b791d85e1383040dd8f4905dd1e51",
     "environment/world.mjs": "a9508dc6e6cc844211fce7c800ae8a1ae422adb961c700e7533169815b4abcb7",
     "index.html": "cc3859c2e59abd4a4d22abe9e19df2bf95c5d8d29ad0a3f470c7ed066322dc88"
   },
@@ -303,5 +460,5 @@
     "physics.mjs": "56a39afc71e9ab29b6d55754c0063a2f9021e29a53c6b04ea1738182823d1530",
     "interpretation.json": "ea86958f2e53162a9d21a8e90126969b0aea0b22a0db40e579a63b867162dc66"
   },
-  "reviewer_sha256": "821db24745dadbff7514282315ab32afc80a967a4b3473d8283bf79cb8db990b"
+  "reviewer_sha256": "39fa58db05188cdd2d2d66bd47d32d76430e93ab65b6103040a18cda3fe1471c"
 }
