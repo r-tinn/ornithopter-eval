@@ -1,0 +1,969 @@
+{
+  "kind": "All local piloted grader development calibrations; not model trials",
+  "notes": [
+    "The first 27-check pass preceded the additional no-snap shutdown predicate.",
+    "The next 28-check calibration exposed an empty-starter telemetry exception, retained here as infrastructure failure.",
+    "The final calibration guards telemetry on unusable candidates and separately checks a syntax-broken candidate.",
+    "No model API trials or visual LLM verdicts are represented."
+  ],
+  "calibrations": [
+    {
+      "directory": "runs/piloted-calibration-20261104T184548Z",
+      "software_calibration_only": true,
+      "offline_validation_passed": true,
+      "results": {
+        "reference": {
+          "passed": 27,
+          "total": 27,
+          "failed": [],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 15,
+              "total": 15
+            },
+            "interaction": {
+              "passed": 9,
+              "total": 9
+            }
+          }
+        },
+        "missing_pilot": {
+          "passed": 26,
+          "total": 27,
+          "failed": [
+            "pilot_mesh_present"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 15,
+              "total": 15
+            },
+            "interaction": {
+              "passed": 8,
+              "total": 9
+            }
+          }
+        },
+        "omitted_pilot_mass": {
+          "passed": 24,
+          "total": 27,
+          "failed": [
+            "mass_budget_complete",
+            "bank_reduces_vertical_force",
+            "locked_wings_matching_wind"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 12,
+              "total": 15
+            },
+            "interaction": {
+              "passed": 9,
+              "total": 9
+            }
+          }
+        },
+        "free_thrust": {
+          "passed": 24,
+          "total": 27,
+          "failed": [
+            "locked_wings_no_propulsion",
+            "glide_ratio_in_envelope",
+            "locked_wings_matching_wind"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 12,
+              "total": 15
+            },
+            "interaction": {
+              "passed": 9,
+              "total": 9
+            }
+          }
+        },
+        "ignored_motion_override": {
+          "passed": 24,
+          "total": 27,
+          "failed": [
+            "locked_wings_no_propulsion",
+            "outer_motion_changes_propulsion",
+            "stroke_rate_changes_propulsion"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 12,
+              "total": 15
+            },
+            "interaction": {
+              "passed": 9,
+              "total": 9
+            }
+          }
+        },
+        "false_wing_rates": {
+          "passed": 23,
+          "total": 27,
+          "failed": [
+            "outer_motion_changes_propulsion",
+            "stroke_rate_changes_propulsion",
+            "rendered_wings_match_physics",
+            "takeoff_from_strip"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 13,
+              "total": 15
+            },
+            "interaction": {
+              "passed": 7,
+              "total": 9
+            }
+          }
+        },
+        "wrong_wheel_axis": {
+          "passed": 26,
+          "total": 27,
+          "failed": [
+            "wheel_rotation_axis"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 15,
+              "total": 15
+            },
+            "interaction": {
+              "passed": 8,
+              "total": 9
+            }
+          }
+        },
+        "unlimited_fuel": {
+          "passed": 25,
+          "total": 27,
+          "failed": [
+            "fuel_accounting",
+            "empty_tank_stops_drive"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 13,
+              "total": 15
+            },
+            "interaction": {
+              "passed": 9,
+              "total": 9
+            }
+          }
+        },
+        "overpowered_engine": {
+          "passed": 26,
+          "total": 27,
+          "failed": [
+            "shaft_power_limited"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 14,
+              "total": 15
+            },
+            "interaction": {
+              "passed": 9,
+              "total": 9
+            }
+          }
+        },
+        "auto_level": {
+          "passed": 26,
+          "total": 27,
+          "failed": [
+            "neutral_bank_retains_bank"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 14,
+              "total": 15
+            },
+            "interaction": {
+              "passed": 9,
+              "total": 9
+            }
+          }
+        },
+        "zero_drag": {
+          "passed": 25,
+          "total": 27,
+          "failed": [
+            "post_stall_lift_reduces",
+            "glide_ratio_in_envelope"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 13,
+              "total": 15
+            },
+            "interaction": {
+              "passed": 9,
+              "total": 9
+            }
+          }
+        },
+        "empty": {
+          "passed": 0,
+          "total": 27,
+          "failed": [
+            "aspect_ratio_from_study",
+            "wrist_fraction_from_study",
+            "mechanical_area_consistent",
+            "mass_budget_complete",
+            "fuel_accounting",
+            "empty_tank_stops_drive",
+            "fuel_mass_affects_weight",
+            "locked_wings_no_propulsion",
+            "outer_motion_changes_propulsion",
+            "stroke_rate_changes_propulsion",
+            "shaft_power_limited",
+            "drive_energy_balance",
+            "bank_reduces_vertical_force",
+            "banked_trim_loses_height",
+            "neutral_bank_retains_bank",
+            "post_stall_lift_reduces",
+            "glide_ratio_in_envelope",
+            "locked_wings_matching_wind",
+            "pilot_mesh_present",
+            "rendered_wings_match_physics",
+            "wing_geometry_matches_area",
+            "wheel_rotation_axis",
+            "wheels_above_surface",
+            "takeoff_from_strip",
+            "landing_on_strip",
+            "rudder_mesh_and_yaw",
+            "aircraft_geometry_bounded"
+          ],
+          "groups": {
+            "source": {
+              "passed": 0,
+              "total": 3
+            },
+            "physics": {
+              "passed": 0,
+              "total": 15
+            },
+            "interaction": {
+              "passed": 0,
+              "total": 9
+            }
+          }
+        }
+      },
+      "infrastructure_errors": {},
+      "reference_sha256": {
+        "physics.mjs": "3ae15514a7e758b6a7a5eaea36a0cd7e06d4b9db0874f1889b21016d45ad810a",
+        "kinematics.mjs": "28aa79064d02a80737444f06f7ec612667a3ec56d21082a8388a661bd6658fff",
+        "environment/engineering.mjs": "6f14002a720e1e932bd93e951d0a26d36838dbf356fedd8397c63e630d58f4b3",
+        "environment/platform.mjs": "c92b6d92e2ca8867b7b2edec52dfa6cd846160ee0f58ca842ee996670d65e203"
+      },
+      "calibration_script_sha256": "edee0364c8e0f211d59002f0de64d3b74478eddb67efcf220eeb1328aa9f544b"
+    },
+    {
+      "directory": "runs/piloted-calibration-20261104T190115Z",
+      "software_calibration_only": true,
+      "offline_validation_passed": false,
+      "results": {
+        "reference": {
+          "passed": 28,
+          "total": 28,
+          "failed": [],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 16,
+              "total": 16
+            },
+            "interaction": {
+              "passed": 9,
+              "total": 9
+            }
+          }
+        },
+        "missing_pilot": {
+          "passed": 27,
+          "total": 28,
+          "failed": [
+            "pilot_mesh_present"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 16,
+              "total": 16
+            },
+            "interaction": {
+              "passed": 8,
+              "total": 9
+            }
+          }
+        },
+        "omitted_pilot_mass": {
+          "passed": 25,
+          "total": 28,
+          "failed": [
+            "mass_budget_complete",
+            "bank_reduces_vertical_force",
+            "locked_wings_matching_wind"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 13,
+              "total": 16
+            },
+            "interaction": {
+              "passed": 9,
+              "total": 9
+            }
+          }
+        },
+        "free_thrust": {
+          "passed": 25,
+          "total": 28,
+          "failed": [
+            "locked_wings_no_propulsion",
+            "glide_ratio_in_envelope",
+            "locked_wings_matching_wind"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 13,
+              "total": 16
+            },
+            "interaction": {
+              "passed": 9,
+              "total": 9
+            }
+          }
+        },
+        "ignored_motion_override": {
+          "passed": 25,
+          "total": 28,
+          "failed": [
+            "locked_wings_no_propulsion",
+            "outer_motion_changes_propulsion",
+            "stroke_rate_changes_propulsion"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 13,
+              "total": 16
+            },
+            "interaction": {
+              "passed": 9,
+              "total": 9
+            }
+          }
+        },
+        "false_wing_rates": {
+          "passed": 24,
+          "total": 28,
+          "failed": [
+            "outer_motion_changes_propulsion",
+            "stroke_rate_changes_propulsion",
+            "rendered_wings_match_physics",
+            "takeoff_from_strip"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 14,
+              "total": 16
+            },
+            "interaction": {
+              "passed": 7,
+              "total": 9
+            }
+          }
+        },
+        "snapping_lock": {
+          "passed": 26,
+          "total": 28,
+          "failed": [
+            "drive_lock_preserves_pose",
+            "landing_on_strip"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 15,
+              "total": 16
+            },
+            "interaction": {
+              "passed": 8,
+              "total": 9
+            }
+          }
+        },
+        "wrong_wheel_axis": {
+          "passed": 27,
+          "total": 28,
+          "failed": [
+            "wheel_rotation_axis"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 16,
+              "total": 16
+            },
+            "interaction": {
+              "passed": 8,
+              "total": 9
+            }
+          }
+        },
+        "unlimited_fuel": {
+          "passed": 26,
+          "total": 28,
+          "failed": [
+            "fuel_accounting",
+            "empty_tank_stops_drive"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 14,
+              "total": 16
+            },
+            "interaction": {
+              "passed": 9,
+              "total": 9
+            }
+          }
+        },
+        "overpowered_engine": {
+          "passed": 27,
+          "total": 28,
+          "failed": [
+            "shaft_power_limited"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 15,
+              "total": 16
+            },
+            "interaction": {
+              "passed": 9,
+              "total": 9
+            }
+          }
+        },
+        "auto_level": {
+          "passed": 27,
+          "total": 28,
+          "failed": [
+            "neutral_bank_retains_bank"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 15,
+              "total": 16
+            },
+            "interaction": {
+              "passed": 9,
+              "total": 9
+            }
+          }
+        },
+        "zero_drag": {
+          "passed": 26,
+          "total": 28,
+          "failed": [
+            "post_stall_lift_reduces",
+            "glide_ratio_in_envelope"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 14,
+              "total": 16
+            },
+            "interaction": {
+              "passed": 9,
+              "total": 9
+            }
+          }
+        },
+        "empty": null
+      },
+      "infrastructure_errors": {
+        "empty": {
+          "status": "infrastructure_error",
+          "error": "Error: clock.pauseAt: Error: Implement aircraft forces.\n    at Module.forces (http://127.0.0.1:49894/physics.mjs:4:62)\n    at draw (http://127.0.0.1:49894/environment/platform.mjs:86:422)\n    at animate (http://127.0.0.1:49894/environment/platform.mjs:109:43)\n    at ClockController._callFirstTimer (<anonymous>:285:20)\n    at ClockController._runTo (<anonymous>:120:33)\n    at ClockController._innerFastForwardTo (<anonymous>:207:16)\n    at ClockController.pauseAt (<anonymous>:133:16)\n    at async <anonymous>:337:30"
+        }
+      },
+      "reference_sha256": {
+        "physics.mjs": "0e26e616563edc731e54ad0a4a1be8e15a89cedef66c1fb97be9635ca5c10886",
+        "kinematics.mjs": "71c50269276c948ff45ce6806b6cdc540472700206dd1a8c5d82912aedc648b3",
+        "environment/engineering.mjs": "7f6d9ee792326ef38ed917d42ffeef28655705a9824a8c1d5e31459081670fa3",
+        "environment/platform.mjs": "ab40fe7e1fa65ec63d082681f0deb07157f42e4d1e25c33bff54d8dcb4018e76"
+      },
+      "calibration_script_sha256": "274207fb3ca001308ed55950ec1ba4316b9d1f5e036b1473ec5750ce467e1289"
+    },
+    {
+      "directory": "runs/piloted-calibration-20261104T190521Z",
+      "software_calibration_only": true,
+      "offline_validation_passed": true,
+      "results": {
+        "reference": {
+          "passed": 28,
+          "total": 28,
+          "failed": [],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 16,
+              "total": 16
+            },
+            "interaction": {
+              "passed": 9,
+              "total": 9
+            }
+          }
+        },
+        "missing_pilot": {
+          "passed": 27,
+          "total": 28,
+          "failed": [
+            "pilot_mesh_present"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 16,
+              "total": 16
+            },
+            "interaction": {
+              "passed": 8,
+              "total": 9
+            }
+          }
+        },
+        "omitted_pilot_mass": {
+          "passed": 25,
+          "total": 28,
+          "failed": [
+            "mass_budget_complete",
+            "bank_reduces_vertical_force",
+            "locked_wings_matching_wind"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 13,
+              "total": 16
+            },
+            "interaction": {
+              "passed": 9,
+              "total": 9
+            }
+          }
+        },
+        "free_thrust": {
+          "passed": 25,
+          "total": 28,
+          "failed": [
+            "locked_wings_no_propulsion",
+            "glide_ratio_in_envelope",
+            "locked_wings_matching_wind"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 13,
+              "total": 16
+            },
+            "interaction": {
+              "passed": 9,
+              "total": 9
+            }
+          }
+        },
+        "ignored_motion_override": {
+          "passed": 25,
+          "total": 28,
+          "failed": [
+            "locked_wings_no_propulsion",
+            "outer_motion_changes_propulsion",
+            "stroke_rate_changes_propulsion"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 13,
+              "total": 16
+            },
+            "interaction": {
+              "passed": 9,
+              "total": 9
+            }
+          }
+        },
+        "false_wing_rates": {
+          "passed": 24,
+          "total": 28,
+          "failed": [
+            "outer_motion_changes_propulsion",
+            "stroke_rate_changes_propulsion",
+            "rendered_wings_match_physics",
+            "takeoff_from_strip"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 14,
+              "total": 16
+            },
+            "interaction": {
+              "passed": 7,
+              "total": 9
+            }
+          }
+        },
+        "snapping_lock": {
+          "passed": 26,
+          "total": 28,
+          "failed": [
+            "drive_lock_preserves_pose",
+            "landing_on_strip"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 15,
+              "total": 16
+            },
+            "interaction": {
+              "passed": 8,
+              "total": 9
+            }
+          }
+        },
+        "wrong_wheel_axis": {
+          "passed": 27,
+          "total": 28,
+          "failed": [
+            "wheel_rotation_axis"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 16,
+              "total": 16
+            },
+            "interaction": {
+              "passed": 8,
+              "total": 9
+            }
+          }
+        },
+        "unlimited_fuel": {
+          "passed": 26,
+          "total": 28,
+          "failed": [
+            "fuel_accounting",
+            "empty_tank_stops_drive"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 14,
+              "total": 16
+            },
+            "interaction": {
+              "passed": 9,
+              "total": 9
+            }
+          }
+        },
+        "overpowered_engine": {
+          "passed": 27,
+          "total": 28,
+          "failed": [
+            "shaft_power_limited"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 15,
+              "total": 16
+            },
+            "interaction": {
+              "passed": 9,
+              "total": 9
+            }
+          }
+        },
+        "auto_level": {
+          "passed": 27,
+          "total": 28,
+          "failed": [
+            "neutral_bank_retains_bank"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 15,
+              "total": 16
+            },
+            "interaction": {
+              "passed": 9,
+              "total": 9
+            }
+          }
+        },
+        "zero_drag": {
+          "passed": 26,
+          "total": 28,
+          "failed": [
+            "post_stall_lift_reduces",
+            "glide_ratio_in_envelope"
+          ],
+          "groups": {
+            "source": {
+              "passed": 3,
+              "total": 3
+            },
+            "physics": {
+              "passed": 14,
+              "total": 16
+            },
+            "interaction": {
+              "passed": 9,
+              "total": 9
+            }
+          }
+        },
+        "syntax_error": {
+          "passed": 0,
+          "total": 28,
+          "failed": [
+            "aspect_ratio_from_study",
+            "wrist_fraction_from_study",
+            "mechanical_area_consistent",
+            "mass_budget_complete",
+            "fuel_accounting",
+            "empty_tank_stops_drive",
+            "drive_lock_preserves_pose",
+            "fuel_mass_affects_weight",
+            "locked_wings_no_propulsion",
+            "outer_motion_changes_propulsion",
+            "stroke_rate_changes_propulsion",
+            "shaft_power_limited",
+            "drive_energy_balance",
+            "bank_reduces_vertical_force",
+            "banked_trim_loses_height",
+            "neutral_bank_retains_bank",
+            "post_stall_lift_reduces",
+            "glide_ratio_in_envelope",
+            "locked_wings_matching_wind",
+            "pilot_mesh_present",
+            "rendered_wings_match_physics",
+            "wing_geometry_matches_area",
+            "wheel_rotation_axis",
+            "wheels_above_surface",
+            "takeoff_from_strip",
+            "landing_on_strip",
+            "rudder_mesh_and_yaw",
+            "aircraft_geometry_bounded"
+          ],
+          "groups": {
+            "source": {
+              "passed": 0,
+              "total": 3
+            },
+            "physics": {
+              "passed": 0,
+              "total": 16
+            },
+            "interaction": {
+              "passed": 0,
+              "total": 9
+            }
+          }
+        },
+        "empty": {
+          "passed": 0,
+          "total": 28,
+          "failed": [
+            "aspect_ratio_from_study",
+            "wrist_fraction_from_study",
+            "mechanical_area_consistent",
+            "mass_budget_complete",
+            "fuel_accounting",
+            "empty_tank_stops_drive",
+            "drive_lock_preserves_pose",
+            "fuel_mass_affects_weight",
+            "locked_wings_no_propulsion",
+            "outer_motion_changes_propulsion",
+            "stroke_rate_changes_propulsion",
+            "shaft_power_limited",
+            "drive_energy_balance",
+            "bank_reduces_vertical_force",
+            "banked_trim_loses_height",
+            "neutral_bank_retains_bank",
+            "post_stall_lift_reduces",
+            "glide_ratio_in_envelope",
+            "locked_wings_matching_wind",
+            "pilot_mesh_present",
+            "rendered_wings_match_physics",
+            "wing_geometry_matches_area",
+            "wheel_rotation_axis",
+            "wheels_above_surface",
+            "takeoff_from_strip",
+            "landing_on_strip",
+            "rudder_mesh_and_yaw",
+            "aircraft_geometry_bounded"
+          ],
+          "groups": {
+            "source": {
+              "passed": 0,
+              "total": 3
+            },
+            "physics": {
+              "passed": 0,
+              "total": 16
+            },
+            "interaction": {
+              "passed": 0,
+              "total": 9
+            }
+          }
+        }
+      },
+      "infrastructure_errors": {},
+      "reference_sha256": {
+        "physics.mjs": "0e26e616563edc731e54ad0a4a1be8e15a89cedef66c1fb97be9635ca5c10886",
+        "kinematics.mjs": "71c50269276c948ff45ce6806b6cdc540472700206dd1a8c5d82912aedc648b3",
+        "environment/engineering.mjs": "7f6d9ee792326ef38ed917d42ffeef28655705a9824a8c1d5e31459081670fa3",
+        "environment/platform.mjs": "4494cf585db5af884161c19fe2d71fbfeadb9bd8f787211502966e7043092175"
+      },
+      "calibration_script_sha256": "3084546e776e08e841cf85e74988cc21dbb9baba94421762ae6e0a66a26864e2"
+    }
+  ]
+}

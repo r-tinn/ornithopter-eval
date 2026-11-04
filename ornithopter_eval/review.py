@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 
 from .api import create_response
-from .checks import TASK_VERSION, VISUAL_CHECKS, refresh_verdict
+from .checks import TASK_VERSION, VISUAL_CHECKS, PILOTED_VERSION, PILOTED_CHECKS, refresh_verdict
 from .runner import ROOT, digest, image_input, verify_sources, write_json
 
 def audit_consistency(records):
@@ -28,8 +28,18 @@ def audit_consistency(records):
             "limitation":"Consistency is necessary, not sufficient: identical wrong judgments can still be consistent."}
 
 
-def validate_item(check_id, item):
-    allowed = set(VISUAL_CHECKS[check_id]["images"])
+PILOTED_VISUAL_CHECKS={
+    name:{'instruction':question,'images':images} for name,question,images in [
+        ('recognisable_adult_pilot',PILOTED_CHECKS['visual']['recognisable_adult_pilot'],['inspection-pilot.png','inspection-front.png','inspection-side.png']),
+        ('mechanical_airframe',PILOTED_CHECKS['visual']['mechanical_airframe'],['inspection-orbit.png','inspection-pilot.png']),
+        ('wings_lateral',PILOTED_CHECKS['visual']['wings_lateral'],['inspection-top.png','inspection-front.png']),
+        ('tail_aft',PILOTED_CHECKS['visual']['tail_aft'],['inspection-top.png','inspection-side.png']),
+        ('landing_gear_visible',PILOTED_CHECKS['visual']['landing_gear_visible'],['inspection-front.png','inspection-side.png','inspection-pilot.png']),
+    ]}
+
+
+def validate_item(check_id, item, specs=VISUAL_CHECKS):
+    allowed = set(specs[check_id]["images"])
     frames = allowed - {"Unknown-2.jpg"}
     if (not isinstance(item, dict) or set(item) != {"pass", "reason", "evidence"} or
         type(item.get("pass")) is not bool or not isinstance(item.get("reason"), str) or
@@ -40,16 +50,17 @@ def validate_item(check_id, item):
 
 
 def apply_review(report, review):
-    if report.get("task_version") != TASK_VERSION or report.get("status") != "awaiting_review":
+    specs=PILOTED_VISUAL_CHECKS if report.get('task_version')==PILOTED_VERSION else VISUAL_CHECKS
+    if report.get("task_version") not in (TASK_VERSION,PILOTED_VERSION) or report.get("status") != "awaiting_review":
         raise ValueError("A completed current-version automated grade awaiting review is required")
     refresh_verdict(report)
-    needed = {name for spec in VISUAL_CHECKS.values() for name in spec["images"] if not name.startswith("Unknown-")}
+    needed = {name for spec in specs.values() for name in spec["images"] if not name.startswith("Unknown-")}
     if not needed <= set(report.get("evidence", {}).get("screenshots", [])):
         raise ValueError("Missing inspection evidence; visual checks remain ungraded")
-    if set(review) != set(VISUAL_CHECKS):
-        raise ValueError("Review must answer exactly the five visual questions")
+    if set(review) != set(specs):
+        raise ValueError("Review must answer exactly the versioned visual questions")
     for check_id, item in review.items():
-        validate_item(check_id, item)
+        validate_item(check_id, item, specs)
     for check in report["dimensions"]["visual"]["checks"]:
         check.update(review[check["id"]])
     return refresh_verdict(report)

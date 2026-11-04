@@ -13,14 +13,19 @@ from pathlib import Path
 
 from .experiment import ArtifactServer
 from .policy import FilePolicy, PolicyError
-from .checks import MECHANICAL_VERSION,MECHANICAL_VERSIONS
+from .checks import MECHANICAL_VERSION,MECHANICAL_VERSIONS,PILOTED_VERSION,checklist
 from .runner import ROOT, digest, verify_sources, write_json
 
 CANDIDATE = ROOT / 'candidate/mechanical-v4'
 EDITABLE = ('aircraft.mjs', 'physics.mjs', 'interpretation.json')
+PILOTED_EDITABLE = ('aircraft.mjs', 'physics.mjs', 'kinematics.mjs', 'interpretation.json')
 
 
-def prepare_world(output, reference=False):
+def prepare_world(output, reference=False, task_version=MECHANICAL_VERSION):
+    if task_version not in (MECHANICAL_VERSION,PILOTED_VERSION):
+        raise ValueError('Unsupported candidate version')
+    candidate=ROOT/'candidate/mechanical-v5' if task_version==PILOTED_VERSION else CANDIDATE
+    editable=PILOTED_EDITABLE if task_version==PILOTED_VERSION else EDITABLE
     output = Path(output).resolve()
     if output.exists():
         raise ValueError('Use a fresh output directory; existing review packets are preserved')
@@ -28,24 +33,25 @@ def prepare_world(output, reference=False):
     output.mkdir(parents=True)
     inputs = output / 'inputs'
     inputs.mkdir()
-    for name in ('TASK.md','SOURCE_GUIDE.md','AIRCRAFT_API.md','engineering.json'):
-        shutil.copyfile(CANDIDATE / name, inputs / name)
+    for name in ('TASK.md','SOURCE_GUIDE.md','AIRCRAFT_API.md','engineering.json','ENGINEERING_NOTES.md'):
+        if (candidate/name).is_file():
+            shutil.copyfile(candidate / name, inputs / name)
     (inputs / 'sources').mkdir()
     for source in sources:
         shutil.copyfile(ROOT / 'task/sources' / source['file'],inputs / 'sources' / source['file'])
     submission = output / 'submission'
-    shutil.copytree(CANDIDATE / 'scaffold',submission)
+    shutil.copytree(candidate / 'scaffold',submission)
     if reference:
-        for name in EDITABLE:
-            fixture = ROOT / 'fixtures/mechanical-v4' / name
+        for name in editable:
+            fixture = ROOT / 'fixtures' / candidate.name / name
             if fixture.exists():
                 shutil.copyfile(fixture,submission / name)
     hashes = {str(p.relative_to(submission)):digest(p) for p in sorted(submission.rglob('*')) if p.is_file()}
     write_json(output / 'manifest.json',{
-        'task_version':MECHANICAL_VERSION,'status':'review_candidate',
+        'task_version':task_version,'status':'review_candidate',
         'reference_fixture':bool(reference),'not_a_model_submission':bool(reference),
-        'editable_files':['submission/'+name for name in EDITABLE],
-        'readonly_sha256':{name:sha for name,sha in hashes.items() if name not in EDITABLE},
+        'editable_files':['submission/'+name for name in editable],
+        'readonly_sha256':{name:sha for name,sha in hashes.items() if name not in editable},
         'input_sha256':{str(p.relative_to(output)):digest(p) for p in sorted(inputs.rglob('*')) if p.is_file()},
         'config':{'max_output_tokens_total':32000,'reasoning_effort':'medium','output_token_notice_percentages':[50,75]},
         'grading_status':'proposed checklist for review; not a scored model trial',
@@ -56,7 +62,8 @@ def prepare_world(output, reference=False):
 
 def prepare_world_trial(output, config_path):
     config = json.loads(Path(config_path).read_text())
-    if config.get('task_version') != MECHANICAL_VERSION:
+    version=config.get('task_version')
+    if version not in (MECHANICAL_VERSION,PILOTED_VERSION):
         raise ValueError('Unsupported mechanical task version')
     for key in ('max_output_tokens_total','max_output_tokens_per_response','max_requests','max_wall_seconds','max_submission_bytes'):
         if type(config.get(key)) is not int or config[key] <= 0:
@@ -65,15 +72,15 @@ def prepare_world_trial(output, config_path):
     percentages = config.setdefault('output_token_notice_percentages',[50,75])
     if not isinstance(percentages,list) or any(type(p) is not int or not 0<p<100 for p in percentages) or percentages != sorted(set(percentages)):
         raise ValueError('Invalid output-token notice percentages')
-    output = prepare_world(output)
+    output = prepare_world(output,task_version=version)
     manifest = json.loads((output/'manifest.json').read_text())
     manifest.update(status='prepared',model=None,config=config,
         created_utc=datetime.now(timezone.utc).isoformat(),
-        grading_status='provisional smoke checklist; four visual checks ungraded',
+        grading_status=f'provisional smoke checklist; {len(checklist(version)["visual"])} visual checks ungraded',
         starter_sha256={str(p.relative_to(output)):digest(p) for p in sorted((output/'submission').rglob('*')) if p.is_file()},
         implementation_sha256={str(p.relative_to(ROOT)):digest(p) for pattern in ('ornithopter_eval/*.py','grader/*.mjs') for p in sorted(ROOT.glob(pattern))},
         runtime={'python':sys.version,'platform':platform.platform()},
-        protocol='one instruction; three writable aircraft files; no execution or grader feedback; token-only checkpoints')
+        protocol='one instruction; only declared aircraft files writable; no execution or grader feedback; token-only checkpoints')
     write_json(output/'manifest.json',manifest)
     return output
 
@@ -84,13 +91,13 @@ class CandidateFilePolicy(FilePolicy):
         super().__init__(root,max_bytes)
         manifest=json.loads((self.root / 'manifest.json').read_text())
         if manifest.get('task_version') not in MECHANICAL_VERSIONS or manifest.get('reference_fixture'):
-            raise PolicyError('Use an empty v4 candidate packet for model file operations')
+            raise PolicyError('Use an empty mechanical candidate packet for model file operations')
         self.editable=set(manifest['editable_files'])
 
     def path(self, name, write=False):
         result=super().path(name,write)
         if write and str(result.relative_to(self.root)) not in self.editable:
-            raise PolicyError('Only aircraft.mjs, physics.mjs and interpretation.json are writable; the world is fixed')
+            raise PolicyError('Only the manifest-declared aircraft files are writable; the world is fixed')
         return result
 
 

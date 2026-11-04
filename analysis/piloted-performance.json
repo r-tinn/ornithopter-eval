@@ -1,0 +1,410 @@
+{
+  "kind": "v5 handwritten reference performance and sensitivity",
+  "model_trial": false,
+  "empirically_validated": false,
+  "cycles": [
+    {
+      "speed_m_s": 0,
+      "imposed_wingbeat_hz": 1.1,
+      "mean_wing_axial_N": 159.53981317909768,
+      "mean_aero_load_W": 5567.09619217754,
+      "mean_wing_dissipation_W": 5567.09619217754,
+      "body_drag_N": 0,
+      "net_forward_force_N": 159.53981317909768,
+      "net_wing_propulsion_efficiency": 0,
+      "wing_power_identity_residual_W": 0
+    },
+    {
+      "speed_m_s": 12,
+      "imposed_wingbeat_hz": 1.1,
+      "mean_wing_axial_N": 316.69576500791726,
+      "mean_aero_load_W": 8412.603264950083,
+      "mean_wing_dissipation_W": 4612.254084855075,
+      "body_drag_N": 79.38000000000001,
+      "net_forward_force_N": 237.31576500791726,
+      "net_wing_propulsion_efficiency": 0.4517447287605517,
+      "wing_power_identity_residual_W": 9.094947017729282e-13
+    },
+    {
+      "speed_m_s": 16,
+      "imposed_wingbeat_hz": 1.1,
+      "mean_wing_axial_N": 336.9583668563776,
+      "mean_aero_load_W": 10056.282751756626,
+      "mean_wing_dissipation_W": 4664.94888205459,
+      "body_drag_N": 141.12,
+      "net_forward_force_N": 195.8383668563776,
+      "net_wing_propulsion_efficiency": 0.5361159787159213,
+      "wing_power_identity_residual_W": -6.366462912410498e-12
+    },
+    {
+      "speed_m_s": 20,
+      "imposed_wingbeat_hz": 1.1,
+      "mean_wing_axial_N": 275.7659691629811,
+      "mean_aero_load_W": 11336.05675338765,
+      "mean_wing_dissipation_W": 5820.737370128025,
+      "body_drag_N": 220.5,
+      "net_forward_force_N": 55.265969162981094,
+      "net_wing_propulsion_efficiency": 0.4865289141756839,
+      "wing_power_identity_residual_W": 2.7284841053187847e-12
+    }
+  ],
+  "sensitivity": [
+    {
+      "scenario": "baseline",
+      "transmission_efficiency": 0.85,
+      "body_flat_plate_area_m2": 0.9,
+      "dry_mass_kg": 224.9,
+      "error": null,
+      "first_airborne_sample": {
+        "time_s": 15.299999999999772,
+        "distance_m": 73.40008742466253
+      },
+      "note": "First airborne sample can be a hop; sustained takeoff is a separate browser predicate.",
+      "mean_climb_30_to_60_s_m_s": 0.285943150740301,
+      "shaft_work_J": 573646.6777904186,
+      "fuel_used_kg": 0.0906404646622776,
+      "final_state": {
+        "position": [
+          859.3861877542712,
+          10.749649307952978,
+          2.5276103631642942e-14
+        ],
+        "velocity": [
+          18.343159924233596,
+          0.446387918658858,
+          4.64904142554592e-16
+        ],
+        "pitch": 0,
+        "roll": 0,
+        "heading": 2.534482305529026e-17,
+        "phase": 2.45106701911337,
+        "omega": 6.691098042198572,
+        "fuel_kg": 3.5093595353377225,
+        "pitch_rate": 0,
+        "roll_rate": 0,
+        "wheel_angle": 449.0132261500593,
+        "shaft_work_J": 573646.6777904186,
+        "aero_work_J": 451937.8269093796,
+        "drive_heat_J": 119022.60330043087,
+        "time": 59.999999999997236,
+        "status": "flying"
+      }
+    },
+    {
+      "scenario": "lower_transmission_efficiency",
+      "transmission_efficiency": 0.75,
+      "body_flat_plate_area_m2": 0.9,
+      "dry_mass_kg": 224.9,
+      "error": null,
+      "first_airborne_sample": {
+        "time_s": 16.28333333333305,
+        "distance_m": 82.40762247824934
+      },
+      "note": "First airborne sample can be a hop; sustained takeoff is a separate browser predicate.",
+      "mean_climb_30_to_60_s_m_s": 0.17707687562152744,
+      "shaft_work_J": 618467.5489682329,
+      "fuel_used_kg": 0.09748809775889233,
+      "final_state": {
+        "position": [
+          844.4438692482228,
+          7.1528792143027635,
+          4.110551408807172e-14
+        ],
+        "velocity": [
+          18.119117815209915,
+          -0.6490816393657776,
+          8.991642039168076e-16
+        ],
+        "pitch": 0,
+        "roll": 0,
+        "heading": 4.9625164596148995e-17,
+        "phase": 1.1549915563810769,
+        "omega": 7.532673671541806,
+        "fuel_kg": 3.5025119022411078,
+        "pitch_rate": 0,
+        "roll_rate": 0,
+        "wheel_angle": 472.79834399742,
+        "shaft_work_J": 618467.5489682329,
+        "aero_work_J": 428570.32239688456,
+        "drive_heat_J": 186492.75621283968,
+        "time": 59.999999999997236,
+        "status": "flying"
+      }
+    },
+    {
+      "scenario": "higher_transmission_efficiency",
+      "transmission_efficiency": 0.92,
+      "body_flat_plate_area_m2": 0.9,
+      "dry_mass_kg": 224.9,
+      "error": null,
+      "first_airborne_sample": {
+        "time_s": 15.216666666666443,
+        "distance_m": 73.41856674278146
+      },
+      "note": "First airborne sample can be a hop; sustained takeoff is a separate browser predicate.",
+      "mean_climb_30_to_60_s_m_s": 0.36127137710501783,
+      "shaft_work_J": 548754.2920149466,
+      "fuel_used_kg": 0.08683746127988634,
+      "final_state": {
+        "position": [
+          868.4694456972012,
+          13.321089756683637,
+          -7.11002567718443e-15
+        ],
+        "velocity": [
+          18.744809940695795,
+          -0.436382947132108,
+          -1.8635602996651444e-16
+        ],
+        "pitch": 0,
+        "roll": 0,
+        "heading": -9.941740170004467e-18,
+        "phase": 0.3876558459518996,
+        "omega": 7.215271699011766,
+        "fuel_kg": 3.5131625387201137,
+        "pitch_rate": 0,
+        "roll_rate": 0,
+        "wheel_angle": 438.84646463741626,
+        "shaft_work_J": 548754.2920149466,
+        "aero_work_J": 468137.20435632346,
+        "drive_heat_J": 77493.47891720534,
+        "time": 59.999999999997236,
+        "status": "flying"
+      }
+    },
+    {
+      "scenario": "lower_body_drag",
+      "transmission_efficiency": 0.85,
+      "body_flat_plate_area_m2": 0.6,
+      "dry_mass_kg": 224.9,
+      "error": null,
+      "first_airborne_sample": {
+        "time_s": 15.26666666666644,
+        "distance_m": 74.70244725384114
+      },
+      "note": "First airborne sample can be a hop; sustained takeoff is a separate browser predicate.",
+      "mean_climb_30_to_60_s_m_s": 0.540933350167232,
+      "shaft_work_J": 572161.6176699951,
+      "fuel_used_kg": 0.09041358047719772,
+      "final_state": {
+        "position": [
+          909.2469615868202,
+          20.040156357144575,
+          -1.4802883056879054e-14
+        ],
+        "velocity": [
+          19.370026444300866,
+          0.24812651161404572,
+          -4.4155365849655297e-16
+        ],
+        "pitch": 0,
+        "roll": 0,
+        "heading": -2.2795717897766157e-17,
+        "phase": 1.8869762819994402,
+        "omega": 7.622704817367194,
+        "fuel_kg": 3.5095864195228024,
+        "pitch_rate": 0,
+        "roll_rate": 0,
+        "wheel_angle": 419.2489861744549,
+        "shaft_work_J": 572161.6176699951,
+        "aero_work_J": 449950.67118801136,
+        "drive_heat_J": 118724.6087580324,
+        "time": 59.999999999997236,
+        "status": "flying"
+      }
+    },
+    {
+      "scenario": "higher_body_drag",
+      "transmission_efficiency": 0.85,
+      "body_flat_plate_area_m2": 1.2,
+      "dry_mass_kg": 224.9,
+      "error": null,
+      "first_airborne_sample": {
+        "time_s": 16.158333333333058,
+        "distance_m": 80.880850128954
+      },
+      "note": "First airborne sample can be a hop; sustained takeoff is a separate browser predicate.",
+      "mean_climb_30_to_60_s_m_s": 0.06603694335989105,
+      "shaft_work_J": 574032.1182452084,
+      "fuel_used_kg": 0.09069935139843421,
+      "final_state": {
+        "position": [
+          815.5182929812291,
+          3.414924284978043,
+          3.211948549241943e-15
+        ],
+        "velocity": [
+          17.849232633634667,
+          0.7639728390528986,
+          2.810567750057434e-17
+        ],
+        "pitch": 0,
+        "roll": 0,
+        "heading": 1.5746154514011246e-18,
+        "phase": 3.5758900492134744,
+        "omega": 4.9295452649162215,
+        "fuel_kg": 3.509300648601566,
+        "pitch_rate": 0,
+        "roll_rate": 0,
+        "wheel_angle": 493.1389381418081,
+        "shaft_work_J": 574032.1182452084,
+        "aero_work_J": 453344.6118769242,
+        "drive_heat_J": 119229.48137716281,
+        "time": 59.999999999997236,
+        "status": "flying"
+      }
+    },
+    {
+      "scenario": "lighter_nonpilot_airframe",
+      "transmission_efficiency": 0.85,
+      "body_flat_plate_area_m2": 0.9,
+      "dry_mass_kg": 190.92000000000002,
+      "error": null,
+      "first_airborne_sample": {
+        "time_s": 11.716666666666642,
+        "distance_m": 51.32918427399177
+      },
+      "note": "First airborne sample can be a hop; sustained takeoff is a separate browser predicate.",
+      "mean_climb_30_to_60_s_m_s": 0.58508320960305,
+      "shaft_work_J": 579634.0731553426,
+      "fuel_used_kg": 0.09155520562080177,
+      "final_state": {
+        "position": [
+          891.7342482223249,
+          23.814369254125666,
+          -6.145669604882752e-15
+        ],
+        "velocity": [
+          18.590619391130975,
+          1.1993360473794985,
+          -1.6335977045373107e-16
+        ],
+        "pitch": 0,
+        "roll": 0,
+        "heading": -8.787215047373037e-18,
+        "phase": 4.30417208229845,
+        "omega": 5.884298202638417,
+        "fuel_kg": 3.5084447943791983,
+        "pitch_rate": 0,
+        "roll_rate": 0,
+        "wheel_angle": 305.5904674398687,
+        "shaft_work_J": 579634.0731553426,
+        "aero_work_J": 457424.1806143601,
+        "drive_heat_J": 120132.39462073824,
+        "time": 59.999999999997236,
+        "status": "flying"
+      }
+    },
+    {
+      "scenario": "heavier_nonpilot_airframe",
+      "transmission_efficiency": 0.85,
+      "body_flat_plate_area_m2": 0.9,
+      "dry_mass_kg": 258.88,
+      "error": null,
+      "first_airborne_sample": {
+        "time_s": 19.733333333332855,
+        "distance_m": 104.94878332029664
+      },
+      "note": "First airborne sample can be a hop; sustained takeoff is a separate browser predicate.",
+      "mean_climb_30_to_60_s_m_s": 0.017965145295057983,
+      "shaft_work_J": 568928.9416429449,
+      "fuel_used_kg": 0.08991969941753464,
+      "final_state": {
+        "position": [
+          821.6932720264813,
+          1.9991060688042546,
+          9.640940521341791e-15
+        ],
+        "velocity": [
+          18.566004969381126,
+          -0.5631338695151509,
+          1.7955407275206303e-16
+        ],
+        "pitch": 0,
+        "roll": 0,
+        "heading": 9.671120580231549e-18,
+        "phase": 1.6064983346949924,
+        "omega": 7.821759021459176,
+        "fuel_kg": 3.5100803005824655,
+        "pitch_rate": 0,
+        "roll_rate": 0,
+        "wheel_angle": 651.427361851698,
+        "shaft_work_J": 568928.9416429449,
+        "aero_work_J": 447016.2836764,
+        "drive_heat_J": 118241.86311517326,
+        "time": 59.999999999997236,
+        "status": "flying"
+      }
+    }
+  ],
+  "paired_full_power_bank": [
+    {
+      "elapsed_s": 1,
+      "bank_input": 1,
+      "straight": {
+        "height_m": 11.060287504450555,
+        "climb_m_s": 0.6711279360661553,
+        "bank_rad": 0
+      },
+      "banked": {
+        "height_m": 11.054560507944423,
+        "climb_m_s": 0.6341145149397527,
+        "bank_rad": 0.20439196525532446
+      },
+      "height_difference_m": -0.005726996506131954
+    },
+    {
+      "elapsed_s": 2,
+      "bank_input": 1,
+      "straight": {
+        "height_m": 11.378337665687688,
+        "climb_m_s": 0.8412662326522503,
+        "bank_rad": 0
+      },
+      "banked": {
+        "height_m": 11.236229926986098,
+        "climb_m_s": 0.33285389816886607,
+        "bank_rad": 0.6277814804206447
+      },
+      "height_difference_m": -0.14210773870158988
+    },
+    {
+      "elapsed_s": 3,
+      "bank_input": 0,
+      "straight": {
+        "height_m": 11.70107157834055,
+        "climb_m_s": 0.9354152786571646,
+        "bank_rad": 0
+      },
+      "banked": {
+        "height_m": 10.79611959262369,
+        "climb_m_s": -0.7690151933032409,
+        "bank_rad": 0.9270068699183278
+      },
+      "height_difference_m": -0.9049519857168598
+    },
+    {
+      "elapsed_s": 5,
+      "bank_input": 0,
+      "straight": {
+        "height_m": 12.350454413356031,
+        "climb_m_s": 0.9465678257013849,
+        "bank_rad": 0
+      },
+      "banked": {
+        "height_m": 6.92450191943488,
+        "climb_m_s": -2.349091480084858,
+        "bank_rad": 1.05
+      },
+      "height_difference_m": -5.425952493921152
+    }
+  ],
+  "full_power_endurance_minutes": 24.053452115812917,
+  "full_power_endurance_with_planning_reserve_minutes": 21.648106904231625,
+  "source_sha256": {
+    "physics.mjs": "0e26e616563edc731e54ad0a4a1be8e15a89cedef66c1fb97be9635ca5c10886",
+    "kinematics.mjs": "71c50269276c948ff45ce6806b6cdc540472700206dd1a8c5d82912aedc648b3",
+    "environment/engineering.mjs": "7f6d9ee792326ef38ed917d42ffeef28655705a9824a8c1d5e31459081670fa3",
+    "environment/mechanism.mjs": "8a3d20081900e7b859673c88712978a894e65946bb8eff85c3fe8369a47e621e"
+  }
+}

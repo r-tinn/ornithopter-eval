@@ -3,7 +3,8 @@ import json
 import re
 from urllib.parse import parse_qs
 
-from .checks import MECHANICAL_VERSIONS
+from .checks import MECHANICAL_VERSION,MECHANICAL_LEGACY_VERSION
+CAMERA_PLAYBACK_VERSIONS=(MECHANICAL_VERSION,MECHANICAL_LEGACY_VERSION)
 from .runner import ROOT,digest
 
 
@@ -14,7 +15,7 @@ class CameraPlayback:
                     for name in ('platform.mjs','view-motion.mjs')}
         self.trials={}
         experiment=json.loads((root/'experiment.json').read_text())
-        if experiment.get('task_version') not in MECHANICAL_VERSIONS:
+        if experiment.get('task_version') not in CAMERA_PLAYBACK_VERSIONS:
             return
         for trial in experiment['trials']:
             name=trial['id']
@@ -24,7 +25,7 @@ class CameraPlayback:
             manifest=json.loads((directory/'manifest.json').read_text())
             platform=directory/'submission/environment/platform.mjs'
             expected=manifest.get('readonly_sha256',{}).get('environment/platform.mjs')
-            if (manifest.get('task_version') in MECHANICAL_VERSIONS and expected and
+            if (manifest.get('task_version') in CAMERA_PLAYBACK_VERSIONS and expected and
                     platform.is_file() and digest(platform)==expected and
                     platform.read_bytes()!=self.files['platform.mjs']):
                 self.trials[name]=expected

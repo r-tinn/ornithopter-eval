@@ -12,7 +12,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 from .api import create_response, get_api_key
-from .checks import CHECKS, TASK_VERSION, MECHANICAL_VERSION, MECHANICAL_VERSIONS, checklist
+from .checks import CHECKS, TASK_VERSION, MECHANICAL_VERSION, MECHANICAL_VERSIONS, PILOTED_VERSION, checklist
 from .grading import grade_submission
 from .runner import ROOT, digest, initial_input, prepare, run_model, write_json
 
@@ -142,10 +142,10 @@ def run_experiment(output, models, repeats, config_path, node="node", transport=
         raise ValueError("A local API key is required; no experiment was created")
     config = json.loads(Path(config_path).read_text())
     version = config.get("task_version")
-    if version not in (TASK_VERSION, MECHANICAL_VERSION):
+    if version not in (TASK_VERSION, MECHANICAL_VERSION,PILOTED_VERSION):
         raise ValueError("Unsupported task version")
     frozen = {str(p.relative_to(ROOT)):digest(p) for pattern in
-              ("ornithopter_eval/*.py","grader/*.mjs","task/*.md","task/starter/*","task/sources/*.jpg","candidate/mechanical-v4/**/*")
+              ("ornithopter_eval/*.py","grader/*.mjs","task/*.md","task/starter/*","task/sources/*.jpg","candidate/mechanical-v4/**/*","candidate/mechanical-v5/**/*")
               for p in sorted(ROOT.glob(pattern)) if p.is_file()}
     root.mkdir(parents=True)
     shutil.copyfile(config_path, root / "config.json")

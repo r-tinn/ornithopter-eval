@@ -93,7 +93,7 @@ def initial_input(run):
     mechanical = manifest.get("task_version") in MECHANICAL_VERSIONS
     api = ("\n\n" + (run / "inputs/AIRCRAFT_API.md").read_text() +
            "\n\nENGINEERING ASSUMPTIONS\n" + (run / "inputs/engineering.json").read_text()) if mechanical else ""
-    starter = ("Writable files: submission/aircraft.mjs, submission/physics.mjs, submission/interpretation.json. "
+    starter = (("Writable files: "+", ".join(manifest['editable_files'])+". ") +
                "All other submission files are supplied read-only infrastructure. " if mechanical else
                "Starter files: submission/index.html, submission/physics.mjs, submission/interpretation.json. ")
     content = [{"type": "input_text", "text": (run / "inputs/TASK.md").read_text() +

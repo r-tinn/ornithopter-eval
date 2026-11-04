@@ -4,10 +4,18 @@ import unittest
 from pathlib import Path
 from ornithopter_eval.playback import CameraPlayback
 from ornithopter_eval.runner import ROOT,digest,write_json
-from ornithopter_eval.checks import MECHANICAL_VERSION
+from ornithopter_eval.checks import MECHANICAL_VERSION,PILOTED_VERSION
 
 
 class PlaybackTests(unittest.TestCase):
+    def test_v5_is_never_replaced_with_the_old_v4_platform(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp)
+            write_json(root/'experiment.json',{'task_version':PILOTED_VERSION,'trials':[]})
+            playback=CameraPlayback(root)
+            self.assertFalse(playback.trials)
+            self.assertIsNone(playback.response('index.html'))
+
     def test_camera_overlay_is_labelled_and_preserves_every_archived_byte(self):
         root=ROOT/'experiments/mechanical-v4-smoke-20261030'
         hashes={str(p.relative_to(root)):digest(p) for p in root.rglob('*') if p.is_file()}

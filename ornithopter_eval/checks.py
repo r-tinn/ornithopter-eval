@@ -77,7 +77,8 @@ VISUAL_CHECKS = {
 
 MECHANICAL_LEGACY_VERSION = "mechanical-v4-draft"
 MECHANICAL_VERSION = "mechanical-v4.1"
-MECHANICAL_VERSIONS = (MECHANICAL_LEGACY_VERSION, MECHANICAL_VERSION)
+PILOTED_VERSION = "mechanical-v5-draft"
+MECHANICAL_VERSIONS = (MECHANICAL_LEGACY_VERSION, MECHANICAL_VERSION, PILOTED_VERSION)
 MECHANICAL_CHECKS = {
     "source": {
         "aspect_ratio_from_study": "Does aspect ratio preserve 7.4²/6.61 within 0.5%?",
@@ -112,8 +113,51 @@ MECHANICAL_CHECKS = {
 MECHANICAL_LEGACY_CHECKS = {group:dict(items) for group,items in MECHANICAL_CHECKS.items()}
 MECHANICAL_CHECKS['interaction']['wheel_rotation_axis'] = 'Do all three actual tyre axles stay aligned with the lateral airframe axis during straight rolling and flight?'
 
+PILOTED_CHECKS = {
+    'source':dict(MECHANICAL_CHECKS['source']),
+    'physics':{
+        'mass_budget_complete':'Are the pilot and every supplied component allocation included in the all-up mass?',
+        'fuel_accounting':'Does measured fuel use match delivered shaft work and the stated idle consumption?',
+        'empty_tank_stops_drive':'Does exhausting the tank stop shaft power and lock the wings?',
+        'drive_lock_preserves_pose':'Does setting drive rate to zero preserve all wing angles at the same crank phase?',
+        'fuel_mass_affects_weight':'Does adding one kilogram of fuel add exactly one kilogram to gravity and mass?',
+        'locked_wings_no_propulsion':'With wing rates locked, is propulsive work zero despite open throttle?',
+        'outer_motion_changes_propulsion':'Does locking only the outer hinge motion change cycle-mean propulsion?',
+        'stroke_rate_changes_propulsion':'Does changing wing angular rate change cycle-mean propulsion?',
+        'shaft_power_limited':'Does shaft power stay within the throttle-scaled 16 kW limit?',
+        'drive_energy_balance':'Does shaft work equal drive-energy change plus aerodynamic work and recorded losses?',
+        'bank_reduces_vertical_force':'At identical horizontal flow, does 60 degree bank halve the vertical wing force?',
+        'banked_trim_loses_height':'From the same level-lift initial condition, does banking cause a larger height loss?',
+        'neutral_bank_retains_bank':'Does neutral bank input retain an established bank rather than auto-levelling?',
+        'post_stall_lift_reduces':'Does the supplied post-stall transition reduce lift and increase drag?',
+        'glide_ratio_in_envelope':'Does an unpowered trimmed glide lose height within the specified 6–14 distance/height envelope?',
+        'locked_wings_matching_wind':'With stationary wings, does matching wind remove aerodynamic force?',
+    },
+    'interaction':{
+        'pilot_mesh_present':'Is visible pilot geometry mounted in the production aircraft at human scale?',
+        'rendered_wings_match_physics':'Do actual wing-panel quarter-chord positions and velocities match the aerodynamic strip mechanism?',
+        'wing_geometry_matches_area':'Do the actual four wing panels have the prescribed planform area and span?',
+        'wheel_rotation_axis':MECHANICAL_CHECKS['interaction']['wheel_rotation_axis'],
+        'wheels_above_surface':MECHANICAL_CHECKS['interaction']['wheels_above_surface'],
+        'takeoff_from_strip':'Does the production aircraft lift off both supplied strips by 35 seconds?',
+        'landing_on_strip':'Does the supplied unpowered approach land on both strips within 10 seconds?',
+        'rudder_mesh_and_yaw':'Does rudder input move the actual rudder and turn the aircraft in the commanded direction?',
+        'aircraft_geometry_bounded':MECHANICAL_CHECKS['interaction']['aircraft_geometry_bounded'],
+    },
+    'visual':{
+        'recognisable_adult_pilot':'Is a seated adult human clearly visible, with head/face, torso, two arms and two legs?',
+        'mechanical_airframe':'Is the production aircraft visibly an engineered airframe with a motor and wing-drive mechanism?',
+        'wings_lateral':'Do the main wings extend to both lateral sides of the airframe?',
+        'tail_aft':'Are the horizontal tail and upright fin/rudder aft of the main wings?',
+        'landing_gear_visible':'Are three wheels and their supporting gear visibly present?',
+    },
+}
+PILOTED_CHECKS['source']['mechanical_area_consistent']='Does the actual wing area preserve S=14²/AR for the 14 m aircraft?'
+
 
 def checklist(version):
+    if version == PILOTED_VERSION:
+        return PILOTED_CHECKS
     if version == MECHANICAL_VERSION:
         return MECHANICAL_CHECKS
     if version == MECHANICAL_LEGACY_VERSION:

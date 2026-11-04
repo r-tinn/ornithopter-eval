@@ -1,0 +1,27 @@
+{
+  "sources": [
+    {
+      "id": "02",
+      "used_for": "Dimensionless aspect ratio and wrist span fraction"
+    },
+    {
+      "id": "14",
+      "used_for": "Mechanical inner/outer wings and conventional tail control"
+    }
+  ],
+  "biomimetic_translation": [
+    "Scale source proportions to 14 m; petrol-powered engineered airframe carrying a seated 55 kg adult."
+  ],
+  "engineering_assumptions": [
+    "Component budget and reference-informed engine, section polar and strip model in engineering.json."
+  ],
+  "excluded_fields": [
+    "Biological body dimensions",
+    "Erroneous wing-length conversion",
+    "Unspecified spring model"
+  ],
+  "limitations": [
+    "Handwritten calibration fixture, not a model trial",
+    "Hypothetical educational design, not empirically validated human-flight performance"
+  ]
+}

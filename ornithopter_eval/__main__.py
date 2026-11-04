@@ -137,20 +137,23 @@ def validate(node):
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Ornithopter evaluation and shared-world review")
     commands = parser.add_subparsers(dest="command",required=True)
-    p = commands.add_parser("prepare");p.add_argument("output");p.add_argument("--config",default=str(DEFAULT_CONFIG))
-    p = commands.add_parser("run");p.add_argument("--model",required=True);p.add_argument("--output",required=True);p.add_argument("--config",default=str(DEFAULT_CONFIG))
-    p = commands.add_parser("grade");p.add_argument("submission");p.add_argument("--output",required=True);p.add_argument("--node",default="node")
+    cli_config=str(ROOT/'configs/mechanical-v5-smoke.json')
+    p = commands.add_parser("prepare");p.add_argument("output");p.add_argument("--config",default=cli_config)
+    p = commands.add_parser("run");p.add_argument("--model",required=True);p.add_argument("--output",required=True);p.add_argument("--config",default=cli_config)
+    p = commands.add_parser("grade");p.add_argument("submission");p.add_argument("--output",required=True);p.add_argument("--node",default="node");p.add_argument('--task-version')
     p = commands.add_parser("judge");p.add_argument("submission");p.add_argument("grade_dir");p.add_argument("--model",required=True)
     p = commands.add_parser("review");p.add_argument("grade_dir");p.add_argument("review_json");p.add_argument("--reviewer",required=True)
     p = commands.add_parser("validate");p.add_argument("--node",default="node")
     p = commands.add_parser("audit-reviews");p.add_argument("reviews",nargs="+")
-    p = commands.add_parser("compare");p.add_argument("--models",nargs=2,required=True);p.add_argument("--repeats",type=int,default=3);p.add_argument("--output",required=True);p.add_argument("--config",default=str(ROOT / "configs/frontier-calibration.json"));p.add_argument("--node",default="node")
+    p = commands.add_parser("compare");p.add_argument("--models",nargs=2,required=True);p.add_argument("--repeats",type=int,default=3);p.add_argument("--output",required=True);p.add_argument("--config",default=cli_config);p.add_argument("--node",default="node")
     p = commands.add_parser("export");p.add_argument("source");p.add_argument("destination")
     p = commands.add_parser("serve-artifacts");p.add_argument("directory");p.add_argument("--port",type=int,default=8765);p.add_argument("--original-camera",action="store_true",help="Serve the exact archived camera without playback updates")
     p = commands.add_parser("prepare-world");p.add_argument("output");p.add_argument("--reference",action="store_true")
+    p = commands.add_parser("prepare-piloted");p.add_argument("output");p.add_argument("--reference",action="store_true")
     p = commands.add_parser("serve-world");p.add_argument("directory");p.add_argument("--port",type=int,default=8766)
     p = commands.add_parser("validate-world");p.add_argument("--node",default="node")
     p = commands.add_parser("validate-mechanical");p.add_argument("--node",default="node")
+    p = commands.add_parser("validate-piloted");p.add_argument("--node",default="node")
     p = commands.add_parser("audit-wheels");p.add_argument("experiment");p.add_argument("--output",required=True);p.add_argument("--node",default="node")
     commands.add_parser("verify-sources")
     args = parser.parse_args(argv)
@@ -165,7 +168,9 @@ def main(argv=None):
             print(json.dumps(result,indent=2))
             return 0 if result["status"]=="submitted" else 1
         elif args.command == "grade":
-            report = grade_submission(args.submission,args.output,node=args.node)
+            manifest=Path(args.submission).resolve().parent/'manifest.json'
+            version=args.task_version or (json.loads(manifest.read_text()).get('task_version') if manifest.is_file() else TASK_VERSION)
+            report = grade_submission(args.submission,args.output,node=args.node,task_version=version)
             print(json.dumps(summarize(report),indent=2))
             return 1 if report["status"] in ("infrastructure_error","submission_timeout") else 0
         elif args.command == "judge":
@@ -178,7 +183,7 @@ def main(argv=None):
                 raise ValueError("Missing inspection evidence; visual checks remain ungraded")
             review = json.loads(Path(args.review_json).read_text())
             report = apply_review(json.loads((folder / "report.json").read_text()),review)
-            report["reviewer"]={"type":"human","name":args.reviewer,"rubric":TASK_VERSION}
+            report["reviewer"]={"type":"human","name":args.reviewer,"rubric":report['task_version']}
             write_json(folder / "review.json",review)
             write_json(folder / "report.json",report)
             print(json.dumps(summarize(report),indent=2))
@@ -199,6 +204,10 @@ def main(argv=None):
         elif args.command == "prepare-world":
             from .world_candidate import prepare_world
             print(prepare_world(args.output,args.reference))
+        elif args.command == "prepare-piloted":
+            from .world_candidate import prepare_world
+            from .checks import PILOTED_VERSION
+            print(prepare_world(args.output,args.reference,task_version=PILOTED_VERSION))
         elif args.command == "serve-world":
             from .world_candidate import serve_world
             serve_world(args.directory,args.port)
@@ -208,6 +217,9 @@ def main(argv=None):
         elif args.command == "validate-mechanical":
             from .mechanical_validation import validate_mechanical
             validate_mechanical(args.node)
+        elif args.command == "validate-piloted":
+            from .piloted_validation import validate_piloted
+            validate_piloted(args.node)
         elif args.command == "audit-wheels":
             from .wheel_audit import audit_wheels
             result=audit_wheels(args.experiment,args.output,args.node)

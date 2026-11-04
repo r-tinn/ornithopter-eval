@@ -9,7 +9,7 @@ jobs:
     # Newer Ubuntu images restrict user namespaces for unpackaged Chromium.
     # Keep Chromium's sandbox enabled on a supported, fixed runner image.
     runs-on: ubuntu-22.04
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -34,6 +34,7 @@ jobs:
             python3 -m ornithopter_eval validate
             python3 -m ornithopter_eval validate-world
             python3 -m ornithopter_eval validate-mechanical
+            python3 -m ornithopter_eval validate-piloted
             python3 -m ornithopter_eval audit-wheels experiments/mechanical-v4-smoke-20261030 --output runs/wheel-axis-regression
             python3 -c 'import json; r=json.load(open("runs/wheel-axis-regression/wheel-axis.json")); assert r["archive_unchanged"]; assert {x["model"]:x["pass"] for x in r["results"]} == {"gpt-5.6-sol":False,"gpt-6.1-sol":True}'
           else
@@ -50,5 +51,6 @@ jobs:
             runs/validation-*
             runs/world-review-*
             runs/mechanical-grader-calibration-*
+            runs/piloted-calibration-*
             runs/wheel-axis-regression
           retention-days: 7

@@ -1,0 +1,51 @@
+{
+  "accessed_utc_date": "2026-11-04",
+  "runtime_requires_external_sources": false,
+  "sources": [
+    {
+      "url": "http://ornithopter.net/Publications/TheDevelopmentandTestingofaFull-ScalePilotedOrnithopter.pdf",
+      "download_sha256": "56e9e8265906c814267285ac24dd8f256006e2445413b5247d72389e3cc553be",
+      "used_for": "DeLaurier 1999; printed pp 73,76\u201378; measured static thrust, design scale and engine context"
+    },
+    {
+      "url": "https://ntrs.nasa.gov/api/citations/19950022917/downloads/19950022917.pdf",
+      "download_sha256": "ef93a725478ef17fa8a7577849654ed5a6eab6d51770b6c5ce75635707e099c2",
+      "used_for": "Steen 1994, printed p26/PDF43, figures17\u201318; approximate visual section-polar anchors"
+    },
+    {
+      "url": "https://vittorazi.com/wp-content/uploads/2023/09/Moster-185-EFI-ENG_compressed.pdf",
+      "download_sha256": "fdf5a2d345ae15893bfe76ec404eea92cd67e2278b3e29d9b85c7cb6ac00eaa0",
+      "used_for": "Engine manufacturer brochure; peak power, engine package mass and explicitly conditional consumption"
+    }
+  ],
+  "drag_table_extraction": {
+    "method": "approximate visual reading of NACA reference markers; not precision raw test data",
+    "uncertainty_cd": 0.001,
+    "values": [
+      [
+        0,
+        0.0072
+      ],
+      [
+        0.4,
+        0.007
+      ],
+      [
+        0.8,
+        0.0073
+      ],
+      [
+        1,
+        0.0084
+      ],
+      [
+        1.2,
+        0.0132
+      ],
+      [
+        1.4,
+        0.0194
+      ]
+    ]
+  }
+}

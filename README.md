@@ -1,5 +1,30 @@
 # Ornithopter Eval
 
+The current review candidate is a [human-piloted mechanical ornithopter](candidate/mechanical-v5/README.md):
+55 kg visible adult pilot, 14 m span, 228.5 kg initial all-up mass, a petrol engine
+with a 16 kW shaft limit, finite fuel and propulsion derived from actual wing
+motion. [Engineering basis and uncertainties](candidate/mechanical-v5/ENGINEERING_NOTES.md)
+distinguish measured reference data from our hypothetical aircraft assumptions.
+
+```sh
+python3 -m ornithopter_eval prepare-piloted runs/piloted-review --reference
+python3 -m ornithopter_eval serve-world runs/piloted-review --port 8768
+python3 -m ornithopter_eval validate-piloted
+```
+
+The preview is a labelled **handwritten reference fixture**, not a model result.
+V5 has [28 automated binary checks and five pending visual questions](candidate/mechanical-v5/GRADERS.md).
+[Calibration results](validation/piloted-v5.json) include fourteen positive/negative
+variants. [Development calibration history](validation/piloted-v5-development.json)
+also retains the earlier empty-starter infrastructure failure and the earlier,
+narrower rubric. [Performance and sensitivity diagnostics](analysis/piloted-performance.json)
+are reproducible with `node analysis/piloted_performance.mjs runs/piloted-review runs/piloted-performance-new.json`.
+The code runner accepts only labelled reference packets for this diagnostic.
+No v5 model cohort has been run. CLI prepare/run/compare now default to the v5
+configuration; medium reasoning and 32,000 total output tokens remain unchanged.
+
+## Preserved v4 task and results
+
 The [v4 smoke results](experiments/mechanical-v4-smoke-20261030/CALIBRATION.md) and
 [playable artifact viewer](experiments/mechanical-v4-smoke-20261030/index.html) are saved:
 one attempt each, GPT-6.1 Sol and GPT-5.6 Sol, medium reasoning, 32,000 total output
@@ -21,7 +46,7 @@ python3 -m ornithopter_eval serve-world runs/mechanical-v4-review --port 8766
 Open `http://127.0.0.1:8766/`. The aircraft in this preview is a handwritten,
 withheld integration fixture. The environment, renderer and license are copied
 into this repository; the old project is not needed to prepare or run it.
-Run the new task with its explicit configuration:
+Reproduce the earlier task with its explicit configuration:
 
 ```sh
 python3 -m ornithopter_eval compare --models gpt-6.1-sol gpt-5.6-sol --repeats 1 --config configs/mechanical-v4-smoke.json --output runs/mechanical-v4-smoke
@@ -79,7 +104,7 @@ and [all six saved attempts](experiments/frontier-20261030-medium-3x/index.html)
 are included for independent inspection.
 There is no claim of general benchmark validity or real-world aircraft validity.
 
-The current task is **swan-v3.1**: the task and starter require scalar `lift`,
+The earlier swan task is **swan-v3.1**: its task and starter require scalar `lift`,
 `drag` and `thrust` in newtons, with signed lift and a separate total-force vector.
 The first live cohort remains archived as swan-v3.0 with its original grades.
 New generator runs default to **32,000 total output tokens, including reasoning**,
@@ -140,7 +165,7 @@ the key in the task or a tracked file. Use a model that supports images, Respons
 No model ID is assumed.
 
 ```sh
-python3 -m ornithopter_eval run --model YOUR_MODEL_ID --output runs/model-a-01
+python3 -m ornithopter_eval run --model YOUR_MODEL_ID --output runs/model-a-01 --config configs/pilot.json
 python3 -m ornithopter_eval grade runs/model-a-01/submission --output runs/model-a-01/grade
 ```
 
@@ -169,7 +194,7 @@ There are no browser, test, build, network or computation tools for the model.
 `prepare` creates an inspectable packet without an API key:
 
 ```sh
-python3 -m ornithopter_eval prepare runs/packet-preview
+python3 -m ornithopter_eval prepare runs/packet-preview --config configs/pilot.json
 python3 -m ornithopter_eval verify-sources
 ```
 

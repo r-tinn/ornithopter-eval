@@ -8,7 +8,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 from .runner import ROOT, digest, write_json
-from .checks import CHECKS, TASK_VERSION, MECHANICAL_VERSION, MECHANICAL_VERSIONS, checklist, normalize_checks, refresh_verdict
+from .checks import CHECKS, TASK_VERSION, MECHANICAL_VERSION, MECHANICAL_VERSIONS, PILOTED_VERSION, checklist, normalize_checks, refresh_verdict
 
 
 class SubmissionServer(http.server.BaseHTTPRequestHandler):
@@ -41,10 +41,12 @@ class SubmissionServer(http.server.BaseHTTPRequestHandler):
 
 
 def grade_submission(submission, output, node="node", timeout=None, task_version=TASK_VERSION):
+    if task_version not in (TASK_VERSION,*MECHANICAL_VERSIONS):
+        raise ValueError('Unsupported task version')
     if timeout is None:
         timeout = 120 if task_version in MECHANICAL_VERSIONS else 60
     checks = checklist(task_version)
-    browser_file = "mechanical-v4.mjs" if task_version in MECHANICAL_VERSIONS else "browser.mjs"
+    browser_file = "piloted-v5.mjs" if task_version==PILOTED_VERSION else ("mechanical-v4.mjs" if task_version in MECHANICAL_VERSIONS else "browser.mjs")
     submission, output = Path(submission).resolve(), Path(output).resolve()
     if not submission.is_dir():
         raise ValueError("Submission directory missing")
@@ -65,6 +67,9 @@ def grade_submission(submission, output, node="node", timeout=None, task_version
                              "Visual judgments cover five specific geometry/motion predicates; model judges can be wrong.",
                              "Real-clock callback timing is diagnostic only; it does not prove presented-frame rate or absence of jitter.",
                              "Browser isolation is defense in depth, not a hardened sandbox for hostile code."]}
+    if task_version==PILOTED_VERSION:
+        report['grader_sha256'].update({p.name:digest(p) for p in (ROOT/'grader').glob('piloted-*.mjs')})
+        report['grader_sha256']['expected_engineering.json']=digest(ROOT/'candidate/mechanical-v5/engineering.json')
     manifest_path = submission.parent / "manifest.json"
     if manifest_path.exists():
         attempt = json.loads(manifest_path.read_text())
@@ -84,9 +89,9 @@ def grade_submission(submission, output, node="node", timeout=None, task_version
             return report
     if task_version in MECHANICAL_VERSIONS:
         report['limitations'] = [
-            'Provisional mechanical-v4 smoke test; one task and selected properties, not scientific validation.',
+            'Provisional '+task_version+' smoke test; one task and selected properties, not scientific validation.',
             'The supplied world and UI earn no model points. Aircraft state hooks do not prove all mesh coupling.',
-            'Four binary visual checks remain ungraded; automated totals are not full-task scores.',
+            str(len(checks['visual']))+' binary visual checks remain ungraded; automated totals are not full-task scores.',
             'Browser isolation is defense in depth, not a hardened hostile-code sandbox.']
         if manifest_path.exists():
             for name, sha in attempt.get('readonly_sha256', {}).items():
