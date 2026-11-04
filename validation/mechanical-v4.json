@@ -1,12 +1,12 @@
 {
-  "task_version": "mechanical-v4-draft",
+  "task_version": "mechanical-v4.1",
   "offline_validation_passed": true,
   "model_trial": false,
-  "evidence_directory": "runs/mechanical-grader-calibration-20261030T165813Z",
+  "evidence_directory": "runs/mechanical-grader-calibration-20261104T174720Z",
   "results": {
     "reference": {
-      "passed": 15,
-      "total": 15,
+      "passed": 16,
+      "total": 16,
       "failed": [],
       "groups": {
         "source": {
@@ -18,14 +18,14 @@
           "total": 6
         },
         "interaction": {
-          "passed": 6,
-          "total": 6
+          "passed": 7,
+          "total": 7
         }
       }
     },
     "wrong_study": {
-      "passed": 11,
-      "total": 15,
+      "passed": 12,
+      "total": 16,
       "failed": [
         "aspect_ratio_from_study",
         "wrist_fraction_from_study",
@@ -42,14 +42,14 @@
           "total": 6
         },
         "interaction": {
-          "passed": 6,
-          "total": 6
+          "passed": 7,
+          "total": 7
         }
       }
     },
     "wrong_dynamics": {
-      "passed": 6,
-      "total": 15,
+      "passed": 7,
+      "total": 16,
       "failed": [
         "power_controls_thrust",
         "lift_scales_with_speed_squared",
@@ -71,14 +71,14 @@
           "total": 6
         },
         "interaction": {
-          "passed": 3,
-          "total": 6
+          "passed": 4,
+          "total": 7
         }
       }
     },
     "frozen_step": {
-      "passed": 8,
-      "total": 15,
+      "passed": 9,
+      "total": 16,
       "failed": [
         "powered_phase_frequency",
         "steady_glide_ratio",
@@ -98,14 +98,14 @@
           "total": 6
         },
         "interaction": {
-          "passed": 1,
-          "total": 6
+          "passed": 2,
+          "total": 7
         }
       }
     },
     "oversize_gear": {
-      "passed": 12,
-      "total": 15,
+      "passed": 13,
+      "total": 16,
       "failed": [
         "landing_on_strip",
         "wheels_above_surface",
@@ -121,14 +121,35 @@
           "total": 6
         },
         "interaction": {
+          "passed": 4,
+          "total": 7
+        }
+      }
+    },
+    "wrong_wheel_axis": {
+      "passed": 15,
+      "total": 16,
+      "failed": [
+        "wheel_rotation_axis"
+      ],
+      "groups": {
+        "source": {
           "passed": 3,
+          "total": 3
+        },
+        "physics": {
+          "passed": 6,
           "total": 6
+        },
+        "interaction": {
+          "passed": 6,
+          "total": 7
         }
       }
     },
     "empty": {
       "passed": 0,
-      "total": 15,
+      "total": 16,
       "failed": [
         "aspect_ratio_from_study",
         "wrist_fraction_from_study",
@@ -144,7 +165,8 @@
         "takeoff_from_strip",
         "landing_on_strip",
         "wheels_above_surface",
-        "aircraft_geometry_bounded"
+        "aircraft_geometry_bounded",
+        "wheel_rotation_axis"
       ],
       "groups": {
         "source": {
@@ -157,12 +179,12 @@
         },
         "interaction": {
           "passed": 0,
-          "total": 6
+          "total": 7
         }
       }
     }
   },
-  "grader_sha256": "273bc646ce099642b26b323142d81b49c33365b8c87282da2a37ba5ddf8a22a2",
+  "grader_sha256": "ed8228ed362e8f034428cf1eb7aed2a6b9e91c3da608ae82bba374b65f7f3c75",
   "fixture_sha256": {
     "aircraft.mjs": "ac470febf2bef16a039504ce2e8b676dcbee88ded3ff1f8490dce3c4a2facb45",
     "interpretation.json": "ea86958f2e53162a9d21a8e90126969b0aea0b22a0db40e579a63b867162dc66",

@@ -10,7 +10,7 @@ from .checks import MECHANICAL_VERSION
 def validate_mechanical(node="node"):
     root=ROOT/'runs'/('mechanical-grader-calibration-'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ'));root.mkdir()
     (root/'calibration-script.py').write_text(Path(__file__).read_text())
-    variants=['reference','wrong_study','wrong_dynamics','frozen_step','oversize_gear','empty']
+    variants=['reference','wrong_study','wrong_dynamics','frozen_step','oversize_gear','wrong_wheel_axis','empty']
     results={}
     for name in variants:
         packet=prepare_world(root/name,reference=name!='empty')
@@ -31,6 +31,8 @@ def validate_mechanical(node="node"):
             replace(physics,'controls.throttle>0?4*Math.PI*dt:0','2*Math.PI*dt')
         if name=='frozen_step':
             replace(physics,'export function step(state,controls,environment,dt){','export function step(state,controls,environment,dt){return structuredClone(state);')
+        if name=='wrong_wheel_axis':
+            replace(aircraft,'export function updateAircraft(aircraft,state,controls){','export function updateAircraft(aircraft,state,controls){ for(const w of aircraft.wheels){w.rotation.order="YXZ";w.rotation.y=-state.position[0]/.16;}')
         if name=='oversize_gear':
             # Actual tyre vertices are below the contact model; a high-poly mesh also exceeds the cap.
             s=aircraft.read_text()
@@ -44,12 +46,13 @@ def validate_mechanical(node="node"):
         print(name,json.dumps(result),report.get('error',''),flush=True)
         write_json(root/'summary.json',{'results':results,'task_version':MECHANICAL_VERSION,'model_trial':False})
     print('EVIDENCE',root,flush=True)
-    assert results['reference']['passed']==15
+    assert results['reference']['passed']==16
     assert set(results['wrong_study']['failed']) >= {'aspect_ratio_from_study','wrist_fraction_from_study','mechanical_area_consistent'}
     assert set(results['wrong_dynamics']['failed']) >= {'power_controls_thrust','lift_scales_with_speed_squared','matching_wind_removes_lift','powered_phase_frequency','unpowered_phase_stops','steady_glide_ratio'}
     assert set(results['frozen_step']['failed']) >= {'pitch_input_changes_pitch','rudder_changes_heading','takeoff_from_strip','landing_on_strip','wheels_above_surface'}
     assert set(results['oversize_gear']['failed']) >= {'aircraft_geometry_bounded','wheels_above_surface'}
     assert results['empty']['passed']==0
+    assert 'wheel_rotation_axis' in results['wrong_wheel_axis']['failed']
     summary={'task_version':MECHANICAL_VERSION,'offline_validation_passed':True,'model_trial':False,
         'evidence_directory':str(root.relative_to(ROOT)),'results':results,
         'grader_sha256':digest(ROOT/'grader/mechanical-v4.mjs'),

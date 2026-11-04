@@ -1,4 +1,4 @@
-# Mechanical ornithopter in a shared flight world — v4 smoke task
+# Mechanical ornithopter in a shared flight world — v4.1 smoke task
 
 Build an engineered, motor-driven ornithopter from the supplied source studies
 and explicit engineering assumptions. Implement the aircraft's 3D structure,
@@ -49,6 +49,12 @@ for flight and inspection; no alternate inspection illustration is allowed.
 
 Export `parameters` with `aspect_ratio`, `wrist_span_fraction`, `wing_area_m2`,
 `span_m`, `body_length_m`, `mass_kg`, `wheel_radius_m`, and `gear_centres`.
+All three tyres must be thin wheel meshes with a clear wheel plane. With zero
+steering, their axles must remain parallel to the airframe lateral (z) axis
+while rolling and in flight. Spin about the axle, rather than swivelling the
+wheel plane. No specific rolling speed, wheel braking or airborne spin decay
+is assessed by this axis requirement.
+
 The engineering values, including three wheel centres, are supplied assumptions;
 the two source ratios must be interpreted from the photographs.
 
@@ -98,6 +104,6 @@ shared world has no animated scenery, shadow maps or post-processing.
 ## Provisional smoke-test status
 
 This task uses an educational engineering model. The handwritten preview aircraft
-is a withheld integration fixture, not a model-generated result. The 15 automated
+is a withheld integration fixture, not a model-generated result. The 16 automated
 binary checks are implemented for smoke testing; four visual predicates remain
 separately ungraded. Passing these checks does not establish real-world validity.

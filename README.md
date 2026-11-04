@@ -11,7 +11,7 @@ includes standalone hills, 48 simple trees, two landing strips, controls and
 cameras. Only aircraft geometry, articulation and flight dynamics are model work.
 The [revised brief](docs/REVISED_BRIEF.md), [candidate task](candidate/mechanical-v4/TASK.md),
 [source re-audit](candidate/mechanical-v4/SOURCE_AUDIT.md) and
-[19 binary checks](candidate/mechanical-v4/GRADERS.md) define the provisional smoke test.
+[20 binary checks](candidate/mechanical-v4/GRADERS.md) define the provisional smoke test.
 
 ```sh
 python3 -m ornithopter_eval prepare-world runs/mechanical-v4-review --reference
@@ -28,7 +28,7 @@ python3 -m ornithopter_eval compare --models gpt-6.1-sol gpt-5.6-sol --repeats 1
 python3 -m ornithopter_eval serve-artifacts runs/mechanical-v4-smoke --port 8767
 ```
 
-V4 reports 15 automated binary checks and four ungraded visual predicates. The
+V4.1 reports 16 automated binary checks and four ungraded visual predicates. The
 handwritten fixture and selected broken variants are tested separately from
 model submissions. Use a fresh output directory. Medium reasoning, 32,000 total
 output tokens including reasoning, no execution during generation and no retries.
@@ -44,6 +44,18 @@ Playback provenance is available at `/viewer-camera.json` on the local server.
 model aircraft. `node --test tests/view-motion.test.mjs` checks interpolation,
 angle wrapping and render scheduling across simulated 30–165 Hz callbacks;
 these checks do not establish a hardware-independent frame rate.
+
+The additional wheel-axis check is deterministic. The separate
+[post-hoc wheel audit](audits/wheel-axis-20261104/wheel-axis.json) fails the saved
+GPT-5.6 Sol wheel animation and passes GPT-6.1 Sol. Original 15/15 cohort scores
+remain unchanged. The [power-model audit](analysis/power-model.json) separates
+measured source ratios from the uncalibrated mass, drive, efficiency and drag
+assumptions; no power assumptions have been changed by this grader update.
+Reproduce the isolated browser measurements with
+`python3 analysis/probe_flight.py --output runs/flight-probe-new.json`,
+then reproduce the dimensional calculations
+with `python3 analysis/power_model.py --output runs/power-audit-new.json`.
+The latter reads the committed browser measurements in `analysis/flight-probe.json`.
 
 ## Previous task and calibration
 

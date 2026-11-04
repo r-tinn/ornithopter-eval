@@ -1,0 +1,1622 @@
+{
+  "kind": "power-and-bank-diagnostic",
+  "grades_changed": false,
+  "models": {
+    "gpt-5.6-sol": {
+      "dt_s": 0.008333333333333333,
+      "environment": {
+        "wind": [
+          0,
+          0,
+          0
+        ],
+        "rho": 1.225
+      },
+      "pairs": {
+        "full_power_climb": {
+          "throttle": 1,
+          "samples": [
+            {
+              "elapsed_s": 0,
+              "straight": {
+                "state": {
+                  "position": [
+                    592.6670823136458,
+                    172.26078148138362,
+                    -165
+                  ],
+                  "velocity": [
+                    14.002020765460308,
+                    2.9739697729896175,
+                    0
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 6.283185307179053,
+                  "time": 59.999999999997236,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.314366270535261,
+                "climb_rate_m_s": 2.9739697729896175,
+                "drag_power_W": 85.01191595425328,
+                "useful_power_W": 260,
+                "potential_energy_gain_W": 174.9880840457318,
+                "vertical_acceleration_m_s2": 1.3026616822268503e-13
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    592.6670823136458,
+                    172.26078148138362,
+                    -165
+                  ],
+                  "velocity": [
+                    14.002020765460308,
+                    2.9739697729896175,
+                    0
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 6.283185307179053,
+                  "time": 59.999999999997236,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.314366270535261,
+                "climb_rate_m_s": 2.9739697729896175,
+                "drag_power_W": 85.01191595425328,
+                "useful_power_W": 260,
+                "potential_energy_gain_W": 174.9880840457318,
+                "vertical_acceleration_m_s2": 1.3026616822268503e-13
+              }
+            },
+            {
+              "elapsed_s": 0.1,
+              "straight": {
+                "state": {
+                  "position": [
+                    594.0672843901923,
+                    172.55817845868245,
+                    -165
+                  ],
+                  "velocity": [
+                    14.00202076546033,
+                    2.9739697729896286,
+                    0
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 1.256637061435384,
+                  "time": 60.09999999999723,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.314366270535283,
+                "climb_rate_m_s": 2.9739697729896286,
+                "drag_power_W": 85.01191595425358,
+                "useful_power_W": 259.99999999999994,
+                "potential_energy_gain_W": 174.98808404573245,
+                "vertical_acceleration_m_s2": 1.2789769243681803e-13
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    594.067310568503,
+                    172.5580343805093,
+                    -164.99682935615655
+                  ],
+                  "velocity": [
+                    14.002890730429106,
+                    2.968964574611304,
+                    0.08774465537781717
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0.19999999999999998,
+                  "heading": 0.006266099526292379,
+                  "phase": 1.256637061435384,
+                  "time": 60.09999999999723,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.314447197785238,
+                "climb_rate_m_s": 2.968964574611304,
+                "drag_power_W": 85.09861688829409,
+                "useful_power_W": 260.00000000000006,
+                "potential_energy_gain_W": 174.69357867367168,
+                "vertical_acceleration_m_s2": -0.16372362761454204
+              },
+              "altitude_difference_m": -0.00014407817315031934
+            },
+            {
+              "elapsed_s": 0.5,
+              "straight": {
+                "state": {
+                  "position": [
+                    599.6680926963784,
+                    173.74776636787777,
+                    -165
+                  ],
+                  "velocity": [
+                    14.002020765460397,
+                    2.9739697729896717,
+                    0
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 6.283185307179049,
+                  "time": 60.49999999999721,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.31436627053536,
+                "climb_rate_m_s": 2.9739697729896717,
+                "drag_power_W": 85.01191595425446,
+                "useful_power_W": 259.99999999999994,
+                "potential_energy_gain_W": 174.98808404573498,
+                "vertical_acceleration_m_s2": 9.355479354174652e-14
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    599.664921063612,
+                    173.6946173169891,
+                    -164.6233722087929
+                  ],
+                  "velocity": [
+                    13.93797402933961,
+                    2.6922079599488287,
+                    2.0363301438337116
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0.6,
+                  "heading": 0.1450730494909625,
+                  "phase": 6.283185307179049,
+                  "time": 60.49999999999721,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.340911553902114,
+                "climb_rate_m_s": 2.6922079599488287,
+                "drag_power_W": 90.71890220587736,
+                "useful_power_W": 260,
+                "potential_energy_gain_W": 158.40924714259307,
+                "vertical_acceleration_m_s2": -0.4984877305530304
+              },
+              "altitude_difference_m": -0.053149050888663396
+            },
+            {
+              "elapsed_s": 1,
+              "straight": {
+                "state": {
+                  "position": [
+                    606.669103079111,
+                    175.23475125437193,
+                    -165
+                  ],
+                  "velocity": [
+                    14.002020765460408,
+                    2.9739697729896926,
+                    0
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 6.283185307179044,
+                  "time": 60.99999999999718,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.314366270535375,
+                "climb_rate_m_s": 2.9739697729896926,
+                "drag_power_W": 85.01191595425442,
+                "useful_power_W": 260,
+                "potential_energy_gain_W": 174.9880840457362,
+                "vertical_acceleration_m_s2": 2.6053233644537006e-14
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    606.4808587864732,
+                    175.0081385795215,
+                    -162.80766479093217
+                  ],
+                  "velocity": [
+                    13.205616210688182,
+                    2.603209566395232,
+                    5.172270343483608
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0.6,
+                  "heading": 0.373306529970029,
+                  "phase": 6.283185307179044,
+                  "time": 60.99999999999718,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.419340486188755,
+                "climb_rate_m_s": 2.603209566395232,
+                "drag_power_W": 94.29558742651376,
+                "useful_power_W": 260,
+                "potential_energy_gain_W": 153.17259056573883,
+                "vertical_acceleration_m_s2": -0.0006393490217983336
+              },
+              "altitude_difference_m": -0.22661267485042913
+            },
+            {
+              "elapsed_s": 2,
+              "straight": {
+                "state": {
+                  "position": [
+                    620.6711238445762,
+                    178.20872102736024,
+                    -165
+                  ],
+                  "velocity": [
+                    14.002020765460408,
+                    2.9739697729896926,
+                    0
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 6.283185307179036,
+                  "time": 61.99999999999712,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.314366270535375,
+                "climb_rate_m_s": 2.9739697729896926,
+                "drag_power_W": 85.01191595425442,
+                "useful_power_W": 260,
+                "potential_energy_gain_W": 174.9880840457362,
+                "vertical_acceleration_m_s2": 2.6053233644537006e-14
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    618.0723361006962,
+                    177.63320327714104,
+                    -154.74172794410103
+                  ],
+                  "velocity": [
+                    9.571287169351844,
+                    2.6532271425795755,
+                    10.63011723406696
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0.6,
+                  "heading": 0.8377639313729272,
+                  "phase": 6.283185307179036,
+                  "time": 61.99999999999712,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.548145749831063,
+                "climb_rate_m_s": 2.6532271425795755,
+                "drag_power_W": 96.29008005449037,
+                "useful_power_W": 260,
+                "potential_energy_gain_W": 156.11561974666796,
+                "vertical_acceleration_m_s2": 0.05517193260900181
+              },
+              "altitude_difference_m": -0.5755177502192055
+            },
+            {
+              "elapsed_s": 5,
+              "straight": {
+                "state": {
+                  "position": [
+                    662.6771861409718,
+                    187.13063034632518,
+                    -165
+                  ],
+                  "velocity": [
+                    14.002020765460408,
+                    2.9739697729896926,
+                    0
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 6.283185307179009,
+                  "time": 64.9999999999978,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.314366270535375,
+                "climb_rate_m_s": 2.9739697729896926,
+                "drag_power_W": 85.01191595425442,
+                "useful_power_W": 260,
+                "potential_energy_gain_W": 174.9880840457362,
+                "vertical_acceleration_m_s2": 2.6053233644537006e-14
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    619.6514546916524,
+                    185.75383362064088,
+                    -114.93216199343973
+                  ],
+                  "velocity": [
+                    -8.678483455816211,
+                    2.738853759721609,
+                    11.543064436786992
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0.6,
+                  "heading": 2.2154710010732708,
+                  "phase": 6.283185307179009,
+                  "time": 64.9999999999978,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.698970426592247,
+                "climb_rate_m_s": 2.738853759721609,
+                "drag_power_W": 98.10638695653076,
+                "useful_power_W": 260,
+                "potential_energy_gain_W": 161.1538813366435,
+                "vertical_acceleration_m_s2": 0.011750290167031588
+              },
+              "altitude_difference_m": -1.3767967256843008
+            },
+            {
+              "elapsed_s": 20,
+              "straight": {
+                "state": {
+                  "position": [
+                    872.7074976229499,
+                    231.74017694114985,
+                    -165
+                  ],
+                  "velocity": [
+                    14.002020765460408,
+                    2.9739697729896926,
+                    0
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 6.283185307178876,
+                  "time": 80.00000000000973,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.314366270535375,
+                "climb_rate_m_s": 2.9739697729896926,
+                "drag_power_W": 85.01191595425442,
+                "useful_power_W": 260,
+                "potential_energy_gain_W": 174.9880840457362,
+                "vertical_acceleration_m_s2": 2.6053233644537006e-14
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    606.0353535024371,
+                    227.13314194927835,
+                    -104.52315438479773
+                  ],
+                  "velocity": [
+                    -13.463193498186836,
+                    2.761522659467107,
+                    5.325045220931058
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0.6,
+                  "heading": 2.7649489752194714,
+                  "phase": 6.283185307178876,
+                  "time": 80.00000000000973,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.739053333689084,
+                "climb_rate_m_s": 2.761522659467107,
+                "drag_power_W": 98.59782397027651,
+                "useful_power_W": 260,
+                "potential_energy_gain_W": 162.48771713077863,
+                "vertical_acceleration_m_s2": 5.018963135465053e-06
+              },
+              "altitude_difference_m": -4.607034991871501
+            }
+          ]
+        },
+        "level_trim": {
+          "throttle": 0.23943347577766147,
+          "samples": [
+            {
+              "elapsed_s": 0,
+              "straight": {
+                "state": {
+                  "position": [
+                    0,
+                    1000,
+                    0
+                  ],
+                  "velocity": [
+                    12.139953591871134,
+                    0,
+                    0
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 0,
+                  "time": 0,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.139953591871134,
+                "climb_rate_m_s": 0,
+                "drag_power_W": 62.25270370219198,
+                "useful_power_W": 62.25270370219199,
+                "potential_energy_gain_W": 0,
+                "vertical_acceleration_m_s2": -2.3684757858670005e-15
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    0,
+                    1000,
+                    0
+                  ],
+                  "velocity": [
+                    12.139953591871134,
+                    0,
+                    0
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 0,
+                  "time": 0,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.139953591871134,
+                "climb_rate_m_s": 0,
+                "drag_power_W": 62.25270370219198,
+                "useful_power_W": 62.25270370219199,
+                "potential_energy_gain_W": 0,
+                "vertical_acceleration_m_s2": -2.3684757858670005e-15
+              }
+            },
+            {
+              "elapsed_s": 0.1,
+              "straight": {
+                "state": {
+                  "position": [
+                    1.2139953591871133,
+                    1000,
+                    0
+                  ],
+                  "velocity": [
+                    12.139953591871134,
+                    -2.3684757858670006e-16,
+                    0
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 1.2566370614359172,
+                  "time": 0.09999999999999999,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.139953591871134,
+                "climb_rate_m_s": -2.3684757858670006e-16,
+                "drag_power_W": 62.25270370219199,
+                "useful_power_W": 62.25270370219199,
+                "potential_energy_gain_W": -1.3936087839283573e-14,
+                "vertical_acceleration_m_s2": -1.1842378929335002e-15
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    1.2139900406678787,
+                    999.9998478392395,
+                    0.003241069029958475
+                  ],
+                  "velocity": [
+                    12.139721505031039,
+                    -0.005299252423788965,
+                    0.0896869903643078
+                  ],
+                  "pitch": 0,
+                  "roll": 0.19999999999999998,
+                  "heading": 0.0073877608020495285,
+                  "phase": 1.2566370614359172,
+                  "time": 0.09999999999999999,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.140053956141626,
+                "climb_rate_m_s": -0.005299252423788965,
+                "drag_power_W": 62.34420093542253,
+                "useful_power_W": 62.252703702191994,
+                "potential_energy_gain_W": -0.3118074826905003,
+                "vertical_acceleration_m_s2": -0.17434435046933552
+              },
+              "altitude_difference_m": -0.00015216076053548022
+            },
+            {
+              "elapsed_s": 0.5,
+              "straight": {
+                "state": {
+                  "position": [
+                    6.069976795935568,
+                    1000,
+                    0
+                  ],
+                  "velocity": [
+                    12.139953591871134,
+                    -6.71068139328983e-16,
+                    0
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 6.283185307179582,
+                  "time": 0.5000000000000007,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.139953591871134,
+                "climb_rate_m_s": -6.71068139328983e-16,
+                "drag_power_W": 62.25270370219199,
+                "useful_power_W": 62.25270370219199,
+                "potential_energy_gain_W": -3.948558221130343e-14,
+                "vertical_acceleration_m_s2": -1.1842378929335002e-15
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    6.052909593178626,
+                    999.9416710049311,
+                    0.38243433472150684
+                  ],
+                  "velocity": [
+                    11.994442036883127,
+                    -0.31520492325538924,
+                    2.0605389192032284
+                  ],
+                  "pitch": 0,
+                  "roll": 0.6,
+                  "heading": 0.17013047426148295,
+                  "phase": 6.283185307179582,
+                  "time": 0.5000000000000007,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.174227472712374,
+                "climb_rate_m_s": -0.31520492325538924,
+                "drag_power_W": 68.50484323600368,
+                "useful_power_W": 62.252703702191994,
+                "potential_energy_gain_W": -18.54662616385478,
+                "vertical_acceleration_m_s2": -0.6141436009193413
+              },
+              "altitude_difference_m": -0.05832899506890499
+            },
+            {
+              "elapsed_s": 1,
+              "straight": {
+                "state": {
+                  "position": [
+                    12.139953591871148,
+                    1000,
+                    0
+                  ],
+                  "velocity": [
+                    12.139953591871134,
+                    -6.71068139328983e-16,
+                    0
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 6.283185307179577,
+                  "time": 0.9999999999999989,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.139953591871134,
+                "climb_rate_m_s": -6.71068139328983e-16,
+                "drag_power_W": 62.25270370219199,
+                "useful_power_W": 62.25270370219199,
+                "potential_energy_gain_W": -3.948558221130343e-14,
+                "vertical_acceleration_m_s2": -1.1842378929335002e-15
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    11.863633218170806,
+                    999.7401656210884,
+                    2.212719144704617
+                  ],
+                  "velocity": [
+                    11.117923193869075,
+                    -0.44160942489216626,
+                    5.201172654584494
+                  ],
+                  "pitch": 0,
+                  "roll": 0.6,
+                  "heading": 0.4375727754639341,
+                  "phase": 6.283185307179577,
+                  "time": 0.9999999999999989,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.282321930796432,
+                "climb_rate_m_s": -0.44160942489216626,
+                "drag_power_W": 72.82409141822019,
+                "useful_power_W": 62.25270370219198,
+                "potential_energy_gain_W": -25.984254399712572,
+                "vertical_acceleration_m_s2": -0.033383233014226
+              },
+              "altitude_difference_m": -0.25983437891159156
+            },
+            {
+              "elapsed_s": 2,
+              "straight": {
+                "state": {
+                  "position": [
+                    24.279907183742164,
+                    1000,
+                    0
+                  ],
+                  "velocity": [
+                    12.139953591871134,
+                    -6.71068139328983e-16,
+                    0
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 6.2831853071795685,
+                  "time": 1.9999999999999953,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.139953591871134,
+                "climb_rate_m_s": -6.71068139328983e-16,
+                "drag_power_W": 62.25270370219199,
+                "useful_power_W": 62.25270370219199,
+                "potential_energy_gain_W": -3.948558221130343e-14,
+                "vertical_acceleration_m_s2": -1.1842378929335002e-15
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    21.107537096230416,
+                    999.3177242256011,
+                    10.212114478288568
+                  ],
+                  "velocity": [
+                    6.917782235758448,
+                    -0.38950848618362927,
+                    10.3706382085392
+                  ],
+                  "pitch": 0,
+                  "roll": 0.6,
+                  "heading": 0.9825251811588904,
+                  "phase": 6.2831853071795685,
+                  "time": 1.9999999999999953,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.472271836942834,
+                "climb_rate_m_s": -0.38950848618362927,
+                "drag_power_W": 75.02280324955935,
+                "useful_power_W": 62.252703702191994,
+                "potential_energy_gain_W": -22.918640376196127,
+                "vertical_acceleration_m_s2": 0.07101902616722218
+              },
+              "altitude_difference_m": -0.6822757743989314
+            },
+            {
+              "elapsed_s": 5,
+              "straight": {
+                "state": {
+                  "position": [
+                    60.699767959355015,
+                    1000,
+                    0
+                  ],
+                  "velocity": [
+                    12.139953591871134,
+                    -6.71068139328983e-16,
+                    0
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 6.283185307179542,
+                  "time": 5.000000000000038,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.139953591871134,
+                "climb_rate_m_s": -6.71068139328983e-16,
+                "drag_power_W": 62.25270370219199,
+                "useful_power_W": 62.25270370219199,
+                "potential_energy_gain_W": -3.948558221130343e-14,
+                "vertical_acceleration_m_s2": -1.1842378929335002e-15
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    13.678552025643535,
+                    998.3663778063468,
+                    43.32555325402261
+                  ],
+                  "velocity": [
+                    -10.783038254346053,
+                    -0.27249380788339944,
+                    6.721577141733872
+                  ],
+                  "pitch": 0,
+                  "roll": 0.6,
+                  "heading": 2.584182722277302,
+                  "phase": 6.283185307179542,
+                  "time": 5.000000000000038,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.709357424445361,
+                "climb_rate_m_s": -0.27249380788339944,
+                "drag_power_W": 76.76538421997648,
+                "useful_power_W": 62.25270370219199,
+                "potential_energy_gain_W": -16.033508406478436,
+                "vertical_acceleration_m_s2": 0.01704974647246497
+              },
+              "altitude_difference_m": -1.6336221936531956
+            },
+            {
+              "elapsed_s": 20,
+              "straight": {
+                "state": {
+                  "position": [
+                    242.79907183743538,
+                    1000,
+                    0
+                  ],
+                  "velocity": [
+                    12.139953591871134,
+                    -6.71068139328983e-16,
+                    0
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 6.283185307179409,
+                  "time": 19.999999999999506,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.139953591871134,
+                "climb_rate_m_s": -6.71068139328983e-16,
+                "drag_power_W": 62.25270370219199,
+                "useful_power_W": 62.25270370219199,
+                "potential_energy_gain_W": -3.948558221130343e-14,
+                "vertical_acceleration_m_s2": -1.1842378929335002e-15
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    -19.961518158046843,
+                    994.73679208544,
+                    34.965129578191764
+                  ],
+                  "velocity": [
+                    -6.461850722074981,
+                    -0.237075712806844,
+                    -11.025805491724622
+                  ],
+                  "pitch": 0,
+                  "roll": 0.6,
+                  "heading": -2.100907298738932,
+                  "phase": 6.283185307179409,
+                  "time": 19.999999999999506,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.782022781599501,
+                "climb_rate_m_s": -0.237075712806844,
+                "drag_power_W": 77.32496152536315,
+                "useful_power_W": 62.25270370219199,
+                "potential_energy_gain_W": -13.94951123398342,
+                "vertical_acceleration_m_s2": 1.3318929988533531e-05
+              },
+              "altitude_difference_m": -5.263207914559985
+            }
+          ]
+        }
+      }
+    },
+    "gpt-6.1-sol": {
+      "dt_s": 0.008333333333333333,
+      "environment": {
+        "wind": [
+          0,
+          0,
+          0
+        ],
+        "rho": 1.225
+      },
+      "pairs": {
+        "full_power_climb": {
+          "throttle": 1,
+          "samples": [
+            {
+              "elapsed_s": 0,
+              "straight": {
+                "state": {
+                  "position": [
+                    592.6670823136458,
+                    172.2607814813836,
+                    -165
+                  ],
+                  "velocity": [
+                    14.002020765460307,
+                    2.9739697729896166,
+                    0
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 6.283185307179053,
+                  "time": 59.999999999997236,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.31436627053526,
+                "climb_rate_m_s": 2.9739697729896166,
+                "drag_power_W": 85.01191595425327,
+                "useful_power_W": 260,
+                "potential_energy_gain_W": 174.98808404573174,
+                "vertical_acceleration_m_s2": 1.3263464400855204e-13
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    592.6670823136458,
+                    172.2607814813836,
+                    -165
+                  ],
+                  "velocity": [
+                    14.002020765460307,
+                    2.9739697729896166,
+                    0
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 6.283185307179053,
+                  "time": 59.999999999997236,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.31436627053526,
+                "climb_rate_m_s": 2.9739697729896166,
+                "drag_power_W": 85.01191595425327,
+                "useful_power_W": 260,
+                "potential_energy_gain_W": 174.98808404573174,
+                "vertical_acceleration_m_s2": 1.3263464400855204e-13
+              }
+            },
+            {
+              "elapsed_s": 0.1,
+              "straight": {
+                "state": {
+                  "position": [
+                    594.0672843901923,
+                    172.55817845868242,
+                    -165
+                  ],
+                  "velocity": [
+                    14.002020765460328,
+                    2.9739697729896273,
+                    0
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 1.256637061435384,
+                  "time": 60.09999999999723,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.314366270535281,
+                "climb_rate_m_s": 2.9739697729896273,
+                "drag_power_W": 85.01191595425354,
+                "useful_power_W": 260,
+                "potential_energy_gain_W": 174.98808404573236,
+                "vertical_acceleration_m_s2": 1.3026616822268503e-13
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    594.067310568503,
+                    172.55803438050927,
+                    -164.99682935615655
+                  ],
+                  "velocity": [
+                    14.002890730429105,
+                    2.9689645746113036,
+                    0.08774465537781717
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0.19999999999999998,
+                  "heading": 0.00626609952629238,
+                  "phase": 1.256637061435384,
+                  "time": 60.09999999999723,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.314447197785237,
+                "climb_rate_m_s": 2.9689645746113036,
+                "drag_power_W": 85.09861688829409,
+                "useful_power_W": 260,
+                "potential_energy_gain_W": 174.69357867367165,
+                "vertical_acceleration_m_s2": -0.16372362761454085
+              },
+              "altitude_difference_m": -0.00014407817315031934
+            },
+            {
+              "elapsed_s": 0.5,
+              "straight": {
+                "state": {
+                  "position": [
+                    599.6680926963784,
+                    173.74776636787774,
+                    -165
+                  ],
+                  "velocity": [
+                    14.002020765460397,
+                    2.973969772989671,
+                    0
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 6.283185307179049,
+                  "time": 60.49999999999721,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.31436627053536,
+                "climb_rate_m_s": 2.973969772989671,
+                "drag_power_W": 85.01191595425446,
+                "useful_power_W": 260,
+                "potential_energy_gain_W": 174.98808404573492,
+                "vertical_acceleration_m_s2": 9.473903143468003e-14
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    599.664921063612,
+                    173.69461731698908,
+                    -164.6233722087929
+                  ],
+                  "velocity": [
+                    13.937974029339609,
+                    2.6922079599488278,
+                    2.0363301438337116
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0.6,
+                  "heading": 0.1450730494909625,
+                  "phase": 6.283185307179049,
+                  "time": 60.49999999999721,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.340911553902112,
+                "climb_rate_m_s": 2.6922079599488278,
+                "drag_power_W": 90.71890220587734,
+                "useful_power_W": 260,
+                "potential_energy_gain_W": 158.40924714259305,
+                "vertical_acceleration_m_s2": -0.4984877305530316
+              },
+              "altitude_difference_m": -0.053149050888663396
+            },
+            {
+              "elapsed_s": 1,
+              "straight": {
+                "state": {
+                  "position": [
+                    606.669103079111,
+                    175.2347512543719,
+                    -165
+                  ],
+                  "velocity": [
+                    14.00202076546041,
+                    2.973969772989694,
+                    0
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 6.283185307179044,
+                  "time": 60.99999999999718,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.314366270535377,
+                "climb_rate_m_s": 2.973969772989694,
+                "drag_power_W": 85.01191595425445,
+                "useful_power_W": 260,
+                "potential_energy_gain_W": 174.9880840457363,
+                "vertical_acceleration_m_s2": 2.3684757858670007e-14
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    606.4808587864732,
+                    175.00813857952147,
+                    -162.80766479093217
+                  ],
+                  "velocity": [
+                    13.20561621068818,
+                    2.6032095663952317,
+                    5.172270343483608
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0.6,
+                  "heading": 0.37330652997002906,
+                  "phase": 6.283185307179044,
+                  "time": 60.99999999999718,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.419340486188753,
+                "climb_rate_m_s": 2.6032095663952317,
+                "drag_power_W": 94.29558742651375,
+                "useful_power_W": 260,
+                "potential_energy_gain_W": 153.1725905657388,
+                "vertical_acceleration_m_s2": -0.0006393490217935968
+              },
+              "altitude_difference_m": -0.22661267485042913
+            },
+            {
+              "elapsed_s": 2,
+              "straight": {
+                "state": {
+                  "position": [
+                    620.6711238445762,
+                    178.2087210273602,
+                    -165
+                  ],
+                  "velocity": [
+                    14.00202076546041,
+                    2.973969772989694,
+                    0
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 6.283185307179036,
+                  "time": 61.99999999999712,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.314366270535377,
+                "climb_rate_m_s": 2.973969772989694,
+                "drag_power_W": 85.01191595425445,
+                "useful_power_W": 260,
+                "potential_energy_gain_W": 174.9880840457363,
+                "vertical_acceleration_m_s2": 2.3684757858670007e-14
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    618.0723361006962,
+                    177.633203277141,
+                    -154.74172794410103
+                  ],
+                  "velocity": [
+                    9.571287169351844,
+                    2.653227142579575,
+                    10.63011723406696
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0.6,
+                  "heading": 0.8377639313729272,
+                  "phase": 6.283185307179036,
+                  "time": 61.99999999999712,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.548145749831063,
+                "climb_rate_m_s": 2.653227142579575,
+                "drag_power_W": 96.29008005449039,
+                "useful_power_W": 260,
+                "potential_energy_gain_W": 156.11561974666793,
+                "vertical_acceleration_m_s2": 0.05517193260900418
+              },
+              "altitude_difference_m": -0.5755177502192055
+            },
+            {
+              "elapsed_s": 5,
+              "straight": {
+                "state": {
+                  "position": [
+                    662.6771861409718,
+                    187.13063034632515,
+                    -165
+                  ],
+                  "velocity": [
+                    14.00202076546041,
+                    2.973969772989694,
+                    0
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 6.283185307179009,
+                  "time": 64.9999999999978,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.314366270535377,
+                "climb_rate_m_s": 2.973969772989694,
+                "drag_power_W": 85.01191595425445,
+                "useful_power_W": 260,
+                "potential_energy_gain_W": 174.9880840457363,
+                "vertical_acceleration_m_s2": 2.3684757858670007e-14
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    619.6514546916524,
+                    185.75383362064085,
+                    -114.93216199343973
+                  ],
+                  "velocity": [
+                    -8.678483455816213,
+                    2.738853759721609,
+                    11.54306443678699
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0.6,
+                  "heading": 2.215471001073271,
+                  "phase": 6.283185307179009,
+                  "time": 64.9999999999978,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.698970426592247,
+                "climb_rate_m_s": 2.738853759721609,
+                "drag_power_W": 98.10638695653076,
+                "useful_power_W": 260,
+                "potential_energy_gain_W": 161.1538813366435,
+                "vertical_acceleration_m_s2": 0.011750290167035141
+              },
+              "altitude_difference_m": -1.3767967256843008
+            },
+            {
+              "elapsed_s": 20,
+              "straight": {
+                "state": {
+                  "position": [
+                    872.7074976229499,
+                    231.74017694114983,
+                    -165
+                  ],
+                  "velocity": [
+                    14.00202076546041,
+                    2.973969772989694,
+                    0
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 6.283185307178876,
+                  "time": 80.00000000000973,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.314366270535377,
+                "climb_rate_m_s": 2.973969772989694,
+                "drag_power_W": 85.01191595425445,
+                "useful_power_W": 260,
+                "potential_energy_gain_W": 174.9880840457363,
+                "vertical_acceleration_m_s2": 2.3684757858670007e-14
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    606.0353535024371,
+                    227.1331419492783,
+                    -104.52315438479773
+                  ],
+                  "velocity": [
+                    -13.463193498186833,
+                    2.7615226594671065,
+                    5.325045220931062
+                  ],
+                  "pitch": 0.15000000000000005,
+                  "roll": 0.6,
+                  "heading": 2.764948975219471,
+                  "phase": 6.283185307178876,
+                  "time": 80.00000000000973,
+                  "status": "flying"
+                },
+                "speed_m_s": 14.73905333368908,
+                "climb_rate_m_s": 2.7615226594671065,
+                "drag_power_W": 98.59782397027642,
+                "useful_power_W": 260,
+                "potential_energy_gain_W": 162.4877171307786,
+                "vertical_acceleration_m_s2": 5.018963128359625e-06
+              },
+              "altitude_difference_m": -4.607034991871529
+            }
+          ]
+        },
+        "level_trim": {
+          "throttle": 0.23943347577766147,
+          "samples": [
+            {
+              "elapsed_s": 0,
+              "straight": {
+                "state": {
+                  "position": [
+                    0,
+                    1000,
+                    0
+                  ],
+                  "velocity": [
+                    12.139953591871134,
+                    0,
+                    0
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 0,
+                  "time": 0,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.139953591871134,
+                "climb_rate_m_s": 0,
+                "drag_power_W": 62.25270370219198,
+                "useful_power_W": 62.25270370219199,
+                "potential_energy_gain_W": 0,
+                "vertical_acceleration_m_s2": -1.1842378929335002e-15
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    0,
+                    1000,
+                    0
+                  ],
+                  "velocity": [
+                    12.139953591871134,
+                    0,
+                    0
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 0,
+                  "time": 0,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.139953591871134,
+                "climb_rate_m_s": 0,
+                "drag_power_W": 62.25270370219198,
+                "useful_power_W": 62.25270370219199,
+                "potential_energy_gain_W": 0,
+                "vertical_acceleration_m_s2": -1.1842378929335002e-15
+              }
+            },
+            {
+              "elapsed_s": 0.1,
+              "straight": {
+                "state": {
+                  "position": [
+                    1.2139953591871133,
+                    1000,
+                    0
+                  ],
+                  "velocity": [
+                    12.139953591871134,
+                    -1.1842378929335003e-16,
+                    0
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 1.2566370614359172,
+                  "time": 0.09999999999999999,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.139953591871134,
+                "climb_rate_m_s": -1.1842378929335003e-16,
+                "drag_power_W": 62.25270370219198,
+                "useful_power_W": 62.25270370219199,
+                "potential_energy_gain_W": -6.9680439196417866e-15,
+                "vertical_acceleration_m_s2": -1.1842378929335002e-15
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    1.2139900406678787,
+                    999.9998478392395,
+                    0.003241069029958475
+                  ],
+                  "velocity": [
+                    12.139721505031039,
+                    -0.005299252423789033,
+                    0.08968699036430783
+                  ],
+                  "pitch": 0,
+                  "roll": 0.19999999999999998,
+                  "heading": 0.00738776080204953,
+                  "phase": 1.2566370614359172,
+                  "time": 0.09999999999999999,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.140053956141626,
+                "climb_rate_m_s": -0.005299252423789033,
+                "drag_power_W": 62.34420093542255,
+                "useful_power_W": 62.252703702191994,
+                "potential_energy_gain_W": -0.31180748269050435,
+                "vertical_acceleration_m_s2": -0.17434435046933552
+              },
+              "altitude_difference_m": -0.00015216076053548022
+            },
+            {
+              "elapsed_s": 0.5,
+              "straight": {
+                "state": {
+                  "position": [
+                    6.069976795935568,
+                    1000,
+                    0
+                  ],
+                  "velocity": [
+                    12.139953591871134,
+                    -2.269789294789208e-16,
+                    0
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 6.283185307179582,
+                  "time": 0.5000000000000007,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.139953591871134,
+                "climb_rate_m_s": -2.269789294789208e-16,
+                "drag_power_W": 62.252703702192,
+                "useful_power_W": 62.25270370219199,
+                "potential_energy_gain_W": -1.335541751264675e-14,
+                "vertical_acceleration_m_s2": 0
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    6.052909593178625,
+                    999.9416710049311,
+                    0.3824343347215068
+                  ],
+                  "velocity": [
+                    11.994442036883125,
+                    -0.31520492325538957,
+                    2.0605389192032284
+                  ],
+                  "pitch": 0,
+                  "roll": 0.6,
+                  "heading": 0.17013047426148298,
+                  "phase": 6.283185307179582,
+                  "time": 0.5000000000000007,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.174227472712372,
+                "climb_rate_m_s": -0.31520492325538957,
+                "drag_power_W": 68.50484323600365,
+                "useful_power_W": 62.25270370219198,
+                "potential_energy_gain_W": -18.546626163854796,
+                "vertical_acceleration_m_s2": -0.6141436009193413
+              },
+              "altitude_difference_m": -0.05832899506890499
+            },
+            {
+              "elapsed_s": 1,
+              "straight": {
+                "state": {
+                  "position": [
+                    12.139953591871148,
+                    1000,
+                    0
+                  ],
+                  "velocity": [
+                    12.139953591871134,
+                    -2.269789294789208e-16,
+                    0
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 6.283185307179577,
+                  "time": 0.9999999999999989,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.139953591871134,
+                "climb_rate_m_s": -2.269789294789208e-16,
+                "drag_power_W": 62.252703702192,
+                "useful_power_W": 62.25270370219199,
+                "potential_energy_gain_W": -1.335541751264675e-14,
+                "vertical_acceleration_m_s2": 0
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    11.863633218170804,
+                    999.7401656210884,
+                    2.212719144704617
+                  ],
+                  "velocity": [
+                    11.117923193869073,
+                    -0.4416094248921668,
+                    5.201172654584494
+                  ],
+                  "pitch": 0,
+                  "roll": 0.6,
+                  "heading": 0.43757277546393414,
+                  "phase": 6.283185307179577,
+                  "time": 0.9999999999999989,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.282321930796433,
+                "climb_rate_m_s": -0.4416094248921668,
+                "drag_power_W": 72.82409141822022,
+                "useful_power_W": 62.25270370219199,
+                "potential_energy_gain_W": -25.984254399712608,
+                "vertical_acceleration_m_s2": -0.033383233014226
+              },
+              "altitude_difference_m": -0.25983437891159156
+            },
+            {
+              "elapsed_s": 2,
+              "straight": {
+                "state": {
+                  "position": [
+                    24.279907183742164,
+                    1000,
+                    0
+                  ],
+                  "velocity": [
+                    12.139953591871134,
+                    -2.269789294789208e-16,
+                    0
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 6.2831853071795685,
+                  "time": 1.9999999999999953,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.139953591871134,
+                "climb_rate_m_s": -2.269789294789208e-16,
+                "drag_power_W": 62.252703702192,
+                "useful_power_W": 62.25270370219199,
+                "potential_energy_gain_W": -1.335541751264675e-14,
+                "vertical_acceleration_m_s2": 0
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    21.10753709623041,
+                    999.3177242256011,
+                    10.212114478288568
+                  ],
+                  "velocity": [
+                    6.917782235758444,
+                    -0.3895084861836299,
+                    10.370638208539198
+                  ],
+                  "pitch": 0,
+                  "roll": 0.6,
+                  "heading": 0.9825251811588906,
+                  "phase": 6.2831853071795685,
+                  "time": 1.9999999999999953,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.472271836942829,
+                "climb_rate_m_s": -0.3895084861836299,
+                "drag_power_W": 75.02280324955929,
+                "useful_power_W": 62.25270370219199,
+                "potential_energy_gain_W": -22.918640376196162,
+                "vertical_acceleration_m_s2": 0.07101902616721982
+              },
+              "altitude_difference_m": -0.6822757743989314
+            },
+            {
+              "elapsed_s": 5,
+              "straight": {
+                "state": {
+                  "position": [
+                    60.699767959355015,
+                    1000,
+                    0
+                  ],
+                  "velocity": [
+                    12.139953591871134,
+                    -2.269789294789208e-16,
+                    0
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 6.283185307179542,
+                  "time": 5.000000000000038,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.139953591871134,
+                "climb_rate_m_s": -2.269789294789208e-16,
+                "drag_power_W": 62.252703702192,
+                "useful_power_W": 62.25270370219199,
+                "potential_energy_gain_W": -1.335541751264675e-14,
+                "vertical_acceleration_m_s2": 0
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    13.678552025643514,
+                    998.3663778063468,
+                    43.325553254022594
+                  ],
+                  "velocity": [
+                    -10.783038254346058,
+                    -0.27249380788339916,
+                    6.7215771417338654
+                  ],
+                  "pitch": 0,
+                  "roll": 0.6,
+                  "heading": 2.584182722277303,
+                  "phase": 6.283185307179542,
+                  "time": 5.000000000000038,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.709357424445363,
+                "climb_rate_m_s": -0.27249380788339916,
+                "drag_power_W": 76.7653842199765,
+                "useful_power_W": 62.25270370219199,
+                "potential_energy_gain_W": -16.03350840647842,
+                "vertical_acceleration_m_s2": 0.017049746472463784
+              },
+              "altitude_difference_m": -1.6336221936531956
+            },
+            {
+              "elapsed_s": 20,
+              "straight": {
+                "state": {
+                  "position": [
+                    242.79907183743538,
+                    1000,
+                    0
+                  ],
+                  "velocity": [
+                    12.139953591871134,
+                    -2.269789294789208e-16,
+                    0
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "phase": 6.283185307179409,
+                  "time": 19.999999999999506,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.139953591871134,
+                "climb_rate_m_s": -2.269789294789208e-16,
+                "drag_power_W": 62.252703702192,
+                "useful_power_W": 62.25270370219199,
+                "potential_energy_gain_W": -1.335541751264675e-14,
+                "vertical_acceleration_m_s2": 0
+              },
+              "banked": {
+                "state": {
+                  "position": [
+                    -19.96151815804687,
+                    994.73679208544,
+                    34.96512957819173
+                  ],
+                  "velocity": [
+                    -6.461850722074952,
+                    -0.23707571280684508,
+                    -11.025805491724634
+                  ],
+                  "pitch": 0,
+                  "roll": 0.6,
+                  "heading": -2.10090729873893,
+                  "phase": 6.283185307179409,
+                  "time": 19.999999999999506,
+                  "status": "flying"
+                },
+                "speed_m_s": 12.782022781599496,
+                "climb_rate_m_s": -0.23707571280684508,
+                "drag_power_W": 77.32496152536307,
+                "useful_power_W": 62.252703702191994,
+                "potential_energy_gain_W": -13.949511233983484,
+                "vertical_acceleration_m_s2": 1.3318929983796579e-05
+              },
+              "altitude_difference_m": -5.263207914559985
+            }
+          ]
+        }
+      }
+    }
+  },
+  "archive_unchanged": true,
+  "source_sha256": {
+    "trials/gpt-5.6-sol-01/submission/physics.mjs": "db1b6c0fca88a80a08f3e551272f9bcf985884a410631227f8829c9b9526bbbe",
+    "trials/gpt-6.1-sol-01/submission/physics.mjs": "f90b59d4468a75d940db8f5644e0a95856bf292a7afa76167ea9fc510fefe3d9"
+  },
+  "probe_sha256": "a3fbf5de7bb5f2b5d79616a88d98aee7e5156d9ac097e6e60eeb92c317ade3af"
+}

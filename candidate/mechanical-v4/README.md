@@ -58,10 +58,20 @@ model has medium reasoning and 32,000 total output tokens including reasoning.
 Only three aircraft files are writable. Generation cannot execute or verify code.
 A fresh output directory is required, and API errors are retained without retries.
 The viewer saves playable submissions, all fixed-world files, raw API events,
-transcripts, source, 15 automated check outcomes and grader screenshots. The four
+transcripts, source, 16 automated check outcomes and grader screenshots. The four
 visual questions stay ungraded; one smoke attempt cannot establish a ranking.
 
 Run `python3 -m ornithopter_eval validate-mechanical` for the working fixture,
 wrong source values, broken force/phase dynamics, frozen integration, oversized
-wheels/high-poly geometry and empty starter. This calibration detects selected
+wheels/high-poly geometry, wrong wheel axis and empty starter. This calibration detects selected
 defects, not every possible failure or real-world aerodynamic validity.
+
+The current task/rubric is `mechanical-v4.1` (16 automated questions). The earlier
+`mechanical-v4-draft` smoke cohort keeps its 15-check scores. Run the new question
+alone against those unchanged saved submissions:
+
+```sh
+python3 -m ornithopter_eval audit-wheels experiments/mechanical-v4-smoke-20261030 --output runs/wheel-audit-new
+```
+
+The recorded audit is in `audits/wheel-axis-20261104/wheel-axis.json`.

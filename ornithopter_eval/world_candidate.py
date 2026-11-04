@@ -13,6 +13,7 @@ from pathlib import Path
 
 from .experiment import ArtifactServer
 from .policy import FilePolicy, PolicyError
+from .checks import MECHANICAL_VERSION,MECHANICAL_VERSIONS
 from .runner import ROOT, digest, verify_sources, write_json
 
 CANDIDATE = ROOT / 'candidate/mechanical-v4'
@@ -41,7 +42,7 @@ def prepare_world(output, reference=False):
                 shutil.copyfile(fixture,submission / name)
     hashes = {str(p.relative_to(submission)):digest(p) for p in sorted(submission.rglob('*')) if p.is_file()}
     write_json(output / 'manifest.json',{
-        'task_version':'mechanical-v4-draft','status':'review_candidate',
+        'task_version':MECHANICAL_VERSION,'status':'review_candidate',
         'reference_fixture':bool(reference),'not_a_model_submission':bool(reference),
         'editable_files':['submission/'+name for name in EDITABLE],
         'readonly_sha256':{name:sha for name,sha in hashes.items() if name not in EDITABLE},
@@ -55,7 +56,7 @@ def prepare_world(output, reference=False):
 
 def prepare_world_trial(output, config_path):
     config = json.loads(Path(config_path).read_text())
-    if config.get('task_version') != 'mechanical-v4-draft':
+    if config.get('task_version') != MECHANICAL_VERSION:
         raise ValueError('Unsupported mechanical task version')
     for key in ('max_output_tokens_total','max_output_tokens_per_response','max_requests','max_wall_seconds','max_submission_bytes'):
         if type(config.get(key)) is not int or config[key] <= 0:
@@ -82,7 +83,7 @@ class CandidateFilePolicy(FilePolicy):
     def __init__(self, root, max_bytes=2_000_000):
         super().__init__(root,max_bytes)
         manifest=json.loads((self.root / 'manifest.json').read_text())
-        if manifest.get('task_version')!='mechanical-v4-draft' or manifest.get('reference_fixture'):
+        if manifest.get('task_version') not in MECHANICAL_VERSIONS or manifest.get('reference_fixture'):
             raise PolicyError('Use an empty v4 candidate packet for model file operations')
         self.editable=set(manifest['editable_files'])
 
@@ -96,7 +97,7 @@ class CandidateFilePolicy(FilePolicy):
 def serve_world(directory, port=8766):
     directory=Path(directory).resolve()
     manifest=json.loads((directory / 'manifest.json').read_text())
-    if manifest.get('task_version')!='mechanical-v4-draft':
+    if manifest.get('task_version') not in MECHANICAL_VERSIONS:
         raise ValueError('Select a prepared v4 world-review packet')
     for name,sha in manifest['readonly_sha256'].items():
         if digest(directory / 'submission' / name)!=sha:

@@ -19,7 +19,10 @@ export function updateAircraft(aircraft, state, controls) {
 
 `root` is a THREE.Group with local x forward, y up and z right. The other named
 parts are the actual production Object3D nodes below root; `wheels` is the array
-of the three actual wheel meshes. Outer wing nodes are children of their
+of the three actual tyre meshes, each with a clear thin wheel plane. With
+zero steering their axle directions remain parallel to local z during straight
+rolling and flight. Mounting transforms may be baked into geometry or applied
+to nodes; the grader measures the actual mesh. Outer wing nodes are children of their
 respective inner-wing nodes and rotate at their wrists. Names provide mounting
 and inspection references, not substitute numeric claims about unseen meshes.
 

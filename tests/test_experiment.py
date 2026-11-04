@@ -86,7 +86,7 @@ class ExperimentTests(unittest.TestCase):
             def transport(payload,timeout):
                 calls.append(payload);return {'status':'completed','output':[],'usage':{'input_tokens':100,'output_tokens':1}}
             result=run_experiment(root,['model-a','model-b'],1,ROOT/'configs/mechanical-v4-smoke.json',transport=transport,grader=grade)
-            self.assertEqual(result['models']['model-a']['total_checks'],15)
+            self.assertEqual(result['models']['model-a']['total_checks'],16)
             self.assertEqual(result['models']['model-a']['graded_attempts'],1)
             self.assertEqual(len(calls),2)
             self.assertEqual(calls[0]['input'],calls[1]['input'])

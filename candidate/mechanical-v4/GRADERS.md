@@ -1,7 +1,7 @@
-# Provisional v4 smoke checklist
+# Provisional v4.1 smoke checklist
 
-**19 binary checks: 15 automated, four visual.** These replace the old checklist
-for the mechanical-aircraft task. The 15 automated checks are implemented in
+**20 binary checks: 16 automated, four visual.** These replace the old checklist
+for the mechanical-aircraft task. The 16 automated checks are implemented in
 `grader/mechanical-v4.mjs`; four visual checks remain ungraded. The selected
 fixture/mutant calibration is separate from model trials and scientific validation.
 No old trial is rescored under these new requirements.
@@ -38,7 +38,7 @@ V=sqrt(2*m*g*cos(gamma)/(rho*S*CL)), pitch=-gamma and velocity
 scalar types; the net force is a separate vector. These selected properties do
 not validate the complete aerodynamic model or real-world aircraft performance.
 
-## Aircraft in the shared world — six deterministic browser questions
+## Aircraft in the shared world — seven deterministic geometry/browser questions
 
 | ID | One cause / observation | Pass condition |
 |---|---|---|
@@ -48,6 +48,7 @@ not validate the complete aerodynamic model or real-world aircraft performance.
 | landing_on_strip | Start the supplied zero-power approach and run for 6 s. | Landed, no crash, with zero downward velocity and wheels on the surface. Repeat on both strips. |
 | wheels_above_surface | Sample the actual transformed wheel geometry during approach/contact. | Lowest tyre points do not penetrate the rendered/contact surface by >0.01 m, and touchdown reaches it within 0.02 m. Both strips. |
 | aircraft_geometry_bounded | Count triangles in production aircraft meshes, including instances. | <=12,000 aircraft triangles, with nonempty geometry. |
+| wheel_rotation_axis | At zero attitude and steering, sample the three actual tyre meshes over one circumference of straight travel, both grounded and flying. | Every axle stays parallel to airframe z within 1°. Infer each wheel plane from the geometry's least-variance direction, including mounting transforms. |
 
 Takeoff/landing sequences are checked against a withheld working fixture and
 broken variants before the smoke protocol is frozen. Wheel checks inspect actual
@@ -78,3 +79,15 @@ Timing, draw calls, resource counts and frame stalls remain visible diagnostics.
 Pausing/resuming/resetting the supplied scaffold are infrastructure regression
 checks, not model grades. A checklist pass is not scientific validation or proof
 that every written requirement is satisfied.
+
+The wheel-axis question is implemented in `grader/wheel-axis.mjs`. It intentionally
+does not judge wheel rotation speed, whether wheels spin at all, legitimate
+coasting after takeoff, steering input, tyre styling or rolling friction. A
+stationary correctly mounted wheel can pass this narrow predicate. Ground
+clearance is a separate check.
+
+The published `mechanical-v4-draft` cohort retains its 15-check rubric and original
+scores. `mechanical-v4.1` adds the wheel-axis requirement; a separate post-hoc audit
+of the saved examples fails GPT-5.6 Sol and passes GPT-6.1 Sol. That audit is not a
+new model attempt or a replacement for the original scores. The power and flight
+assumptions are unchanged pending engineering review.

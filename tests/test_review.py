@@ -5,7 +5,8 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from ornithopter_eval.checks import CHECKS, TASK_VERSION, VISUAL_CHECKS, normalize_checks, refresh_verdict
+from ornithopter_eval.checks import (CHECKS, TASK_VERSION, VISUAL_CHECKS, MECHANICAL_VERSION,
+    MECHANICAL_LEGACY_VERSION, checklist, normalize_checks, refresh_verdict)
 from ornithopter_eval.review import apply_review, audit_consistency, judge
 
 
@@ -23,6 +24,20 @@ def review_fixture():
 
 
 class ReviewTests(unittest.TestCase):
+    def test_wheel_check_does_not_rewrite_the_historical_mechanical_rubric(self):
+        for version, automated_count in ((MECHANICAL_LEGACY_VERSION, 15), (MECHANICAL_VERSION, 16)):
+            checks=checklist(version)
+            report=refresh_verdict({'task_version':version,'dimensions':{
+                group:{'checks':[{'id':name,'pass':None if group=='visual' else True} for name in items]}
+                for group,items in checks.items()}})
+            self.assertEqual(sum(len(items) for group,items in checks.items() if group!='visual'),automated_count)
+            self.assertEqual('wheel_rotation_axis' in checks['interaction'],version==MECHANICAL_VERSION)
+            self.assertEqual(report['status'],'awaiting_review')
+            if version==MECHANICAL_VERSION:
+                report['dimensions']['interaction']['checks']=[c for c in report['dimensions']['interaction']['checks'] if c['id']!='wheel_rotation_axis']
+                with self.assertRaises(ValueError):
+                    refresh_verdict(report)
+
     def test_consistency_audit_flags_conflicting_identical_image_judgments(self):
         record={"model":"offline-fixture","rubric":TASK_VERSION,"evidence_sha256":{"inspection-top.png":"same-image-hash"},
             "responses":[{"check_id":"wings_on_both_sides","instruction":"same question","images":["inspection-top.png"],"response":{"model":"offline-fixture"}}],

@@ -10,7 +10,7 @@ from pathlib import Path
 
 from .api import APIError, create_response
 from .policy import FilePolicy, PolicyError
-from .checks import TASK_VERSION
+from .checks import TASK_VERSION, MECHANICAL_VERSIONS
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONFIG = ROOT / "configs/pilot.json"
@@ -40,7 +40,7 @@ def prepare(output, config_path=DEFAULT_CONFIG):
         raise ValueError("Run directory already exists; each attempt requires a fresh directory")
     selected = verify_sources()
     config = json.loads(Path(config_path).read_text())
-    if config.get("task_version") == "mechanical-v4-draft":
+    if config.get("task_version") in MECHANICAL_VERSIONS:
         from .world_candidate import prepare_world_trial
         return prepare_world_trial(output, config_path)
     for key in ("max_output_tokens_total", "max_output_tokens_per_response", "max_requests",
@@ -90,7 +90,7 @@ def initial_input(run):
     config = manifest["config"]
     budget = "\n\nAttempt limits: " + json.dumps(config,sort_keys=True) + \
         ". The total output-token budget spans ALL responses, including reasoning, code/tool calls and final text."
-    mechanical = manifest.get("task_version") == "mechanical-v4-draft"
+    mechanical = manifest.get("task_version") in MECHANICAL_VERSIONS
     api = ("\n\n" + (run / "inputs/AIRCRAFT_API.md").read_text() +
            "\n\nENGINEERING ASSUMPTIONS\n" + (run / "inputs/engineering.json").read_text()) if mechanical else ""
     starter = ("Writable files: submission/aircraft.mjs, submission/physics.mjs, submission/interpretation.json. "
@@ -143,7 +143,7 @@ def run_model(run, model, transport=create_response):
             raise ValueError(f"Prepared file changed: {name}")
     config = manifest["config"]
     policy_type = FilePolicy
-    if manifest.get("task_version") == "mechanical-v4-draft":
+    if manifest.get("task_version") in MECHANICAL_VERSIONS:
         from .world_candidate import CandidateFilePolicy
         policy_type = CandidateFilePolicy
     policy = policy_type(run, config["max_submission_bytes"])

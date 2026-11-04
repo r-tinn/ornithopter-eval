@@ -75,7 +75,9 @@ VISUAL_CHECKS = {
 }
 
 
-MECHANICAL_VERSION = "mechanical-v4-draft"
+MECHANICAL_LEGACY_VERSION = "mechanical-v4-draft"
+MECHANICAL_VERSION = "mechanical-v4.1"
+MECHANICAL_VERSIONS = (MECHANICAL_LEGACY_VERSION, MECHANICAL_VERSION)
 MECHANICAL_CHECKS = {
     "source": {
         "aspect_ratio_from_study": "Does aspect ratio preserve 7.4²/6.61 within 0.5%?",
@@ -107,8 +109,16 @@ MECHANICAL_CHECKS = {
 }
 
 
+MECHANICAL_LEGACY_CHECKS = {group:dict(items) for group,items in MECHANICAL_CHECKS.items()}
+MECHANICAL_CHECKS['interaction']['wheel_rotation_axis'] = 'Do all three actual tyre axles stay aligned with the lateral airframe axis during straight rolling and flight?'
+
+
 def checklist(version):
-    return MECHANICAL_CHECKS if version == MECHANICAL_VERSION else CHECKS
+    if version == MECHANICAL_VERSION:
+        return MECHANICAL_CHECKS
+    if version == MECHANICAL_LEGACY_VERSION:
+        return MECHANICAL_LEGACY_CHECKS
+    return CHECKS
 
 
 def normalize_checks(group, observed, checks=CHECKS):

@@ -2,7 +2,8 @@
 import {chromium} from 'playwright';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-const [base,output]=process.argv.slice(2);
+import {wheelRotationAxis} from './wheel-axis.mjs';
+const [base,output,version='mechanical-v4.1']=process.argv.slice(2);
 const report={source:[],physics:[],interaction:[],diagnostics:{errors:[],external_requests:[]},evidence:{screenshots:[]}};
 let browser;
 const check=(group,id,pass,detail)=>report[group].push({id,pass:pass===true,detail});
@@ -70,6 +71,7 @@ try {
   });
   report.source=numeric.source;report.physics=numeric.physics;
   if(numeric.error)report.diagnostics.physics_import_error=numeric.error;
+  if(version==='mechanical-v4.1')report.interaction.push(await probe.evaluate(wheelRotationAxis,{submission_url:base}));
   await probe.close();
   const page=await context.newPage();
   page.on('pageerror',e=>report.diagnostics.errors.push(String(e)));

@@ -1,0 +1,358 @@
+{
+  "kind": "specification power and energy audit",
+  "physical_aircraft_validated": false,
+  "inputs": {
+    "status": "proposed assumptions for review; not measured aircraft data",
+    "span_m": 3.0,
+    "body_length_m": 2.0,
+    "mass_kg": 6.0,
+    "maximum_mechanical_power_w": 400,
+    "propulsive_efficiency": 0.65,
+    "powered_wingbeat_hz": 2,
+    "rho_kg_m3": 1.225,
+    "gravity_m_s2": 9.80665,
+    "wheel_radius_m": 0.16,
+    "gear_centres_m": [
+      [
+        0.6,
+        -0.66,
+        0
+      ],
+      [
+        -0.45,
+        -0.66,
+        -0.32
+      ],
+      [
+        -0.45,
+        -0.66,
+        0.32
+      ]
+    ],
+    "source_derived": [
+      "aspect_ratio",
+      "wrist_span_fraction"
+    ],
+    "wing_area_m2": "span_m ** 2 / aspect_ratio",
+    "flight_model": "cycle-averaged point-mass translation with commanded attitude; educational approximation",
+    "not_claimed": [
+      "validated mechanical efficiency",
+      "real-world airworthiness",
+      "a human-carrying aircraft",
+      "full unsteady or aeroelastic simulation"
+    ]
+  },
+  "source_ratios": {
+    "aspect_ratio": 8.284417549167928,
+    "wrist_fraction": 0.5
+  },
+  "derived": {
+    "wing_area_m2": 1.0863769174579985,
+    "wing_loading_kg_m2": 5.522945032778619,
+    "shaft_power_per_all_up_mass_W_kg": 66.66666666666667,
+    "useful_propulsive_power_W": 260.0,
+    "CL_cap_limited_minimum_level_speed_m_s": 7.94746518114293
+  },
+  "level_flight": [
+    {
+      "speed_m_s": 7.94746518114293,
+      "bank_rad": 0,
+      "cl": 1.4,
+      "within_CL_cap": true,
+      "parasite_power_W": 11.6907014127983,
+      "induced_power_W": 31.443201285082317,
+      "useful_power_required_W": 43.133902697880615,
+      "shaft_power_required_W": 66.35985030443172,
+      "lift_drag_ratio": 10.841311063070322
+    },
+    {
+      "speed_m_s": 12.139953591871134,
+      "bank_rad": 0,
+      "cl": 0.6000000000000001,
+      "within_CL_cap": true,
+      "parasite_power_W": 41.668296562103066,
+      "induced_power_W": 20.584407140088928,
+      "useful_power_required_W": 62.252703702192,
+      "shaft_power_required_W": 95.77339031106462,
+      "lift_drag_ratio": 11.474419790142969
+    },
+    {
+      "speed_m_s": 14.31436627053526,
+      "bank_rad": 0,
+      "cl": 0.43155986870518603,
+      "within_CL_cap": true,
+      "parasite_power_W": 68.30791724379844,
+      "induced_power_W": 17.457548778197918,
+      "useful_power_required_W": 85.76546602199636,
+      "shaft_power_required_W": 131.9468708030713,
+      "lift_drag_ratio": 9.820454770287768
+    }
+  ],
+  "banking": {
+    "max_bank_rad": 0.6,
+    "max_bank_deg": 34.37746770784939,
+    "instant_vertical_lift_ratio": 0.8253356149096783,
+    "coordinated_level_turn_load_factor": 1.2116283145123166,
+    "induced_drag_multiplier_at_fixed_speed": 1.4680431725279575,
+    "level_at_trim_speed": {
+      "speed_m_s": 12.139953591871134,
+      "bank_rad": 0,
+      "cl": 0.6000000000000001,
+      "within_CL_cap": true,
+      "parasite_power_W": 41.668296562103066,
+      "induced_power_W": 20.584407140088928,
+      "useful_power_required_W": 62.252703702192,
+      "shaft_power_required_W": 95.77339031106462,
+      "lift_drag_ratio": 11.474419790142969
+    },
+    "level_turn_same_speed": {
+      "speed_m_s": 12.139953591871134,
+      "bank_rad": 0.6,
+      "cl": 0.72697698870739,
+      "within_CL_cap": true,
+      "parasite_power_W": 41.668296562103066,
+      "induced_power_W": 30.21879836254328,
+      "useful_power_required_W": 71.88709492464633,
+      "shaft_power_required_W": 110.59553065330205,
+      "lift_drag_ratio": 12.039471774071279
+    },
+    "extra_useful_power_for_level_turn_W": 9.634391222454333,
+    "initial_bank_acceleration_at_level_trim_m_s2": -1.712872492046003,
+    "neutral_level_trim_throttle": 0.23943347577766155,
+    "key_release_auto_level_time_from_max_s": 0.3
+  },
+  "measured_steady_energy_balance": [
+    {
+      "model": "gpt-5.6-sol",
+      "case": "steady_straight",
+      "drag_power_W": 85.01191595425327,
+      "potential_energy_gain_W": 174.9880840457318,
+      "useful_power_input_W": 260.0,
+      "steady_balance_residual_W": -1.4949819160392508e-11,
+      "climb_rate_m_s": 2.9739697729896175,
+      "speed_m_s": 14.314366270535261,
+      "note": "Steady-state diagnostic. Small residuals in a turn can include explicit Euler integration error and remaining kinetic-energy change."
+    },
+    {
+      "model": "gpt-5.6-sol",
+      "case": "banked_after_20_s",
+      "drag_power_W": 98.59782397027647,
+      "potential_energy_gain_W": 162.48771713077863,
+      "useful_power_input_W": 260.0,
+      "steady_balance_residual_W": 1.085541101055128,
+      "climb_rate_m_s": 2.761522659467107,
+      "speed_m_s": 14.739053333689084,
+      "note": "Steady-state diagnostic. Small residuals in a turn can include explicit Euler integration error and remaining kinetic-energy change."
+    },
+    {
+      "model": "gpt-6.1-sol",
+      "case": "steady_straight",
+      "drag_power_W": 85.01191595425327,
+      "potential_energy_gain_W": 174.98808404573174,
+      "useful_power_input_W": 260.0,
+      "steady_balance_residual_W": -1.5006662579253316e-11,
+      "climb_rate_m_s": 2.9739697729896166,
+      "speed_m_s": 14.31436627053526,
+      "note": "Steady-state diagnostic. Small residuals in a turn can include explicit Euler integration error and remaining kinetic-energy change."
+    },
+    {
+      "model": "gpt-6.1-sol",
+      "case": "banked_after_20_s",
+      "drag_power_W": 98.59782397027642,
+      "potential_energy_gain_W": 162.4877171307786,
+      "useful_power_input_W": 260.0,
+      "steady_balance_residual_W": 1.0855411010550142,
+      "climb_rate_m_s": 2.7615226594671065,
+      "speed_m_s": 14.73905333368908,
+      "note": "Steady-state diagnostic. Small residuals in a turn can include explicit Euler integration error and remaining kinetic-energy change."
+    }
+  ],
+  "measured_bank_response": [
+    {
+      "model": "gpt-5.6-sol",
+      "case": "full_power_climb",
+      "throttle": 1,
+      "elapsed_s": 1,
+      "straight_climb_rate_m_s": 2.9739697729896926,
+      "banked_climb_rate_m_s": 2.603209566395232,
+      "altitude_difference_m": -0.22661267485042913
+    },
+    {
+      "model": "gpt-5.6-sol",
+      "case": "full_power_climb",
+      "throttle": 1,
+      "elapsed_s": 20,
+      "straight_climb_rate_m_s": 2.9739697729896926,
+      "banked_climb_rate_m_s": 2.761522659467107,
+      "altitude_difference_m": -4.607034991871501
+    },
+    {
+      "model": "gpt-5.6-sol",
+      "case": "level_trim",
+      "throttle": 0.23943347577766147,
+      "elapsed_s": 1,
+      "straight_climb_rate_m_s": -6.71068139328983e-16,
+      "banked_climb_rate_m_s": -0.44160942489216626,
+      "altitude_difference_m": -0.25983437891159156
+    },
+    {
+      "model": "gpt-5.6-sol",
+      "case": "level_trim",
+      "throttle": 0.23943347577766147,
+      "elapsed_s": 20,
+      "straight_climb_rate_m_s": -6.71068139328983e-16,
+      "banked_climb_rate_m_s": -0.237075712806844,
+      "altitude_difference_m": -5.263207914559985
+    },
+    {
+      "model": "gpt-6.1-sol",
+      "case": "full_power_climb",
+      "throttle": 1,
+      "elapsed_s": 1,
+      "straight_climb_rate_m_s": 2.973969772989694,
+      "banked_climb_rate_m_s": 2.6032095663952317,
+      "altitude_difference_m": -0.22661267485042913
+    },
+    {
+      "model": "gpt-6.1-sol",
+      "case": "full_power_climb",
+      "throttle": 1,
+      "elapsed_s": 20,
+      "straight_climb_rate_m_s": 2.973969772989694,
+      "banked_climb_rate_m_s": 2.7615226594671065,
+      "altitude_difference_m": -4.607034991871529
+    },
+    {
+      "model": "gpt-6.1-sol",
+      "case": "level_trim",
+      "throttle": 0.23943347577766147,
+      "elapsed_s": 1,
+      "straight_climb_rate_m_s": -2.269789294789208e-16,
+      "banked_climb_rate_m_s": -0.4416094248921668,
+      "altitude_difference_m": -0.25983437891159156
+    },
+    {
+      "model": "gpt-6.1-sol",
+      "case": "level_trim",
+      "throttle": 0.23943347577766147,
+      "elapsed_s": 20,
+      "straight_climb_rate_m_s": -2.269789294789208e-16,
+      "banked_climb_rate_m_s": -0.23707571280684508,
+      "altitude_difference_m": -5.263207914559985
+    }
+  ],
+  "sensitivity": [
+    {
+      "scenario": "published",
+      "mass_kg": 6.0,
+      "propulsive_efficiency": 0.65,
+      "CD0": 0.035,
+      "shaft_power_W": 400,
+      "useful_power_W": 260.0,
+      "level_power_required_W": 62.252703702192,
+      "level_excess_power_climb_estimate_m_s": 3.360768735123751,
+      "status": "sensitivity only; not a validated replacement configuration"
+    },
+    {
+      "scenario": "illustration_lower_conversion",
+      "mass_kg": 6.0,
+      "propulsive_efficiency": 0.35,
+      "CD0": 0.035,
+      "shaft_power_W": 400,
+      "useful_power_W": 140.0,
+      "level_power_required_W": 62.252703702192,
+      "level_excess_power_climb_estimate_m_s": 1.3213363091678945,
+      "status": "sensitivity only; not a validated replacement configuration"
+    },
+    {
+      "scenario": "illustration_higher_mass",
+      "mass_kg": 10,
+      "propulsive_efficiency": 0.65,
+      "CD0": 0.035,
+      "shaft_power_W": 400,
+      "useful_power_W": 260.0,
+      "level_power_required_W": 133.946491497208,
+      "level_excess_power_climb_estimate_m_s": 1.2853880632304815,
+      "status": "sensitivity only; not a validated replacement configuration"
+    },
+    {
+      "scenario": "illustration_higher_parasite_drag",
+      "mass_kg": 6.0,
+      "propulsive_efficiency": 0.65,
+      "CD0": 0.07,
+      "shaft_power_W": 400,
+      "useful_power_W": 260.0,
+      "level_power_required_W": 103.92100026429506,
+      "level_excess_power_climb_estimate_m_s": 2.652604775597935,
+      "status": "sensitivity only; not a validated replacement configuration"
+    },
+    {
+      "scenario": "illustration_lower_drive_power",
+      "mass_kg": 6.0,
+      "propulsive_efficiency": 0.65,
+      "CD0": 0.035,
+      "shaft_power_W": 200,
+      "useful_power_W": 130.0,
+      "level_power_required_W": 62.252703702192,
+      "level_excess_power_climb_estimate_m_s": 1.1513836070049064,
+      "status": "sensitivity only; not a validated replacement configuration"
+    }
+  ],
+  "illustrative_endurance": {
+    "usable_battery_Wh": 100,
+    "assumed_electrical_to_shaft_efficiency": 0.85,
+    "shaft_power_W": 400,
+    "electrical_power_W": 470.5882352941177,
+    "ideal_time_minutes_before_auxiliary_loads": 12.75,
+    "status": "Dimensional example only; usable capacity and motor/transmission efficiency are not specified in the task."
+  },
+  "findings": [
+    "400 W is specified as mechanical power. The existing 0.65 is applied after that boundary; it is not a measured battery-to-flight efficiency.",
+    "The task has no battery/fuel capacity, depletion, component mass allocation, power-duration limits or thermal model.",
+    "The combination of mass, drag and available power gives a large excess-power margin. This explains strong climb; it does not prove 400 W is impossible for a real mechanical aircraft.",
+    "CD0, span efficiency, CL cap and propulsion efficiency are assumed constants, not measurements of the rendered mechanism.",
+    "The specified polar includes lift-induced drag. The critique is lack of calibration and complete-system accounting, not omission of all cost of lift.",
+    "The CL function clamps instead of modelling a post-stall decrease, and attitude is directly commanded with automatic roll levelling.",
+    "Lift and thrust are cycle-averaged functions of state, not computed from the actual wing geometry, wing motion, mechanism inertia or peak actuator loads.",
+    "Additional mechanism losses must be assigned explicit boundaries; they must not be added twice if a measured lumped efficiency already includes them.",
+    "Mechanical is not an energy-store category. Batteries, fuel, motor/engine power and all-up mass must be specified separately.",
+    "No power or aerodynamic numbers have been changed by the wheel-grader update. Sensitivity cases are not recommended hardware designs."
+  ],
+  "recommended_next_specification": [
+    "Select an explicit electric or engine architecture and define all-up mass with component allocations.",
+    "Separate stored Wh or fuel mass, electrical/chemical input power, shaft power and useful aerodynamic power; include reserve and finite endurance.",
+    "Keep a cheap cycle-averaged model, but calibrate drag/propulsion/trim/climb against a named prototype or documented dataset.",
+    "Define reference area, drag of the full airframe/gear, lift/drag envelopes and treatment of stall; document what remains an approximation.",
+    "Test banking from a reproducible level-flight trim near power balance, rather than demanding descent during every full-power climbing turn."
+  ],
+  "references": [
+    {
+      "url": "https://web.mit.edu/16.unified/www/FALL/thermodynamics/notes/node100.html",
+      "supports": "Excess propulsive power divides into climb and kinetic-energy change; useful power is not the same boundary as shaft power."
+    },
+    {
+      "url": "https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/induced-drag-coefficient/",
+      "supports": "Lift-induced drag, aspect ratio, efficiency factor and reference area."
+    },
+    {
+      "url": "https://www.molicel.com/inr-21700-p45b/",
+      "supports": "A real high-power lithium-ion cell: manufacturer lists 16.2 Wh and 242 Wh/kg at cell level; not pack usable energy."
+    },
+    {
+      "url": "https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/hydrogen-program-plan-2024.pdf#page=31",
+      "supports": "DOE gives gasoline lower heating value about 12 kWh/kg; chemical energy excludes engine/tank mass and conversion losses."
+    },
+    {
+      "url": "https://www.festo.com/PDF_Flip/corp/smartbird_en/files/assets/seo/page54.html",
+      "supports": "Festo lists SmartBird 450 g, 2 m span, 23 W electrical; a different aircraft and power boundary, not a calibration of this task."
+    },
+    {
+      "url": "https://media.festo.com/media/113631_documentation.pdf#page=6",
+      "supports": "Manufacturer separately reports electromechanical and aerodynamic efficiencies; cannot transfer either to this craft without matching boundaries."
+    }
+  ],
+  "source_sha256": {
+    "candidate/mechanical-v4/engineering.json": "110bc006a5ab34018f58eff9385c615eb7a92f51af7b87519c15dc6bc83b59b9",
+    "analysis/flight-probe.json": "eb39154ea935b449c70be2c242b64d98c0d788b078c6afd0c24958be1c776eb2"
+  }
+}

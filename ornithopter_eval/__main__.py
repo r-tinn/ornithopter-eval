@@ -151,6 +151,7 @@ def main(argv=None):
     p = commands.add_parser("serve-world");p.add_argument("directory");p.add_argument("--port",type=int,default=8766)
     p = commands.add_parser("validate-world");p.add_argument("--node",default="node")
     p = commands.add_parser("validate-mechanical");p.add_argument("--node",default="node")
+    p = commands.add_parser("audit-wheels");p.add_argument("experiment");p.add_argument("--output",required=True);p.add_argument("--node",default="node")
     commands.add_parser("verify-sources")
     args = parser.parse_args(argv)
     try:
@@ -207,6 +208,10 @@ def main(argv=None):
         elif args.command == "validate-mechanical":
             from .mechanical_validation import validate_mechanical
             validate_mechanical(args.node)
+        elif args.command == "audit-wheels":
+            from .wheel_audit import audit_wheels
+            result=audit_wheels(args.experiment,args.output,args.node)
+            print(json.dumps({"results":[{"trial":r["trial"],"pass":r["pass"],"detail":r["detail"].get("max_misalignment_deg")} for r in result["results"]]},indent=2))
         else:
             print(json.dumps(verify_sources(),indent=2))
     except (APIError,ValueError,OSError,KeyError,TypeError) as exc:
