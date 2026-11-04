@@ -4,7 +4,7 @@
 omissions from Stanley's notes despite passing its software checks. The human
 pilot and engine are compatible with his stated aim; the source mechanics need
 to lead the next revision. Read [the audit](audits/source-compatibility-20261104/REPORT.md)
-and [corrected requirements](docs/SOURCE_FIRST_REQUIREMENTS.md). The current
+and [corrected requirements and implementation guidance](docs/SOURCE_FIRST_REQUIREMENTS.md). The current
 simulator and all prior results are preserved; source-first compliance is not
 yet established.
 
