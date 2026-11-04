@@ -6,6 +6,7 @@ import re
 import shutil
 import subprocess
 import tempfile
+import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
@@ -124,7 +125,9 @@ def refresh_workbench(root, experiment):
         rows.append('<tr><td>'+str(t["repeat"])+'</td><td>'+html.escape(t["model"])+'</td><td><strong>'+score+'</strong></td><td><span class="badge">'+html.escape(t["status"])+'</span>'+reason+'</td><td class="actions">'+actions+'</td></tr>')
     effort = html.escape(str(experiment["config"].get("reasoning_effort","default")))
     tokens = str(experiment["config"]["max_output_tokens_total"])
-    body = '<p class="muted">'+('Mechanical ornithopter' if version in MECHANICAL_VERSIONS else 'Stanley’s Swan')+' · '+html.escape(version)+'</p><h1>Frontier model calibration</h1><p>Open each unchanged model submission to fly it yourself, or inspect what the graders captured.</p><p><strong>Automated checks only.</strong> '+str(visual_count)+' visual checks remain ungraded. Passing all automated checks is not a full-task pass.</p>'+cards+'<table><thead><tr><th>Repeat</th><th>Model</th><th>Automated</th><th>Attempt</th><th>Inspect</th></tr></thead><tbody>'+''.join(rows)+'</tbody></table><p class="muted">Same source packet, starter, '+effort+' reasoning and '+tokens+' total output tokens. No execution, testing or grader feedback during generation. Refresh this page for completed attempts.</p><p><a href="experiment.json">Protocol and provenance</a> · <a href="summary.json">Results JSON</a> · <a href="config.json">Fixed budget</a></p>'
+    budget = (str(experiment['config']['max_wall_seconds']) + ' seconds; no benchmark token cap'
+              if experiment['config'].get('budget_mode') == 'wall_time' else tokens + ' total output tokens')
+    body = '<p class="muted">'+('Mechanical ornithopter' if version in MECHANICAL_VERSIONS else 'Stanley’s Swan')+' · '+html.escape(version)+'</p><h1>Frontier model calibration</h1><p>Open each unchanged model submission to fly it yourself, or inspect what the graders captured.</p><p><strong>Automated checks only.</strong> '+str(visual_count)+' visual checks remain ungraded. Passing all automated checks is not a full-task pass.</p>'+cards+'<table><thead><tr><th>Repeat</th><th>Model</th><th>Automated</th><th>Attempt</th><th>Inspect</th></tr></thead><tbody>'+''.join(rows)+'</tbody></table><p class="muted">Same source packet, starter, '+effort+' reasoning and '+budget+'. No execution, testing or grader feedback during generation. Refresh this page for completed attempts.</p><p><a href="experiment.json">Protocol and provenance</a> · <a href="summary.json">Results JSON</a> · <a href="config.json">Fixed budget</a></p>'
     if (root / "artifacts.zip").exists():
         body += '<p><a href="artifacts.zip">Download all artifacts</a></p>'
     if (root / "CALIBRATION.md").exists():
@@ -148,7 +151,7 @@ def run_experiment(output, models, repeats, config_path, node="node", transport=
     if version not in (TASK_VERSION, MECHANICAL_VERSION,PILOTED_VERSION):
         raise ValueError("Unsupported task version")
     frozen = {str(p.relative_to(ROOT)):digest(p) for pattern in
-              ("ornithopter_eval/*.py","grader/*.mjs","task/*.md","task/starter/*","task/sources/*.jpg","candidate/mechanical-v4/**/*","candidate/mechanical-v5/**/*")
+              ("ornithopter_eval/*.py","ornithopter_eval/*.html","grader/*.mjs","task/*.md","task/starter/*","task/sources/*.jpg","candidate/mechanical-v4/**/*","candidate/mechanical-v5/**/*")
               for p in sorted(ROOT.glob(pattern)) if p.is_file()}
     root.mkdir(parents=True)
     if generation_profile is None:
@@ -256,13 +259,19 @@ class ArtifactServer(http.server.BaseHTTPRequestHandler):
             if not path.is_file():
                 self.send_error(404);return
             body = path.read_bytes()
+        if name == 'index.html' and getattr(self.server, 'human_review_url', None):
+            banner = ('<aside style="padding:18px 24px;background:#d8edc8;color:#142018;font:16px system-ui">'
+                      '<a style="color:inherit;font-weight:600" target="_blank" rel="noopener" href="' +
+                      html.escape(self.server.human_review_url, quote=True) + '">Rate aesthetic realism · 1–5 ↗</a>'
+                      ' — fly a submission, then save your own review. Separate from archived scores.</aside>')
+            body = re.sub(br'(<body[^>]*>)', lambda match: match[0] + banner.encode(), body, count=1)
         self.send_response(200)
         self.send_header("Content-Type",allowed[path.suffix]);self.send_header("Content-Length",str(len(body)))
         self.send_header("Content-Security-Policy","default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'")
         self.send_header("Cache-Control","no-store");self.end_headers();self.wfile.write(body)
 
 
-def serve_artifacts(root, port=8765, camera_updates=True):
+def serve_artifacts(root, port=8765, camera_updates=True, *, review_ledger=None):
     root = Path(root).resolve()
     if not (root / "experiment.json").is_file() or not (root / "index.html").is_file():
         raise ValueError("Select an experiment artifact directory")
@@ -270,8 +279,18 @@ def serve_artifacts(root, port=8765, camera_updates=True):
     server.artifact_root = root
     from .playback import configure_camera_playback
     configure_camera_playback(server,root,camera_updates)
+    from .aesthetics import review_server
+    reviewer = review_server(root, f'http://127.0.0.1:{server.server_port}', camera_updates, review_ledger)
+    server.human_review_url = reviewer.origin + '/'
+    worker = threading.Thread(target=reviewer.serve_forever, daemon=True)
+    worker.start()
     print(f"Artifact workbench: http://127.0.0.1:{server.server_port}/",flush=True)
+    print(f"Human aesthetic review: {server.human_review_url}", flush=True)
+    print(f"Rating ledger: {reviewer.store.ledger}", flush=True)
     try:
         server.serve_forever()
     finally:
         server.server_close()
+        reviewer.shutdown()
+        reviewer.server_close()
+        worker.join()

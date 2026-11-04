@@ -24,15 +24,17 @@ commit keys, expose them in outputs, or pass them to evaluated submissions.
 Prefer focused binary checks and report their exact scope. Preserve failed
 judge calibration and conflicting judgments; do not select retries to hide them.
 
-For the next source-first protocol, use medium reasoning and 20,000 total output
-tokens including reasoning, via configs/source-first-budget.json. Preserve the
-explicit 32,000-token configurations for historical/v5 reproduction. Do not
+For the next source-first protocol, use medium reasoning and a 240-second
+generation deadline, via configs/source-first-time.json. No benchmark token or
+request-count cap. Preserve the old token profiles for reproduction. Do not
 silently reinterpret a saved task/config as the new protocol.
-The next rubric has seven binary outcomes: six task graders including the
+The next rubric has eight outcomes: six binary task graders including the
 existing wheel_rotation_axis regression, plus no_verification_tools as a separate
-validity result, not an easy performance point.
-Token-budget notices are limited to the 50% and 75% usage
-thresholds; do not send ongoing token, time or request-count updates. Retain
+validity result, and a separate human aesthetic_realism rating from 1 to 5 after
+the owner flies the submission. Never invent a human rating or combine it into
+the binary task total. Preserve rating revisions and submission identity.
+Time-budget notices are limited to the 50% and 75% thresholds (120 and 180 s),
+delivered at the next exchange; do not send ongoing usage updates. Retain
 the original settings for published cohorts.
 
 The intended next eval is a mechanical ornithopter inside a supplied lightweight

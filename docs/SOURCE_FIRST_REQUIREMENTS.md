@@ -4,8 +4,23 @@ Status: corrected design brief following the 4 November 2026 source audit.
 Expanded with a lightweight implementation approach on 4 November 2026.
 This is not an implemented simulator or a newly calibrated task version.
 The executable v5 prototype does not yet meet this brief.
-The next scoring scheme is [seven focused binary graders](SOURCE_FIRST_GRADERS.md):
-six task targets, including the wheel-axis regression, plus file-only validity.
+The next scoring scheme is [eight graders](SOURCE_FIRST_GRADERS.md): six binary
+task targets, including the wheel-axis regression, file-only validity and a
+separate human aesthetic-realism score from 1 to 5.
+
+## Visual design
+
+Create a visually striking, convincing mechanical ornithopter that brings the
+sketches to life. Preserve source wing proportions, outline, articulation and
+functional relationships. Use coherent materials and plausible structural
+members, joints and transmission, with the adult pilot at a believable scale.
+Make the mechanism readable and its movement smooth and physically meaningful.
+Aim for compelling views during flight and close inspection within the existing
+geometry/performance limits and supplied lightweight world. Visual polish must
+support the source principles and flight model. Do not trade source fidelity
+for ornament. The owner will fly the result and give a separate 1–5 aesthetic
+realism score using the published anchors. The same wording is supplied in new
+generator packets as [DESIGN_BRIEF.md](../task/DESIGN_BRIEF.md).
 
 ## Authority
 
@@ -322,19 +337,21 @@ source-consistent model, report that result and revisit the added assumptions;
 do not change the notes' principles or invent lift to obtain a passing fixture.
 
 Keep the supplied lightweight world, cameras, two strips and few trees. Use
-medium reasoning, **20,000 total output tokens including reasoning**, and
+medium reasoning, a **240-second generation deadline with no benchmark token cap**, and
 one-shot generation with targeted file reads/edits only. No execution, syntax
 checks, builds, tests, browser access or grader feedback during generation.
 Reading edited files and mental review remain allowed. Blocked out-of-policy
-tool requests fail the seventh grader. Deliver token notices only at 50% and
-75%; retain the existing 900 s operational timeout rather than adding an
-aggressive latency deadline. These are evaluation conditions, not aircraft
+tool requests fail the seventh grader. Deliver time notices only at 50% and
+75% (120 and 180 s), at the next exchange if one occurs. No benchmark request
+cap or extra exchange solely for a notice. The deadline includes API/tool time;
+retain completed files at cutoff. These are evaluation conditions, not aircraft
 physics. Bundle all source/scaffold files needed by the eventual task here.
 
 ## Grader consequences
 
-Use exactly the seven rows in [SOURCE_FIRST_GRADERS.md](SOURCE_FIRST_GRADERS.md).
+Use exactly the eight rows in [SOURCE_FIRST_GRADERS.md](SOURCE_FIRST_GRADERS.md).
 Score the six task targets and report the file-only validity result separately.
+Record the owner's aesthetic realism rating separately as 1–5, initially ungraded.
 Remove the easy standalone points; retain useful pilot, geometry, source-number
 and UI observations as non-scoring diagnostics and required deliverables.
 The wheel-axis check remains a scored regression. Keep the force-comparison

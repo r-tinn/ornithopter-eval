@@ -15,6 +15,7 @@ from .experiment import ArtifactServer
 from .policy import FilePolicy, PolicyError
 from .checks import MECHANICAL_VERSION,MECHANICAL_VERSIONS,PILOTED_VERSION,checklist
 from .runner import ROOT, digest, verify_sources, write_json
+from .protocol import validate_config
 
 CANDIDATE = ROOT / 'candidate/mechanical-v4'
 EDITABLE = ('aircraft.mjs', 'physics.mjs', 'interpretation.json')
@@ -33,6 +34,7 @@ def prepare_world(output, reference=False, task_version=MECHANICAL_VERSION):
     output.mkdir(parents=True)
     inputs = output / 'inputs'
     inputs.mkdir()
+    shutil.copyfile(ROOT / 'task/DESIGN_BRIEF.md', inputs / 'DESIGN_BRIEF.md')
     for name in ('TASK.md','SOURCE_GUIDE.md','AIRCRAFT_API.md','engineering.json','ENGINEERING_NOTES.md'):
         if (candidate/name).is_file():
             shutil.copyfile(candidate / name, inputs / name)
@@ -65,13 +67,7 @@ def prepare_world_trial(output, config_path, *, config=None):
     version=config.get('task_version')
     if version not in (MECHANICAL_VERSION,PILOTED_VERSION):
         raise ValueError('Unsupported mechanical task version')
-    for key in ('max_output_tokens_total','max_output_tokens_per_response','max_requests','max_wall_seconds','max_submission_bytes'):
-        if type(config.get(key)) is not int or config[key] <= 0:
-            raise ValueError('Invalid budget: '+key)
-    config['reasoning_effort'] = config.get('reasoning_effort') or 'medium'
-    percentages = config.setdefault('output_token_notice_percentages',[50,75])
-    if not isinstance(percentages,list) or any(type(p) is not int or not 0<p<100 for p in percentages) or percentages != sorted(set(percentages)):
-        raise ValueError('Invalid output-token notice percentages')
+    validate_config(config)
     output = prepare_world(output,task_version=version)
     manifest = json.loads((output/'manifest.json').read_text())
     manifest.update(status='prepared',model=None,config=config,
@@ -80,7 +76,7 @@ def prepare_world_trial(output, config_path, *, config=None):
         starter_sha256={str(p.relative_to(output)):digest(p) for p in sorted((output/'submission').rglob('*')) if p.is_file()},
         implementation_sha256={str(p.relative_to(ROOT)):digest(p) for pattern in ('ornithopter_eval/*.py','grader/*.mjs') for p in sorted(ROOT.glob(pattern))},
         runtime={'python':sys.version,'platform':platform.platform()},
-        protocol='one instruction; only declared aircraft files writable; no execution or grader feedback; token-only checkpoints')
+        protocol='one instruction; only declared aircraft files writable; no execution or grader feedback; configured budget checkpoints')
     write_json(output/'manifest.json',manifest)
     return output
 

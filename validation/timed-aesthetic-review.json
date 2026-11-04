@@ -1,0 +1,58 @@
+{
+  "recorded_utc": "2026-11-04T20:41:24.022462+00:00",
+  "scope": "Timed generation and human aesthetic-rating infrastructure; not a new source-first physics calibration.",
+  "generation_profile": "configs/source-first-time.json",
+  "cli_default": "configs/mechanical-v5-timed.json",
+  "generation_seconds": 240,
+  "reasoning_effort": "medium",
+  "benchmark_token_cap": null,
+  "benchmark_request_cap": null,
+  "time_notice_thresholds_seconds": [
+    120,
+    180
+  ],
+  "time_notice_delivery": "Once per threshold, at the next exchange if generation continues; cannot interrupt an in-flight response.",
+  "deadline_enforcement": [
+    "Killable API worker",
+    "No dispatch from late responses",
+    "No tool dispatch after deadline",
+    "Discard edits completed after deadline; retain prior completed files",
+    "Interrupted provider token usage explicitly unknown"
+  ],
+  "python_tests": {
+    "passed": 83,
+    "suite": "python3 -m unittest discover -s tests -v"
+  },
+  "javascript_tests": {
+    "passed": 6,
+    "suite": "node --test tests/view-motion.test.mjs tests/wheel-axis.test.mjs"
+  },
+  "browser_smoke": {
+    "passed": true,
+    "command": "PLAYWRIGHT_BROWSERS_PATH=.cache/browsers node tests/aesthetic-ui.smoke.mjs",
+    "scope": "Temporary offline cohort only; saves 4/5 then 2/5, reloads, preserves both revisions, verifies artifact bytes, desktop/mobile screenshots, no page errors.",
+    "screenshots_local": [
+      "runs/aesthetic-ui-smoke/desktop.png",
+      "runs/aesthetic-ui-smoke/mobile.png"
+    ]
+  },
+  "manual_review": {
+    "grader": "aesthetic_realism",
+    "range": [
+      1,
+      5
+    ],
+    "automatic_default": null,
+    "real_model_scores_entered_by_agent": 0,
+    "storage": "Git-ignored reviews/aesthetics/*.jsonl; append-only revisions; export JSON from UI",
+    "identity": "Full frozen submission file hashes, task version, reviewer, timestamp, camera mode",
+    "isolation": "Trusted reviewer on a separate loopback origin from read-only simulator artifacts"
+  },
+  "live_api_calls": 0,
+  "historical_artifacts_modified": false,
+  "limitations": [
+    "Five source-first physics graders remain specifications, not runnable/calibrated checks.",
+    "Four-minute difficulty is estimated from two older mechanical-task runs, not yet a revised-task cohort.",
+    "Human aesthetics is a separate ordinal score; no automatic conversion into task pass/fail."
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "task_version": "mechanical-v5-draft",
+  "budget_mode": "wall_time",
+  "max_output_tokens_total": null,
+  "max_output_tokens_per_response": null,
+  "max_requests": null,
+  "max_wall_seconds": 240,
+  "max_submission_bytes": 2000000,
+  "reasoning_effort": "medium",
+  "output_token_notice_percentages": [],
+  "time_notice_percentages": [50, 75]
+}

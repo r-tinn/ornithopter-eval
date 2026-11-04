@@ -1,19 +1,20 @@
-# Seven graders for the source-first revision
+# Eight graders for the source-first revision
 
 This replaces the proposed many-check scoring scheme **for the next task**.
 It does not rescore archived attempts or relabel v5's 28 checks. The old 15/15
 model results used v4; no frontier model has completed the source-first revision.
 Its difficulty or saturation is not yet established.
 
-There are seven binary outcomes: six task graders and one file-only validity
-grader. Report performance as **x/6**, with protocol **pass/fail** separately.
+There are six binary task outcomes, one binary file-only validity outcome and
+one human aesthetic-realism score. Report performance as **x/6**, protocol
+**pass/fail**, and human aesthetics **1–5** separately (ungraded until reviewed).
 Obeying tool rules does not earn an easy performance point. For invalid runs,
 retain raw artifact results but exclude them from valid-performance aggregates.
 Also report the invalid rate and valid completions per all started attempts, so
 exclusions cannot make a model look better. Missing evidence is unavailable,
 never an inferred pass or an automatic model failure.
 
-## The seven questions
+## The eight questions
 
 | # / ID | Single target | Probe and failure it must catch | Status |
 |---|---|---|---|
@@ -24,10 +25,11 @@ never an inferred pass or an automatic model failure.
 | 5. `unpowered_glide_balance` | Does the deliberately configured glide lose mechanical energy at the rate predicted by its aerodynamic losses? | Published speed/trim cases, zero motor input, force-derived descent and reconstructed energy loss. Include residual wing/spring motion. Catch altitude hold, zero drag and hidden propulsion. No arbitrary 6–14 L/D window. | Specification; new glide/loss model needed. |
 | 6. `wheel_rotation_axis` | Does each rendered wheel rotate about its axle during straight travel and airborne motion? | Reuse `grader/wheel-axis.mjs`: infer the tyre's thin axis from transformed production geometry; every axle stays within 1° of aircraft lateral z with steering neutral. Supply both travel distance and `wheel_angle` so either animation convention is exercised. Must retain the saved GPT-5.6 failure and GPT-6.1 pass. | **Implemented existing regression**, with explicit wheel-angle input coverage. |
 | 7. `no_verification_tools` | Did the generator request only declared file reads and edits throughout its recorded attempt? | Audit every observed tool request and matched result. Any out-of-policy request fails even if blocked. Missing/inconsistent evidence cannot pass. No LLM judge or inspection of encrypted reasoning. | **Implemented** in `ornithopter_eval/rollout.py`, recorded automatically on new runs. |
+| 8. `aesthetic_realism` | After flying it, how convincing, compelling and faithful to the source sketches is the mechanical aircraft? | Owner enters 1–5 in the local review UI, considering proportions, coherent materials/construction, readable mechanisms, pilot scale and movement. No LLM proxy or automatic default. | **Implemented** human-rating UI and append-only local ledger; no model submission has been rated by the authoring agent. |
 
 Each physical scenario may use several fixed inputs to verify its one dependency.
-It yields one boolean, reason and raw evidence; no subtest points, weights or
-aesthetic score. These are new integrated probes, not seven headings around all
+It yields one boolean, reason and raw evidence; no subtest points or weights.
+The separate human grader is deliberately ordinal. These are new integrated probes, not headings around all
 the old easy checks. The wheel check is retained because it detects a specific
 observed failure the owner requires.
 
@@ -53,8 +55,39 @@ Each needs an inspected positive reference and a targeted broken variant it
 rejects. Preserve failures and conflicting judgments. V5's handwritten reference
 does not implement the new source-first mechanics and is not its positive
 fixture. Do not tune thresholds, parameters or budgets to force a model ranking.
-Record token cutoffs separately from physics defects and retain completed files
-at cutoff without extra tokens, retries or generation-time feedback.
+Record deadline cutoffs separately from physics defects and retain completed
+files at cutoff without extensions, retries or generation-time grader feedback.
+
+## Human aesthetic realism
+
+Fly and inspect the aircraft before rating it. Judge how convincingly it brings
+the sketches to life as a mechanical design, not whether you prefer one artistic
+style. Consider source proportions and silhouette, believable construction,
+coherent materials, appropriately scaled pilot and mechanisms, and visual motion.
+The task explicitly asks for a striking, realistic, compelling design within the
+existing lightweight rendering limits. This score does not establish physical
+correctness and has no automatic pass threshold.
+
+| Score | Anchor |
+|---|---|
+| 1 | Rough and unconvincing: incoherent shape, construction or movement. |
+| 2 | Recognisable but crude: weak proportions, materials or mechanical clarity. |
+| 3 | Believable engineered aircraft, with clear visual shortcomings. |
+| 4 | Convincing, source-faithful and polished: coherent construction and motion. |
+| 5 | Exceptional realism and coherence: compelling, source-faithful mechanical design. |
+
+`serve-artifacts` starts a separate local human-review page linked from the
+gallery. Open the simulator, play it, select a score, confirm you have flown it
+and save. Optional notes and reviewer name are retained. Ratings bind to the
+submission's complete recorded file hashes and task version. Revisions append;
+they never overwrite earlier judgments, manifests, automated reports or ZIPs.
+Export ratings JSON from the review page. Local ledgers live in Git-ignored
+`reviews/aesthetics/`; keep/export them with your experiment records.
+
+Submissions remain on the read-only artifact origin. The trusted review UI runs
+on a different loopback port and requires its own session token to save ratings,
+so a submission cannot award itself a human score. Existing cohorts can receive
+a separately labelled retrospective rating; their original rubric is unchanged.
 
 ## File-only policy
 
@@ -78,27 +111,45 @@ automatic compliance passes.
 
 ## Generation constraints
 
-Use [source-first-budget.json](../configs/source-first-budget.json): **20,000 total
-output tokens**, including reasoning, code/tool calls and final text; **medium
-reasoning**. Notices only at 50%/75% (10,000/15,000 used), at the next exchange if
-one occurs. Retain 24 exchanges, 2 MB and the existing 900 s operational timeout.
-The token reduction is 37.5%; do not also introduce a short provider-latency race.
-The API output count already includes reasoning:
-[official OpenAI token accounting](https://developers.openai.com/api/docs/guides/reasoning).
+Use [source-first-time.json](../configs/source-first-time.json): **240 seconds**
+from generation start, **medium reasoning**, with **no benchmark output-token or
+request-count cap**. The API request omits `max_output_tokens`; the provider's
+own response/context limits still apply. Keep the 2 MB submission limit.
+
+Warn only at 50%/75% of elapsed time: **120 and 180 seconds**. Deliver each
+threshold once at the next exchange, combining crossed thresholds if necessary.
+No extra request solely to deliver a warning. A warning cannot interrupt an
+in-flight response. The deadline includes API latency, reasoning, generation
+and file-tool handling, but excludes preparation and grading. A killable API
+worker enforces the local cutoff even if a request stalls. No late tool dispatch;
+edits completing late are discarded. Keep previously completed files and grade
+those artifacts with a distinct `wall_time_limit` termination reason. Provider
+usage for an interrupted request is unknown; local cancellation does not promise
+that provider generation or billing stops at exactly the same instant.
+
+The latest saved mechanical runs took **128.889 s (5.6 Sol)** and **190.063 s
+(6.1 Sol)**. Four minutes gives the slower run about 50 s of headroom while being
+far tighter than 900 s. These are older-task timings, not feasibility evidence
+for the harder source-first mechanics. Freeze 240 s before the next cohort,
+record latency/cutoff rates and revisit only in a new labelled profile if needed.
+See [saved timing basis](../analysis/time-budget.json). Do not tune it to force a ranking.
 
 The profile overlays generation constraints; it does not implement a task/rubric.
-`--generation-profile configs/source-first-budget.json` works with `prepare`,
+`--generation-profile configs/source-first-time.json` works with `prepare`,
 `run` and `compare`, saving resolved limits and the profile hash while preserving
 the original config. Applying it to v5 still uses **v5's sources and graders**.
 Keep historical reproduction commands on their original configs without an
 overlay. Use this profile by default when the source-first task is implemented.
+The previous 20,000-token profile remains unchanged for reproducibility.
+New packets include the frozen [visual design brief](../task/DESIGN_BRIEF.md);
+historical prompts and ratings are not rewritten.
 
 Prepare a **v5 harness-only** budget smoke packet without an API call:
 
 ```sh
-python3 -m ornithopter_eval prepare runs/constrained-harness-review --config configs/mechanical-v5-smoke.json --generation-profile configs/source-first-budget.json
+python3 -m ornithopter_eval prepare runs/timed-harness-review --config configs/mechanical-v5-smoke.json --generation-profile configs/source-first-time.json
 python3 -m ornithopter_eval audit-rollout runs/FINISHED_RUN --output runs/rollout-recheck.json
 ```
 
-The first command does not prepare the revised physics task. The full seven-row
+The first command does not prepare the revised physics task. The full eight-row
 rubric remains a review specification until the missing physics work is complete.

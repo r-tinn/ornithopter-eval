@@ -5,6 +5,7 @@ __pycache__/
 node_modules/
 .cache/
 runs/
+reviews/aesthetics/
 !runs/.gitkeep
 .DS_Store
 task/sources/*.jpg

@@ -19,6 +19,10 @@ class PilotedTests(unittest.TestCase):
             root=Path(temp)/'trial'
             main(['prepare',str(root)])
             self.assertEqual(json.loads((root/'manifest.json').read_text())['task_version'],PILOTED_VERSION)
+            config=json.loads((root/'manifest.json').read_text())['config']
+            self.assertEqual(config['max_wall_seconds'],240)
+            self.assertEqual(config['budget_mode'],'wall_time')
+            self.assertIsNone(config['max_output_tokens_total'])
             with patch('ornithopter_eval.__main__.grade_submission',return_value={'status':'awaiting_review','dimensions':{}}) as grade:
                 main(['grade',str(root/'submission'),'--output',str(root/'grade')])
                 self.assertEqual(grade.call_args.kwargs['task_version'],PILOTED_VERSION)

@@ -1,20 +1,37 @@
 # Ornithopter Eval
 
-The next source-first revision uses [seven focused binary graders](docs/SOURCE_FIRST_GRADERS.md):
+The next source-first revision uses [eight graders](docs/SOURCE_FIRST_GRADERS.md):
 wing-cycle forces, elastic/inertial exchange, wing-induced pitch, power-limited
-flight, unpowered glide, wheel rotation axis and file-only tool use. Five new
+flight, unpowered glide, wheel rotation axis, file-only tool use and a **human
+aesthetic realism rating (1–5)** entered after flying each submission. Report
+six binary task outcomes, protocol validity and human rating separately. Five new
 physics scenarios still require implementation/calibration. The existing wheel
 regression and the new deterministic rollout auditor are implemented.
 
-The [constrained generation profile](configs/source-first-budget.json) sets
-20,000 total output tokens including reasoning, medium effort and 50%/75%
-notices. It keeps the existing 900 s operational timeout. Use
-`--generation-profile configs/source-first-budget.json` with `prepare`, `run`
+The [timed generation profile](configs/source-first-time.json) sets a **4-minute
+generation deadline**, medium effort and no benchmark token or request-count cap.
+Time notices arrive at the next exchange after **2 and 3 minutes**. The latest
+mechanical runs took 129 and 190 seconds; the harder revised task still needs
+calibration. [Timing basis and limits](analysis/time-budget.json). Use
+`--generation-profile configs/source-first-time.json` with `prepare`, `run`
 or `compare`; the resolved profile/hash is saved without rewriting historical
-configs. This changes the generation budget, not the task/rubric version.
+configs. CLI `prepare`, `run` and `compare` now default to
+[mechanical-v5-timed.json](configs/mechanical-v5-timed.json). This changes the
+generation budget, not the physics task/rubric version. Explicit historical
+configs keep their original limits; the low-level legacy `prepare()` helper
+retains its old packet default for v3 fixture reproduction.
 New attempts save `rollout-review.json` and the gallery links its file-only
 audit. Blocked out-of-policy tool requests fail; missing trace evidence stays
 unavailable. Old model trials and their scores remain unchanged.
+
+New packets include a [visual design brief](task/DESIGN_BRIEF.md) requesting a
+compelling, realistic mechanical design faithful to the sketches. Run
+`python3 -m ornithopter_eval serve-artifacts experiments/mechanical-v4-smoke-20261030 --port 8769`
+and click **Rate aesthetic realism · 1–5** in the gallery. Fly a submission first,
+then save your score and optional notes. Reviews persist in Git-ignored
+`reviews/aesthetics/`, preserve revisions and bind to unchanged submission hashes.
+Export them from the review page. The historical cohort's original scores,
+prompts and ZIP remain unchanged; any new human rating is separate.
 
 **Source-faithfulness review, 4 November 2026:** the v5 prototype has important
 omissions from Stanley's notes despite passing its software checks. The human
@@ -45,7 +62,8 @@ narrower rubric. [Performance and sensitivity diagnostics](analysis/piloted-perf
 are reproducible with `node analysis/piloted_performance.mjs runs/piloted-review runs/piloted-performance-new.json`.
 The code runner accepts only labelled reference packets for this diagnostic.
 No v5 model cohort has been run. CLI prepare/run/compare now default to the v5
-configuration; medium reasoning and 32,000 total output tokens remain unchanged.
+physics task with the new four-minute budget by default. Use explicit
+`--config configs/mechanical-v5-smoke.json` for the older 32,000-token budget.
 
 ## Preserved v4 task and results
 
@@ -131,9 +149,9 @@ There is no claim of general benchmark validity or real-world aircraft validity.
 The earlier swan task is **swan-v3.1**: its task and starter require scalar `lift`,
 `drag` and `thrust` in newtons, with signed lift and a separate total-force vector.
 The first live cohort remains archived as swan-v3.0 with its original grades.
-New generator runs default to **32,000 total output tokens, including reasoning**,
-with **medium reasoning** explicitly requested for every model. The harness sends
-only two token-budget checkpoints, after crossing 50% and 75% usage. The first
+These preserved swan configurations use **32,000 total output tokens, including
+reasoning**, with **medium reasoning** and two token checkpoints after 50% and
+75% usage. New CLI runs use the four-minute configuration described above. The first
 16,000-token cohort retains its original settings and scores.
 
 The two selected family source photographs and reference preview are included

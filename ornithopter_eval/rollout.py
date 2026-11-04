@@ -63,13 +63,13 @@ def audit_rollout(directory):
                 or end.get('status') != manifest['status'] or end.get('usage') != manifest.get('usage')
                 or end.get('reason') != manifest.get('reason')):
             return unavailable('Attempt is incomplete or has inconsistent final metadata')
-        requests, responses, awaiting = 0, 0, False
+        requests, responses, interrupted, awaiting = 0, 0, 0, False
         calls, executed, required, partial = {}, set(), set(), set()
         editable = set(manifest['editable_files']) if 'editable_files' in manifest else None
         for event in events[:-1]:
             kind = event.get('event')
             if kind == 'request':
-                if awaiting or required - executed:
+                if awaiting or interrupted or required - executed:
                     return unavailable('Missing response or tool-result evidence before the next request')
                 requests += 1
                 if event.get('index') != requests:
@@ -116,6 +116,13 @@ def audit_rollout(directory):
                             result['violations'].append({'call_id': call_id, 'reason': 'Patch outside the declared editable files'})
                     else:
                         result['violations'].append({'call_id': call_id, 'tool': tool, 'reason': 'Unsupported tool requested'})
+            elif kind == 'request_interrupted':
+                if (not awaiting or event.get('index') != requests or event.get('reason') != 'wall_time_limit'
+                        or event.get('tool_dispatch') is not False or end.get('reason') != 'wall_time_limit'
+                        or manifest.get('config', {}).get('budget_mode') != 'wall_time'):
+                    return unavailable('Invalid interrupted-request record')
+                interrupted += 1
+                awaiting = False
             elif kind == 'tool_result':
                 item = event['result']
                 call_id = item.get('call_id')
@@ -130,8 +137,10 @@ def audit_rollout(directory):
         if missing and not ((end.get('reason') == 'wall_time_limit' or end.get('status') == 'protocol_violation')
                             and missing == set(end.get('undispatched_call_ids', []))):
             return unavailable('Missing tool-result evidence')
-        if awaiting or not responses or responses != requests or responses != manifest['usage']['requests']:
+        if (awaiting or not requests or requests != responses + interrupted or responses != manifest['usage']['requests']
+                or interrupted != manifest['usage'].get('interrupted_requests', 0)):
             return unavailable('Missing request/response evidence')
+        result['interrupted_requests'] = interrupted
         result.update(status='completed', **{'pass': not result['violations']},
                       reason='Only allowed file operations requested' if not result['violations'] else 'Out-of-policy tool use requested')
         return result

@@ -11,7 +11,8 @@ from pathlib import Path
 from .api import APIError, create_response
 from .policy import FilePolicy, PolicyError
 from .checks import TASK_VERSION, MECHANICAL_VERSIONS
-from .protocol import load_config
+from .protocol import load_config, validate_config
+from .deadline import DeadlineExceeded, call_before_deadline
 from .rollout import POLICY_VERSION, ProtocolViolation, audit_rollout
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -45,22 +46,14 @@ def prepare(output, config_path=DEFAULT_CONFIG, *, generation_profile=None):
     if config.get("task_version") in MECHANICAL_VERSIONS:
         from .world_candidate import prepare_world_trial
         return prepare_world_trial(output, config_path, config=config)
-    for key in ("max_output_tokens_total", "max_output_tokens_per_response", "max_requests",
-                "max_wall_seconds", "max_submission_bytes"):
-        if type(config.get(key)) is not int or config[key] <= 0:
-            raise ValueError(f"Invalid budget: {key}")
     if config.get("task_version") != TASK_VERSION:
         raise ValueError("Unsupported task version")
-    config["reasoning_effort"] = config.get("reasoning_effort") or "medium"
-    percentages = config.setdefault("output_token_notice_percentages", [50, 75])
-    if (not isinstance(percentages, list) or
-        any(type(p) is not int or not 0 < p < 100 for p in percentages) or
-        percentages != sorted(set(percentages))):
-        raise ValueError("Output-token notice percentages must be distinct, ascending integers between 1 and 99")
+    validate_config(config)
     output.mkdir(parents=True)
     (output / "inputs/sources").mkdir(parents=True)
     for name in ("TASK.md", "SOURCE_GUIDE.md"):
         shutil.copyfile(ROOT / "task" / name, output / "inputs" / name)
+    shutil.copyfile(ROOT / 'task/DESIGN_BRIEF.md', output / 'inputs/DESIGN_BRIEF.md')
     for entry in selected:
         shutil.copyfile(ROOT / "task/sources" / entry["file"], output / "inputs/sources" / entry["file"])
     shutil.copytree(ROOT / "task/starter", output / "submission")
@@ -75,7 +68,7 @@ def prepare(output, config_path=DEFAULT_CONFIG, *, generation_profile=None):
         "implementation_sha256": {str(p.relative_to(ROOT)): digest(p)
             for pattern in ("ornithopter_eval/*.py", "grader/*.mjs") for p in sorted(ROOT.glob(pattern))},
         "runtime": {"python":sys.version, "platform":platform.platform()},
-        "protocol": "one instruction; file operations only; no execution or grader feedback; configured token-only checkpoints",
+        "protocol": "one instruction; file operations only; no execution or grader feedback; configured budget checkpoints",
         "status": "prepared", "model": None,
     })
     return output
@@ -90,9 +83,14 @@ def image_input(path):
 def initial_input(run):
     manifest = json.loads((run / "manifest.json").read_text())
     config = manifest["config"]
+    budget_text = (f"The generation deadline is {config['max_wall_seconds']} seconds from the first API request. "
+                   "There is no benchmark output-token or request-count limit; model/service limits still apply. "
+                   "Time warnings are delivered at the next exchange after 50% and 75% of the deadline. "
+                   "Prioritise completing files before the deadline. " if config.get('budget_mode') == 'wall_time' else
+                   "The total output-token budget spans ALL responses, including reasoning, code/tool calls and final text. ")
     budget = "\n\nAttempt limits: " + json.dumps(config,sort_keys=True) + \
         ". These attempt limits override any historical budget numbers in the task prose. " + \
-        "The total output-token budget spans ALL responses, including reasoning, code/tool calls and final text. " + \
+        budget_text + \
         "The shell tool is a virtual file reader: only ls PATH, cat PATH and head -n N PATH are available. " + \
         "Use targeted reads and declared file edits only. Do not request execution, syntax checks, builds, tests, " + \
         "browser previews, HTTP requests or grader feedback. Blocked out-of-policy requests are recorded. " + \
@@ -105,6 +103,7 @@ def initial_input(run):
                "Starter files: submission/index.html, submission/physics.mjs, submission/interpretation.json. ")
     content = [{"type": "input_text", "text": (run / "inputs/TASK.md").read_text() +
                "\n\n" + (run / "inputs/SOURCE_GUIDE.md").read_text() +
+               ('\n\n' + (run / 'inputs/DESIGN_BRIEF.md').read_text() if (run / 'inputs/DESIGN_BRIEF.md').is_file() else '') +
                api + budget + "\n\n" + starter + "Images follow, labelled in filename order."}]
     for path in sorted((run / "inputs/sources").glob("*.jpg")):
         content.extend([{"type": "input_text", "text": path.name}, image_input(path)])
@@ -140,7 +139,8 @@ def execute_call(policy, item):
     raise ValueError(f"Unexpected tool: {kind}")
 
 
-def run_model(run, model, transport=create_response):
+def run_model(run, model, transport=create_response, *, clock=None):
+    clock = time.monotonic if clock is None else clock
     run = Path(run).resolve()
     manifest = json.loads((run / "manifest.json").read_text())
     if manifest["status"] != "prepared":
@@ -157,20 +157,23 @@ def run_model(run, model, transport=create_response):
     history = initial_input(run)
     usage = {"input_tokens": 0, "output_tokens": 0, "requests": 0}
     notified = set()
-    started = time.monotonic()
+    time_notified = set()
+    timed = config.get('budget_mode') == 'wall_time'
+    started = clock()
     manifest.update(model=model, status="running")
     write_json(run / "manifest.json", manifest)
     status, reason = "budget_exhausted", "request_limit"
     undispatched = []
     try:
         with (run / "events.jsonl").open("x") as log:
-            for _ in range(config["max_requests"]):
-                remaining = config["max_wall_seconds"] - (time.monotonic() - started)
-                tokens = config["max_output_tokens_total"] - usage["output_tokens"]
-                if remaining <= 0 or tokens < 16:
+            while config['max_requests'] is None or usage['requests'] < config['max_requests']:
+                elapsed = clock() - started
+                remaining = config["max_wall_seconds"] - elapsed
+                tokens = None if timed else config["max_output_tokens_total"] - usage["output_tokens"]
+                if remaining <= 0 or (tokens is not None and tokens < 16):
                     reason = "wall_time_limit" if remaining <= 0 else "output_token_limit"
                     break
-                crossed = [p for p in config.get("output_token_notice_percentages", [50, 75])
+                crossed = [] if timed else [p for p in config.get("output_token_notice_percentages", [50, 75])
                            if p not in notified and usage["output_tokens"] * 100 >= config["max_output_tokens_total"] * p]
                 if crossed:
                     thresholds = ", ".join(f"{p}%" for p in crossed)
@@ -181,6 +184,16 @@ def run_model(run, model, transport=create_response):
                     notified.update(crossed)
                     log.write(json.dumps({"event":"budget_notice", "percentages":crossed,
                         "output_tokens_used":usage["output_tokens"],"output_tokens_remaining":tokens,"text":notice})+"\n")
+                crossed_time = [p for p in config.get('time_notice_percentages', [])
+                                if p not in time_notified and elapsed * 100 >= config['max_wall_seconds'] * p]
+                if crossed_time:
+                    thresholds = ', '.join(f'{p}%' for p in crossed_time)
+                    notice = (f'Time budget checkpoint ({thresholds} crossed): {elapsed:.1f}/{config["max_wall_seconds"]} seconds elapsed; '
+                              f'{remaining:.1f} seconds remaining. Complete the files now; no verification tools.')
+                    history.append({'role': 'developer', 'content': [{'type': 'input_text', 'text': notice}]})
+                    time_notified.update(crossed_time)
+                    log.write(json.dumps({'event': 'budget_notice', 'budget_type': 'time', 'percentages': crossed_time,
+                                          'elapsed_seconds': elapsed, 'remaining_seconds': remaining, 'text': notice}) + '\n')
                 payload = {"model": model, "input": history, "store": False,
                            "include": ["reasoning.encrypted_content"],
                            "instructions": "Follow the task's file-only tool policy. "
@@ -188,16 +201,27 @@ def run_model(run, model, transport=create_response):
                            "Edits use apply_patch on declared writable files. Do not request tests, syntax checks, builds, "
                            "code execution, browser/HTTP access or grader feedback. Blocked attempts violate the file-only protocol. "
                            "File rereads, patch-error correction and mental review are allowed. Submit once.",
-                           "tools": [{"type": "apply_patch"}, {"type": "shell", "environment": {"type": "local"}}],
-                           "max_output_tokens": min(tokens, config["max_output_tokens_per_response"])}
+                           "tools": [{"type": "apply_patch"}, {"type": "shell", "environment": {"type": "local"}}]}
+                if tokens is not None:
+                    payload['max_output_tokens'] = min(tokens, config['max_output_tokens_per_response'])
                 payload["reasoning"] = {"effort": config.get("reasoning_effort") or "medium"}
                 log.write(json.dumps({"event":"request","index":usage["requests"]+1,
-                    "model":model,"max_output_tokens":payload["max_output_tokens"],
+                    "model":model,"max_output_tokens":payload.get("max_output_tokens"),
                     "reasoning":payload.get("reasoning"),"tools":payload["tools"],
                     "instructions":payload["instructions"],
                     "input_sha256":hashlib.sha256(json.dumps(history,sort_keys=True).encode()).hexdigest()})+"\n")
                 log.flush()
-                response = transport(payload, timeout=max(1, remaining))
+                try:
+                    if timed and transport is create_response:
+                        response = call_before_deadline(transport, payload, config['max_wall_seconds'] - (clock() - started))
+                    else:
+                        response = transport(payload, timeout=remaining if timed else max(1, remaining))
+                except DeadlineExceeded:
+                    reason = 'wall_time_limit'
+                    usage['interrupted_requests'] = usage.get('interrupted_requests', 0) + 1
+                    log.write(json.dumps({'event': 'request_interrupted', 'index': usage['requests'] + 1,
+                                          'reason': reason, 'tool_dispatch': False}) + '\n')
+                    break
                 usage["requests"] += 1
                 log.write(json.dumps({"event": "response", "response": response}) + "\n")
                 log.flush()
@@ -208,10 +232,11 @@ def run_model(run, model, transport=create_response):
                     usage[key] += value
                 if response.get("status") not in ("completed", "incomplete"):
                     raise ValueError("Response did not complete")
-                if time.monotonic() - started > config["max_wall_seconds"]:
+                if clock() - started >= config["max_wall_seconds"]:
                     reason = "wall_time_limit"
                     undispatched = [x.get('call_id') for x in response.get('output', [])
-                                    if x.get('type') in ('apply_patch_call', 'shell_call')]
+                                    if (x.get('type') in ('apply_patch_call', 'shell_call')
+                                        and (response['status'] == 'completed' or x.get('status') == 'completed'))]
                     break
                 output = response.get("output", [])
                 history.extend(output)
@@ -223,14 +248,40 @@ def run_model(run, model, transport=create_response):
                         undispatched = [x.get('call_id') for x in output if x.get('type', '').endswith('_call')]
                         raise ProtocolViolation("Unsupported tool requested")
                 incomplete = response["status"] == "incomplete"
-                for call in calls:
+                eligible = [call for call in calls if not incomplete or call.get('status') == 'completed']
+                deadline_hit = False
+                for index, call in enumerate(eligible):
                     # A response can hit its cap after finishing earlier file operations.
                     # Retain those operations; never apply an unfinished or unmarked call.
-                    if incomplete and call.get("status") != "completed":
-                        continue
+                    if timed and clock() - started >= config['max_wall_seconds']:
+                        undispatched = [x.get('call_id') for x in eligible[index:]]
+                        deadline_hit = True
+                        break
+                    before = None
+                    target = None
+                    if timed and call.get('type') == 'apply_patch_call':
+                        try:
+                            target = policy.path((call.get('operation') or {}).get('path'), write=True)
+                            before = target.read_bytes() if target.is_file() else None
+                        except (PolicyError, OSError):
+                            target = None
                     result = execute_call(policy, call)
+                    if timed and clock() - started >= config['max_wall_seconds']:
+                        if target is not None:
+                            if before is None:
+                                target.unlink(missing_ok=True)
+                            else:
+                                target.write_bytes(before)
+                            result.update(status='failed', output='Deadline reached; late edit discarded.')
+                        undispatched = [x.get('call_id') for x in eligible[index + 1:]]
+                        deadline_hit = True
                     history.append(result)
                     log.write(json.dumps({"event": "tool_result", "result": result}) + "\n")
+                    if deadline_hit:
+                        break
+                if deadline_hit:
+                    reason = 'wall_time_limit'
+                    break
                 if incomplete:
                     reason = "incomplete_response"
                     break
@@ -248,9 +299,11 @@ def run_model(run, model, transport=create_response):
         log.write(json.dumps({'event': 'run_end', 'status': status, 'reason': reason,
                               'usage': usage, 'undispatched_call_ids': undispatched}) + '\n')
     manifest.update(status=status, reason=reason, usage=usage,
+                    usage_scope='Completed API responses only; interrupted request usage is unknown' if usage.get('interrupted_requests') else 'All completed API responses',
                     rollout_policy_version=POLICY_VERSION, events_sha256=digest(run / 'events.jsonl'),
                     output_token_notice_percentages_sent=sorted(notified),
-                    elapsed_seconds=round(time.monotonic() - started, 3),
+                    time_notice_percentages_sent=sorted(time_notified),
+                    elapsed_seconds=round(clock() - started, 3),
                     submission_sha256={str(p.relative_to(run / "submission")): digest(p)
                                        for p in sorted((run / "submission").rglob("*")) if p.is_file()})
     write_json(run / "manifest.json", manifest)

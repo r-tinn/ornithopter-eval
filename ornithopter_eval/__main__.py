@@ -10,7 +10,7 @@ from .checks import TASK_VERSION
 from .grading import grade_submission
 from .experiment import export_experiment, run_experiment, serve_artifacts
 from .review import apply_review, audit_consistency, judge
-from .runner import ROOT, DEFAULT_CONFIG, prepare, run_model, verify_sources, write_json
+from .runner import ROOT, prepare, run_model, verify_sources, write_json
 
 
 def summarize(report):
@@ -137,7 +137,7 @@ def validate(node):
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Ornithopter evaluation and shared-world review")
     commands = parser.add_subparsers(dest="command",required=True)
-    cli_config=str(ROOT/'configs/mechanical-v5-smoke.json')
+    cli_config=str(ROOT/'configs/mechanical-v5-timed.json')
     p = commands.add_parser("prepare");p.add_argument("output");p.add_argument("--config",default=cli_config)
     p = commands.add_parser("run");p.add_argument("--model",required=True);p.add_argument("--output",required=True);p.add_argument("--config",default=cli_config)
     p = commands.add_parser("grade");p.add_argument("submission");p.add_argument("--output",required=True);p.add_argument("--node",default="node");p.add_argument('--task-version')
