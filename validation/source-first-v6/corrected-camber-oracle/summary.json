@@ -1,0 +1,64 @@
+{
+  "task_version": "mechanical-v6-source-first",
+  "kind": "handwritten author mutant calibration, not model trials",
+  "all_targeted_defects_rejected": true,
+  "results": [
+    {
+      "variant": "clamped_camber_cosine",
+      "target": "power_limited_flight",
+      "rejected": true,
+      "evidence": "clamped_camber_cosine/result.json"
+    },
+    {
+      "variant": "no_recovery_closing",
+      "target": "wing_cycle_force_coupling",
+      "rejected": true,
+      "evidence": "no_recovery_closing/result.json"
+    },
+    {
+      "variant": "shared_section_table",
+      "target": "wing_cycle_force_coupling",
+      "rejected": true,
+      "evidence": "shared_section_table/result.json"
+    },
+    {
+      "variant": "no_spring_torque",
+      "target": "elastic_inertial_exchange",
+      "rejected": true,
+      "evidence": "no_spring_torque/result.json"
+    },
+    {
+      "variant": "no_inertial_pitch_reaction",
+      "target": "wing_body_pitch_coupling",
+      "rejected": true,
+      "evidence": "no_inertial_pitch_reaction/result.json"
+    },
+    {
+      "variant": "overpowered_engine",
+      "target": "power_limited_flight",
+      "rejected": true,
+      "evidence": "overpowered_engine/result.json"
+    },
+    {
+      "variant": "glide_altitude_hold",
+      "target": "unpowered_glide_balance",
+      "rejected": true,
+      "evidence": "glide_altitude_hold/result.json"
+    },
+    {
+      "variant": "wrong_wheel_axis",
+      "target": "wheel_rotation_axis",
+      "rejected": true,
+      "evidence": "wrong_wheel_axis/result.json"
+    }
+  ],
+  "live_model_calls": 0,
+  "positive_reference_all_six_pass": true,
+  "original_calibration_preserved": "../summary.json",
+  "correction": "Endpoint-clamp table interpolation only; retain actual alpha in separate camber cosine, matching the published task.",
+  "model_submissions_modified": false,
+  "model_scores_changed": false,
+  "live_model_retries": 0,
+  "python_unit_tests_passed": 86,
+  "javascript_tests_passed": 9
+}

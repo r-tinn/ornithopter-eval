@@ -45,7 +45,7 @@ export async function sourceProbe({E,scenario='all'}){
   }
   function toWorld(v,s){const cr=Math.cos(s.roll),sr=Math.sin(s.roll),cp=Math.cos(s.pitch),sp=Math.sin(s.pitch),ch=Math.cos(s.heading),sh=Math.sin(s.heading),y=cr*v[1]-sr*v[2],z=sr*v[1]+cr*v[2],x=cp*v[0]-sp*y;return [ch*x-sh*z,sp*v[0]+cp*y,sh*x+ch*z];}
   const toBody=(v,s)=>[[1,0,0],[0,1,0],[0,0,1]].map(axis=>dot(v,toWorld(axis,s)));
-  function polar(region,alpha,camber){const t=E.sections[region],xs=E.sections.alpha_rad,a=clamp(alpha,xs[0],xs.at(-1));let i=1;while(i<xs.length-1&&a>xs[i])i++;const f=(a-xs[i-1])/(xs[i]-xs[i-1]),cl=t.cl_base[i-1]*(1-f)+t.cl_base[i]*f+t.camber_lift_gain*(camber-t.camber_reference)*Math.cos(a);return {cl,cd:t.cd_base[i-1]*(1-f)+t.cd_base[i]*f+cl*cl/(Math.PI*E.aero.span_efficiency*AR)};}
+  function polar(region,alpha,camber){const t=E.sections[region],xs=E.sections.alpha_rad,a=clamp(alpha,xs[0],xs.at(-1));let i=1;while(i<xs.length-1&&a>xs[i])i++;const f=(a-xs[i-1])/(xs[i]-xs[i-1]),cl=t.cl_base[i-1]*(1-f)+t.cl_base[i]*f+t.camber_lift_gain*(camber-t.camber_reference)*Math.cos(alpha);return {cl,cd:t.cd_base[i-1]*(1-f)+t.cd_base[i]*f+cl*cl/(Math.PI*E.aero.span_efficiency*AR)};}
   function expected(s,c,e){
     const q=mechanism(s),air=toBody(sub(s.velocity,e.wind),s);let F=[0,0,0],wing=[0,0,0],Qphi=0,Qpitch=0,D=0;
     function apply(f,r,j,loss,isWing=false){F=add(F,f);Qphi+=dot(f,j);Qpitch+=dot(f,[-r[1],r[0],0]);D+=loss;if(isWing)wing=add(wing,f);}

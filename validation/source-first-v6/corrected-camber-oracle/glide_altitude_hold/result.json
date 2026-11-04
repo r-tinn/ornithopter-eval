@@ -1,0 +1,5313 @@
+{
+  "physics": [
+    {
+      "id": "unpowered_glide_balance",
+      "pass": false,
+      "detail": {
+        "pass": false,
+        "cases": [
+          {
+            "pass": false,
+            "speedScale": 0.9,
+            "initial_energy_J": 182500.33075070154,
+            "final_energy_J": 176046.62564642742,
+            "integrated_loss_J": 6372.387774160409,
+            "max_energy_residual_J": 144.26318481759517,
+            "max_acceleration_error_m_s2": 162.7145146689261,
+            "height_lost_m": 0,
+            "distance_m": 66.6801146965549,
+            "distance_per_height": null,
+            "no_motor_or_fuel_use": true,
+            "records": [
+              {
+                "state": {
+                  "position": [
+                    0.08047508036774387,
+                    100,
+                    6.949756133875284e-22
+                  ],
+                  "velocity": [
+                    9.65703126618977,
+                    0,
+                    8.339262136442034e-20
+                  ],
+                  "pitch": 0.013083422097702318,
+                  "roll": 0,
+                  "heading": 8.635430399442344e-21,
+                  "pitch_rate": -0.00002378550563276473,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 15.618196313708102,
+                  "drive_heat_J": 8.280897068894026e-11,
+                  "control_work_J": 0,
+                  "time": 0.008333333333333333,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 182344.70744286245,
+                "integrated_loss_J": 11.360123021494365,
+                "residual_J": -144.26318481759517
+              },
+              {
+                "state": {
+                  "position": [
+                    2.0019271217810375,
+                    100,
+                    -7.253179693291054e-20
+                  ],
+                  "velocity": [
+                    9.557226507823918,
+                    0,
+                    -2.9849796106236277e-19
+                  ],
+                  "pitch": 0.020145339823271723,
+                  "roll": 0,
+                  "heading": -3.123269714472088e-20,
+                  "pitch_rate": 0.06779356184549248,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 188.47540956652404,
+                  "drive_heat_J": 0.04565034893595713,
+                  "control_work_J": 0,
+                  "time": 0.20833333333333356,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 182175.3480303724,
+                "integrated_loss_J": 181.77190201489137,
+                "residual_J": -143.21081831425545
+              },
+              {
+                "state": {
+                  "position": [
+                    3.9030086177862953,
+                    100,
+                    -2.197931980424414e-19
+                  ],
+                  "velocity": [
+                    9.452136600471588,
+                    0,
+                    -1.4475015988658972e-18
+                  ],
+                  "pitch": 0.039048563783966955,
+                  "roll": 0,
+                  "heading": -1.5314014810087257e-19,
+                  "pitch_rate": 0.11824342440052243,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 367.40752634806006,
+                  "drive_heat_J": 0.30173678637508283,
+                  "control_work_J": 0,
+                  "time": 0.4083333333333331,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 181999.75636036953,
+                "integrated_loss_J": 358.51055424215866,
+                "residual_J": -142.06383608985925
+              },
+              {
+                "state": {
+                  "position": [
+                    5.781974071267561,
+                    100,
+                    -5.2575586670981e-19
+                  ],
+                  "velocity": [
+                    9.334997184429305,
+                    0,
+                    -1.7619627289676348e-18
+                  ],
+                  "pitch": 0.06620263854732121,
+                  "roll": 0,
+                  "heading": -1.8874807288711062e-19,
+                  "pitch_rate": 0.15001076842331396,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 564.2215625690118,
+                  "drive_heat_J": 0.8202509665428264,
+                  "control_work_J": 0,
+                  "time": 0.6083333333333324,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 181805.98973060708,
+                "integrated_loss_J": 553.5082604405294,
+                "residual_J": -140.8327596539457
+              },
+              {
+                "state": {
+                  "position": [
+                    7.6358081461241145,
+                    100,
+                    -9.364775015279712e-19
+                  ],
+                  "velocity": [
+                    9.200017690455153,
+                    0,
+                    -1.8362250677715758e-18
+                  ],
+                  "pitch": 0.09769213913186714,
+                  "roll": 0,
+                  "heading": -1.995892974941369e-19,
+                  "pitch_rate": 0.16135178418196214,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 788.2253002080994,
+                  "drive_heat_J": 1.514680499842071,
+                  "control_work_J": 0,
+                  "time": 0.8083333333333317,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 181584.5917368613,
+                "integrated_loss_J": 776.1406410775518,
+                "residual_J": -139.59837276270264
+              },
+              {
+                "state": {
+                  "position": [
+                    9.46065908592017,
+                    100,
+                    -1.2829339512114173e-18
+                  ],
+                  "velocity": [
+                    9.04537611993088,
+                    0,
+                    -1.4421312002404282e-18
+                  ],
+                  "pitch": 0.12941084156885532,
+                  "roll": 0,
+                  "heading": -1.5943297228545187e-19,
+                  "pitch_rate": 0.1528118369819594,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 1041.5824586187744,
+                  "drive_heat_J": 2.219119708742256,
+                  "control_work_J": 0,
+                  "time": 1.008333333333331,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 181333.69697090477,
+                "integrated_loss_J": 1028.3298553415336,
+                "residual_J": -138.30392445524922
+              },
+              {
+                "state": {
+                  "position": [
+                    11.252815288428136,
+                    100,
+                    -1.6471446084132446e-18
+                  ],
+                  "velocity": [
+                    8.873698040870233,
+                    0,
+                    -1.6782603387534132e-18
+                  ],
+                  "pitch": 0.1577942806617723,
+                  "roll": 0,
+                  "heading": -1.8912750141189482e-19,
+                  "pitch_rate": 0.12890169310226757,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 1318.4471581424818,
+                  "drive_heat_J": 2.7844038662218145,
+                  "control_work_J": 0,
+                  "time": 1.2083333333333304,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 181059.4516835714,
+                "integrated_loss_J": 1303.9210271177672,
+                "residual_J": -136.95804001239594
+              },
+              {
+                "state": {
+                  "position": [
+                    13.00930263785275,
+                    100,
+                    -2.025445393312786e-18
+                  ],
+                  "velocity": [
+                    8.689570876276854,
+                    0,
+                    -2.1389449451025096e-18
+                  ],
+                  "pitch": 0.1803330431193463,
+                  "roll": 0,
+                  "heading": -2.4615081406861893e-19,
+                  "pitch_rate": 0.09535175555126837,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 1609.6839790099593,
+                  "drive_heat_J": 3.142643254552252,
+                  "control_work_J": 0,
+                  "time": 1.4083333333333297,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 180771.0797056574,
+                "integrated_loss_J": 1593.6897938204038,
+                "residual_J": -135.5612512237276
+              },
+              {
+                "state": {
+                  "position": [
+                    14.7281858353242,
+                    100,
+                    -2.4160567454711635e-18
+                  ],
+                  "velocity": [
+                    8.498636848297892,
+                    0,
+                    -2.0123111224766557e-18
+                  ],
+                  "pitch": 0.19568316089982893,
+                  "roll": 0,
+                  "heading": -2.3678045766594693e-19,
+                  "pitch_rate": 0.057933980127893914,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 1905.0986268528738,
+                  "drive_heat_J": 3.3108617676120105,
+                  "control_work_J": 0,
+                  "time": 1.608333333333329,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 180478.7777001331,
+                "integrated_loss_J": 1887.43769254317,
+                "residual_J": -134.11535802527214
+              },
+              {
+                "state": {
+                  "position": [
+                    16.408686589891843,
+                    100,
+                    -2.8887368883727248e-18
+                  ],
+                  "velocity": [
+                    8.306680672299985,
+                    0,
+                    -2.3963053752868106e-18
+                  ],
+                  "pitch": 0.20358922574890492,
+                  "roll": 0,
+                  "heading": -2.884792939347833e-19,
+                  "pitch_rate": 0.021646318386409916,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 2195.2235266756743,
+                  "drive_heat_J": 3.3576979370422455,
+                  "control_work_J": 0,
+                  "time": 1.8083333333333282,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 180191.9563075941,
+                "integrated_loss_J": 2175.7490048589107,
+                "residual_J": -132.62543824850582
+              },
+              {
+                "state": {
+                  "position": [
+                    18.051132639669962,
+                    100,
+                    -3.2869351727341904e-18
+                  ],
+                  "velocity": [
+                    8.118869845667307,
+                    0,
+                    -2.298590392112457e-18
+                  ],
+                  "pitch": 0.20467130287520965,
+                  "roll": 0,
+                  "heading": -2.8311703917006577e-19,
+                  "pitch_rate": -0.009812677231906005,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 2472.4932343134915,
+                  "drive_heat_J": 3.360832649691458,
+                  "control_work_J": 0,
+                  "time": 2.008333333333328,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 179918.10419869173,
+                "integrated_loss_J": 2451.1258134212444,
+                "residual_J": -131.10073858857504
+              },
+              {
+                "state": {
+                  "position": [
+                    19.656778715633447,
+                    100,
+                    -3.750239636274856e-18
+                  ],
+                  "velocity": [
+                    7.939245797024886,
+                    0,
+                    -2.3094613109977855e-18
+                  ],
+                  "pitch": 0.20014175040905907,
+                  "roll": 0,
+                  "heading": -2.9089177612604234e-19,
+                  "pitch_rate": -0.03422074558113197,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 2731.7569222884536,
+                  "drive_heat_J": 3.3765877719965616,
+                  "control_work_J": 0,
+                  "time": 2.208333333333338,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 179662.30666653084,
+                "integrated_loss_J": 2708.4702179659685,
+                "residual_J": -129.55386620471836
+              },
+              {
+                "state": {
+                  "position": [
+                    21.227554337819072,
+                    100,
+                    -4.143844193024458e-18
+                  ],
+                  "velocity": [
+                    7.770500500260226,
+                    0,
+                    -1.234815258314673e-18
+                  ],
+                  "pitch": 0.1915173741227354,
+                  "roll": 0,
+                  "heading": -1.589106465244189e-19,
+                  "pitch_rate": -0.05071825526264018,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 2970.2482694645632,
+                  "drive_heat_J": 3.4292905764511437,
+                  "control_work_J": 0,
+                  "time": 2.408333333333348,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 179427.28956502362,
+                "integrated_loss_J": 2945.042378942529,
+                "residual_J": -127.99880673538428
+              },
+              {
+                "state": {
+                  "position": [
+                    22.765792943507126,
+                    100,
+                    -4.4879668267956515e-18
+                  ],
+                  "velocity": [
+                    7.614002382604774,
+                    0,
+                    -1.846415104009667e-18
+                  ],
+                  "pitch": 0.18037385117000443,
+                  "roll": 0,
+                  "heading": -2.4250256451561584e-19,
+                  "pitch_rate": -0.059519922741227624,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 3187.216480678181,
+                  "drive_heat_J": 3.5163973360744407,
+                  "control_work_J": 0,
+                  "time": 2.608333333333358,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 179213.78711509623,
+                "integrated_loss_J": 3160.094910988495,
+                "residual_J": -126.4487246168137
+              },
+              {
+                "state": {
+                  "position": [
+                    24.273984644983162,
+                    100,
+                    -4.747314397839711e-18
+                  ],
+                  "velocity": [
+                    7.46999174532207,
+                    0,
+                    -7.270338752212117e-19
+                  ],
+                  "pitch": 0.16816545451574105,
+                  "roll": 0,
+                  "heading": -9.73272662150533e-20,
+                  "pitch_rate": -0.0615670484380993,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 3383.4149089254684,
+                  "drive_heat_J": 3.6207398141690326,
+                  "control_work_J": 0,
+                  "time": 2.8083333333333678,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 179021.04442122884,
+                "integrated_loss_J": 3354.372038847035,
+                "residual_J": -124.91429062566021
+              },
+              {
+                "state": {
+                  "position": [
+                    25.754577634664543,
+                    100,
+                    -4.934985245602641e-18
+                  ],
+                  "velocity": [
+                    7.337858113561051,
+                    0,
+                    -9.293335540842834e-19
+                  ],
+                  "pitch": 0.15611311790876659,
+                  "roll": 0,
+                  "heading": -1.266491583377427e-19,
+                  "pitch_rate": -0.05820211296004466,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 3560.587136994499,
+                  "drive_heat_J": 3.7224486427964116,
+                  "control_work_J": 0,
+                  "time": 3.0083333333333777,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 178847.32169277672,
+                "integrated_loss_J": 3529.6062214594704,
+                "residual_J": -123.40283646536409
+              },
+              {
+                "state": {
+                  "position": [
+                    27.20983716990987,
+                    100,
+                    -5.132145559663495e-18
+                  ],
+                  "velocity": [
+                    7.216429045588272,
+                    0,
+                    -9.02593498767274e-19
+                  ],
+                  "pitch": 0.1451515168574114,
+                  "roll": 0,
+                  "heading": -1.250748109716495e-19,
+                  "pitch_rate": -0.050908137404228296,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 3721.026365392512,
+                  "drive_heat_J": 3.80668364147971,
+                  "control_work_J": 0,
+                  "time": 3.2083333333333877,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 178690.32816792378,
+                "integrated_loss_J": 3688.084305980554,
+                "residual_J": -121.91827679719427
+              },
+              {
+                "state": {
+                  "position": [
+                    28.641759565177317,
+                    100,
+                    -5.208045976196112e-18
+                  ],
+                  "velocity": [
+                    7.104226204311286,
+                    0,
+                    1.8755178551414317e-19
+                  ],
+                  "pitch": 0.13592064751531951,
+                  "roll": 0,
+                  "heading": 2.6400030083547325e-20,
+                  "pitch_rate": -0.04112435723741527,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 3867.2351089062677,
+                  "drive_heat_J": 3.866554275692182,
+                  "control_work_J": 0,
+                  "time": 3.4083333333333976,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 178547.5596210684,
+                "integrated_loss_J": 3832.309563916716,
+                "residual_J": -120.46156571642496
+              },
+              {
+                "state": {
+                  "position": [
+                    30.05203228099019,
+                    100,
+                    -5.138929059506117e-18
+                  ],
+                  "velocity": [
+                    6.99966853815717,
+                    0,
+                    2.762935574550946e-19
+                  ],
+                  "pitch": 0.12878711586037375,
+                  "roll": 0,
+                  "heading": 3.947237729171608e-20,
+                  "pitch_rate": -0.030131376101193978,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 4001.6833131069056,
+                  "drive_heat_J": 3.902458150314096,
+                  "control_work_J": 0,
+                  "time": 3.6083333333334076,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 178416.54045589225,
+                "integrated_loss_J": 3964.7588652772984,
+                "residual_J": -119.03142953198403
+              },
+              {
+                "state": {
+                  "position": [
+                    31.44202898490232,
+                    100,
+                    -5.089486846896715e-18
+                  ],
+                  "velocity": [
+                    6.901219247720522,
+                    0,
+                    3.0405000753840934e-19
+                  ],
+                  "pitch": 0.12388264986347536,
+                  "roll": 0,
+                  "heading": 4.405743342219381e-20,
+                  "pitch_rate": -0.018991080694901484,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 4126.649959039529,
+                  "drive_heat_J": 3.9195859771705015,
+                  "control_work_J": 0,
+                  "time": 3.8083333333334175,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 178294.9838670314,
+                "integrated_loss_J": 4087.7217151415152,
+                "residual_J": -117.62516852861154
+              },
+              {
+                "state": {
+                  "position": [
+                    32.81282883765424,
+                    100,
+                    -5.115076323944931e-18
+                  ],
+                  "velocity": [
+                    6.807482506650809,
+                    0,
+                    -5.07397700154543e-19
+                  ],
+                  "pitch": 0.12115048418201713,
+                  "roll": 0,
+                  "heading": -7.453529254887148e-20,
+                  "pitch_rate": -0.008525489671795996,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 4244.12992103214,
+                  "drive_heat_J": 3.925067262627785,
+                  "control_work_J": 0,
+                  "time": 4.008333333333426,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 178180.8870468887,
+                "integrated_loss_J": 4203.2043117541425,
+                "residual_J": -116.23939205869101
+              },
+              {
+                "state": {
+                  "position": [
+                    34.16525088965985,
+                    100,
+                    -5.271714331596545e-18
+                  ],
+                  "velocity": [
+                    6.717259540746531,
+                    0,
+                    -8.825210857037014e-19
+                  ],
+                  "pitch": 0.12039323532519712,
+                  "roll": 0,
+                  "heading": -1.3138112058204338e-19,
+                  "pitch_rate": 0.0006789774477402367,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 4355.7893064307245,
+                  "drive_heat_J": 3.9256666114245156,
+                  "control_work_J": 0,
+                  "time": 4.208333333333415,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 178072.57743040053,
+                "integrated_loss_J": 4312.88270501288,
+                "residual_J": -114.87061528812046
+              },
+              {
+                "state": {
+                  "position": [
+                    35.4998964596341,
+                    100,
+                    -5.496490256681989e-18
+                  ],
+                  "velocity": [
+                    6.629573938232783,
+                    0,
+                    -1.22222290277274e-18
+                  ],
+                  "pitch": 0.1213182510397292,
+                  "roll": 0,
+                  "heading": -1.8435919323927817e-19,
+                  "pitch_rate": 0.00825190807059654,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 4462.955600415293,
+                  "drive_heat_J": 3.9263995531212283,
+                  "control_work_J": 0,
+                  "time": 4.408333333333403,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177968.7233503048,
+                "integrated_loss_J": 4418.091707702305,
+                "residual_J": -113.5156926944328
+              },
+              {
+                "state": {
+                  "position": [
+                    36.817194228129964,
+                    100,
+                    -5.773049658147418e-18
+                  ],
+                  "velocity": [
+                    6.54367478324604,
+                    0,
+                    -1.6420515895004165e-18
+                  ],
+                  "pitch": 0.12357810549488062,
+                  "roll": 0,
+                  "heading": -2.509372247081424e-19,
+                  "pitch_rate": 0.014010861231692415,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 4566.632053031332,
+                  "drive_heat_J": 3.930051910198178,
+                  "control_work_J": 0,
+                  "time": 4.608333333333392,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177868.31970062415,
+                "integrated_loss_J": 4519.838956902739,
+                "residual_J": -112.17209317465313
+              },
+              {
+                "state": {
+                  "position": [
+                    38.11744432770112,
+                    100,
+                    -6.10208364265892e-18
+                  ],
+                  "velocity": [
+                    6.459024499355501,
+                    0,
+                    -1.5372758726679162e-18
+                  ],
+                  "pitch": 0.12680502734488605,
+                  "roll": 0,
+                  "heading": -2.3800434149480465e-19,
+                  "pitch_rate": 0.01792930782131927,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 4667.528261289235,
+                  "drive_heat_J": 3.9373769363033615,
+                  "control_work_J": 0,
+                  "time": 4.808333333333381,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177770.65687294185,
+                "integrated_loss_J": 4618.835839741637,
+                "residual_J": -110.83803801806062
+              },
+              {
+                "state": {
+                  "position": [
+                    39.400858926537325,
+                    100,
+                    -6.3206818673561065e-18
+                  ],
+                  "velocity": [
+                    6.375276712330908,
+                    0,
+                    -1.0226550467610667e-18
+                  ],
+                  "pitch": 0.13063875612725462,
+                  "roll": 0,
+                  "heading": -1.6040951521101378e-19,
+                  "pitch_rate": 0.020103343291248868,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 4766.100737208579,
+                  "drive_heat_J": 3.9476762693149094,
+                  "control_work_J": 0,
+                  "time": 5.008333333333369,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177675.27944668368,
+                "integrated_loss_J": 4715.538773924503,
+                "residual_J": -109.51253009337233
+              },
+              {
+                "state": {
+                  "position": [
+                    40.66759773231713,
+                    100,
+                    -6.546756012098528e-18
+                  ],
+                  "velocity": [
+                    6.292248177743062,
+                    0,
+                    -9.81679851241734e-19
+                  ],
+                  "pitch": 0.13474777846598984,
+                  "roll": 0,
+                  "heading": -1.5601416592468993e-19,
+                  "pitch_rate": 0.020719030534064507,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 4862.598563821431,
+                  "drive_heat_J": 3.959496067812133,
+                  "control_work_J": 0,
+                  "time": 5.208333333333358,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177581.93977354508,
+                "integrated_loss_J": 4810.1956734343,
+                "residual_J": -108.19530372216832
+              },
+              {
+                "state": {
+                  "position": [
+                    41.91779755240217,
+                    100,
+                    -6.736266822609533e-18
+                  ],
+                  "velocity": [
+                    6.209887868826463,
+                    0,
+                    -1.24547959677968e-18
+                  ],
+                  "pitch": 0.13884421195354074,
+                  "roll": 0,
+                  "heading": -2.0056394303542378e-19,
+                  "pitch_rate": 0.020021732533875628,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 4957.110227507253,
+                  "drive_heat_J": 3.971243807996679,
+                  "control_work_J": 0,
+                  "time": 5.4083333333333465,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177490.5505362078,
+                "integrated_loss_J": 4902.893492144041,
+                "residual_J": -106.88672234970727
+              },
+              {
+                "state": {
+                  "position": [
+                    43.1515955913502,
+                    100,
+                    -7.031128361630314e-18
+                  ],
+                  "velocity": [
+                    6.128245610675427,
+                    0,
+                    -1.3511146874258122e-18
+                  ],
+                  "pitch": 0.1426928461602387,
+                  "roll": 0,
+                  "heading": -2.2047332519965666e-19,
+                  "pitch_rate": 0.018288510825561256,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 5049.608542819158,
+                  "drive_heat_J": 3.981619273740517,
+                  "control_work_J": 0,
+                  "time": 5.608333333333335,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177401.13944858458,
+                "integrated_loss_J": 4993.603655112474,
+                "residual_J": -105.58764700448955
+              },
+              {
+                "state": {
+                  "position": [
+                    44.36914658669939,
+                    100,
+                    -7.359977914727174e-18
+                  ],
+                  "velocity": [
+                    6.047442094290516,
+                    0,
+                    -1.741131103485816e-18
+                  ],
+                  "pitch": 0.1461150423906854,
+                  "roll": 0,
+                  "heading": -2.87911992597605e-19,
+                  "pitch_rate": 0.015804434854731115,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 5139.991355337243,
+                  "drive_heat_J": 3.989831732282718,
+                  "control_work_J": 0,
+                  "time": 5.808333333333324,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177313.8084207939,
+                "integrated_loss_J": 5082.223036082152,
+                "residual_J": -104.29929382549017
+              },
+              {
+                "state": {
+                  "position": [
+                    45.570634203247074,
+                    100,
+                    -7.728003532644807e-18
+                  ],
+                  "velocity": [
+                    5.967641640110226,
+                    0,
+                    -1.7375452132386478e-18
+                  ],
+                  "pitch": 0.1489883374685891,
+                  "roll": 0,
+                  "heading": -2.9116111824813835e-19,
+                  "pitch_rate": 0.012843385477506344,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 5228.116454800816,
+                  "drive_heat_J": 3.9956313211059693,
+                  "control_work_J": 0,
+                  "time": 6.008333333333312,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177228.6987131524,
+                "integrated_loss_J": 5168.608943212259,
+                "residual_J": -103.0230943368806
+              },
+              {
+                "state": {
+                  "position": [
+                    46.75627733761302,
+                    100,
+                    -8.055309985796544e-18
+                  ],
+                  "velocity": [
+                    5.889028662612144,
+                    0,
+                    -1.7523297981256617e-18
+                  ],
+                  "pitch": 0.15124268324416937,
+                  "roll": 0,
+                  "heading": -2.9755837482176497e-19,
+                  "pitch_rate": 0.00965362696791586,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 5313.829843287317,
+                  "drive_heat_J": 3.999212557624092,
+                  "control_work_J": 0,
+                  "time": 6.208333333333301,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177145.96286459692,
+                "integrated_loss_J": 5252.607318062361,
+                "residual_J": -101.76056804225664
+              },
+              {
+                "state": {
+                  "position": [
+                    47.926332135777415,
+                    100,
+                    -8.427461626885963e-18
+                  ],
+                  "velocity": [
+                    5.811788397892741,
+                    0,
+                    -1.816359026069718e-18
+                  ],
+                  "pitch": 0.15285427551387135,
+                  "roll": 0,
+                  "heading": -3.12530137320261e-19,
+                  "pitch_rate": 0.0064480933584821635,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 5396.987145096643,
+                  "drive_heat_J": 4.0010546276392285,
+                  "control_work_J": 0,
+                  "time": 6.40833333333329,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177065.74353544993,
+                "integrated_loss_J": 5334.074001817752,
+                "residual_J": -100.51321343384916
+              },
+              {
+                "state": {
+                  "position": [
+                    49.081090602171656,
+                    100,
+                    -8.825876771463684e-18
+                  ],
+                  "velocity": [
+                    5.736092097360035,
+                    0,
+                    -2.1655225497742565e-18
+                  ],
+                  "pitch": 0.1538378840439543,
+                  "roll": 0,
+                  "heading": -3.775257637113099e-19,
+                  "pitch_rate": 0.0033990311412362985,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 5477.46847598222,
+                  "drive_heat_J": 4.001753584049848,
+                  "control_work_J": 0,
+                  "time": 6.608333333333278,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176988.15888574993,
+                "integrated_loss_J": 5412.889444279085,
+                "residual_J": -99.2824206725345
+              },
+              {
+                "state": {
+                  "position": [
+                    50.22087668724644,
+                    100,
+                    -9.201901624343026e-18
+                  ],
+                  "velocity": [
+                    5.662086576841757,
+                    0,
+                    -1.7346092977376753e-18
+                  ],
+                  "pitch": 0.15423849857929997,
+                  "roll": 0,
+                  "heading": -3.0635513501900907e-19,
+                  "pitch_rate": 0.0006364016407728358,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 5555.187480657872,
+                  "drive_heat_J": 4.001883753052519,
+                  "control_work_J": 0,
+                  "time": 6.808333333333267,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176913.29373933448,
+                "integrated_loss_J": 5488.967604428509,
+                "residual_J": -98.0694069385645
+              },
+              {
+                "state": {
+                  "position": [
+                    51.346040691919384,
+                    100,
+                    -9.548177638484195e-18
+                  ],
+                  "velocity": [
+                    5.58988775808444,
+                    0,
+                    -1.6446003193495527e-18
+                  ],
+                  "pitch": 0.15412296984515106,
+                  "roll": 0,
+                  "heading": -2.9420990018467376e-19,
+                  "pitch_rate": -0.0017507031666812694,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 5630.09548949848,
+                  "drive_heat_J": 4.001906402592588,
+                  "control_work_J": 0,
+                  "time": 7.008333333333256,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176841.1955631863,
+                "integrated_loss_J": 5562.260013793348,
+                "residual_J": -96.87517372186994
+              },
+              {
+                "state": {
+                  "position": [
+                    52.45695273552419,
+                    100,
+                    -9.880382246915568e-18
+                  ],
+                  "velocity": [
+                    5.519577660697555,
+                    0,
+                    -1.6339741275114152e-18
+                  ],
+                  "pitch": 0.1535721682243159,
+                  "roll": 0,
+                  "heading": -2.960324553717605e-19,
+                  "pitch_rate": -0.003710433334066885,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 5702.181847983428,
+                  "drive_heat_J": 4.002127738675016,
+                  "control_work_J": 0,
+                  "time": 7.208333333333244,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176771.87420660513,
+                "integrated_loss_J": 5632.756060035442,
+                "residual_J": -95.7004840609734
+              },
+              {
+                "state": {
+                  "position": [
+                    53.55399591401494,
+                    100,
+                    -1.0213186821304833e-17
+                  ],
+                  "velocity": [
+                    5.4512042004127474,
+                    0,
+                    -1.555909538929362e-18
+                  ],
+                  "pitch": 0.15267402384454462,
+                  "roll": 0,
+                  "heading": -2.8542492295767484e-19,
+                  "pitch_rate": -0.005223117536661661,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 5771.471460368172,
+                  "drive_heat_J": 4.002697747201505,
+                  "control_work_J": 0,
+                  "time": 7.408333333333233,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176705.30436867423,
+                "integrated_loss_J": 5700.480525121659,
+                "residual_J": -94.54585690566455
+              },
+              {
+                "state": {
+                  "position": [
+                    54.63755964214173,
+                    100,
+                    -1.0512583856448942e-17
+                  ],
+                  "velocity": [
+                    5.384783118356425,
+                    0,
+                    -1.3655724814891898e-18
+                  ],
+                  "pitch": 0.1515176646581754,
+                  "roll": 0,
+                  "heading": -2.5359841826015787e-19,
+                  "pitch_rate": -0.006295451588811337,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 5838.020494580345,
+                  "drive_heat_J": 4.003636450925937,
+                  "control_work_J": 0,
+                  "time": 7.6083333333332215,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176641.42986281347,
+                "integrated_loss_J": 5765.489312559632,
+                "residual_J": -93.41157532844227
+              },
+              {
+                "state": {
+                  "position": [
+                    55.70803354012057,
+                    100,
+                    -1.0727473445567184e-17
+                  ],
+                  "velocity": [
+                    5.320301393139976,
+                    0,
+                    -9.408421058470189e-19
+                  ],
+                  "pitch": 0.15018874346024388,
+                  "roll": 0,
+                  "heading": -1.7684000140671456e-19,
+                  "pitch_rate": -0.006954503186077961,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 5901.91105144229,
+                  "drive_heat_J": 4.004873690140624,
+                  "control_work_J": 0,
+                  "time": 7.80833333333321,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176580.16889206736,
+                "integrated_loss_J": 5827.864153453376,
+                "residual_J": -92.2977051807975
+              },
+              {
+                "state": {
+                  "position": [
+                    56.76580210202057,
+                    100,
+                    -1.0880372166066782e-17
+                  ],
+                  "velocity": [
+                    5.257721556467159,
+                    0,
+                    -6.294337632882669e-19
+                  ],
+                  "pitch": 0.14876594560968195,
+                  "roll": 0,
+                  "heading": -1.1971607026508357e-19,
+                  "pitch_rate": -0.007241959752793072,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 5963.245436784496,
+                  "drive_heat_J": 4.006290934095321,
+                  "control_work_J": 0,
+                  "time": 8.0083333333332,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176521.419711081,
+                "integrated_loss_J": 5887.706918696076,
+                "residual_J": -91.2041209244635
+              },
+              {
+                "state": {
+                  "position": [
+                    57.81124027631945,
+                    100,
+                    -1.0959352252426289e-17
+                  ],
+                  "velocity": [
+                    5.196986426645423,
+                    0,
+                    -4.528076290612798e-19
+                  ],
+                  "pitch": 0.1473185973732,
+                  "roll": 0,
+                  "heading": -8.712888429719459e-20,
+                  "pitch_rate": -0.007208912779179788,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 6022.140511682432,
+                  "drive_heat_J": 4.007757311953887,
+                  "control_work_J": 0,
+                  "time": 8.208333333333188,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176465.06621026638,
+                "integrated_loss_J": 5945.134004747451,
+                "residual_J": -90.13053568772739
+              },
+              {
+                "state": {
+                  "position": [
+                    58.84471000224749,
+                    100,
+                    -1.1040668217544399e-17
+                  ],
+                  "velocity": [
+                    5.1380238778321825,
+                    0,
+                    -2.5010760325878377e-19
+                  ],
+                  "pitch": 0.1459052482515132,
+                  "roll": 0,
+                  "heading": -4.867778142056987e-20,
+                  "pitch_rate": -0.006911354128015415,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 6078.7224482762485,
+                  "drive_heat_J": 4.009155810868657,
+                  "control_work_J": 0,
+                  "time": 8.408333333333177,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176410.98310138393,
+                "integrated_loss_J": 6000.271116281295,
+                "residual_J": -89.0765330363065
+              },
+              {
+                "state": {
+                  "position": [
+                    59.86655767936968,
+                    100,
+                    -1.1079373081302987e-17
+                  ],
+                  "velocity": [
+                    5.080751364380181,
+                    0,
+                    -3.626596291377193e-19
+                  ],
+                  "pitch": 0.14457307556120486,
+                  "roll": 0,
+                  "heading": -7.13791333463454e-20,
+                  "pitch_rate": -0.006406463561586225,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 6133.122094098594,
+                  "drive_heat_J": 4.010398687525497,
+                  "control_work_J": 0,
+                  "time": 8.608333333333166,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176359.04050479457,
+                "integrated_loss_J": 6053.248647467296,
+                "residual_J": -88.04159843968228
+              },
+              {
+                "state": {
+                  "position": [
+                    60.87711250111214,
+                    100,
+                    -1.1166468088084207e-17
+                  ],
+                  "velocity": [
+                    5.025080011388704,
+                    0,
+                    -5.350679738803003e-19
+                  ],
+                  "pitch": 0.14335795136977023,
+                  "roll": 0,
+                  "heading": -1.0647949339465976e-19,
+                  "pitch_rate": -0.0057496938423762705,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 6185.471049072717,
+                  "drive_heat_J": 4.011433265352718,
+                  "control_work_J": 0,
+                  "time": 8.808333333333154,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176309.10783481426,
+                "integrated_loss_J": 6104.197766976624,
+                "residual_J": -87.02514891064493
+              },
+              {
+                "state": {
+                  "position": [
+                    61.876685553176046,
+                    100,
+                    -1.1254722108904375e-17
+                  ],
+                  "velocity": [
+                    4.970918160136477,
+                    0,
+                    -3.0095232498813156e-19
+                  ],
+                  "pitch": 0.1422850160481566,
+                  "roll": 0,
+                  "heading": -6.05426030550197e-20,
+                  "pitch_rate": -0.0049926088223745104,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 6235.898485405145,
+                  "drive_heat_J": 4.012240438025601,
+                  "control_work_J": 0,
+                  "time": 9.008333333333143,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176261.0569519317,
+                "integrated_loss_J": 6153.2472390092435,
+                "residual_J": -86.02655976059032
+              },
+              {
+                "state": {
+                  "position": [
+                    62.86556956196359,
+                    100,
+                    -1.1394177801048866e-17
+                  ],
+                  "velocity": [
+                    4.918174318892348,
+                    0,
+                    -1.090973618080569e-18
+                  ],
+                  "pitch": 0.14136961511405696,
+                  "roll": 0,
+                  "heading": -2.218249186267708e-19,
+                  "pitch_rate": -0.004181397847909545,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 6284.528688536524,
+                  "drive_heat_J": 4.012828546341947,
+                  "control_work_J": 0,
+                  "time": 9.208333333333131,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176214.76460193482,
+                "integrated_loss_J": 6200.520960948626,
+                "residual_J": -85.0451878180902
+              },
+              {
+                "state": {
+                  "position": [
+                    63.84403917313377,
+                    100,
+                    -1.1604933104855322e-17
+                  ],
+                  "velocity": [
+                    4.8667595160821655,
+                    0,
+                    -9.808453934281657e-19
+                  ],
+                  "pitch": 0.14061847329721675,
+                  "roll": 0,
+                  "heading": -2.0153972888674085e-19,
+                  "pitch_rate": -0.0033559727497439015,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 6331.479263310628,
+                  "drive_heat_J": 4.013225087095814,
+                  "control_work_J": 0,
+                  "time": 9.40833333333312,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176170.11419582844,
+                "integrated_loss_J": 6246.13616407316,
+                "residual_J": -84.08039079993614
+              },
+              {
+                "state": {
+                  "position": [
+                    64.81235164328993,
+                    100,
+                    -1.1781241184156224e-17
+                  ],
+                  "velocity": [
+                    4.816589085561161,
+                    0,
+                    -7.892851294851521e-19
+                  ],
+                  "pitch": 0.1400309992456229,
+                  "roll": 0,
+                  "heading": -1.638680641973833e-19,
+                  "pitch_rate": -0.002549547836877721,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 6376.859929646095,
+                  "drive_heat_J": 4.0134681933274905,
+                  "control_work_J": 0,
+                  "time": 9.608333333333109,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176126.99700451072,
+                "integrated_loss_J": 6290.202203400346,
+                "residual_J": -83.1315427904774
+              },
+              {
+                "state": {
+                  "position": [
+                    65.77074783605167,
+                    100,
+                    -1.1918209940978367e-17
+                  ],
+                  "velocity": [
+                    4.767583935018521,
+                    0,
+                    -5.946736029694188e-19
+                  ],
+                  "pitch": 0.13960063411771953,
+                  "roll": 0,
+                  "heading": -1.2473269712179877e-19,
+                  "pitch_rate": -0.0017886052561295039,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 6420.771822657889,
+                  "drive_heat_J": 4.013599194782952,
+                  "control_work_J": 0,
+                  "time": 9.808333333333097,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176085.31285189954,
+                "integrated_loss_J": 6332.8198528138055,
+                "residual_J": -82.19804598818882
+              }
+            ]
+          },
+          {
+            "pass": false,
+            "speedScale": 1,
+            "initial_energy_J": 184478.27608111303,
+            "final_energy_J": 176243.88805662934,
+            "integrated_loss_J": 8120.117056045242,
+            "max_energy_residual_J": 176.60546561016236,
+            "max_acceleration_error_m_s2": 178.96096481957858,
+            "height_lost_m": 0,
+            "distance_m": 71.63778119609097,
+            "distance_per_height": null,
+            "no_motor_or_fuel_use": true,
+            "records": [
+              {
+                "state": {
+                  "position": [
+                    0.08941668918972451,
+                    100,
+                    -2.1717977790006975e-22
+                  ],
+                  "velocity": [
+                    10.73000270276694,
+                    0,
+                    -1.042419916025807e-19
+                  ],
+                  "pitch": 0.013083471741963809,
+                  "roll": 0,
+                  "heading": -9.715001430120783e-21,
+                  "pitch_rate": 1.6289189017150439e-18,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 21.346042547564586,
+                  "drive_heat_J": 7.535006649247506e-37,
+                  "control_work_J": 0,
+                  "time": 0.008333333333333333,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 184286.08752262298,
+                "integrated_loss_J": 15.583092879869179,
+                "residual_J": -176.60546561016236
+              },
+              {
+                "state": {
+                  "position": [
+                    2.223099598592545,
+                    100,
+                    2.262260373264399e-20
+                  ],
+                  "velocity": [
+                    10.606355466495808,
+                    0,
+                    3.113266262277744e-19
+                  ],
+                  "pitch": 0.021773230061138158,
+                  "roll": 0,
+                  "heading": 2.935283728809745e-20,
+                  "pitch_rate": 0.08308955289989794,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 257.7576868033317,
+                  "drive_heat_J": 0.06898782080176244,
+                  "control_work_J": 0,
+                  "time": 0.20833333333333356,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 184053.20197594652,
+                "integrated_loss_J": 249.53073548221485,
+                "residual_J": -175.54336968428106
+              },
+              {
+                "state": {
+                  "position": [
+                    4.331390904590444,
+                    100,
+                    2.362295885327487e-19
+                  ],
+                  "velocity": [
+                    10.474266808276274,
+                    0,
+                    2.4138972670848176e-18
+                  ],
+                  "pitch": 0.04475721728188506,
+                  "roll": 0,
+                  "heading": 2.30459784085075e-19,
+                  "pitch_rate": 0.14264183699529023,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 505.5423223235588,
+                  "drive_heat_J": 0.44707974906576875,
+                  "control_work_J": 0,
+                  "time": 0.4083333333333331,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 183808.5165409112,
+                "integrated_loss_J": 495.3328675640466,
+                "residual_J": -174.42667263778276
+              },
+              {
+                "state": {
+                  "position": [
+                    6.411549433427991,
+                    100,
+                    6.321630561451103e-19
+                  ],
+                  "velocity": [
+                    10.323404635308176,
+                    0,
+                    1.832762546546621e-18
+                  ],
+                  "pitch": 0.07709630701894905,
+                  "roll": 0,
+                  "heading": 1.7753470015872425e-19,
+                  "pitch_rate": 0.17611346580693038,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 784.3005421187931,
+                  "drive_heat_J": 1.1818026178638146,
+                  "control_work_J": 0,
+                  "time": 0.6083333333333324,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 183531.9926602815,
+                "integrated_loss_J": 772.896480508691,
+                "residual_J": -173.38694032281637
+              },
+              {
+                "state": {
+                  "position": [
+                    8.458949304061246,
+                    100,
+                    9.785460538115595e-19
+                  ],
+                  "velocity": [
+                    10.145929390978363,
+                    0,
+                    2.136073272407938e-18
+                  ],
+                  "pitch": 0.11327991873292949,
+                  "roll": 0,
+                  "heading": 2.1053500276744567e-19,
+                  "pitch_rate": 0.18093024169327987,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 1107.6407278798804,
+                  "drive_heat_J": 2.098364901005314,
+                  "control_work_J": 0,
+                  "time": 0.8083333333333317,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 183209.89380572253,
+                "integrated_loss_J": 1095.8347038914796,
+                "residual_J": -172.54757149901707
+              },
+              {
+                "state": {
+                  "position": [
+                    10.468163573639767,
+                    100,
+                    1.524768183829673e-18
+                  ],
+                  "velocity": [
+                    9.942219687400202,
+                    0,
+                    3.664620670025128e-18
+                  ],
+                  "pitch": 0.14776302735497676,
+                  "roll": 0,
+                  "heading": 3.685918019563891e-19,
+                  "pitch_rate": 0.16024554402021696,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 1473.3609871913661,
+                  "drive_heat_J": 2.931754089633614,
+                  "control_work_J": 0,
+                  "time": 1.008333333333331,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 182845.4345184775,
+                "integrated_loss_J": 1461.1648313558183,
+                "residual_J": -171.67673127970193
+              },
+              {
+                "state": {
+                  "position": [
+                    12.434459850389686,
+                    100,
+                    2.2027488302918263e-18
+                  ],
+                  "velocity": [
+                    9.717961268739417,
+                    0,
+                    3.3578922514689106e-18
+                  ],
+                  "pitch": 0.17621461803659016,
+                  "roll": 0,
+                  "heading": 3.4553464030264504e-19,
+                  "pitch_rate": 0.12209669937657444,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 1868.2126629085496,
+                  "drive_heat_J": 3.5018274789976607,
+                  "control_work_J": 0,
+                  "time": 1.2083333333333304,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 182452.1842361096,
+                "integrated_loss_J": 1855.3476698175439,
+                "residual_J": -170.74417518588598
+              },
+              {
+                "state": {
+                  "position": [
+                    14.35452291154969,
+                    100,
+                    2.9284618515460754e-18
+                  ],
+                  "velocity": [
+                    9.481382805358725,
+                    0,
+                    3.393744977776428e-18
+                  ],
+                  "pitch": 0.1960437015266766,
+                  "roll": 0,
+                  "heading": 3.5793776577171187e-19,
+                  "pitch_rate": 0.07550827894738373,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 2275.0338878202697,
+                  "drive_heat_J": 3.782155612927409,
+                  "control_work_J": 0,
+                  "time": 1.4083333333333297,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 182047.3973615677,
+                "integrated_loss_J": 2261.1510843730653,
+                "residual_J": -169.72763517225394
+              },
+              {
+                "state": {
+                  "position": [
+                    16.226794139624346,
+                    100,
+                    3.714376003485847e-18
+                  ],
+                  "velocity": [
+                    9.241533957376234,
+                    0,
+                    3.272015843283843e-18
+                  ],
+                  "pitch": 0.20641318862506317,
+                  "roll": 0,
+                  "heading": 3.5405549104456266e-19,
+                  "pitch_rate": 0.028736730891357035,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 2676.8969926455793,
+                  "drive_heat_J": 3.862549488387195,
+                  "control_work_J": 0,
+                  "time": 1.608333333333329,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 181647.9654383014,
+                "integrated_loss_J": 2661.700008035777,
+                "residual_J": -168.6106347758323
+              },
+              {
+                "state": {
+                  "position": [
+                    18.0514733708439,
+                    100,
+                    4.5104131804392534e-18
+                  ],
+                  "velocity": [
+                    9.006721628468274,
+                    0,
+                    4.566616030897015e-18
+                  ],
+                  "pitch": 0.2079519459821835,
+                  "roll": 0,
+                  "heading": 5.070231122124329e-19,
+                  "pitch_rate": -0.011962186349961457,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 3060.0363111015276,
+                  "drive_heat_J": 3.8680846450017885,
+                  "control_work_J": 0,
+                  "time": 1.8083333333333282,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 181267.5552833493,
+                "integrated_loss_J": 3043.331065033355,
+                "residual_J": -167.38973273037118
+              },
+              {
+                "state": {
+                  "position": [
+                    19.830251928532306,
+                    100,
+                    5.301597771046806e-18
+                  ],
+                  "velocity": [
+                    8.783421018990772,
+                    0,
+                    2.695074614262747e-18
+                  ],
+                  "pitch": 0.2022914528230521,
+                  "roll": 0,
+                  "heading": 3.0683655132045747e-19,
+                  "pitch_rate": -0.042842294226139895,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 3415.222441036022,
+                  "drive_heat_J": 3.8927452119424757,
+                  "control_work_J": 0,
+                  "time": 2.008333333333328,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 180915.29866951023,
+                "integrated_loss_J": 3396.9020017823377,
+                "residual_J": -166.07540982044884
+              },
+              {
+                "state": {
+                  "position": [
+                    21.565887181036388,
+                    100,
+                    5.727267090902133e-18
+                  ],
+                  "velocity": [
+                    8.575784336709434,
+                    0,
+                    2.279321464236203e-18
+                  ],
+                  "pitch": 0.1915690761188018,
+                  "roll": 0,
+                  "heading": 2.65785772442919e-19,
+                  "pitch_rate": -0.06252534218851787,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 3737.803001318743,
+                  "drive_heat_J": 3.9741313953155295,
+                  "control_work_J": 0,
+                  "time": 2.208333333333338,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 180595.78390805545,
+                "integrated_loss_J": 3717.804394117374,
+                "residual_J": -164.6877789401915
+              },
+              {
+                "state": {
+                  "position": [
+                    23.26173471014206,
+                    100,
+                    6.2345792646910695e-18
+                  ],
+                  "velocity": [
+                    8.385684615577043,
+                    0,
+                    2.920695197292728e-18
+                  ],
+                  "pitch": 0.17800384332988906,
+                  "roll": 0,
+                  "heading": 3.4829537851534697e-19,
+                  "pitch_rate": -0.07146604643480375,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 4026.9209614334704,
+                  "drive_heat_J": 4.103131454779541,
+                  "control_work_J": 0,
+                  "time": 2.408333333333348,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 180309.8384623257,
+                "integrated_loss_J": 4005.1871735547666,
+                "residual_J": -163.25044523258111
+              },
+              {
+                "state": {
+                  "position": [
+                    24.9213279626456,
+                    100,
+                    6.878373577123123e-18
+                  ],
+                  "velocity": [
+                    8.213111749291851,
+                    0,
+                    3.145562181180285e-18
+                  ],
+                  "pitch": 0.163595553248801,
+                  "roll": 0,
+                  "heading": 3.8299274102187892e-19,
+                  "pitch_rate": -0.07129301676688617,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 4284.41915460404,
+                  "drive_heat_J": 4.248453264541591,
+                  "control_work_J": 0,
+                  "time": 2.608333333333358,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 180055.6094383248,
+                "integrated_loss_J": 4260.881332243593,
+                "residual_J": -161.78531054462655
+              },
+              {
+                "state": {
+                  "position": [
+                    26.548055196150028,
+                    100,
+                    7.553111511448362e-18
+                  ],
+                  "velocity": [
+                    8.056718376724675,
+                    0,
+                    3.820885813725318e-18
+                  ],
+                  "pitch": 0.14995186600935617,
+                  "roll": 0,
+                  "heading": 4.742484017765352e-19,
+                  "pitch_rate": -0.06421000969930324,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 4513.77656769968,
+                  "drive_heat_J": 4.378878014066596,
+                  "control_work_J": 0,
+                  "time": 2.8083333333333678,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 179829.61142899867,
+                "integrated_loss_J": 4488.355123574728,
+                "residual_J": -160.30952853962663
+              },
+              {
+                "state": {
+                  "position": [
+                    28.14494719710446,
+                    100,
+                    8.222604506653396e-18
+                  ],
+                  "velocity": [
+                    7.9143617387389895,
+                    0,
+                    2.7083122011299177e-18
+                  ],
+                  "pitch": 0.13822133144257043,
+                  "roll": 0,
+                  "heading": 3.42202225591149e-19,
+                  "pitch_rate": -0.052542273516201464,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 4719.242608285444,
+                  "drive_heat_J": 4.475521794873853,
+                  "control_work_J": 0,
+                  "time": 3.0083333333333777,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 179627.58313014582,
+                "integrated_loss_J": 4691.858409592705,
+                "residual_J": -158.83454137449735
+              },
+              {
+                "state": {
+                  "position": [
+                    29.714565295174257,
+                    100,
+                    8.791380843773454e-18
+                  ],
+                  "velocity": [
+                    7.78355581329085,
+                    0,
+                    2.7444372997794174e-18
+                  ],
+                  "pitch": 0.12910118711460358,
+                  "roll": 0,
+                  "heading": 3.525942853898651e-19,
+                  "pitch_rate": -0.03844046368585999,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 4905.2100604754705,
+                  "drive_heat_J": 4.534211628998206,
+                  "control_work_J": 0,
+                  "time": 3.2083333333333877,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 179445.11272543223,
+                "integrated_loss_J": 4875.79680202935,
+                "residual_J": -157.36655365143088
+              },
+              {
+                "state": {
+                  "position": [
+                    31.258968045073946,
+                    100,
+                    9.390260048669342e-18
+                  ],
+                  "velocity": [
+                    7.661804534603236,
+                    0,
+                    3.1975302113991997e-18
+                  ],
+                  "pitch": 0.12289054597946983,
+                  "roll": 0,
+                  "heading": 4.173338274238267e-19,
+                  "pitch_rate": -0.023717063410656405,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 5075.803085648616,
+                  "drive_heat_J": 4.561719303484369,
+                  "control_work_J": 0,
+                  "time": 3.4083333333333976,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 179278.05292032938,
+                "integrated_loss_J": 5044.315422141775,
+                "residual_J": -155.90773864186485
+              },
+              {
+                "state": {
+                  "position": [
+                    32.77973292727349,
+                    100,
+                    1.0035689553899076e-17
+                  ],
+                  "velocity": [
+                    7.5468213980315975,
+                    0,
+                    3.0027238677057706e-18
+                  ],
+                  "pitch": 0.119566097353196,
+                  "roll": 0,
+                  "heading": 3.9787928047283023e-19,
+                  "pitch_rate": -0.009778663490022627,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 5234.634728695065,
+                  "drive_heat_J": 4.569909957578759,
+                  "control_work_J": 0,
+                  "time": 3.6083333333334076,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 179122.76790354954,
+                "integrated_loss_J": 5201.050536338297,
+                "residual_J": -154.45764122519176
+              },
+              {
+                "state": {
+                  "position": [
+                    34.278012264134304,
+                    100,
+                    1.0537631026231769e-17
+                  ],
+                  "velocity": [
+                    7.43665593669277,
+                    0,
+                    2.1526164729601863e-18
+                  ],
+                  "pitch": 0.11886464799375603,
+                  "roll": 0,
+                  "heading": 2.8946027505980036e-19,
+                  "pitch_rate": 0.002379739725152247,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 5384.688546276656,
+                  "drive_heat_J": 4.570599925552724,
+                  "control_work_J": 0,
+                  "time": 3.8083333333334175,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 178976.25535035296,
+                "integrated_loss_J": 5349.006277072722,
+                "residual_J": -153.01445368735585
+              },
+              {
+                "state": {
+                  "position": [
+                    35.75460708635389,
+                    100,
+                    1.0944329255523904e-17
+                  ],
+                  "velocity": [
+                    7.329750529190503,
+                    0,
+                    1.6852901931892634e-18
+                  ],
+                  "pitch": 0.12036280443703055,
+                  "roll": 0,
+                  "heading": 2.299246320154619e-19,
+                  "pitch_rate": 0.012143952603684626,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 5528.287274100041,
+                  "drive_heat_J": 4.572393898300525,
+                  "control_work_J": 0,
+                  "time": 4.008333333333426,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 178836.17956770357,
+                "integrated_loss_J": 5490.5205005537855,
+                "residual_J": -151.5760128556867
+              },
+              {
+                "state": {
+                  "position": [
+                    37.210047152618166,
+                    100,
+                    1.1364865941202047e-17
+                  ],
+                  "velocity": [
+                    7.224948217379696,
+                    0,
+                    2.1449457164004566e-18
+                  ],
+                  "pitch": 0.12354831943155212,
+                  "roll": 0,
+                  "heading": 2.968804276327912e-19,
+                  "pitch_rate": 0.019230207524333083,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 5667.120638381389,
+                  "drive_heat_J": 4.5796145668351524,
+                  "control_work_J": 0,
+                  "time": 4.208333333333415,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 178700.84368136578,
+                "integrated_loss_J": 5627.291918172428,
+                "residual_J": -150.1404815748101
+              },
+              {
+                "state": {
+                  "position": [
+                    38.64466902512927,
+                    100,
+                    1.1755148497627128e-17
+                  ],
+                  "velocity": [
+                    7.12146779797001,
+                    0,
+                    1.5434104471087765e-18
+                  ],
+                  "pitch": 0.12788030472516856,
+                  "roll": 0,
+                  "heading": 2.1672645175040025e-19,
+                  "pitch_rate": 0.02362550217545683,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 5802.311718970728,
+                  "drive_heat_J": 4.592796092851881,
+                  "control_work_J": 0,
+                  "time": 4.408333333333403,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 178569.12200336222,
+                "integrated_loss_J": 5760.447335582533,
+                "residual_J": -148.70674216825864
+              },
+              {
+                "state": {
+                  "position": [
+                    40.058686934772716,
+                    100,
+                    1.203249152034159e-17
+                  ],
+                  "velocity": [
+                    7.018858370023039,
+                    0,
+                    1.366957356302772e-18
+                  ],
+                  "pitch": 0.13283712007891238,
+                  "roll": 0,
+                  "heading": 1.947549422197965e-19,
+                  "pitch_rate": 0.025524820737499097,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 5934.506307937556,
+                  "drive_heat_J": 4.610003682897731,
+                  "control_work_J": 0,
+                  "time": 4.608333333333392,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 178440.36884050528,
+                "integrated_loss_J": 5890.632681899439,
+                "residual_J": -147.27455870830454
+              },
+              {
+                "state": {
+                  "position": [
+                    41.45225327549707,
+                    100,
+                    1.2285206935194574e-17
+                  ],
+                  "velocity": [
+                    6.916942378696757,
+                    0,
+                    9.627372327815301e-19
+                  ],
+                  "pitch": 0.1379517403647426,
+                  "roll": 0,
+                  "heading": 1.3918537701667576e-19,
+                  "pitch_rate": 0.025269259154831827,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 6063.973069805446,
+                  "drive_heat_J": 4.628315530247032,
+                  "control_work_J": 0,
+                  "time": 4.808333333333381,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 178314.31655024306,
+                "integrated_loss_J": 6018.11495904657,
+                "residual_J": -145.84457182339975
+              },
+              {
+                "state": {
+                  "position": [
+                    42.82550713783773,
+                    100,
+                    1.2465486510571792e-17
+                  ],
+                  "velocity": [
+                    6.8157539479883305,
+                    0,
+                    1.1579637151537952e-18
+                  ],
+                  "pitch": 0.14283509866751298,
+                  "roll": 0,
+                  "heading": 1.698951757927776e-19,
+                  "pitch_rate": 0.02328812457866599,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 6190.704766372679,
+                  "drive_heat_J": 4.645017875045546,
+                  "control_work_J": 0,
+                  "time": 5.008333333333369,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 178190.9729781148,
+                "integrated_loss_J": 6142.884918570029,
+                "residual_J": -144.41818442821386
+              },
+              {
+                "state": {
+                  "position": [
+                    44.178610480281954,
+                    100,
+                    1.2663953246183705e-17
+                  ],
+                  "velocity": [
+                    6.715477678576723,
+                    0,
+                    8.722183043417098e-19
+                  ],
+                  "pitch": 0.14718846517299633,
+                  "roll": 0,
+                  "heading": 1.2988179636486671e-19,
+                  "pitch_rate": 0.02004758466727969,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 6314.512944292405,
+                  "drive_heat_J": 4.658308783955568,
+                  "control_work_J": 0,
+                  "time": 5.208333333333358,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 178070.5260375644,
+                "integrated_loss_J": 6264.752657430778,
+                "residual_J": -142.99738611784414
+              },
+              {
+                "state": {
+                  "position": [
+                    45.51177244262072,
+                    100,
+                    1.2884408941373678e-17
+                  ],
+                  "velocity": [
+                    6.616391829977088,
+                    0,
+                    1.5334400400173408e-18
+                  ],
+                  "pitch": 0.15080638789753018,
+                  "roll": 0,
+                  "heading": 2.317637889989733e-19,
+                  "pitch_rate": 0.016007925835840545,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 6435.1105949008615,
+                  "drive_heat_J": 4.667509545714574,
+                  "control_work_J": 0,
+                  "time": 5.4083333333333465,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177953.26088631965,
+                "integrated_loss_J": 6383.430642427715,
+                "residual_J": -141.58455236567534
+              },
+              {
+                "state": {
+                  "position": [
+                    46.825262978249775,
+                    100,
+                    1.3238542465554336e-17
+                  ],
+                  "velocity": [
+                    6.518818711824462,
+                    0,
+                    1.5593212177257635e-18
+                  ],
+                  "pitch": 0.15357206408811622,
+                  "roll": 0,
+                  "heading": 2.392030345770034e-19,
+                  "pitch_rate": 0.011590751480298936,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 6552.17942632129,
+                  "drive_heat_J": 4.672909453119499,
+                  "control_work_J": 0,
+                  "time": 5.608333333333335,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177839.49290329378,
+                "integrated_loss_J": 6498.600933465692,
+                "residual_J": -140.18224435354932
+              },
+              {
+                "state": {
+                  "position": [
+                    48.11941744336748,
+                    100,
+                    1.3562562683485253e-17
+                  ],
+                  "velocity": [
+                    6.423084076244422,
+                    0,
+                    1.5249343426689802e-18
+                  ],
+                  "pitch": 0.15544718893325318,
+                  "roll": 0,
+                  "heading": 2.3741466320033123e-19,
+                  "pitch_rate": 0.007156549331523174,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 6665.420417582035,
+                  "drive_heat_J": 4.675416676326033,
+                  "control_work_J": 0,
+                  "time": 5.808333333333324,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177729.5175991789,
+                "integrated_loss_J": 6609.965454971866,
+                "residual_J": -138.79302696228842
+              },
+              {
+                "state": {
+                  "position": [
+                    49.394634039874525,
+                    100,
+                    1.3822270424052261e-17
+                  ],
+                  "velocity": [
+                    6.329486318625754,
+                    0,
+                    1.2973441591064238e-18
+                  ],
+                  "pitch": 0.15645832086232378,
+                  "roll": 0,
+                  "heading": 2.049683171426936e-19,
+                  "pitch_rate": 0.0029921371152119673,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 6774.588074623015,
+                  "drive_heat_J": 4.676172869087456,
+                  "control_work_J": 0,
+                  "time": 6.008333333333312,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177623.5768638529,
+                "integrated_loss_J": 6717.279901260746,
+                "residual_J": -137.4193159993738
+              },
+              {
+                "state": {
+                  "position": [
+                    50.6513660790441,
+                    100,
+                    1.404554499912043e-17
+                  ],
+                  "velocity": [
+                    6.2382754033596495,
+                    0,
+                    9.163118978485273e-19
+                  ],
+                  "pitch": 0.15668162395236465,
+                  "roll": 0,
+                  "heading": 1.4688545128274453e-19,
+                  "pitch_rate": -0.0006932732602948171,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 6879.510128223918,
+                  "drive_heat_J": 4.676239502803127,
+                  "control_work_J": 0,
+                  "time": 6.208333333333301,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177521.83968796022,
+                "integrated_loss_J": 6820.373132479849,
+                "residual_J": -136.06326067296322
+              },
+              {
+                "state": {
+                  "position": [
+                    51.89011094011438,
+                    100,
+                    1.4253623345865148e-17
+                  ],
+                  "velocity": [
+                    6.149640700935923,
+                    0,
+                    1.1569100529498172e-18
+                  ],
+                  "pitch": 0.15622754065780894,
+                  "roll": 0,
+                  "heading": 1.8812644660260318e-19,
+                  "pitch_rate": -0.0037651567593790397,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 6980.095232980625,
+                  "drive_heat_J": 4.676405878763728,
+                  "control_work_J": 0,
+                  "time": 6.40833333333329,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177424.39473969117,
+                "integrated_loss_J": 6919.1546781897605,
+                "residual_J": -134.7266632321116
+              },
+              {
+                "state": {
+                  "position": [
+                    53.11139737976224,
+                    100,
+                    1.449672959456739e-17
+                  ],
+                  "velocity": [
+                    6.063706406684747,
+                    0,
+                    1.2492524851843581e-18
+                  ],
+                  "pitch": 0.15522656999096293,
+                  "roll": 0,
+                  "heading": 2.0602126841219722e-19,
+                  "pitch_rate": -0.00615586983488949,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 7076.331563372997,
+                  "drive_heat_J": 4.677120589740306,
+                  "control_work_J": 0,
+                  "time": 6.608333333333278,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177331.25189359617,
+                "integrated_loss_J": 7013.613253104985,
+                "residual_J": -133.4109344118624
+              },
+              {
+                "state": {
+                  "position": [
+                    54.31577255040284,
+                    100,
+                    1.4819845759844986e-17
+                  ],
+                  "velocity": [
+                    5.980532929460016,
+                    0,
+                    1.7846890015347653e-18
+                  ],
+                  "pitch": 0.15381693480166506,
+                  "roll": 0,
+                  "heading": 2.9841638238348523e-19,
+                  "pitch_rate": -0.007853866395706535,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 7168.279146290873,
+                  "drive_heat_J": 4.678518278153992,
+                  "control_work_J": 0,
+                  "time": 6.808333333333267,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177242.34989893436,
+                "integrated_loss_J": 7103.809101358393,
+                "residual_J": -132.1170808202587
+              },
+              {
+                "state": {
+                  "position": [
+                    55.503789753120095,
+                    100,
+                    1.516920743691466e-17
+                  ],
+                  "velocity": [
+                    5.9001225737221,
+                    0,
+                    1.7558047873747497e-18
+                  ],
+                  "pitch": 0.15213456284456575,
+                  "roll": 0,
+                  "heading": 2.9758784930922175e-19,
+                  "pitch_rate": -0.008891592565408573,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 7256.058442716662,
+                  "drive_heat_J": 4.680502063005741,
+                  "control_work_J": 0,
+                  "time": 7.008333333333256,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177157.56771644877,
+                "integrated_loss_J": 7189.862645930745,
+                "residual_J": -130.8457187335007
+              },
+              {
+                "state": {
+                  "position": [
+                    56.67599762406416,
+                    100,
+                    1.5573445465075004e-17
+                  ],
+                  "velocity": [
+                    5.8224279459792445,
+                    0,
+                    2.1095302511511804e-18
+                  ],
+                  "pitch": 0.15030550916598223,
+                  "roll": 0,
+                  "heading": 3.6231109611376895e-19,
+                  "pitch_rate": -0.0093333640644137,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 7339.837219752402,
+                  "drive_heat_J": 4.682844333492708,
+                  "control_work_J": 0,
+                  "time": 7.208333333333244,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177076.73752389036,
+                "integrated_loss_J": 7271.941449301855,
+                "residual_J": -129.59710792082478
+              },
+              {
+                "state": {
+                  "position": [
+                    57.83293116011852,
+                    100,
+                    1.5974469794233765e-17
+                  ],
+                  "velocity": [
+                    5.7473617383871405,
+                    0,
+                    1.9532420439273606e-18
+                  ],
+                  "pitch": 0.148440724719349,
+                  "roll": 0,
+                  "heading": 3.398502013335063e-19,
+                  "pitch_rate": -0.009264149435882375,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 7419.817241612782,
+                  "drive_heat_J": 4.685278548266897,
+                  "control_work_J": 0,
+                  "time": 7.408333333333233,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176999.65789446564,
+                "integrated_loss_J": 7350.246987632002,
+                "residual_J": -128.37119901538244
+              },
+              {
+                "state": {
+                  "position": [
+                    58.9751047475671,
+                    100,
+                    1.6395332921026388e-17
+                  ],
+                  "velocity": [
+                    5.674806821148997,
+                    0,
+                    1.9160941738087772e-18
+                  ],
+                  "pitch": 0.1466329275412027,
+                  "roll": 0,
+                  "heading": 3.3764923356823965e-19,
+                  "pitch_rate": -0.008779829656722485,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 7496.221826905798,
+                  "drive_heat_J": 4.687566795619324,
+                  "control_work_J": 0,
+                  "time": 7.6083333333332215,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176926.1061219033,
+                "integrated_loss_J": 7425.002270780052,
+                "residual_J": -127.16768842967576
+              },
+              {
+                "state": {
+                  "position": [
+                    60.10300717283846,
+                    100,
+                    1.6762373439066765e-17
+                  ],
+                  "velocity": [
+                    5.604625863953985,
+                    0,
+                    1.877650380492875e-18
+                  ],
+                  "pitch": 0.14495524916808158,
+                  "roll": 0,
+                  "heading": 3.3501797016798883e-19,
+                  "pitch_rate": -0.00797921156174964,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 7569.284910508908,
+                  "drive_heat_J": 4.689538522475982,
+                  "control_work_J": 0,
+                  "time": 7.80833333333321,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176855.8490638632,
+                "integrated_loss_J": 7496.440941567484,
+                "residual_J": -125.98607568236184
+              },
+              {
+                "state": {
+                  "position": [
+                    61.21709846557575,
+                    100,
+                    1.7156625204652254e-17
+                  ],
+                  "velocity": [
+                    5.536669972071805,
+                    0,
+                    2.0933411114100016e-18
+                  ],
+                  "pitch": 0.14346129686190234,
+                  "roll": 0,
+                  "heading": 3.7808666977971954e-19,
+                  "pitch_rate": -0.006957850870839777,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 7639.241927428395,
+                  "drive_heat_J": 4.691103288873561,
+                  "control_work_J": 0,
+                  "time": 8.0083333333332,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176788.65218811,
+                "integrated_loss_J": 7564.798173926154,
+                "residual_J": -124.82571907687816
+              },
+              {
+                "state": {
+                  "position": [
+                    62.317808344538236,
+                    100,
+                    1.7502417407682668e-17
+                  ],
+                  "velocity": [
+                    5.470786046166072,
+                    0,
+                    1.2959580728537653e-18
+                  ],
+                  "pitch": 0.14218627735647227,
+                  "roll": 0,
+                  "heading": 2.368869961131039e-19,
+                  "pitch_rate": -0.0058035885113394015,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 7706.322601880963,
+                  "drive_heat_J": 4.692244375559725,
+                  "control_work_J": 0,
+                  "time": 8.208333333333188,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176724.28673506307,
+                "integrated_loss_J": 7630.303459268463,
+                "residual_J": -123.68588678148808
+              },
+              {
+                "state": {
+                  "position": [
+                    63.405535996930645,
+                    100,
+                    1.77963850422306e-17
+                  ],
+                  "velocity": [
+                    5.4068227493668015,
+                    0,
+                    1.315158224207323e-18
+                  ],
+                  "pitch": 0.14114885723281387,
+                  "roll": 0,
+                  "heading": 2.4324049172156467e-19,
+                  "pitch_rate": -0.004593611482771525,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 7770.7455665001335,
+                  "drive_heat_J": 4.693001164342276,
+                  "control_work_J": 0,
+                  "time": 8.408333333333177,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176662.53506653747,
+                "integrated_loss_J": 7693.175213176769,
+                "residual_J": -122.56580139879952
+              },
+              {
+                "state": {
+                  "position": [
+                    64.48065091188637,
+                    100,
+                    1.8056550169455978e-17
+                  ],
+                  "velocity": [
+                    5.344635091779819,
+                    0,
+                    1.310541371929518e-18
+                  ],
+                  "pitch": 0.14035347803569712,
+                  "roll": 0,
+                  "heading": 2.4520689428267293e-19,
+                  "pitch_rate": -0.0033928035884636326,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 7832.714639156895,
+                  "drive_heat_J": 4.693447371635401,
+                  "control_work_J": 0,
+                  "time": 8.608333333333166,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176603.19436776923,
+                "integrated_loss_J": 7753.617036334786,
+                "residual_J": -121.46467700900394
+              },
+              {
+                "state": {
+                  "position": [
+                    65.54349449997478,
+                    100,
+                    1.8304643712587136e-17
+                  ],
+                  "velocity": [
+                    5.284087727300137,
+                    0,
+                    1.1504452766798647e-18
+                  ],
+                  "pitch": 0.1397928928904201,
+                  "roll": 0,
+                  "heading": 2.17718807115202e-19,
+                  "pitch_rate": -0.002253138768924454,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 7892.41653327405,
+                  "drive_heat_J": 4.693670383361219,
+                  "control_work_J": 0,
+                  "time": 8.808333333333154,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176546.07892242467,
+                "integrated_loss_J": 7811.815410297965,
+                "residual_J": -120.38174839038402
+              },
+              {
+                "state": {
+                  "position": [
+                    66.59438225514278,
+                    100,
+                    1.8547087153558537e-17
+                  ],
+                  "velocity": [
+                    5.225057108295529,
+                    0,
+                    1.4912391808663383e-18
+                  ],
+                  "pitch": 0.13945074018528647,
+                  "roll": 0,
+                  "heading": 2.8540150853064975e-19,
+                  "pitch_rate": -0.0012138790460733853,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 7950.0197583611025,
+                  "drive_heat_J": 4.6937548527816535,
+                  "control_work_J": 0,
+                  "time": 9.008333333333143,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176491.02120086088,
+                "integrated_loss_J": 7867.938587588607,
+                "residual_J": -119.31629266354139
+              },
+              {
+                "state": {
+                  "position": [
+                    67.63360624747105,
+                    100,
+                    1.8871472331359056e-17
+                  ],
+                  "velocity": [
+                    5.167432668623099,
+                    0,
+                    1.7494799768199513e-18
+                  ],
+                  "pitch": 0.13930401542347062,
+                  "roll": 0,
+                  "heading": 3.38558833566014e-19,
+                  "pitch_rate": -0.00030236120483700534,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 8005.674470023205,
+                  "drive_heat_J": 4.693771861990621,
+                  "control_work_J": 0,
+                  "time": 9.208333333333131,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176437.87200074035,
+                "integrated_loss_J": 7922.13643638896,
+                "residual_J": -118.2676439837087
+              },
+              {
+                "state": {
+                  "position": [
+                    68.66143777011592,
+                    100,
+                    1.920933117670569e-17
+                  ],
+                  "velocity": [
+                    5.1111172118936965,
+                    0,
+                    1.6058752903725305e-18
+                  ],
+                  "pitch": 0.13932534274214015,
+                  "roll": 0,
+                  "heading": 3.1419261656446047e-19,
+                  "pitch_rate": 0.00046481523296667973,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 8059.513044744951,
+                  "drive_heat_J": 4.693773554184641,
+                  "control_work_J": 0,
+                  "time": 9.40833333333312,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176386.4998641068,
+                "integrated_loss_J": 7974.541014865833,
+                "residual_J": -117.23520214040764
+              },
+              {
+                "state": {
+                  "position": [
+                    69.67812999876152,
+                    100,
+                    1.957652537137576e-17
+                  ],
+                  "velocity": [
+                    5.056026675964033,
+                    0,
+                    2.1019822746644425e-18
+                  ],
+                  "pitch": 0.13948498205421736,
+                  "roll": 0,
+                  "heading": 4.157379716086362e-19,
+                  "pitch_rate": 0.0010803558218578286,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 8111.651178451075,
+                  "drive_heat_J": 4.693792277883308,
+                  "control_work_J": 0,
+                  "time": 9.608333333333109,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176336.78997198612,
+                "integrated_loss_J": 8025.267673081833,
+                "residual_J": -116.2184360450774
+              },
+              {
+                "state": {
+                  "position": [
+                    70.68392055483517,
+                    100,
+                    1.999919108125821e-17
+                  ],
+                  "velocity": [
+                    5.002089430991271,
+                    0,
+                    1.9281394750190845e-18
+                  ],
+                  "pitch": 0.13975253619463976,
+                  "roll": 0,
+                  "heading": 3.854668137424689e-19,
+                  "pitch_rate": 0.001544722261363042,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 8162.189335156448,
+                  "drive_heat_J": 4.693842890956683,
+                  "control_work_J": 0,
+                  "time": 9.808333333333097,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176288.64269056145,
+                "integrated_loss_J": 8074.416507432124,
+                "residual_J": -115.21688311945763
+              }
+            ]
+          },
+          {
+            "pass": false,
+            "speedScale": 1.1,
+            "initial_energy_J": 186664.42618314677,
+            "final_energy_J": 176426.93457180168,
+            "integrated_loss_J": 10083.496072944448,
+            "max_energy_residual_J": 211.88843803593772,
+            "max_acceleration_error_m_s2": 195.05876452758943,
+            "height_lost_m": 0,
+            "distance_m": 76.32033280374613,
+            "distance_per_height": null,
+            "no_motor_or_fuel_use": true,
+            "records": [
+              {
+                "state": {
+                  "position": [
+                    0.09835827711280622,
+                    100,
+                    -1.2596688139514679e-21
+                  ],
+                  "velocity": [
+                    11.802964175319419,
+                    0,
+                    -2.502023280528573e-19
+                  ],
+                  "pitch": 0.013083538724058787,
+                  "roll": 0,
+                  "heading": -2.119826209216518e-20,
+                  "pitch_rate": 0.00003206229333220897,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 28.317723651376653,
+                  "drive_heat_J": 1.5074979519892049e-10,
+                  "control_work_J": 0,
+                  "time": 0.008333333333333333,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 186431.79674518036,
+                "integrated_loss_J": 20.740999930482182,
+                "residual_J": -211.88843803593772
+              },
+              {
+                "state": {
+                  "position": [
+                    2.4440133059394316,
+                    100,
+                    -1.8688758775615658e-20
+                  ],
+                  "velocity": [
+                    11.65281430140332,
+                    0,
+                    2.92968033493365e-19
+                  ],
+                  "pitch": 0.023558631196986306,
+                  "roll": 0,
+                  "heading": 2.514139725526078e-20,
+                  "pitch_rate": 0.09975229545538981,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 342.29489115195094,
+                  "drive_heat_J": 0.10005228756014348,
+                  "control_work_J": 0,
+                  "time": 0.20833333333333356,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 186121.03576104733,
+                "integrated_loss_J": 332.4794982380469,
+                "residual_J": -210.91092386140372
+              },
+              {
+                "state": {
+                  "position": [
+                    4.758623119585814,
+                    100,
+                    2.922463530320471e-19
+                  ],
+                  "velocity": [
+                    11.489836409058606,
+                    0,
+                    1.5010548905322228e-18
+                  ],
+                  "pitch": 0.05091731566875701,
+                  "roll": 0,
+                  "heading": 1.3064197235643743e-19,
+                  "pitch_rate": 0.16832637828913663,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 675.9753386842161,
+                  "drive_heat_J": 0.635034965536347,
+                  "control_work_J": 0,
+                  "time": 0.4083333333333331,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 185789.63043124057,
+                "integrated_loss_J": 664.7952812125586,
+                "residual_J": -210.00047069363063
+              },
+              {
+                "state": {
+                  "position": [
+                    7.03807786765711,
+                    100,
+                    4.511117171237533e-19
+                  ],
+                  "velocity": [
+                    11.29891958036781,
+                    0,
+                    3.82749250750801e-19
+                  ],
+                  "pitch": 0.08852423428957508,
+                  "roll": 0,
+                  "heading": 3.3874853965315283e-20,
+                  "pitch_rate": 0.2013809431508444,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 1060.2196346039227,
+                  "drive_heat_J": 1.6276475140049604,
+                  "control_work_J": 0,
+                  "time": 0.6083333333333324,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 185405.71881813227,
+                "integrated_loss_J": 1049.1765626843344,
+                "residual_J": -209.5308023301768
+              },
+              {
+                "state": {
+                  "position": [
+                    9.275684633303433,
+                    100,
+                    4.246429650325427e-19
+                  ],
+                  "velocity": [
+                    11.07107661172931,
+                    0,
+                    1.9776271684289296e-19
+                  ],
+                  "pitch": 0.1288823085975646,
+                  "roll": 0,
+                  "heading": 1.786300680399702e-20,
+                  "pitch_rate": 0.19614972578024634,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 1511.8706634318662,
+                  "drive_heat_J": 2.7679083913731914,
+                  "control_work_J": 0,
+                  "time": 0.8083333333333317,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 184952.9962551574,
+                "integrated_loss_J": 1501.9236745375194,
+                "residual_J": -209.50625345186563
+              },
+              {
+                "state": {
+                  "position": [
+                    11.464304134667755,
+                    100,
+                    4.480832682551844e-19
+                  ],
+                  "velocity": [
+                    10.810356703689644,
+                    0,
+                    -2.2233181040479756e-19
+                  ],
+                  "pitch": 0.16492970965554532,
+                  "roll": 0,
+                  "heading": -2.056655635876606e-20,
+                  "pitch_rate": 0.1602053170157979,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 2019.7436627983277,
+                  "drive_heat_J": 3.680572904699512,
+                  "control_work_J": 0,
+                  "time": 1.008333333333331,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 184444.3592564268,
+                "integrated_loss_J": 2010.6188584362565,
+                "residual_J": -209.448068283702
+              },
+              {
+                "state": {
+                  "position": [
+                    13.5983159826327,
+                    100,
+                    4.2837760516861637e-19
+                  ],
+                  "velocity": [
+                    10.527056056696066,
+                    0,
+                    -3.444097520047431e-19
+                  ],
+                  "pitch": 0.19176708221507144,
+                  "roll": 0,
+                  "heading": -3.271662563112034e-20,
+                  "pitch_rate": 0.1062969995117061,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 2558.7001497072483,
+                  "drive_heat_J": 4.191583147862289,
+                  "control_work_J": 0,
+                  "time": 1.2083333333333304,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 183905.26651689125,
+                "integrated_loss_J": 2549.8699497559037,
+                "residual_J": -209.28971649962477
+              },
+              {
+                "state": {
+                  "position": [
+                    15.674499013681816,
+                    100,
+                    2.218165487256114e-19
+                  ],
+                  "velocity": [
+                    10.234338038773036,
+                    0,
+                    -1.6073489636235767e-18
+                  ],
+                  "pitch": 0.20712739325970966,
+                  "roll": 0,
+                  "heading": -1.5705451173628393e-19,
+                  "pitch_rate": 0.047474314656076,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 3100.270508372344,
+                  "drive_heat_J": 4.364859985521503,
+                  "control_work_J": 0,
+                  "time": 1.4083333333333297,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 183364.27024011227,
+                "integrated_loss_J": 3091.194054156142,
+                "residual_J": -208.96188887837343
+              },
+              {
+                "state": {
+                  "position": [
+                    17.69229463656072,
+                    100,
+                    2.771101585421419e-19
+                  ],
+                  "velocity": [
+                    9.945200499345516,
+                    0,
+                    9.491420864663683e-19
+                  ],
+                  "pitch": 0.211147120218258,
+                  "roll": 0,
+                  "heading": 9.543719973557401e-20,
+                  "pitch_rate": -0.005643023551653574,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 3619.699144848383,
+                  "drive_heat_J": 4.382782615553987,
+                  "control_work_J": 0,
+                  "time": 1.608333333333329,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 182846.04068104387,
+                "integrated_loss_J": 3609.9652613652224,
+                "residual_J": -208.42024073767243
+              },
+              {
+                "state": {
+                  "position": [
+                    19.653525198212243,
+                    100,
+                    5.588301232746749e-19
+                  ],
+                  "velocity": [
+                    9.670154126575802,
+                    0,
+                    1.7438996521273504e-18
+                  ],
+                  "pitch": 0.20570901018788626,
+                  "roll": 0,
+                  "heading": 1.8033835131280006e-19,
+                  "pitch_rate": -0.046333559566614224,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 4099.822107593263,
+                  "drive_heat_J": 4.407361674871378,
+                  "control_work_J": 0,
+                  "time": 1.8083333333333282,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 182367.6065764491,
+                "integrated_loss_J": 4089.1624183333506,
+                "residual_J": -207.6571883643337
+              },
+              {
+                "state": {
+                  "position": [
+                    21.561756401633104,
+                    100,
+                    8.61071131536548e-19
+                  ],
+                  "velocity": [
+                    9.416020162184006,
+                    0,
+                    8.276999381733468e-19
+                  ],
+                  "pitch": 0.19363334538699553,
+                  "roll": 0,
+                  "heading": 8.790337360337228e-20,
+                  "pitch_rate": -0.07186213201273559,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 4531.823800868403,
+                  "drive_heat_J": 4.510964842212713,
+                  "control_work_J": 0,
+                  "time": 2.008333333333328,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 181937.67723486776,
+                "integrated_loss_J": 4520.052650023628,
+                "residual_J": -206.6962982553814
+              },
+              {
+                "state": {
+                  "position": [
+                    23.42153360236025,
+                    100,
+                    1.1547926497978192e-18
+                  ],
+                  "velocity": [
+                    9.185834319570793,
+                    0,
+                    2.4804183718128895e-18
+                  ],
+                  "pitch": 0.1779537873612377,
+                  "roll": 0,
+                  "heading": 2.70026465263831e-19,
+                  "pitch_rate": -0.08264683562811197,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 4913.934136271922,
+                  "drive_heat_J": 4.68333530892722,
+                  "control_work_J": 0,
+                  "time": 2.208333333333338,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 181557.96251621717,
+                "integrated_loss_J": 4900.885680091694,
+                "residual_J": -205.5779868379177
+              },
+              {
+                "state": {
+                  "position": [
+                    25.23768179005004,
+                    100,
+                    1.471981484781522e-18
+                  ],
+                  "velocity": [
+                    8.979506324272636,
+                    0,
+                    1.276697151581092e-18
+                  ],
+                  "pitch": 0.16140178255110918,
+                  "roll": 0,
+                  "heading": 1.4217899130267698e-19,
+                  "pitch_rate": -0.08109622233168204,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 5249.302001327625,
+                  "drive_heat_J": 4.875124043667823,
+                  "control_work_J": 0,
+                  "time": 2.408333333333348,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 181225.27980614323,
+                "integrated_loss_J": 5234.800737056114,
+                "residual_J": -204.34563994742348
+              },
+              {
+                "state": {
+                  "position": [
+                    27.014776183747887,
+                    100,
+                    1.7741963426845073e-18
+                  ],
+                  "velocity": [
+                    8.794798598870432,
+                    0,
+                    2.7987761567946994e-18
+                  ],
+                  "pitch": 0.1461192634263488,
+                  "roll": 0,
+                  "heading": 3.182308412558944e-19,
+                  "pitch_rate": -0.07053925666685129,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 5543.906479248188,
+                  "drive_heat_J": 5.038877733867956,
+                  "control_work_J": 0,
+                  "time": 2.608333333333358,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 180933.6184378956,
+                "integrated_loss_J": 5527.771084149484,
+                "residual_J": -203.03666110167978
+              },
+              {
+                "state": {
+                  "position": [
+                    28.756811377612603,
+                    100,
+                    2.294087589949113e-18
+                  ],
+                  "velocity": [
+                    8.628290759357654,
+                    0,
+                    2.3632691878523453e-18
+                  ],
+                  "pitch": 0.13355864821835886,
+                  "roll": 0,
+                  "heading": 2.7389772247641343e-19,
+                  "pitch_rate": -0.0544370033067053,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 5804.901892664029,
+                  "drive_heat_J": 5.149925382647271,
+                  "control_work_J": 0,
+                  "time": 2.8083333333333678,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 180675.78224349252,
+                "integrated_loss_J": 5786.96514958469,
+                "residual_J": -201.67879006956355
+              },
+              {
+                "state": {
+                  "position": [
+                    30.46704621148534,
+                    100,
+                    2.6979963880184196e-18
+                  ],
+                  "velocity": [
+                    8.47615552209084,
+                    0,
+                    2.1186947176222014e-18
+                  ],
+                  "pitch": 0.12450967550189757,
+                  "roll": 0,
+                  "heading": 2.4995939634429643e-19,
+                  "pitch_rate": -0.03589690499374501,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 6039.474122984884,
+                  "drive_heat_J": 5.208049554374909,
+                  "control_work_J": 0,
+                  "time": 3.0083333333333777,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 180444.5339874594,
+                "integrated_loss_J": 6019.602079318521,
+                "residual_J": -200.29011636885116
+              },
+              {
+                "state": {
+                  "position": [
+                    32.147980274589905,
+                    100,
+                    3.1874188086415853e-18
+                  ],
+                  "velocity": [
+                    8.334698804483695,
+                    0,
+                    2.39001691402433e-18
+                  ],
+                  "pitch": 0.11919780144335364,
+                  "roll": 0,
+                  "heading": 2.8675504299430808e-19,
+                  "pitch_rate": -0.01742997224019105,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 6254.136772057092,
+                  "drive_heat_J": 5.2285988730272015,
+                  "control_work_J": 0,
+                  "time": 3.2083333333333877,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 180233.30701096912,
+                "integrated_loss_J": 6232.238192000895,
+                "residual_J": -198.88098017676384
+              },
+              {
+                "state": {
+                  "position": [
+                    33.801416481945004,
+                    100,
+                    3.706425080621317e-18
+                  ],
+                  "velocity": [
+                    8.2006874199634,
+                    0,
+                    2.400235440557229e-18
+                  ],
+                  "pitch": 0.11741343435911766,
+                  "roll": 0,
+                  "heading": 2.926871026341279e-19,
+                  "pitch_rate": -0.0008726300661252019,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 6454.356590153342,
+                  "drive_heat_J": 5.231468854623036,
+                  "control_work_J": 0,
+                  "time": 3.4083333333333976,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 180036.58821990745,
+                "integrated_loss_J": 6430.381535020371,
+                "residual_J": -197.45642821895308
+              },
+              {
+                "state": {
+                  "position": [
+                    35.428571946305084,
+                    100,
+                    4.161030293231306e-18
+                  ],
+                  "velocity": [
+                    8.071512912395878,
+                    0,
+                    1.5821754196655146e-18
+                  ],
+                  "pitch": 0.11864601919826444,
+                  "roll": 0,
+                  "heading": 1.960196851368073e-19,
+                  "pitch_rate": 0.012592976487424822,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 6644.408312771756,
+                  "drive_heat_J": 5.232956355271459,
+                  "control_work_J": 0,
+                  "time": 3.6083333333334076,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 179850.0684951435,
+                "integrated_loss_J": 6618.33922196724,
+                "residual_J": -196.01846603603917
+              },
+              {
+                "state": {
+                  "position": [
+                    37.030209338175894,
+                    100,
+                    4.645065095742036e-18
+                  ],
+                  "velocity": [
+                    7.945240025871105,
+                    0,
+                    3.149155540028284e-18
+                  ],
+                  "pitch": 0.12220816736299224,
+                  "roll": 0,
+                  "heading": 3.9635750836652853e-19,
+                  "pitch_rate": 0.022365620699283825,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 6827.383209491993,
+                  "drive_heat_J": 5.2420619965052255,
+                  "control_work_J": 0,
+                  "time": 3.8083333333334175,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 179670.63525947518,
+                "integrated_loss_J": 6799.223137383484,
+                "residual_J": -194.56778628809843
+              },
+              {
+                "state": {
+                  "position": [
+                    38.6067697511298,
+                    100,
+                    5.286928348253896e-18
+                  ],
+                  "velocity": [
+                    7.820578918173305,
+                    0,
+                    2.6605724394447118e-18
+                  ],
+                  "pitch": 0.12734219167187824,
+                  "roll": 0,
+                  "heading": 3.40201469390217e-19,
+                  "pitch_rate": 0.028325736119095387,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 7005.297181125685,
+                  "drive_heat_J": 5.260596019732088,
+                  "control_work_J": 0,
+                  "time": 4.008333333333426,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 179496.26222639153,
+                "integrated_loss_J": 6975.059036555673,
+                "residual_J": -193.10492019957746
+              },
+              {
+                "state": {
+                  "position": [
+                    40.15849486472137,
+                    100,
+                    5.76776336753967e-18
+                  ],
+                  "velocity": [
+                    7.69680999431262,
+                    0,
+                    2.0175611481831813e-18
+                  ],
+                  "pitch": 0.13330553570430745,
+                  "roll": 0,
+                  "heading": 2.6212952504661173e-19,
+                  "pitch_rate": 0.030725501483778943,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 7179.259015168601,
+                  "drive_heat_J": 5.285502819951535,
+                  "control_work_J": 0,
+                  "time": 4.208333333333415,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 179325.83731291178,
+                "integrated_loss_J": 7146.957978585693,
+                "residual_J": -191.63089164928533
+              },
+              {
+                "state": {
+                  "position": [
+                    41.68553112565515,
+                    100,
+                    6.174142842873562e-18
+                  ],
+                  "velocity": [
+                    7.573682206428147,
+                    0,
+                    1.8389185157029632e-18
+                  ],
+                  "pitch": 0.13943394849633883,
+                  "roll": 0,
+                  "heading": 2.4280375985966047e-19,
+                  "pitch_rate": 0.030077472200629146,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 7349.668583081458,
+                  "drive_heat_J": 5.311794333894108,
+                  "control_work_J": 0,
+                  "time": 4.408333333333403,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 179158.96046546343,
+                "integrated_loss_J": 7315.318219541725,
+                "residual_J": -190.14749814162496
+              },
+              {
+                "state": {
+                  "position": [
+                    43.1880122445039,
+                    100,
+                    6.4637581948073084e-18
+                  ],
+                  "velocity": [
+                    7.451300104596403,
+                    0,
+                    1.4818622912143072e-18
+                  ],
+                  "pitch": 0.1451828235358173,
+                  "roll": 0,
+                  "heading": 1.9887298463528623e-19,
+                  "pitch_rate": 0.027048652779941403,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 7516.420880832181,
+                  "drive_heat_J": 5.334950755173378,
+                  "control_work_J": 0,
+                  "time": 4.608333333333392,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 178995.7365445546,
+                "integrated_loss_J": 7480.03229911188,
+                "residual_J": -188.6573394802981
+              },
+              {
+                "state": {
+                  "position": [
+                    44.666118959959825,
+                    100,
+                    6.699712434295542e-18
+                  ],
+                  "velocity": [
+                    7.33001112339438,
+                    0,
+                    1.0455761021470612e-18
+                  ],
+                  "pitch": 0.15014840520008446,
+                  "roll": 0,
+                  "heading": 1.426431808281999e-19,
+                  "pitch_rate": 0.02236603914597432,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 7679.096980601532,
+                  "drive_heat_J": 5.352262119397156,
+                  "control_work_J": 0,
+                  "time": 4.808333333333381,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 178836.58264290635,
+                "integrated_loss_J": 7640.679848770056,
+                "residual_J": -187.1636914703704
+              },
+              {
+                "state": {
+                  "position": [
+                    46.120117024612604,
+                    100,
+                    6.8242978001632e-18
+                  ],
+                  "velocity": [
+                    7.210301739883719,
+                    0,
+                    -2.797854839566497e-20
+                  ],
+                  "pitch": 0.15407168285610057,
+                  "roll": 0,
+                  "heading": -3.880357494735884e-21,
+                  "pitch_rate": 0.016738673047733098,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 7837.128265083451,
+                  "drive_heat_J": 5.3631107436352154,
+                  "control_work_J": 0,
+                  "time": 5.008333333333369,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 178682.06339661684,
+                "integrated_loss_J": 7796.692490920773,
+                "residual_J": -185.67029560916126
+              },
+              {
+                "state": {
+                  "position": [
+                    47.550375841545815,
+                    100,
+                    6.825439230358673e-18
+                  ],
+                  "velocity": [
+                    7.092708646731749,
+                    0,
+                    2.532665812148008e-19
+                  ],
+                  "pitch": 0.15682864221120107,
+                  "roll": 0,
+                  "heading": 3.5708019859451516e-20,
+                  "pitch_rate": 0.010799532982676491,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 7989.925896602092,
+                  "drive_heat_J": 5.368513828508968,
+                  "control_work_J": 0,
+                  "time": 5.208333333333358,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 178532.7619591335,
+                "integrated_loss_J": 7947.483109446016,
+                "residual_J": -184.1811145672691
+              },
+              {
+                "state": {
+                  "position": [
+                    48.95737116730926,
+                    100,
+                    6.846722992117135e-18
+                  ],
+                  "velocity": [
+                    6.977748663812821,
+                    0,
+                    1.3695159268269333e-19
+                  ],
+                  "pitch": 0.15841098480632584,
+                  "roll": 0,
+                  "heading": 1.9626902498356752e-20,
+                  "pitch_rate": 0.005068293617134904,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 8136.9728697535875,
+                  "drive_heat_J": 5.370343282564834,
+                  "control_work_J": 0,
+                  "time": 5.4083333333333465,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 178389.18881926461,
+                "integrated_loss_J": 8092.537275164975,
+                "residual_J": -182.70008871718892
+              },
+              {
+                "state": {
+                  "position": [
+                    50.34167580405374,
+                    100,
+                    6.853940319049576e-18
+                  ],
+                  "velocity": [
+                    6.865868760234855,
+                    0,
+                    4.178802978652912e-19
+                  ],
+                  "pitch": 0.15890139525256447,
+                  "roll": 0,
+                  "heading": 6.086342638611651e-20,
+                  "pitch_rate": -0.00006634938065069358,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 8277.880558424058,
+                  "drive_heat_J": 5.37057324704367,
+                  "control_work_J": 0,
+                  "time": 5.608333333333335,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 178251.72615345725,
+                "integrated_loss_J": 8231.469110664952,
+                "residual_J": -181.2309190245869
+              },
+              {
+                "state": {
+                  "position": [
+                    51.70394226149907,
+                    100,
+                    6.952669011027483e-18
+                  ],
+                  "velocity": [
+                    6.75741545407139,
+                    0,
+                    2.6400831191852794e-19
+                  ],
+                  "pitch": 0.15844697899645002,
+                  "roll": 0,
+                  "heading": 3.906942139534444e-20,
+                  "pitch_rate": -0.004347938525731342,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 8412.414894915008,
+                  "drive_heat_J": 5.370760626790531,
+                  "control_work_J": 0,
+                  "time": 5.808333333333324,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 178120.602327435,
+                "integrated_loss_J": 8364.046962080432,
+                "residual_J": -179.7768936313514
+              },
+              {
+                "state": {
+                  "position": [
+                    53.04488104968673,
+                    100,
+                    6.920545310819255e-18
+                  ],
+                  "velocity": [
+                    6.652621218906152,
+                    0,
+                    -7.342162168112455e-19
+                  ],
+                  "pitch": 0.15723374399524437,
+                  "roll": 0,
+                  "heading": -1.103649512953885e-19,
+                  "pitch_rate": -0.0076412996251654375,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 8540.499034383127,
+                  "drive_heat_J": 5.371816328744187,
+                  "control_work_J": 0,
+                  "time": 6.008333333333312,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177995.88960397136,
+                "integrated_loss_J": 8490.195811281608,
+                "residual_J": -178.3407678937947
+              },
+              {
+                "state": {
+                  "position": [
+                    54.36523767591262,
+                    100,
+                    6.807763099426648e-18
+                  ],
+                  "velocity": [
+                    6.55160450034937,
+                    0,
+                    -6.943250992180264e-19
+                  ],
+                  "pitch": 0.15546412367534593,
+                  "roll": 0,
+                  "heading": -1.0597787140249398e-19,
+                  "pitch_rate": -0.009913803628514833,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 8662.199712715425,
+                  "drive_heat_J": 5.374020493238805,
+                  "control_work_J": 0,
+                  "time": 6.208333333333301,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177877.51787455077,
+                "integrated_loss_J": 8609.983608267818,
+                "residual_J": -176.924700328178
+              },
+              {
+                "state": {
+                  "position": [
+                    55.665770690309074,
+                    100,
+                    6.685721740228387e-18
+                  ],
+                  "velocity": [
+                    6.454379550038783,
+                    0,
+                    -1.0500279755927303e-18
+                  ],
+                  "pitch": 0.15333868575414883,
+                  "roll": 0,
+                  "heading": -1.6268457215014894e-19,
+                  "pitch_rate": -0.01121285478803012,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 8777.703863572224,
+                  "drive_heat_J": 5.377186692264349,
+                  "control_work_J": 0,
+                  "time": 6.40833333333329,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177765.297934776,
+                "integrated_loss_J": 8723.598007841143,
+                "residual_J": -175.53024052962428
+              },
+              {
+                "state": {
+                  "position": [
+                    56.94723237203648,
+                    100,
+                    6.449330218640584e-18
+                  ],
+                  "velocity": [
+                    6.360872420579127,
+                    0,
+                    -1.2830131453804327e-18
+                  ],
+                  "pitch": 0.15104244634548097,
+                  "roll": 0,
+                  "heading": -2.0170395828558697e-19,
+                  "pitch_rate": -0.011642804854390953,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 8887.290848367595,
+                  "drive_heat_J": 5.3808780445580116,
+                  "control_work_J": 0,
+                  "time": 6.608333333333278,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177658.9490469031,
+                "integrated_loss_J": 8831.318775808153,
+                "residual_J": -174.1583604355401
+              },
+              {
+                "state": {
+                  "position": [
+                    58.210352962283864,
+                    100,
+                    6.151572018813089e-18
+                  ],
+                  "velocity": [
+                    6.270939966061783,
+                    0,
+                    -1.4077405187057268e-18
+                  ],
+                  "pitch": 0.14873566299829985,
+                  "roll": 0,
+                  "heading": -2.244863650942911e-19,
+                  "pitch_rate": -0.01134354659638662,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 8991.30424718172,
+                  "drive_heat_J": 5.384603148241143,
+                  "control_work_J": 0,
+                  "time": 6.808333333333267,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177558.12692036523,
+                "integrated_loss_J": 8933.48974509578,
+                "residual_J": -172.8095176857605
+              },
+              {
+                "state": {
+                  "position": [
+                    59.45582878626674,
+                    100,
+                    5.809959092087382e-18
+                  ],
+                  "velocity": [
+                    6.184389380789643,
+                    0,
+                    -1.8636196144743392e-18
+                  ],
+                  "pitch": 0.14654862123270346,
+                  "roll": 0,
+                  "heading": -3.0134254163608083e-19,
+                  "pitch_rate": -0.010472144026174064,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 9090.125823998307,
+                  "drive_heat_J": 5.387953145690183,
+                  "control_work_J": 0,
+                  "time": 7.008333333333256,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177462.4495459588,
+                "integrated_loss_J": 9030.492897987318,
+                "residual_J": -171.48373920065933
+              },
+              {
+                "state": {
+                  "position": [
+                    60.68431418581084,
+                    100,
+                    5.4542204501757084e-18
+                  ],
+                  "velocity": [
+                    6.100996533608532,
+                    0,
+                    -1.7977544695377275e-18
+                  ],
+                  "pitch": 0.14457973459500276,
+                  "roll": 0,
+                  "heading": -2.9466570905825723e-19,
+                  "pitch_rate": -0.009188118788258006,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 9184.153162994435,
+                  "drive_heat_J": 5.390670570657039,
+                  "control_work_J": 0,
+                  "time": 7.208333333333244,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177371.51940774813,
+                "integrated_loss_J": 9122.726061386797,
+                "residual_J": -170.1807140118617
+              },
+              {
+                "state": {
+                  "position": [
+                    61.896416903171975,
+                    100,
+                    5.066302898904973e-18
+                  ],
+                  "velocity": [
+                    6.020522014130931,
+                    0,
+                    -1.7980672156827444e-18
+                  ],
+                  "pitch": 0.14289621178986173,
+                  "roll": 0,
+                  "heading": -2.9865636425918747e-19,
+                  "pitch_rate": -0.007642471176631987,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 9273.78162551355,
+                  "drive_heat_J": 5.392660134483318,
+                  "control_work_J": 0,
+                  "time": 7.408333333333233,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177284.94142355636,
+                "integrated_loss_J": 9210.584873325386,
+                "residual_J": -168.89988626501872
+              },
+              {
+                "state": {
+                  "position": [
+                    63.092696396082616,
+                    100,
+                    4.731854957405604e-18
+                  ],
+                  "velocity": [
+                    5.942724345514203,
+                    0,
+                    -1.4322875864776093e-18
+                  ],
+                  "pitch": 0.14153656686662017,
+                  "roll": 0,
+                  "heading": -2.4101531607447936e-19,
+                  "pitch_rate": -0.005970162418978678,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 9359.390689589289,
+                  "drive_heat_J": 5.393960715967615,
+                  "control_work_J": 0,
+                  "time": 7.6083333333332215,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177202.3365417197,
+                "integrated_loss_J": 9294.449099807363,
+                "residual_J": -167.64054161970853
+              },
+              {
+                "state": {
+                  "position": [
+                    64.27366449737072,
+                    100,
+                    4.503017999861279e-18
+                  ],
+                  "velocity": [
+                    5.867370219974284,
+                    0,
+                    -9.22471596089492e-19
+                  ],
+                  "pitch": 0.14051432491453628,
+                  "roll": 0,
+                  "heading": -1.5722062210240673e-19,
+                  "pitch_rate": -0.00428558955375869,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 9441.33436359972,
+                  "drive_heat_J": 5.394698831450789,
+                  "control_work_J": 0,
+                  "time": 7.80833333333321,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177123.3512887724,
+                "integrated_loss_J": 9374.67301178877,
+                "residual_J": -166.40188258560374
+              },
+              {
+                "state": {
+                  "position": [
+                    65.43978783304841,
+                    100,
+                    4.259426892278515e-18
+                  ],
+                  "velocity": [
+                    5.794241886510772,
+                    0,
+                    -1.5169703196235115e-18
+                  ],
+                  "pitch": 0.13982237901028488,
+                  "roll": 0,
+                  "heading": -2.618065226367369e-19,
+                  "pitch_rate": -0.0026805045647579594,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 9519.935161076424,
+                  "drive_heat_J": 5.395040001468097,
+                  "control_work_J": 0,
+                  "time": 8.0083333333332,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 177047.66376887186,
+                "integrated_loss_J": 9451.579323889722,
+                "residual_J": -165.1830903851951
+              },
+              {
+                "state": {
+                  "position": [
+                    66.59149145688986,
+                    100,
+                    3.975341563377462e-18
+                  ],
+                  "velocity": [
+                    5.723141986865285,
+                    0,
+                    -1.4993737589290216e-18
+                  ],
+                  "pitch": 0.1394375650899983,
+                  "roll": 0,
+                  "heading": -2.6198437193592467e-19,
+                  "pitch_rate": -0.001223826760909528,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 9595.481036022504,
+                  "drive_heat_J": 5.395148613951819,
+                  "control_work_J": 0,
+                  "time": 8.208333333333188,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176974.98670725955,
+                "integrated_loss_J": 9525.45610329598,
+                "residual_J": -163.98337259123218
+              },
+              {
+                "state": {
+                  "position": [
+                    67.72916322839157,
+                    100,
+                    3.687772638757422e-18
+                  ],
+                  "velocity": [
+                    5.653896220921142,
+                    0,
+                    -1.3619107386260752e-18
+                  ],
+                  "pitch": 0.1393251278740825,
+                  "roll": 0,
+                  "heading": -2.408800383683361e-19,
+                  "pitch_rate": 0.0000371597281075016,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 9668.22466717607,
+                  "drive_heat_J": 5.39516117626249,
+                  "control_work_J": 0,
+                  "time": 8.408333333333177,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176905.0681450796,
+                "integrated_loss_J": 9596.556041049069,
+                "residual_J": -162.80199701810488
+              },
+              {
+                "state": {
+                  "position": [
+                    68.85315854080169,
+                    100,
+                    3.414420599997837e-18
+                  ],
+                  "velocity": [
+                    5.586354250455604,
+                    0,
+                    -1.5123158087630924e-18
+                  ],
+                  "pitch": 0.13944284626876124,
+                  "roll": 0,
+                  "heading": -2.707160593404461e-19,
+                  "pitch_rate": 0.001074665860068741,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 9738.384515419953,
+                  "drive_heat_J": 5.395173389902817,
+                  "control_work_J": 0,
+                  "time": 8.608333333333166,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176837.69036039824,
+                "integrated_loss_J": 9665.097509573248,
+                "residual_J": -161.63831317529548
+              },
+              {
+                "state": {
+                  "position": [
+                    69.96380508717586,
+                    100,
+                    3.0515790221874285e-18
+                  ],
+                  "velocity": [
+                    5.520389240159067,
+                    0,
+                    -1.6419355378209883e-18
+                  ],
+                  "pitch": 0.13974466787696302,
+                  "roll": 0,
+                  "heading": -2.974311169720483e-19,
+                  "pitch_rate": 0.0018776841818691902,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 9806.147139961284,
+                  "drive_heat_J": 5.395238663068653,
+                  "control_work_J": 0,
+                  "time": 8.808333333333154,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176772.66753088255,
+                "integrated_loss_J": 9731.266889183142,
+                "residual_J": -160.49176308108144
+              },
+              {
+                "state": {
+                  "position": [
+                    71.06140742921244,
+                    100,
+                    2.6942072739740528e-18
+                  ],
+                  "velocity": [
+                    5.455896402159388,
+                    0,
+                    -1.8294855561807207e-18
+                  ],
+                  "pitch": 0.14018376880273867,
+                  "roll": 0,
+                  "heading": -3.353226346923723e-19,
+                  "pitch_rate": 0.00244899893865814,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 9871.670332087804,
+                  "drive_heat_J": 5.3953743923368105,
+                  "control_work_J": 0,
+                  "time": 9.008333333333143,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176709.84258124756,
+                "integrated_loss_J": 9795.221718446985,
+                "residual_J": -159.36188345222035
+              },
+              {
+                "state": {
+                  "position": [
+                    72.14625120252862,
+                    100,
+                    2.3139029436041522e-18
+                  ],
+                  "velocity": [
+                    5.392790865592566,
+                    0,
+                    -1.7447953592361142e-18
+                  ],
+                  "pitch": 0.14071500757492653,
+                  "roll": 0,
+                  "heading": -3.2354218858520376e-19,
+                  "pitch_rate": 0.0028021503763329776,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 9935.086701477223,
+                  "drive_heat_J": 5.395572234477293,
+                  "control_work_J": 0,
+                  "time": 9.208333333333131,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176649.0835823298,
+                "integrated_loss_J": 9857.0942995135,
+                "residual_J": -158.24830130347982
+              },
+              {
+                "state": {
+                  "position": [
+                    73.21860685142673,
+                    100,
+                    1.995193090474393e-18
+                  ],
+                  "velocity": [
+                    5.331005143189783,
+                    0,
+                    -1.5075003159462296e-18
+                  ],
+                  "pitch": 0.14129678212172092,
+                  "roll": 0,
+                  "heading": -2.8277975268360433e-19,
+                  "pitch_rate": 0.0029585250590935834,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 9996.507423863688,
+                  "drive_heat_J": 5.395809215602899,
+                  "control_work_J": 0,
+                  "time": 9.40833333333312,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176590.27999418983,
+                "integrated_loss_J": 9916.995464088193,
+                "residual_J": -157.1507248687558
+              },
+              {
+                "state": {
+                  "position": [
+                    74.27873283558338,
+                    100,
+                    1.6871067167771554e-18
+                  ],
+                  "velocity": [
+                    5.2704864169635375,
+                    0,
+                    -1.2188313509134308e-18
+                  ],
+                  "pitch": 0.14189232789152492,
+                  "roll": 0,
+                  "heading": -2.3125595144131514e-19,
+                  "pitch_rate": 0.0029446933607814242,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 10056.025927227754,
+                  "drive_heat_J": 5.396057489362275,
+                  "control_work_J": 0,
+                  "time": 9.608333333333109,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176533.3389764477,
+                "integrated_loss_J": 9975.018275153825,
+                "residual_J": -156.06893154524732
+              },
+              {
+                "state": {
+                  "position": [
+                    75.32687829071,
+                    100,
+                    1.3800694500048278e-18
+                  ],
+                  "velocity": [
+                    5.2111938176452774,
+                    0,
+                    -1.9937514779238558e-18
+                  ],
+                  "pitch": 0.14247051503851624,
+                  "roll": 0,
+                  "heading": -3.825901602763164e-19,
+                  "pitch_rate": 0.0027900724706763575,
+                  "roll_rate": 0,
+                  "phase": 0,
+                  "omega": 0,
+                  "fuel_kg": 3.6,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 0,
+                  "aero_work_J": 10113.721354821662,
+                  "drive_heat_J": 5.396291556403638,
+                  "control_work_J": 0,
+                  "time": 9.808333333333097,
+                  "status": "flying",
+                  "gliding": true,
+                  "timing_bias": 0,
+                  "sweep_scale": 1
+                },
+                "mechanical_energy_J": 176478.1819271184,
+                "integrated_loss_J": 10031.241501724668,
+                "residual_J": -155.00275430371403
+              }
+            ]
+          }
+        ],
+        "tolerance": "10 s actual glides at 90%,100%,110% trim speed; positive descent, no arbitrary L/D band; energy residual <1 J + 0.5% losses; independently reconstructed acceleration within .02 m/s²."
+      }
+    }
+  ],
+  "diagnostics": {
+    "reference_equations": "Independent mass points, centroid, inertia, local sections and coupled E-L solve; no candidate counters/helpers used as expectations."
+  },
+  "geometry": []
+}

@@ -1,0 +1,88 @@
+{
+  "title": "Tinn / articulated-wing mechanical study",
+  "status": "Source-informed educational reduction, not a recovered buildable design or validated flight prediction",
+  "photographs_read": [
+    {
+      "photo": "02",
+      "reading": "Rounded Say span 7.4 ft; wrist span 3.7 ft, explicitly 50% b. Original area paragraph gives 6.61 square feet for the elliptical outer-wing estimate, and AR about 8.29. Broad arm and rounded tapering hand outline.",
+      "used": "aspect_ratio = 7.4^2/6.61; wrist_span_fraction = 3.7/7.4; full-size area = 14^2/aspect_ratio.",
+      "uncertainty": "Original 3.135 ft wing-length conversion is inconsistent and excluded. The paragraph compares 7.83 and discusses specimen/spreading variation; it is not an exact full-size design.",
+      "completion": "14 m span, hinge gap and four-segment elliptical taper from supplied engineering/helper."
+    },
+    {
+      "photo": "08",
+      "reading": "Goettingen 417a curved-plate chart with several axes, lift/drag/moment curves and Reynolds-number labels.",
+      "used": "Distinct curved outer and inner section models; do not digitise ambiguous curves.",
+      "uncertainty": "Multi-axis scales and exact anchors cannot support precise full-scale coefficient recovery.",
+      "completion": "Separate illustrative engineering.sections tables, endpoint-clamped linear interpolation, camber correction and induced drag."
+    },
+    {
+      "photo": "09",
+      "reading": "Bird flight as a guide to ornithopter design, Stanley J. O. Tinn 2007. Sine-wave ideal trajectory defines required vertical forces; candidate wing actions evaluated against it. Manned powered ornithopter intent.",
+      "used": "Real integrated motion, with the supplied required-versus-actual force comparison retained as analysis, not a flight prescription.",
+      "uncertainty": "Missing appendices and experimental support remain missing; historical handwritten revisions are not numerical requirements.",
+      "completion": "55 kg seated adult and all full-scale mass/engine numbers are supplied engineering assumptions."
+    },
+    {
+      "photo": "10",
+      "reading": "Straight and level flapping cannot literally be straight: lift and thrust vary cyclically and give undulating trajectory and airspeed. Bounding and ring-gait examples. Powered man-carrying application stated.",
+      "used": "Instantaneous local strip forces, no altitude hold, no direct thrust, no prescribed speed.",
+      "uncertainty": "Marginal handwriting does not specify usable force coefficients.",
+      "completion": "Quasi-steady strip model; ring vortices and wake dynamics are not simulated."
+    },
+    {
+      "photo": "11",
+      "reading": "At low speeds flap-down lasts longer than recovery; periods become equal near cruise. Resonant wing/wishbone/body assembly reduces inertial demand. Compare required force to candidate wing forces; sine trajectory smooths acceleration.",
+      "used": "Fixed quick-return setting theta=phi-b sin(phi), low speed b=.3, cruise b=0. Actual mass matrix and hinge elastic energy.",
+      "uncertainty": "Crossed-out text and marginal amendments cannot be resolved into a unique revised numerical model.",
+      "completion": "Explicit smooth phase curves, spring stiffness, damping and drive inertia are illustrative completions. Settings require reset."
+    },
+    {
+      "photo": "12",
+      "reading": "Wing and body inertia plus wishbone spring form a mass-spring system about common CG. Fore/aft wing motion changes CG/lift separation and pitching moment; tail assists. Arms and hands lift/advance, then pull down/back; recovery feathers close.",
+      "used": "Two-coordinate coupled Lagrange dynamics, moving whole-aircraft CG and body reaction, local velocity force directions, fore/aft sweep linkage and recovery overlap.",
+      "uncertainty": "No exact linkage dimensions, spring law or motion samples are recoverable here.",
+      "completion": "Two rigid sliding outer half-leaves, finite-difference helper derivatives and numerical phase laws; hidden overlap mass retained."
+    },
+    {
+      "photo": "13",
+      "reading": "Opening continuation explicitly says reduced area and span on recovery and adjustment of local incidences; handwritten camber addition. Later goshawk cross-sections have varying proportions and listed camber percentages.",
+      "used": "Exposure shortens span while retaining mass; twist and camber are independent geometric/section quantities.",
+      "uncertainty": "Goshawk dimensions and 13/10/9/6 percent cambers are not swan specifications.",
+      "completion": "Engineering camber means/amplitudes and curved three-point section geometry, not copied goshawk values."
+    },
+    {
+      "photo": "14",
+      "reading": "Arm section 5 to 6 percent thick, outer hand effectively thin slotted curved plate. Resolve local lift and drag into forward/vertical components; recovery closing reduces area/drag. Conventional tail or weight shift, advantageous fin/rudder. Takeoff swan arm/hand angles are examples.",
+      "used": "Broad inner sections, thin curved two-leaf outer panels, conventional stabiliser/elevator and fin/rudder, local force-vector calculation.",
+      "uncertainty": "Bird takeoff angles and stiffness changes are observations/suggestions, not an aircraft linkage specification.",
+      "completion": "5.5 percent inner thickness metadata, .8 percent outer metadata; supplied stroke amplitudes and finite pilot control coefficients. Visual structure is stylised, not stress-designed."
+    },
+    {
+      "photo": "15",
+      "reading": "Gliding horsepower Dg V / 550, then additional induced-drag, horizontal/vertical acceleration and wing-inertia power terms. Inertial power is zero without damping in ideal elastic exchange. Design algorithm refers to absent Appendix 12.",
+      "used": "Aerodynamic drag work, actual stored kinetic/spring energy, transmission/damping heat and pilot control work separately accounted. Motor-off dynamics coast honestly.",
+      "uncertainty": "No missing appendix or ambiguous handwritten dimensionless relation is reconstructed.",
+      "completion": "16 kW capped shaft, finite starting torque, 85 percent transmission, supplied BSFC and fuel budget; spring supplies no net cycle energy."
+    }
+  ],
+  "engineering": {
+    "dry_mass_including_pilot_kg": 173.9,
+    "pilot_mass_kg": 55,
+    "initial_fuel_kg": 3.6,
+    "initial_total_mass_kg": 177.5,
+    "moving_wing_mass_kg": 30,
+    "note": "Revised engineering mass allocations override stale 50 kg prose; helper retains all 30 kg during overlap. Engine, reflected inertia, section coefficients, fuel, pilot and all full-size dimensions are not attributed to Stanley.",
+    "glide": "Isolated frozen extended configuration; uses supplied zero-moment/weight-balance trim via Approach. No in-flight mode or linkage switching.",
+    "ground": "Reduced three-tyre pitch-zero runway constraint, effective phase inertia includes vertical CG motion; releases when computed normal load is negative. Rolling/braking loss finite; not suspension."
+  },
+  "visual_design": "Cream translucent-looking woven sail panels with fine rib/spar seams, graphite/silver triangulated frame, petrol-teal fairings, brass slow crank and bearings, finned rear engine and fuel vessel, exposed three-wheel undercarriage, seated helmeted pilot with bent limbs, harness, controls and instruments. Wing geometry remains owned by the supplied mechanism helper. Tyre rotation about lateral z, not a changing Euler axle.",
+  "limitations": [
+    "No CFD, unsteady wakes, stall hysteresis, overlap-flow modelling, local section pitching moment or structural validation.",
+    "Roll/yaw inertial coupling omitted as specified; force rotation is three-dimensional with no bank lift compensation.",
+    "Springs and ideal linkages are educational assumptions; material strength, fatigue, aeroelasticity and transmission packaging are not validated.",
+    "Fixed timing and glide mode are configuration settings, not free in-flight pose transitions.",
+    "Source photographs inspected afresh; no claim to recover unreadable marginal quantities or missing appendices.",
+    "File-only implementation: no execution, syntax checks, tests or browser verification performed."
+  ]
+}

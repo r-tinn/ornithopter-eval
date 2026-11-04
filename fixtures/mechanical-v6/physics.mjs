@@ -8,7 +8,7 @@ export function polar(region,alpha,camber){
   const table=E.sections[region],xs=E.sections.alpha_rad,a=clamp(alpha,xs[0],xs.at(-1));
   let i=1;while(i<xs.length-1&&a>xs[i])i++;
   const t=(a-xs[i-1])/(xs[i]-xs[i-1]),interp=ys=>ys[i-1]*(1-t)+ys[i]*t;
-  const cl=interp(table.cl_base)+table.camber_lift_gain*(camber-table.camber_reference)*Math.cos(a);
+  const cl=interp(table.cl_base)+table.camber_lift_gain*(camber-table.camber_reference)*Math.cos(alpha);
   return {cl,cd:interp(table.cd_base)+cl*cl/(Math.PI*E.aero.span_efficiency*AR)};
 }
 function evaluate(s,c,e,override){

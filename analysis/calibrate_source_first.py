@@ -13,6 +13,7 @@ from ornithopter_eval.runner import ROOT, write_json
 from ornithopter_eval.world_candidate import prepare_world
 
 MUTANTS = {
+    'clamped_camber_cosine': ('physics.mjs', 'Math.cos(alpha)', 'Math.cos(a)', 'power', 'power_limited_flight'),
     'no_recovery_closing': ('kinematics.mjs', 'return pose;', "for(const n of ['leftOuter','rightOuter'])pose[n].exposure=1;return pose;", 'wing', 'wing_cycle_force_coupling'),
     'shared_section_table': ('physics.mjs', 'const table=E.sections[region]', 'const table=E.sections.inner', 'wing', 'wing_cycle_force_coupling'),
     'no_spring_torque': ('physics.mjs', '-q.Up', '-0*q.Up', 'elastic', 'elastic_inertial_exchange'),

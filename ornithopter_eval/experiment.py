@@ -74,14 +74,14 @@ def _write_html(path, contents):
     temp.replace(path)
 
 
-def write_trial_pages(run):
+def write_trial_pages(run, grade_directory='grade'):
     evidence = []
-    report_path = run / "grade/report.json"
+    report_path = run / grade_directory / 'report.json'
     if report_path.exists():
         report = json.loads(report_path.read_text())
         evidence = report.get("evidence", {}).get("screenshots", [])
-    figures = ''.join('<figure><figcaption>'+html.escape(name)+'</figcaption><img src="grade/'+html.escape(name,quote=True)+'" alt="'+html.escape(name,quote=True)+'"></figure>' for name in evidence)
-    _write_html(run / "evidence.html",_page("Grader captures",'<p><a href="../../index.html">All trials</a></p><h1>Grader captures</h1><p>Captured after submission. No feedback was returned to the generator.</p>'+figures+('<p>No screenshots were captured; inspect the report and logs.</p>' if not figures else '')+'<p><a href="grade/report.json">Full report</a> · <a href="grade/grader.log">Grader log</a></p>'))
+    figures = ''.join('<figure><figcaption>'+html.escape(name)+'</figcaption><img src="'+grade_directory+'/'+html.escape(name,quote=True)+'" alt="'+html.escape(name,quote=True)+'"></figure>' for name in evidence)
+    _write_html(run / "evidence.html",_page("Grader captures",'<p><a href="../../index.html">All trials</a></p><h1>Grader captures</h1><p>Captured after submission. No feedback was returned to the generator.</p>'+figures+('<p>No screenshots were captured; inspect the report and logs.</p>' if not figures else '')+'<p><a href="'+grade_directory+'/report.json">Full report</a> · <a href="'+grade_directory+'/grader.log">Grader log</a></p>'))
     manifest = json.loads((run / "manifest.json").read_text())
     editable = manifest.get("editable_files")
     sources = []
@@ -125,10 +125,13 @@ def refresh_workbench(root, experiment):
         prefix = 'trials/'+t["id"]+'/'
         result = t.get("automated")
         score = str(result["passed"])+" / "+str(total) if result else '—'
-        simulator_label = 'Fly simulator ↗' if result and result['groups']['interaction']['passed'] else 'Open submission ↗'
+        simulator_label = 'Fly simulator ↗' if result and (version==SOURCE_FIRST_VERSION or result['groups']['interaction']['passed']) else 'Open submission ↗'
         actions = '<a target="_blank" rel="noopener" href="'+prefix+'submission/index.html">'+simulator_label+'</a><a href="'+prefix+'evidence.html">Captures</a><a href="'+prefix+'grade/report.json">Checks</a><a href="'+prefix+'transcript.txt">Transcript</a><a href="'+prefix+'submission-source.txt">Source</a>' if t["status"] not in ("prepared","running") else '<span class="muted">Artifacts appear when this attempt finishes.</span>'
         if (root / prefix / 'rollout-review.json').is_file():
             actions += '<a href="'+prefix+'rollout-review.json">File-only audit</a>'
+        if t.get('grade_directory') and t['grade_directory']!='grade':
+            actions=actions.replace('href="'+prefix+'grade/report.json"','href="'+prefix+t['grade_directory']+'/report.json"')
+            actions+='<a href="'+prefix+'grade/report.json">Initial grading</a>'
         reason = '<br><small>'+html.escape(t['reason'])+'</small>' if t.get('reason') else ''
         if version==SOURCE_FIRST_VERSION:
             protocol=(t.get('rollout_review') or {}).get('pass')

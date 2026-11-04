@@ -1,0 +1,13 @@
+{
+  "kind": "Post-submission grader transcription correction",
+  "reason": "The published task applies endpoint clamping to section-table interpolation, then uses cos(actual alpha) for the separate camber correction. The initial author fixture and oracle incorrectly reused the clamped table angle in that cosine. Both models used the literal published formula. Corrected only the reference/oracle; no submission or generation input changed.",
+  "changed_files": [
+    "fixtures/mechanical-v6/physics.mjs",
+    "grader/source-probes.mjs"
+  ],
+  "corrected_oracle_sha256": "76780f2fc141c21a15494b2a00a88aa5fd2dd0de138b8fe40fd4ab5b49142149",
+  "initial_results_retained": true,
+  "thresholds_changed": false,
+  "live_model_retries": 0,
+  "task_scores_changed": false
+}

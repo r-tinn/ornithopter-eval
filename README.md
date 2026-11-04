@@ -1,5 +1,9 @@
 # Ornithopter Eval
 
+**Latest comparison:** [GPT-5.6 Sol vs GPT-6.1 Sol, one run each](experiments/source-first-v6-20261104-one-each/index.html). Raw task checks: 3/6 vs 5/6. Read the [run findings](experiments/source-first-v6-20261104-one-each/CALIBRATION.md): 5.6 has a startup failure and strict chained-read policy flag; 6.1 reaches the deadline and fails powered takeoff. [Download all artifacts](experiments/source-first-v6-20261104-one-each/artifacts.zip).
+
+Serve this cohort with `python3 -m ornithopter_eval serve-artifacts experiments/source-first-v6-20261104-one-each --port 8772`. The gallery includes your separate human-rating UI.
+
 The runnable task is [source-first v6](candidate/mechanical-v6/TASK.md). A fresh
 model receives **nine original notebook photographs (02,08–15)** plus clearly
 labelled engineering completions:55kg adult pilot,14m span,**177.5kg initial all-up
@@ -18,7 +22,7 @@ balance,and actual wheel rotation axis. **File-only tool validity** is separate.
 **Human aesthetic realism (1–5)** is entered after you fly the simulator.
 [Exact probes/tolerances](candidate/mechanical-v6/GRADERS.md) and
 [positive/negative calibration](validation/source-first-v6/summary.json) are saved.
-The reference passes six; all seven targeted defects are rejected. This checks
+The corrected reference passes six; all eight targeted defects are rejected. The [post-submission oracle correction](validation/source-first-v6/corrected-camber-oracle/summary.json) and initial grading are both retained; model scores are unchanged. This checks
 an educational reduced model, not a flight-validated aircraft design.
 
 New CLI runs use **240 seconds**, **medium reasoning**, and **no benchmark token

@@ -1,0 +1,293 @@
+export const E={
+  "status": "source-first-v6 frozen educational reduction; no flight validation",
+  "span_m": 14,
+  "body_length_m": 6,
+  "pilot_height_m": 1.65,
+  "pilot_mass_kg": 55,
+  "mass_budget": [
+    {
+      "id": "pilot",
+      "kg": 55,
+      "basis": "Benchmark light adult, includes clothing and helmet"
+    },
+    {
+      "id": "wings",
+      "kg": 30,
+      "basis": "Favourable lightweight composite/ideal-linkage estimate; no structural validation"
+    },
+    {
+      "id": "fuselage",
+      "kg": 20,
+      "basis": "Favourable lightweight composite/ideal-linkage estimate; no structural validation"
+    },
+    {
+      "id": "tail",
+      "kg": 5,
+      "basis": "Favourable lightweight composite/ideal-linkage estimate; no structural validation"
+    },
+    {
+      "id": "landing_gear",
+      "kg": 8,
+      "basis": "Favourable lightweight composite/ideal-linkage estimate; no structural validation"
+    },
+    {
+      "id": "engine",
+      "kg": 16.9,
+      "basis": "Moster185 EFI published engine package; exclusions separately allocated"
+    },
+    {
+      "id": "transmission",
+      "kg": 12,
+      "basis": "Favourable lightweight composite/ideal-linkage estimate; no structural validation"
+    },
+    {
+      "id": "installation",
+      "kg": 8,
+      "basis": "Favourable lightweight composite/ideal-linkage estimate; no structural validation"
+    },
+    {
+      "id": "cockpit_controls",
+      "kg": 6,
+      "basis": "Favourable lightweight composite/ideal-linkage estimate; no structural validation"
+    },
+    {
+      "id": "tank",
+      "kg": 3,
+      "basis": "Favourable lightweight composite/ideal-linkage estimate; no structural validation"
+    },
+    {
+      "id": "contingency",
+      "kg": 10,
+      "basis": "Favourable lightweight composite/ideal-linkage estimate; no structural validation"
+    }
+  ],
+  "dry_mass_including_pilot_kg": 173.9,
+  "fuel": {
+    "initial_litres": 5,
+    "density_kg_litre": 0.72,
+    "initial_kg": 3.6,
+    "lower_heating_value_J_kg": 43200000,
+    "bsfc_kg_kWh": 0.55,
+    "idle_kg_s": 0.00005,
+    "planning_reserve_fraction": 0.1
+  },
+  "engine": {
+    "reference": "Vittorazi Moster185 EFI",
+    "published_peak_CV": 26,
+    "published_peak_W": 19122.9675,
+    "continuous_shaft_limit_W": 16000,
+    "transmission_efficiency": 0.85,
+    "equivalent_drive_inertia_kg_m2": 300,
+    "drive_friction_Nm_s": 12,
+    "maximum_wingbeat_hz": 1.1,
+    "governor_gain_W_per_rad_s": 20000,
+    "starting_torque_Nm": 3200,
+    "governor_torque_gain_Nm_s": 3000
+  },
+  "wing": {
+    "root_height_m": 0.8,
+    "hinge_offset_m": 0.25,
+    "taper_ratio": 0.35,
+    "inner_amplitude_rad": 0.3,
+    "outer_amplitude_rad": 0.36,
+    "outer_phase_lag_rad": 0,
+    "dihedral_rad": 0.08,
+    "incidence_rad": 0.06,
+    "inner_twist_amplitude_rad": 0.13,
+    "outer_twist_amplitude_rad": 0.3,
+    "strips_per_panel": 4,
+    "parked_phase_rad": 0,
+    "sweep_amplitude_m": 0.8,
+    "recovery_exposure": 0.65,
+    "camber_inner_base": 0.022,
+    "camber_inner_amplitude": 0.008,
+    "camber_outer_base": 0.045,
+    "camber_outer_amplitude": 0.015,
+    "inner_thickness_fraction": 0.055,
+    "outer_thickness_fraction": 0.008,
+    "timing_bias_low_speed": 0.3,
+    "timing_bias_cruise": 0
+  },
+  "aero": {
+    "section_lift_slope_per_rad": 6.283185307179586,
+    "zero_lift_alpha_rad": -0.07,
+    "roughness_multiplier": 1.5,
+    "span_efficiency": 0.75,
+    "stall_alpha_rad": 0.24,
+    "post_stall_transition_rad": 0.52,
+    "body_flat_plate_areas_m2": {
+      "pilot_and_cockpit": 0.28,
+      "fuselage_tail": 0.12,
+      "gear": 0.07,
+      "bracing_installation": 0.06
+    },
+    "section_profile_drag": [
+      [
+        0,
+        0.0072
+      ],
+      [
+        0.4,
+        0.007
+      ],
+      [
+        0.8,
+        0.0073
+      ],
+      [
+        1,
+        0.0084
+      ],
+      [
+        1.2,
+        0.0132
+      ],
+      [
+        1.4,
+        0.0194
+      ]
+    ]
+  },
+  "rho_kg_m3": 1.225,
+  "gravity_m_s2": 9.80665,
+  "wheel_radius_m": 0.23,
+  "gear_centres_m": [
+    [
+      2,
+      -1.2,
+      0
+    ],
+    [
+      -0.45,
+      -1.2,
+      -1.2
+    ],
+    [
+      -0.45,
+      -1.2,
+      1.2
+    ]
+  ],
+  "controls": {
+    "pitch_accel_rad_s2": 0.32,
+    "pitch_damping_per_s": 1.2,
+    "roll_accel_rad_s2": 0.55,
+    "roll_damping_per_s": 1,
+    "pitch_limits_rad": [
+      -0.35,
+      0.45
+    ],
+    "bank_limit_rad": 1.05,
+    "rudder_coefficient": 0.12,
+    "brake_force_N": 500,
+    "rolling_friction_coefficient": 0.015,
+    "safe_touchdown_sink_m_s": 2,
+    "safe_touchdown_speed_m_s": 22,
+    "safe_touchdown_bank_rad": 0.25
+  },
+  "source_derived": [
+    "aspect_ratio",
+    "wrist_span_fraction"
+  ],
+  "limitations": [
+    "Component masses except engine and pilot are estimates with a 15 kg allowance.",
+    "Engine continuous derating, BSFC, transmission losses and equivalent inertia are benchmark assumptions, not manufacturer ratings.",
+    "Airfoil anchors do not establish full-aircraft drag or unsteady performance.",
+    "A small strip model, not CFD, flexible-structure analysis or a human-flight engineering design."
+  ],
+  "coupled": {
+    "body_pitch_inertia_kg_m2": 320,
+    "spring_stiffness_Nm_rad": 28000,
+    "phase_damping_Nm_s": 5,
+    "pitch_damping_Nm_s": 140,
+    "pitch_control_torque_Nm": 220,
+    "tail_area_m2": 1.3,
+    "tail_arm_m": 2.8,
+    "tail_lift_slope": 3.5,
+    "tail_drag_coefficient": 0.018,
+    "derivative_step": 0.0002,
+    "integration_dt_max": 0.004166666666666667,
+    "mass_inner_per_side_kg": 7.5,
+    "mass_outer_per_side_kg": 7.5,
+    "tail_incidence_rad": -0.08
+  },
+  "sections": {
+    "alpha_rad": [
+      -1.57,
+      -0.6,
+      -0.3,
+      -0.15,
+      0,
+      0.15,
+      0.3,
+      0.6,
+      1.57
+    ],
+    "inner": {
+      "cl_base": [
+        0,
+        -0.75,
+        -0.85,
+        -0.48,
+        0.08,
+        0.9,
+        1,
+        0.82,
+        0
+      ],
+      "cd_base": [
+        1.8,
+        0.58,
+        0.16,
+        0.035,
+        0.016,
+        0.033,
+        0.12,
+        0.58,
+        1.8
+      ],
+      "camber_reference": 0.022,
+      "camber_lift_gain": 6
+    },
+    "outer": {
+      "cl_base": [
+        0,
+        -0.7,
+        -0.65,
+        -0.25,
+        0.26,
+        1.03,
+        1.15,
+        0.86,
+        0
+      ],
+      "cd_base": [
+        1.8,
+        0.56,
+        0.13,
+        0.028,
+        0.024,
+        0.034,
+        0.1,
+        0.56,
+        1.8
+      ],
+      "camber_reference": 0.045,
+      "camber_lift_gain": 8
+    },
+    "regime": "Favourable illustrative full-scale section tables; not measured, no low-Re graph extrapolation. Unsteady wake/stall hysteresis omitted."
+  },
+  "glide": {
+    "alpha_body_rad": 0.1493781345714254,
+    "pitch_rad": 0.013083471741963809,
+    "velocity_m_s": [
+      10.73000270276694,
+      -1.4715654536564426,
+      0
+    ],
+    "speed_m_s": 10.830441490806408,
+    "flight_path_rad": -0.1362946628294616,
+    "derived_lift_to_drag": 7.291556536683965,
+    "derivation": "Solve zero pitching moment, D/L flight-path angle and vertical balance in the frozen extended-wing model; not a notebook reading."
+  }
+};
