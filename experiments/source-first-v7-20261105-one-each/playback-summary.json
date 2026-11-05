@@ -1,0 +1,66 @@
+{
+  "kind": "Derived observations from original grader reports; no additional scored checks, model retries or repairs",
+  "rows": [
+    {
+      "model": "gpt-5.6-sol",
+      "elapsed_generation_seconds": 188.5,
+      "termination": "submitted",
+      "raw_task_checks": {
+        "passed": 4,
+        "total": 7
+      },
+      "file_only_validity": true,
+      "production_startup_ready": true,
+      "sustained_takeoff": null,
+      "observed_flight_and_bank_sequence_completed": false,
+      "final_status": "crashed",
+      "final_simulation_seconds": 17.55833333333266,
+      "final_clearance_m": -0.0043709636522337725,
+      "numerical_force_comparison_passed": false,
+      "maximum_force_residual_N": 1.279348836273917,
+      "powered_pitch_stability": true,
+      "slow_pitch_range_deg": [
+        3.74145700859503,
+        6.971757333239843
+      ],
+      "large_slow_pitch_reversals": 0,
+      "pitch_observation_error": null,
+      "failed_checks": [
+        "wing_cycle_force_coupling",
+        "wing_body_pitch_coupling",
+        "power_limited_flight"
+      ],
+      "report": "trials/gpt-5.6-sol-01/grade/report.json"
+    },
+    {
+      "model": "gpt-6.1-sol",
+      "elapsed_generation_seconds": 350.247,
+      "termination": "submitted",
+      "raw_task_checks": {
+        "passed": 6,
+        "total": 7
+      },
+      "file_only_validity": true,
+      "production_startup_ready": true,
+      "sustained_takeoff": null,
+      "observed_flight_and_bank_sequence_completed": false,
+      "final_status": "crashed",
+      "final_simulation_seconds": 17.549999999999326,
+      "final_clearance_m": 0,
+      "numerical_force_comparison_passed": true,
+      "maximum_force_residual_N": 9.11830110576515e-13,
+      "powered_pitch_stability": true,
+      "slow_pitch_range_deg": [
+        3.724027745144555,
+        6.997623922300601
+      ],
+      "large_slow_pitch_reversals": 0,
+      "pitch_observation_error": null,
+      "failed_checks": [
+        "power_limited_flight"
+      ],
+      "report": "trials/gpt-6.1-sol-01/grade/report.json"
+    }
+  ],
+  "human_aesthetics": "Ungraded; owner review required"
+}

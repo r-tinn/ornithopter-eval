@@ -1,10 +1,10 @@
 # Ornithopter Eval
 
-**Latest comparison:** [Eight-minute GPT-5.6 Sol vs GPT-6.1 Sol, one run each](experiments/source-first-v6-20261105-8min-one-each/index.html). Both simulators open and both tool audits pass. 5.6 completes the takeoff/flight-and-bank sequence but scores 3/6 component checks; 6.1 scores 5/6 but crashes before sustained takeoff. [Findings and exact scope](experiments/source-first-v6-20261105-8min-one-each/CALIBRATION.md) · [Download all artifacts](experiments/source-first-v6-20261105-8min-one-each/artifacts.zip).
+**Latest comparison:** [Source-first v7: GPT-5.6 Sol vs GPT-6.1 Sol, one run each](experiments/source-first-v7-20261105-one-each/index.html). Both simulators open and both file-only audits pass. 5.6 scores 4/7 and 6.1 scores 6/7. Both pass airborne pitch stability and wheel rotation, but both crash before sustained runway takeoff. [Findings and exact scope](experiments/source-first-v7-20261105-one-each/CALIBRATION.md) · [Download all artifacts](experiments/source-first-v7-20261105-one-each/artifacts.zip).
 
-Serve this cohort with `python3 -m ornithopter_eval serve-artifacts experiments/source-first-v6-20261105-8min-one-each --port 8773`. The gallery includes your separate human-rating UI.
+Serve this cohort with `python3 -m ornithopter_eval serve-artifacts experiments/source-first-v7-20261105-one-each --port 8774`. The gallery includes your separate human-rating UI.
 
-The next-run task is [source-first v7](candidate/mechanical-v7/TASK.md). A fresh
+The current task is [source-first v7](candidate/mechanical-v7/TASK.md). A fresh
 model receives **nine original notebook photographs (02,08–15)** plus clearly
 labelled engineering completions:55kg adult pilot,14m span,**177.5kg initial all-up
 mass**,16kW petrol engine and finite fuel. Read [the numerical assumptions and
@@ -14,7 +14,9 @@ The model creates a mechanical ornithopter in the supplied lightweight hills,
 trees and two-strip world. Shared geometry/mass bookkeeping supports closing
 outer leaves, distinct region camber and sections, real spring/wing inertia,
 whole-aircraft CG movement and coupled wing/body pitch. Forces and work follow
-the actual linked motion. No original-project runtime dependency.
+the actual linked motion. No original-project runtime dependency. Meadow now sits
+1.8 km from Valley, beyond the southern ridge on an elevated meadow; the world
+still uses 8,192 terrain triangles and 48 trees. [Scenery review](validation/world-relocation-20261105/README.md).
 
 There are **seven binary task graders**:wing-cycle forces/production geometry,
 elastic/inertial energy,wing/body pitch,finite-power takeoff/bank,unpowered glide

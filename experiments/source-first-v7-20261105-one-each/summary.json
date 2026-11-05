@@ -1,0 +1,123 @@
+{
+  "task_version": "mechanical-v7-source-first",
+  "status": "completed",
+  "models": {
+    "gpt-5.6-sol": {
+      "attempts": 1,
+      "graded_attempts": 1,
+      "mean_passed": 4.0,
+      "total_checks": 7,
+      "all_automated_passes": 0,
+      "range": [
+        4,
+        4
+      ],
+      "protocol_valid_attempts": 1,
+      "protocol_invalid_attempts": 0,
+      "aesthetic_realism": "Human review pending; separate from task score"
+    },
+    "gpt-6.1-sol": {
+      "attempts": 1,
+      "graded_attempts": 1,
+      "mean_passed": 6.0,
+      "total_checks": 7,
+      "all_automated_passes": 0,
+      "range": [
+        6,
+        6
+      ],
+      "protocol_valid_attempts": 1,
+      "protocol_invalid_attempts": 0,
+      "aesthetic_realism": "Human review pending; separate from task score"
+    }
+  },
+  "comparison_scope": "7 binary task outcomes; aggregates include valid file-only attempts only. Report protocol invalid rate separately. Human aesthetic realism 1\u20135 is separate and ungraded until the owner reviews.",
+  "full_task_pass_rate": null,
+  "note": "1 repeat(s) per model; exploratory, not a definitive ranking.",
+  "trials": [
+    {
+      "id": "gpt-5.6-sol-01",
+      "model": "gpt-5.6-sol",
+      "repeat": 1,
+      "status": "submitted",
+      "automated": {
+        "passed": 4,
+        "total": 7,
+        "failed": [
+          "wing_cycle_force_coupling",
+          "wing_body_pitch_coupling",
+          "power_limited_flight"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 3,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 1,
+            "total": 1
+          }
+        }
+      },
+      "reason": null,
+      "usage": {
+        "input_tokens": 495486,
+        "output_tokens": 14834,
+        "requests": 11
+      },
+      "elapsed_seconds": 188.5,
+      "rollout_review": {
+        "file": "rollout-review.json",
+        "pass": true,
+        "status": "completed",
+        "sha256": "a3f258c9a9afd64a68c9363c9dbeeb5b26e815301ae3cd51529a069ba36aaa96"
+      },
+      "grading_status": "failed"
+    },
+    {
+      "id": "gpt-6.1-sol-01",
+      "model": "gpt-6.1-sol",
+      "repeat": 1,
+      "status": "submitted",
+      "automated": {
+        "passed": 6,
+        "total": 7,
+        "failed": [
+          "power_limited_flight"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 5,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 1,
+            "total": 1
+          }
+        }
+      },
+      "reason": null,
+      "usage": {
+        "input_tokens": 634712,
+        "output_tokens": 17299,
+        "requests": 14
+      },
+      "elapsed_seconds": 350.247,
+      "rollout_review": {
+        "file": "rollout-review.json",
+        "pass": true,
+        "status": "completed",
+        "sha256": "07264618facd6ad6447911dc0e7cfdd8c307bba3b7a7ef9c76b98cda5f92c477"
+      },
+      "grading_status": "failed"
+    }
+  ]
+}
