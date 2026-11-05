@@ -1,8 +1,8 @@
 # Ornithopter Eval
 
-**Latest comparison:** [GPT-5.6 Sol vs GPT-6.1 Sol, one run each](experiments/source-first-v6-20261104-one-each/index.html). Raw task checks: 3/6 vs 5/6. Read the [run findings](experiments/source-first-v6-20261104-one-each/CALIBRATION.md): 5.6 has a startup failure and strict chained-read policy flag; 6.1 reaches the deadline and fails powered takeoff. [Download all artifacts](experiments/source-first-v6-20261104-one-each/artifacts.zip).
+**Latest comparison:** [Eight-minute GPT-5.6 Sol vs GPT-6.1 Sol, one run each](experiments/source-first-v6-20261105-8min-one-each/index.html). Both simulators open and both tool audits pass. 5.6 completes the takeoff/flight-and-bank sequence but scores 3/6 component checks; 6.1 scores 5/6 but crashes before sustained takeoff. [Findings and exact scope](experiments/source-first-v6-20261105-8min-one-each/CALIBRATION.md) · [Download all artifacts](experiments/source-first-v6-20261105-8min-one-each/artifacts.zip).
 
-Serve this cohort with `python3 -m ornithopter_eval serve-artifacts experiments/source-first-v6-20261104-one-each --port 8772`. The gallery includes your separate human-rating UI.
+Serve this cohort with `python3 -m ornithopter_eval serve-artifacts experiments/source-first-v6-20261105-8min-one-each --port 8773`. The gallery includes your separate human-rating UI.
 
 The runnable task is [source-first v6](candidate/mechanical-v6/TASK.md). A fresh
 model receives **nine original notebook photographs (02,08–15)** plus clearly

@@ -1,0 +1,48 @@
+{
+  "kind": "Derived observations from original grader reports; no additional scored checks or model retries",
+  "rows": [
+    {
+      "model": "gpt-5.6-sol",
+      "elapsed_generation_seconds": 248.284,
+      "termination": "submitted",
+      "raw_task_checks": {
+        "passed": 3,
+        "total": 6
+      },
+      "file_only_validity": true,
+      "production_startup_ready": true,
+      "sustained_takeoff": {
+        "time": 26.07499999999884,
+        "x": -200.08924357154868,
+        "clearance": 2.639598400649744
+      },
+      "observed_flight_and_bank_sequence_completed": true,
+      "final_status": "flying",
+      "final_simulation_seconds": 70.0000000000185,
+      "final_clearance_m": 26.528609528735867,
+      "numerical_force_comparison_passed": false,
+      "maximum_force_residual_N": 2.0222903833712076,
+      "report": "trials/gpt-5.6-sol-01/grade/report.json"
+    },
+    {
+      "model": "gpt-6.1-sol",
+      "elapsed_generation_seconds": 437.444,
+      "termination": "submitted",
+      "raw_task_checks": {
+        "passed": 5,
+        "total": 6
+      },
+      "file_only_validity": true,
+      "production_startup_ready": true,
+      "sustained_takeoff": null,
+      "observed_flight_and_bank_sequence_completed": false,
+      "final_status": "crashed",
+      "final_simulation_seconds": 17.537499999999326,
+      "final_clearance_m": 0,
+      "numerical_force_comparison_passed": true,
+      "maximum_force_residual_N": 4.717623866611174e-13,
+      "report": "trials/gpt-6.1-sol-01/grade/report.json"
+    }
+  ],
+  "human_aesthetics": "Ungraded; owner review required"
+}
