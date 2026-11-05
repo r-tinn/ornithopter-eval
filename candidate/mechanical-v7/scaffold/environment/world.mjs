@@ -3,7 +3,8 @@
 export const WORLD = Object.freeze({size:3600, segments:64, trees:48, frame_hz:60, pixel_ratio:1.25});
 export const AIRFIELDS = Object.freeze([
   Object.freeze({id:'valley',name:'Valley strip',x:-120,z:-165,length:650,width:28,start:-280}),
-  Object.freeze({id:'meadow',name:'Meadow strip',x:780,z:285,length:550,width:26,start:-230}),
+  // An elevated meadow beyond the southern ridge, about 1.8 km from Valley.
+  Object.freeze({id:'meadow',name:'Meadow strip',x:950,z:1280,length:550,width:26,start:-230}),
 ]);
 const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
 const smooth=(a,b,x)=>{const t=clamp((x-a)/(b-a),0,1);return t*t*(3-2*t);};

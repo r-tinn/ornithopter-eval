@@ -70,11 +70,12 @@ function draw(){
     }catch(error){fail(error);}
   }
   position.fromArray(renderState.position);camera.up.set(0,1,0);
-  const near=mode==='world'?2:.5;
+  const near=mode==='world'?20:.5;
   if(camera.near!==near){camera.near=near;camera.updateProjectionMatrix();}
+  scene.fog.near=mode==='world'?3000:700;scene.fog.far=mode==='world'?6500:3100;
   const yaw=-renderState.heading,scale=(physics.parameters.span_m||3)/3;
   if(mode==='world'){
-    desired.set(-700,650,1000);target.set(250,0,10);
+    desired.set(-1050,1400,2150);target.set(300,45,520);
   }else if(mode==='chase'){
     // Camera and airframe share the same interpolated pose, with no lateral offset
     // or independently delayed camera position / immediate look-at mismatch.

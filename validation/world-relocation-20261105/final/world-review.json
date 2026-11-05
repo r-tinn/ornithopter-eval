@@ -1,0 +1,32 @@
+{
+  "kind": "author fixture environment review, not a model trial",
+  "separation_m": 1798.0336481834815,
+  "meadow_elevation_m": 65.10744721043854,
+  "intervening_ridge_above_sightline_m": 180.63175668839395,
+  "max_runway_height_error_m": 3.969047313034935e-15,
+  "max_valley_surface_change_m": 7.105427357601002e-15,
+  "diagnostics": {
+    "mode": "chase",
+    "field": "meadow",
+    "ready": true,
+    "running": false,
+    "terrain_triangles": 8192,
+    "trees": 48,
+    "airfields": 2,
+    "draw_calls": 62,
+    "triangles": 9874,
+    "render_frames": 5,
+    "paused_rendering": "on demand",
+    "external_assets": false
+  },
+  "geometry": {
+    "triangles": 1594,
+    "wheel_clearances": [
+      -4.1723211552380235e-9,
+      -4.1723211552380235e-9,
+      -4.1723211552380235e-9
+    ],
+    "pilot_meshes": 17
+  },
+  "errors": []
+}
