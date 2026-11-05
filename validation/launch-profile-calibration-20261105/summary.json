@@ -1,0 +1,308 @@
+{
+  "kind": "Author-only launch-profile calibration; no model API calls or changed scores",
+  "executions": 106,
+  "distinct_low_throttle_settings": 20,
+  "reference_variants": {
+    "contact_implementations": [
+      "corrected impact measurement",
+      "corrected constrained midpoint plus inelastic landing momentum projection"
+    ],
+    "integration_dt_seconds": [
+      0.004166666666666667,
+      0.0020833333333333333,
+      0.0010416666666666667,
+      0.0005208333333333333
+    ]
+  },
+  "transition_horizontal_speed_m_s": 14,
+  "recommended_order": [
+    0.65,
+    0.625,
+    0.6375
+  ],
+  "individual_successes_of_eight": {
+    "0.5": 0,
+    "0.625": 6,
+    "0.6375": 7,
+    "0.65": 7,
+    "0.8": 0
+  },
+  "portfolio_successes_of_eight": 8,
+  "first_two_successes_of_eight": 8,
+  "third_profile_scope": "Extra alternative with 7/8 individual successes; adds no coverage beyond the first two in this finite reference matrix. Not a unique optimum.",
+  "matrix": [
+    {
+      "variant": "physics-contact-d1.mjs",
+      "profiles": [
+        {
+          "low_throttle": 0.65,
+          "pass": false,
+          "max_touchdown_sink_m_s": 2.3537940149271974,
+          "first_sustained_takeoff": null
+        },
+        {
+          "low_throttle": 0.625,
+          "pass": true,
+          "max_touchdown_sink_m_s": 1.5449571700346847,
+          "first_sustained_takeoff": {
+            "time": 49.37500000001233,
+            "x": -77.85285181326039
+          }
+        },
+        {
+          "low_throttle": 0.6375,
+          "pass": true,
+          "max_touchdown_sink_m_s": 1.9237921856212217,
+          "first_sustained_takeoff": {
+            "time": 47.18333333334392,
+            "x": -95.18313127083285
+          }
+        }
+      ]
+    },
+    {
+      "variant": "physics-contact-d2.mjs",
+      "profiles": [
+        {
+          "low_throttle": 0.65,
+          "pass": true,
+          "max_touchdown_sink_m_s": 1.9803633164311267,
+          "first_sustained_takeoff": {
+            "time": 46.374999999998906,
+            "x": -93.38205975278086
+          }
+        },
+        {
+          "low_throttle": 0.625,
+          "pass": true,
+          "max_touchdown_sink_m_s": 1.7221227835749775,
+          "first_sustained_takeoff": {
+            "time": 49.39166666666283,
+            "x": -79.76634111078127
+          }
+        },
+        {
+          "low_throttle": 0.6375,
+          "pass": false,
+          "max_touchdown_sink_m_s": 2.0723663748018533,
+          "first_sustained_takeoff": null
+        }
+      ]
+    },
+    {
+      "variant": "physics-contact-d4.mjs",
+      "profiles": [
+        {
+          "low_throttle": 0.65,
+          "pass": true,
+          "max_touchdown_sink_m_s": 1.6528255095054254,
+          "first_sustained_takeoff": {
+            "time": 46.44166666664497,
+            "x": -97.86380548993719
+          }
+        },
+        {
+          "low_throttle": 0.625,
+          "pass": false,
+          "max_touchdown_sink_m_s": 2.1507434358103454,
+          "first_sustained_takeoff": null
+        },
+        {
+          "low_throttle": 0.6375,
+          "pass": true,
+          "max_touchdown_sink_m_s": 1.809069125290842,
+          "first_sustained_takeoff": {
+            "time": 48.55833333330971,
+            "x": -81.05555014505998
+          }
+        }
+      ]
+    },
+    {
+      "variant": "physics-contact-d8.mjs",
+      "profiles": [
+        {
+          "low_throttle": 0.65,
+          "pass": true,
+          "max_touchdown_sink_m_s": 1.7094234908086872,
+          "first_sustained_takeoff": {
+            "time": 47.891666666633384,
+            "x": -92.08608138527119
+          }
+        },
+        {
+          "low_throttle": 0.625,
+          "pass": false,
+          "max_touchdown_sink_m_s": 2.4594637661496197,
+          "first_sustained_takeoff": null
+        },
+        {
+          "low_throttle": 0.6375,
+          "pass": true,
+          "max_touchdown_sink_m_s": 1.3622594268497805,
+          "first_sustained_takeoff": {
+            "time": 50.04166666663143,
+            "x": -75.64619348083654
+          }
+        }
+      ]
+    },
+    {
+      "variant": "physics-corrected-d1.mjs",
+      "profiles": [
+        {
+          "low_throttle": 0.65,
+          "pass": true,
+          "max_touchdown_sink_m_s": 1.788939165636621,
+          "first_sustained_takeoff": {
+            "time": 51.20833333334712,
+            "x": -93.34985500710569
+          }
+        },
+        {
+          "low_throttle": 0.625,
+          "pass": true,
+          "max_touchdown_sink_m_s": 1.7929133038572265,
+          "first_sustained_takeoff": {
+            "time": 55.84166666668414,
+            "x": -66.93373529576598
+          }
+        },
+        {
+          "low_throttle": 0.6375,
+          "pass": true,
+          "max_touchdown_sink_m_s": 1.7449373104248749,
+          "first_sustained_takeoff": {
+            "time": 53.48333333334893,
+            "x": -79.89494128798121
+          }
+        }
+      ]
+    },
+    {
+      "variant": "physics-corrected-d2.mjs",
+      "profiles": [
+        {
+          "low_throttle": 0.65,
+          "pass": true,
+          "max_touchdown_sink_m_s": 1.7107007397915728,
+          "first_sustained_takeoff": {
+            "time": 51.20833333332784,
+            "x": -92.34295673849374
+          }
+        },
+        {
+          "low_throttle": 0.625,
+          "pass": true,
+          "max_touchdown_sink_m_s": 1.6827247748658825,
+          "first_sustained_takeoff": {
+            "time": 55.84166666665696,
+            "x": -65.80031009126228
+          }
+        },
+        {
+          "low_throttle": 0.6375,
+          "pass": true,
+          "max_touchdown_sink_m_s": 1.6343062439997935,
+          "first_sustained_takeoff": {
+            "time": 53.483333333325774,
+            "x": -78.8082332292588
+          }
+        }
+      ]
+    },
+    {
+      "variant": "physics-corrected-d4.mjs",
+      "profiles": [
+        {
+          "low_throttle": 0.65,
+          "pass": true,
+          "max_touchdown_sink_m_s": 1.64766367587734,
+          "first_sustained_takeoff": {
+            "time": 51.2083333333073,
+            "x": -91.82273231951599
+          }
+        },
+        {
+          "low_throttle": 0.625,
+          "pass": true,
+          "max_touchdown_sink_m_s": 1.614200503095513,
+          "first_sustained_takeoff": {
+            "time": 55.833333333303095,
+            "x": -65.33692020743442
+          }
+        },
+        {
+          "low_throttle": 0.6375,
+          "pass": true,
+          "max_touchdown_sink_m_s": 1.569196095219172,
+          "first_sustained_takeoff": {
+            "time": 53.47499999997191,
+            "x": -78.38142239059738
+          }
+        }
+      ]
+    },
+    {
+      "variant": "physics-corrected-d8.mjs",
+      "profiles": [
+        {
+          "low_throttle": 0.65,
+          "pass": true,
+          "max_touchdown_sink_m_s": 1.6293707227104637,
+          "first_sustained_takeoff": {
+            "time": 51.208333333297034,
+            "x": -91.58376152256041
+          }
+        },
+        {
+          "low_throttle": 0.625,
+          "pass": true,
+          "max_touchdown_sink_m_s": 1.5987861670703127,
+          "first_sustained_takeoff": {
+            "time": 55.83333333329283,
+            "x": -65.0596142067121
+          }
+        },
+        {
+          "low_throttle": 0.6375,
+          "pass": true,
+          "max_touchdown_sink_m_s": 1.5494333370167785,
+          "first_sustained_takeoff": {
+            "time": 53.47499999996164,
+            "x": -78.10873883213672
+          }
+        }
+      ]
+    }
+  ],
+  "independent_power_probe_passes": 3,
+  "limits": "Finite deterministic sensitivity study on author implementations, not unseen-model validation or a statistical success probability. Contact dynamics remain sensitive. Some passing impacts are close to the 2 m/s threshold. No latched switch or throttle ramp is claimed tested.",
+  "evidence_sha256": {
+    "timestep-results.json": "4bf130cbf6e2bec73cfe54832ff084e88b2aa18e7fbb23b574e7ea88ee756d4c",
+    "extremes-results.json": "7c9e421c71d1911e44e297a176fcb07bc48222626a75ad54a6acf1bd60422a31",
+    "provenance.json": "dd9133c827397c6b0fcf8c291002e65d87effae64440a78ec1325e3f53810a13",
+    "reproduce.py": "c8619ee4583a9e12b28a234a2f2f80cedcc447fbebf86f7cd62489763e450811",
+    "coarse-results.json": "23dfe8dbd5797dec1675d0874510a59aeb692fe785f78851f79d72e6c07c19c3",
+    "coarse.json": "0e42f6999f7df98dcb4017cd5d92de222fde131d2cac13a22f54c2ea51a4bf5d",
+    "source-probes.snapshot.mjs": "76780f2fc141c21a15494b2a00a88aa5fd2dd0de138b8fe40fd4ab5b49142149",
+    "README.md": "2d3c780972b66c89ec5f9084b853d126d7b34d1f4a40c3d295854e8e541da27b",
+    "rounded-results.json": "02fe1fad1a97a998c3f3d65580fa21bf406fa09e66b57de0464b1cedd2d2cfbb",
+    "power-validation.mjs": "c7d6f8d5f281b02d0832e4ebbfa52d3ff37dd3beaabc95e45e0e33ff2d2be6f2",
+    "timestep.json": "f25f5d35a1067cabb05b28be1a0e48d24e9e4486ccce0dde9fbea881968ee39b",
+    "rounded.json": "4b6fe247a9cdf1ffb39e706cea44fd4f42486adc1d7f27484d16ca0f022f598a",
+    "recommended-profiles.json": "d95795361a1e187201f42c4bfd093992357156daac41076a546f470174d9b0c8",
+    "power-validation.json": "f92b8cec040829f5a533a1c17946ad65398b1fd68662a6dd0349caaaddf44e6e",
+    "search.mjs": "33e7295824d04276a8e5be66602e1a1e8b88eab423f80a6b3686465f74bc99f0",
+    "extremes.json": "272166ec50c2f2116e54939ca4f5fc9750ba2e7e651a1366244e65ba258d56e7",
+    "author/physics-contact-d8.mjs": "3a6e65dcf9ab41b98cff72df43e4b7f6b7c550d1c4d57f03e7a05f6c7e0786e8",
+    "author/physics-corrected-d8.mjs": "b0bd559f142f4531faf20e6a7820a59eb52dbf5aab896d4c55886430368c37c8",
+    "author/kinematics.mjs": "3c6bd41b1ff702216bc02bf2122623eb786fdd4e7040ba2cc3320548896308c7",
+    "author/physics-contact-d4.mjs": "97c3e429df10d7013b823021adf7f567a84923d8b7ba6f284209634af87abb1c",
+    "author/physics-corrected-d4.mjs": "bcca6b8f67d31a641efb086d0bce7cc23e9f76d5ab46970385640053b8471219",
+    "author/physics-contact-d2.mjs": "39006453ef0b1c66aa1ee4907935063b12cac92e28d8171b1ac250b3757601df",
+    "author/physics-corrected-d2.mjs": "d35107df6be453878fc723bb7554d53fbc2f9a6a28b99a8a8bf1a27e503e15d5",
+    "author/physics-contact-d1.mjs": "bcb5e61efd24c132b3e1296d47c43c9477799cddaf01949699888e1ea134e814",
+    "author/physics-corrected-d1.mjs": "a43b66e157551814bcab004f589f3c80c28d69c3b257f592eb53abbb455e4d30"
+  }
+}

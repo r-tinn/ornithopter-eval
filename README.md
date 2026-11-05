@@ -33,7 +33,10 @@ with unchanged physical constants and crash limits, including independent power,
 force, fuel and energy checks. The launch controller and numerical contact
 sensitivity still need calibration; this is not an official seven-pass reference.
 Treat the original positive calibration as insufficient evidence. Published
-model scores remain unchanged. The observed 5.6 slow oscillation is retained as a separate regression
+model scores remain unchanged. [Launch-profile calibration](validation/launch-profile-calibration-20261105/README.md)
+recommends 65%, 62.5%, 63.75% below 14 m/s, full throttle above it; the proposed
+portfolio covers all eight author contact/timestep variants. This controller
+proposal has not changed the frozen v7 grader. The observed 5.6 slow oscillation is retained as a separate regression
 example, without changing its published six-check score. These are checks on an
 educational reduced model, not a flight-validated aircraft design.
 

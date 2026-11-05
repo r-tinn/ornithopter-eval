@@ -1,0 +1,24 @@
+{
+  "kind": "Proposed launch-controller calibration, not a change to saved v7 grading",
+  "attempt_order": [
+    {
+      "low_speed_throttle": 0.65,
+      "transition_horizontal_speed_m_s": 14,
+      "high_speed_throttle": 1
+    },
+    {
+      "low_speed_throttle": 0.625,
+      "transition_horizontal_speed_m_s": 14,
+      "high_speed_throttle": 1
+    },
+    {
+      "low_speed_throttle": 0.6375,
+      "transition_horizontal_speed_m_s": 14,
+      "high_speed_throttle": 1
+    }
+  ],
+  "throttle_rule": "On each 1/120 s pilot exchange use low_speed_throttle when hypot(vx,vz)<14, otherwise 1. This is speed feedback, not a latched switch or ramp.",
+  "initial_state": "Each attempt resets to the original from-rest runway initial state; timing_bias=.3.",
+  "other_controls": "Original pitch controller and bank manoeuvre unchanged.",
+  "task_result": "Proposed pass if any full power-limited-flight attempt passes; retain all attempted failures. No change implemented to published grader."
+}
