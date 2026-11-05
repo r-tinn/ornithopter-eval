@@ -1,5 +1,11 @@
 # Current-instructions author-reference audit — 5 November 2026
 
+**Follow-up:** [additional control searches found crash-free takeoff witnesses](../takeoff-control-witnesses-20261105/README.md)
+with unchanged physical constants and crash limits. The historical audit below
+records why the original positive control was invalid; its lack of a witness
+was subsequently resolved. The full-throttle grader and launch robustness still
+need calibration.
+
 **The old positive reference does not establish that the current task is solvable.**
 Its input packet and physics fixture match the current v7 files, but its contact
 implementation violates the current touchdown requirement.

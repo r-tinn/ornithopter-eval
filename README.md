@@ -27,9 +27,12 @@ balance,actual wheel rotation axis,and neutral-input powered pitch stability. **
 The original labelled author reference scored seven passes and all nine deliberate
 defects were rejected. A [subsequent contact audit](validation/current-instructions-reference-20261105/README.md)
 found that the reference erased downward impact speed before judging touchdown.
-The corrected author candidate scores six passes and crashes on takeoff; a fully
-compliant takeoff reference has **not yet been established**. Treat the original
-positive calibration as insufficient evidence of task solvability. Published
+The corrected author candidate scores six passes under the original full-throttle
+launch. [Further author control searches demonstrate crash-free takeoff](validation/takeoff-control-witnesses-20261105/README.md)
+with unchanged physical constants and crash limits, including independent power,
+force, fuel and energy checks. The launch controller and numerical contact
+sensitivity still need calibration; this is not an official seven-pass reference.
+Treat the original positive calibration as insufficient evidence. Published
 model scores remain unchanged. The observed 5.6 slow oscillation is retained as a separate regression
 example, without changing its published six-check score. These are checks on an
 educational reduced model, not a flight-validated aircraft design.
