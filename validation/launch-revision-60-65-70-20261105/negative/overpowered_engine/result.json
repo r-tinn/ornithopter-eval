@@ -1,0 +1,1312 @@
+{
+  "physics": [
+    {
+      "id": "power_limited_flight",
+      "pass": false,
+      "detail": {
+        "pass": false,
+        "first_sustained_takeoff": null,
+        "runway_end_x": 205,
+        "final_state": {
+          "position": [
+            -399.9989917118782,
+            3.3955327686220196,
+            -165
+          ],
+          "velocity": [
+            0.017179891562020922,
+            -0.39638525237146327,
+            -2.1686838069611537e-17
+          ],
+          "pitch": 0,
+          "roll": 0,
+          "heading": 0,
+          "pitch_rate": 0,
+          "roll_rate": 0,
+          "phase": 0.5023648797899011,
+          "omega": 2.5233332024561532,
+          "fuel_kg": 3.5994908821175393,
+          "wheel_angle": 0.003930050478416164,
+          "shaft_work_J": 3215.1352306553654,
+          "aero_work_J": 93.15771773326838,
+          "drive_heat_J": 486.7827923113002,
+          "control_work_J": 0,
+          "time": 0.3583333333333333,
+          "status": "grounded",
+          "gliding": false,
+          "timing_bias": 0.3,
+          "sweep_scale": 1
+        },
+        "final_clearance_m": 0,
+        "shaft_work_integral_J": 3214.868086929625,
+        "fuel_used_kg": 0.0005091178824607745,
+        "expected_fuel_used_kg": 0.0005090770688364706,
+        "trajectory_force_correct": true,
+        "fuel_correct": true,
+        "trajectory": [
+          {
+            "state": {
+              "position": [
+                -399.9999999993506,
+                3.47398930387803,
+                -165
+              ],
+              "velocity": [
+                0,
+                -0.011133869697455097,
+                0
+              ],
+              "pitch": 0,
+              "roll": 0,
+              "heading": 0,
+              "pitch_rate": 0,
+              "roll_rate": 0,
+              "phase": 0.00030171154340641733,
+              "omega": 0.07240291225228285,
+              "fuel_kg": 3.599999288326491,
+              "wheel_angle": 0,
+              "shaft_work_J": 1.930953877801071,
+              "aero_work_J": 0.000064861473740295,
+              "drive_heat_J": 0.28971135245076723,
+              "control_work_J": 0,
+              "time": 0.008333333333333333,
+              "status": "grounded",
+              "gliding": false,
+              "timing_bias": 0.3,
+              "sweep_scale": 1
+            },
+            "clearance": 0,
+            "power_W": 463.37863841461024,
+            "independent_force_residual_N": 0,
+            "controls": {
+              "throttle": 0.7,
+              "pitch": 0.48,
+              "bank": 0,
+              "rudder": 0,
+              "brake": 0
+            }
+          },
+          {
+            "state": {
+              "position": [
+                -399.9999964940059,
+                3.466255896523769,
+                -165
+              ],
+              "velocity": [
+                0,
+                -0.14252304745155767,
+                0
+              ],
+              "pitch": 0,
+              "roll": 0,
+              "heading": 0,
+              "pitch_rate": 0,
+              "roll_rate": 0,
+              "phase": 0.05047158538339793,
+              "omega": 0.9224594658032086,
+              "fuel_kg": 3.5999452333387363,
+              "wheel_angle": 0,
+              "shaft_work_J": 323.0181464537468,
+              "aero_work_J": 1.1807480453337038,
+              "drive_heat_J": 48.60879890070414,
+              "control_work_J": 0,
+              "time": 0.10833333333333332,
+              "status": "grounded",
+              "gliding": false,
+              "timing_bias": 0.3,
+              "sweep_scale": 1
+            },
+            "clearance": 0,
+            "power_W": 5903.740581140535,
+            "independent_force_residual_N": 0,
+            "controls": {
+              "throttle": 0.7,
+              "pitch": 0.48,
+              "bank": 0,
+              "rudder": 0,
+              "brake": 0
+            }
+          },
+          {
+            "state": {
+              "position": [
+                -399.99997568482837,
+                3.4458593029302538,
+                -165
+              ],
+              "velocity": [
+                0.0000946290103958956,
+                -0.2626113349473752,
+                8.079343540623602e-20
+              ],
+              "pitch": 0,
+              "roll": 0,
+              "heading": 0,
+              "pitch_rate": 0,
+              "roll_rate": 0,
+              "phase": 0.18178524203377333,
+              "omega": 1.682664087679593,
+              "fuel_kg": 3.599811837763345,
+              "wheel_angle": 8.891625122711141e-7,
+              "shaft_work_J": 1163.4255490161493,
+              "aero_work_J": 14.250854704799641,
+              "drive_heat_J": 175.55619270087294,
+              "control_work_J": 0,
+              "time": 0.20833333333333356,
+              "status": "grounded",
+              "gliding": false,
+              "timing_bias": 0.3,
+              "sweep_scale": 1
+            },
+            "clearance": 0,
+            "power_W": 10769.050161149396,
+            "independent_force_residual_N": 0,
+            "controls": {
+              "throttle": 0.7,
+              "pitch": 0.48,
+              "bank": 0,
+              "rudder": 0,
+              "brake": 0
+            }
+          },
+          {
+            "state": {
+              "position": [
+                -399.9996336880966,
+                3.4144849204949885,
+                -165
+              ],
+              "velocity": [
+                0.00836117011828868,
+                -0.3600711716917432,
+                1.9286686357695907e-17
+              ],
+              "pitch": 0,
+              "roll": 0,
+              "heading": 0,
+              "pitch_rate": 0,
+              "roll_rate": 0,
+              "phase": 0.3818536042691543,
+              "omega": 2.2891143736070436,
+              "fuel_kg": 3.599611215364715,
+              "wheel_angle": 0.0012835457906129814,
+              "shaft_work_J": 2443.863067322587,
+              "aero_work_J": 57.21427280624761,
+              "drive_heat_J": 369.63853545954765,
+              "control_work_J": 0,
+              "time": 0.30833333333333346,
+              "status": "grounded",
+              "gliding": false,
+              "timing_bias": 0.3,
+              "sweep_scale": 1
+            },
+            "clearance": 0,
+            "power_W": 14650.331991085079,
+            "independent_force_residual_N": 0,
+            "controls": {
+              "throttle": 0.7,
+              "pitch": 0.48,
+              "bank": 0,
+              "rudder": 0,
+              "brake": 0
+            }
+          }
+        ],
+        "low_speed_throttle": 0.7,
+        "initial_state": {
+          "position": [
+            -400,
+            3.474035698550246,
+            -165
+          ],
+          "velocity": [
+            0,
+            0,
+            0
+          ],
+          "pitch": 0,
+          "roll": 0,
+          "heading": 0,
+          "pitch_rate": 0,
+          "roll_rate": 0,
+          "phase": 0,
+          "omega": 0,
+          "fuel_kg": 3.6,
+          "wheel_angle": 0,
+          "shaft_work_J": 0,
+          "aero_work_J": 0,
+          "drive_heat_J": 0,
+          "control_work_J": 0,
+          "time": 0,
+          "status": "grounded",
+          "gliding": false,
+          "timing_bias": 0.3,
+          "sweep_scale": 1
+        },
+        "tolerance": "Engine cap exact to .001 W; energy derivative 10 W + 0.3%; fuel 0.1 g + 1%; source forces within .1 N; >=2 s clear by .3 m before runway end, bank >.25 rad and >1 m clear at 70 s.",
+        "limits": [
+          {
+            "fuel": 0,
+            "throttle": 0,
+            "omega": 0,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 0,
+            "throttle": 0,
+            "omega": 0.1,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 0,
+            "throttle": 0,
+            "omega": 3,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 0,
+            "throttle": 0,
+            "omega": 5,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 0,
+            "throttle": 0,
+            "omega": 6,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 0,
+            "throttle": 0,
+            "omega": 8,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 0,
+            "throttle": 0.3,
+            "omega": 0,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 0,
+            "throttle": 0.3,
+            "omega": 0.1,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 0,
+            "throttle": 0.3,
+            "omega": 3,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 0,
+            "throttle": 0.3,
+            "omega": 5,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 0,
+            "throttle": 0.3,
+            "omega": 6,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 0,
+            "throttle": 0.3,
+            "omega": 8,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 0,
+            "throttle": 1,
+            "omega": 0,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 0,
+            "throttle": 1,
+            "omega": 0.1,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 0,
+            "throttle": 1,
+            "omega": 3,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 0,
+            "throttle": 1,
+            "omega": 5,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 0,
+            "throttle": 1,
+            "omega": 6,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 0,
+            "throttle": 1,
+            "omega": 8,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 3.6,
+            "throttle": 0,
+            "omega": 0,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 3.6,
+            "throttle": 0,
+            "omega": 0.1,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 3.6,
+            "throttle": 0,
+            "omega": 3,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 3.6,
+            "throttle": 0,
+            "omega": 5,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 3.6,
+            "throttle": 0,
+            "omega": 6,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 3.6,
+            "throttle": 0,
+            "omega": 8,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 3.6,
+            "throttle": 0.3,
+            "omega": 0,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 3.6,
+            "throttle": 0.3,
+            "omega": 0.1,
+            "power": 640,
+            "expected_power": 320,
+            "pass": false
+          },
+          {
+            "fuel": 3.6,
+            "throttle": 0.3,
+            "omega": 3,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 3.6,
+            "throttle": 0.3,
+            "omega": 5,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 3.6,
+            "throttle": 0.3,
+            "omega": 6,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 3.6,
+            "throttle": 0.3,
+            "omega": 8,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 3.6,
+            "throttle": 1,
+            "omega": 0,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          },
+          {
+            "fuel": 3.6,
+            "throttle": 1,
+            "omega": 0.1,
+            "power": 640,
+            "expected_power": 320,
+            "pass": false
+          },
+          {
+            "fuel": 3.6,
+            "throttle": 1,
+            "omega": 3,
+            "power": 19200,
+            "expected_power": 9600,
+            "pass": false
+          },
+          {
+            "fuel": 3.6,
+            "throttle": 1,
+            "omega": 5,
+            "power": 32000,
+            "expected_power": 16000,
+            "pass": false
+          },
+          {
+            "fuel": 3.6,
+            "throttle": 1,
+            "omega": 6,
+            "power": 32000,
+            "expected_power": 16000,
+            "pass": false
+          },
+          {
+            "fuel": 3.6,
+            "throttle": 1,
+            "omega": 8,
+            "power": 0,
+            "expected_power": 0,
+            "pass": true
+          }
+        ],
+        "derivatives": [
+          {
+            "phase": 0.4,
+            "actual_energy_rate_W": -582.2010993142612,
+            "expected_energy_rate_W": -582.8263113618465,
+            "pass": true
+          },
+          {
+            "phase": 1.7,
+            "actual_energy_rate_W": 2906.359208282083,
+            "expected_energy_rate_W": 2905.6301250444344,
+            "pass": true
+          },
+          {
+            "phase": 3.8,
+            "actual_energy_rate_W": 1497.3582758102564,
+            "expected_energy_rate_W": 1496.6171189829297,
+            "pass": true
+          }
+        ],
+        "attempts": [
+          {
+            "pass": false,
+            "first_sustained_takeoff": null,
+            "runway_end_x": 205,
+            "final_state": {
+              "position": [
+                -399.9989917118782,
+                3.3955327686220196,
+                -165
+              ],
+              "velocity": [
+                0.017179891562020922,
+                -0.39638525237146327,
+                -2.1686838069611537e-17
+              ],
+              "pitch": 0,
+              "roll": 0,
+              "heading": 0,
+              "pitch_rate": 0,
+              "roll_rate": 0,
+              "phase": 0.5023648797899011,
+              "omega": 2.5233332024561532,
+              "fuel_kg": 3.5994908821175393,
+              "wheel_angle": 0.003930050478416164,
+              "shaft_work_J": 3215.1352306553654,
+              "aero_work_J": 93.15771773326838,
+              "drive_heat_J": 486.7827923113002,
+              "control_work_J": 0,
+              "time": 0.3583333333333333,
+              "status": "grounded",
+              "gliding": false,
+              "timing_bias": 0.3,
+              "sweep_scale": 1
+            },
+            "final_clearance_m": 0,
+            "shaft_work_integral_J": 3214.868086929625,
+            "fuel_used_kg": 0.0005091178824607745,
+            "expected_fuel_used_kg": 0.0005090770688364706,
+            "trajectory_force_correct": true,
+            "fuel_correct": true,
+            "trajectory": [
+              {
+                "state": {
+                  "position": [
+                    -399.9999999993506,
+                    3.47398930387803,
+                    -165
+                  ],
+                  "velocity": [
+                    0,
+                    -0.011133869697455097,
+                    0
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "pitch_rate": 0,
+                  "roll_rate": 0,
+                  "phase": 0.00030171154340641733,
+                  "omega": 0.07240291225228285,
+                  "fuel_kg": 3.599999288326491,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 1.930953877801071,
+                  "aero_work_J": 0.000064861473740295,
+                  "drive_heat_J": 0.28971135245076723,
+                  "control_work_J": 0,
+                  "time": 0.008333333333333333,
+                  "status": "grounded",
+                  "gliding": false,
+                  "timing_bias": 0.3,
+                  "sweep_scale": 1
+                },
+                "clearance": 0,
+                "power_W": 463.37863841461024,
+                "independent_force_residual_N": 0,
+                "controls": {
+                  "throttle": 0.6,
+                  "pitch": 0.48,
+                  "bank": 0,
+                  "rudder": 0,
+                  "brake": 0
+                }
+              },
+              {
+                "state": {
+                  "position": [
+                    -399.9999964940059,
+                    3.466255896523769,
+                    -165
+                  ],
+                  "velocity": [
+                    0,
+                    -0.14252304745155767,
+                    0
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "pitch_rate": 0,
+                  "roll_rate": 0,
+                  "phase": 0.05047158538339793,
+                  "omega": 0.9224594658032086,
+                  "fuel_kg": 3.5999452333387363,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 323.0181464537468,
+                  "aero_work_J": 1.1807480453337038,
+                  "drive_heat_J": 48.60879890070414,
+                  "control_work_J": 0,
+                  "time": 0.10833333333333332,
+                  "status": "grounded",
+                  "gliding": false,
+                  "timing_bias": 0.3,
+                  "sweep_scale": 1
+                },
+                "clearance": 0,
+                "power_W": 5903.740581140535,
+                "independent_force_residual_N": 0,
+                "controls": {
+                  "throttle": 0.6,
+                  "pitch": 0.48,
+                  "bank": 0,
+                  "rudder": 0,
+                  "brake": 0
+                }
+              },
+              {
+                "state": {
+                  "position": [
+                    -399.99997568482837,
+                    3.4458593029302538,
+                    -165
+                  ],
+                  "velocity": [
+                    0.0000946290103958956,
+                    -0.2626113349473752,
+                    8.079343540623602e-20
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "pitch_rate": 0,
+                  "roll_rate": 0,
+                  "phase": 0.18178524203377333,
+                  "omega": 1.682664087679593,
+                  "fuel_kg": 3.599811837763345,
+                  "wheel_angle": 8.891625122711141e-7,
+                  "shaft_work_J": 1163.4255490161493,
+                  "aero_work_J": 14.250854704799641,
+                  "drive_heat_J": 175.55619270087294,
+                  "control_work_J": 0,
+                  "time": 0.20833333333333356,
+                  "status": "grounded",
+                  "gliding": false,
+                  "timing_bias": 0.3,
+                  "sweep_scale": 1
+                },
+                "clearance": 0,
+                "power_W": 10769.050161149396,
+                "independent_force_residual_N": 0,
+                "controls": {
+                  "throttle": 0.6,
+                  "pitch": 0.48,
+                  "bank": 0,
+                  "rudder": 0,
+                  "brake": 0
+                }
+              },
+              {
+                "state": {
+                  "position": [
+                    -399.9996336880966,
+                    3.4144849204949885,
+                    -165
+                  ],
+                  "velocity": [
+                    0.00836117011828868,
+                    -0.3600711716917432,
+                    1.9286686357695907e-17
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "pitch_rate": 0,
+                  "roll_rate": 0,
+                  "phase": 0.3818536042691543,
+                  "omega": 2.2891143736070436,
+                  "fuel_kg": 3.599611215364715,
+                  "wheel_angle": 0.0012835457906129814,
+                  "shaft_work_J": 2443.863067322587,
+                  "aero_work_J": 57.21427280624761,
+                  "drive_heat_J": 369.63853545954765,
+                  "control_work_J": 0,
+                  "time": 0.30833333333333346,
+                  "status": "grounded",
+                  "gliding": false,
+                  "timing_bias": 0.3,
+                  "sweep_scale": 1
+                },
+                "clearance": 0,
+                "power_W": 14650.331991085079,
+                "independent_force_residual_N": 0,
+                "controls": {
+                  "throttle": 0.6,
+                  "pitch": 0.48,
+                  "bank": 0,
+                  "rudder": 0,
+                  "brake": 0
+                }
+              }
+            ],
+            "low_speed_throttle": 0.6,
+            "initial_state": {
+              "position": [
+                -400,
+                3.474035698550246,
+                -165
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "pitch": 0,
+              "roll": 0,
+              "heading": 0,
+              "pitch_rate": 0,
+              "roll_rate": 0,
+              "phase": 0,
+              "omega": 0,
+              "fuel_kg": 3.6,
+              "wheel_angle": 0,
+              "shaft_work_J": 0,
+              "aero_work_J": 0,
+              "drive_heat_J": 0,
+              "control_work_J": 0,
+              "time": 0,
+              "status": "grounded",
+              "gliding": false,
+              "timing_bias": 0.3,
+              "sweep_scale": 1
+            },
+            "tolerance": "Engine cap exact to .001 W; energy derivative 10 W + 0.3%; fuel 0.1 g + 1%; source forces within .1 N; >=2 s clear by .3 m before runway end, bank >.25 rad and >1 m clear at 70 s."
+          },
+          {
+            "pass": false,
+            "first_sustained_takeoff": null,
+            "runway_end_x": 205,
+            "final_state": {
+              "position": [
+                -399.9989917118782,
+                3.3955327686220196,
+                -165
+              ],
+              "velocity": [
+                0.017179891562020922,
+                -0.39638525237146327,
+                -2.1686838069611537e-17
+              ],
+              "pitch": 0,
+              "roll": 0,
+              "heading": 0,
+              "pitch_rate": 0,
+              "roll_rate": 0,
+              "phase": 0.5023648797899011,
+              "omega": 2.5233332024561532,
+              "fuel_kg": 3.5994908821175393,
+              "wheel_angle": 0.003930050478416164,
+              "shaft_work_J": 3215.1352306553654,
+              "aero_work_J": 93.15771773326838,
+              "drive_heat_J": 486.7827923113002,
+              "control_work_J": 0,
+              "time": 0.3583333333333333,
+              "status": "grounded",
+              "gliding": false,
+              "timing_bias": 0.3,
+              "sweep_scale": 1
+            },
+            "final_clearance_m": 0,
+            "shaft_work_integral_J": 3214.868086929625,
+            "fuel_used_kg": 0.0005091178824607745,
+            "expected_fuel_used_kg": 0.0005090770688364706,
+            "trajectory_force_correct": true,
+            "fuel_correct": true,
+            "trajectory": [
+              {
+                "state": {
+                  "position": [
+                    -399.9999999993506,
+                    3.47398930387803,
+                    -165
+                  ],
+                  "velocity": [
+                    0,
+                    -0.011133869697455097,
+                    0
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "pitch_rate": 0,
+                  "roll_rate": 0,
+                  "phase": 0.00030171154340641733,
+                  "omega": 0.07240291225228285,
+                  "fuel_kg": 3.599999288326491,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 1.930953877801071,
+                  "aero_work_J": 0.000064861473740295,
+                  "drive_heat_J": 0.28971135245076723,
+                  "control_work_J": 0,
+                  "time": 0.008333333333333333,
+                  "status": "grounded",
+                  "gliding": false,
+                  "timing_bias": 0.3,
+                  "sweep_scale": 1
+                },
+                "clearance": 0,
+                "power_W": 463.37863841461024,
+                "independent_force_residual_N": 0,
+                "controls": {
+                  "throttle": 0.65,
+                  "pitch": 0.48,
+                  "bank": 0,
+                  "rudder": 0,
+                  "brake": 0
+                }
+              },
+              {
+                "state": {
+                  "position": [
+                    -399.9999964940059,
+                    3.466255896523769,
+                    -165
+                  ],
+                  "velocity": [
+                    0,
+                    -0.14252304745155767,
+                    0
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "pitch_rate": 0,
+                  "roll_rate": 0,
+                  "phase": 0.05047158538339793,
+                  "omega": 0.9224594658032086,
+                  "fuel_kg": 3.5999452333387363,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 323.0181464537468,
+                  "aero_work_J": 1.1807480453337038,
+                  "drive_heat_J": 48.60879890070414,
+                  "control_work_J": 0,
+                  "time": 0.10833333333333332,
+                  "status": "grounded",
+                  "gliding": false,
+                  "timing_bias": 0.3,
+                  "sweep_scale": 1
+                },
+                "clearance": 0,
+                "power_W": 5903.740581140535,
+                "independent_force_residual_N": 0,
+                "controls": {
+                  "throttle": 0.65,
+                  "pitch": 0.48,
+                  "bank": 0,
+                  "rudder": 0,
+                  "brake": 0
+                }
+              },
+              {
+                "state": {
+                  "position": [
+                    -399.99997568482837,
+                    3.4458593029302538,
+                    -165
+                  ],
+                  "velocity": [
+                    0.0000946290103958956,
+                    -0.2626113349473752,
+                    8.079343540623602e-20
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "pitch_rate": 0,
+                  "roll_rate": 0,
+                  "phase": 0.18178524203377333,
+                  "omega": 1.682664087679593,
+                  "fuel_kg": 3.599811837763345,
+                  "wheel_angle": 8.891625122711141e-7,
+                  "shaft_work_J": 1163.4255490161493,
+                  "aero_work_J": 14.250854704799641,
+                  "drive_heat_J": 175.55619270087294,
+                  "control_work_J": 0,
+                  "time": 0.20833333333333356,
+                  "status": "grounded",
+                  "gliding": false,
+                  "timing_bias": 0.3,
+                  "sweep_scale": 1
+                },
+                "clearance": 0,
+                "power_W": 10769.050161149396,
+                "independent_force_residual_N": 0,
+                "controls": {
+                  "throttle": 0.65,
+                  "pitch": 0.48,
+                  "bank": 0,
+                  "rudder": 0,
+                  "brake": 0
+                }
+              },
+              {
+                "state": {
+                  "position": [
+                    -399.9996336880966,
+                    3.4144849204949885,
+                    -165
+                  ],
+                  "velocity": [
+                    0.00836117011828868,
+                    -0.3600711716917432,
+                    1.9286686357695907e-17
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "pitch_rate": 0,
+                  "roll_rate": 0,
+                  "phase": 0.3818536042691543,
+                  "omega": 2.2891143736070436,
+                  "fuel_kg": 3.599611215364715,
+                  "wheel_angle": 0.0012835457906129814,
+                  "shaft_work_J": 2443.863067322587,
+                  "aero_work_J": 57.21427280624761,
+                  "drive_heat_J": 369.63853545954765,
+                  "control_work_J": 0,
+                  "time": 0.30833333333333346,
+                  "status": "grounded",
+                  "gliding": false,
+                  "timing_bias": 0.3,
+                  "sweep_scale": 1
+                },
+                "clearance": 0,
+                "power_W": 14650.331991085079,
+                "independent_force_residual_N": 0,
+                "controls": {
+                  "throttle": 0.65,
+                  "pitch": 0.48,
+                  "bank": 0,
+                  "rudder": 0,
+                  "brake": 0
+                }
+              }
+            ],
+            "low_speed_throttle": 0.65,
+            "initial_state": {
+              "position": [
+                -400,
+                3.474035698550246,
+                -165
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "pitch": 0,
+              "roll": 0,
+              "heading": 0,
+              "pitch_rate": 0,
+              "roll_rate": 0,
+              "phase": 0,
+              "omega": 0,
+              "fuel_kg": 3.6,
+              "wheel_angle": 0,
+              "shaft_work_J": 0,
+              "aero_work_J": 0,
+              "drive_heat_J": 0,
+              "control_work_J": 0,
+              "time": 0,
+              "status": "grounded",
+              "gliding": false,
+              "timing_bias": 0.3,
+              "sweep_scale": 1
+            },
+            "tolerance": "Engine cap exact to .001 W; energy derivative 10 W + 0.3%; fuel 0.1 g + 1%; source forces within .1 N; >=2 s clear by .3 m before runway end, bank >.25 rad and >1 m clear at 70 s."
+          },
+          {
+            "pass": false,
+            "first_sustained_takeoff": null,
+            "runway_end_x": 205,
+            "final_state": {
+              "position": [
+                -399.9989917118782,
+                3.3955327686220196,
+                -165
+              ],
+              "velocity": [
+                0.017179891562020922,
+                -0.39638525237146327,
+                -2.1686838069611537e-17
+              ],
+              "pitch": 0,
+              "roll": 0,
+              "heading": 0,
+              "pitch_rate": 0,
+              "roll_rate": 0,
+              "phase": 0.5023648797899011,
+              "omega": 2.5233332024561532,
+              "fuel_kg": 3.5994908821175393,
+              "wheel_angle": 0.003930050478416164,
+              "shaft_work_J": 3215.1352306553654,
+              "aero_work_J": 93.15771773326838,
+              "drive_heat_J": 486.7827923113002,
+              "control_work_J": 0,
+              "time": 0.3583333333333333,
+              "status": "grounded",
+              "gliding": false,
+              "timing_bias": 0.3,
+              "sweep_scale": 1
+            },
+            "final_clearance_m": 0,
+            "shaft_work_integral_J": 3214.868086929625,
+            "fuel_used_kg": 0.0005091178824607745,
+            "expected_fuel_used_kg": 0.0005090770688364706,
+            "trajectory_force_correct": true,
+            "fuel_correct": true,
+            "trajectory": [
+              {
+                "state": {
+                  "position": [
+                    -399.9999999993506,
+                    3.47398930387803,
+                    -165
+                  ],
+                  "velocity": [
+                    0,
+                    -0.011133869697455097,
+                    0
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "pitch_rate": 0,
+                  "roll_rate": 0,
+                  "phase": 0.00030171154340641733,
+                  "omega": 0.07240291225228285,
+                  "fuel_kg": 3.599999288326491,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 1.930953877801071,
+                  "aero_work_J": 0.000064861473740295,
+                  "drive_heat_J": 0.28971135245076723,
+                  "control_work_J": 0,
+                  "time": 0.008333333333333333,
+                  "status": "grounded",
+                  "gliding": false,
+                  "timing_bias": 0.3,
+                  "sweep_scale": 1
+                },
+                "clearance": 0,
+                "power_W": 463.37863841461024,
+                "independent_force_residual_N": 0,
+                "controls": {
+                  "throttle": 0.7,
+                  "pitch": 0.48,
+                  "bank": 0,
+                  "rudder": 0,
+                  "brake": 0
+                }
+              },
+              {
+                "state": {
+                  "position": [
+                    -399.9999964940059,
+                    3.466255896523769,
+                    -165
+                  ],
+                  "velocity": [
+                    0,
+                    -0.14252304745155767,
+                    0
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "pitch_rate": 0,
+                  "roll_rate": 0,
+                  "phase": 0.05047158538339793,
+                  "omega": 0.9224594658032086,
+                  "fuel_kg": 3.5999452333387363,
+                  "wheel_angle": 0,
+                  "shaft_work_J": 323.0181464537468,
+                  "aero_work_J": 1.1807480453337038,
+                  "drive_heat_J": 48.60879890070414,
+                  "control_work_J": 0,
+                  "time": 0.10833333333333332,
+                  "status": "grounded",
+                  "gliding": false,
+                  "timing_bias": 0.3,
+                  "sweep_scale": 1
+                },
+                "clearance": 0,
+                "power_W": 5903.740581140535,
+                "independent_force_residual_N": 0,
+                "controls": {
+                  "throttle": 0.7,
+                  "pitch": 0.48,
+                  "bank": 0,
+                  "rudder": 0,
+                  "brake": 0
+                }
+              },
+              {
+                "state": {
+                  "position": [
+                    -399.99997568482837,
+                    3.4458593029302538,
+                    -165
+                  ],
+                  "velocity": [
+                    0.0000946290103958956,
+                    -0.2626113349473752,
+                    8.079343540623602e-20
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "pitch_rate": 0,
+                  "roll_rate": 0,
+                  "phase": 0.18178524203377333,
+                  "omega": 1.682664087679593,
+                  "fuel_kg": 3.599811837763345,
+                  "wheel_angle": 8.891625122711141e-7,
+                  "shaft_work_J": 1163.4255490161493,
+                  "aero_work_J": 14.250854704799641,
+                  "drive_heat_J": 175.55619270087294,
+                  "control_work_J": 0,
+                  "time": 0.20833333333333356,
+                  "status": "grounded",
+                  "gliding": false,
+                  "timing_bias": 0.3,
+                  "sweep_scale": 1
+                },
+                "clearance": 0,
+                "power_W": 10769.050161149396,
+                "independent_force_residual_N": 0,
+                "controls": {
+                  "throttle": 0.7,
+                  "pitch": 0.48,
+                  "bank": 0,
+                  "rudder": 0,
+                  "brake": 0
+                }
+              },
+              {
+                "state": {
+                  "position": [
+                    -399.9996336880966,
+                    3.4144849204949885,
+                    -165
+                  ],
+                  "velocity": [
+                    0.00836117011828868,
+                    -0.3600711716917432,
+                    1.9286686357695907e-17
+                  ],
+                  "pitch": 0,
+                  "roll": 0,
+                  "heading": 0,
+                  "pitch_rate": 0,
+                  "roll_rate": 0,
+                  "phase": 0.3818536042691543,
+                  "omega": 2.2891143736070436,
+                  "fuel_kg": 3.599611215364715,
+                  "wheel_angle": 0.0012835457906129814,
+                  "shaft_work_J": 2443.863067322587,
+                  "aero_work_J": 57.21427280624761,
+                  "drive_heat_J": 369.63853545954765,
+                  "control_work_J": 0,
+                  "time": 0.30833333333333346,
+                  "status": "grounded",
+                  "gliding": false,
+                  "timing_bias": 0.3,
+                  "sweep_scale": 1
+                },
+                "clearance": 0,
+                "power_W": 14650.331991085079,
+                "independent_force_residual_N": 0,
+                "controls": {
+                  "throttle": 0.7,
+                  "pitch": 0.48,
+                  "bank": 0,
+                  "rudder": 0,
+                  "brake": 0
+                }
+              }
+            ],
+            "low_speed_throttle": 0.7,
+            "initial_state": {
+              "position": [
+                -400,
+                3.474035698550246,
+                -165
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "pitch": 0,
+              "roll": 0,
+              "heading": 0,
+              "pitch_rate": 0,
+              "roll_rate": 0,
+              "phase": 0,
+              "omega": 0,
+              "fuel_kg": 3.6,
+              "wheel_angle": 0,
+              "shaft_work_J": 0,
+              "aero_work_J": 0,
+              "drive_heat_J": 0,
+              "control_work_J": 0,
+              "time": 0,
+              "status": "grounded",
+              "gliding": false,
+              "timing_bias": 0.3,
+              "sweep_scale": 1
+            },
+            "tolerance": "Engine cap exact to .001 W; energy derivative 10 W + 0.3%; fuel 0.1 g + 1%; source forces within .1 N; >=2 s clear by .3 m before runway end, bank >.25 rad and >1 m clear at 70 s."
+          }
+        ],
+        "launch_protocol": {
+          "id": "v7-launch-60-65-70-v1",
+          "low_speed_throttles": [
+            0.6,
+            0.65,
+            0.7
+          ],
+          "transition_horizontal_speed_m_s": 14,
+          "high_speed_throttle": 1,
+          "rule": "At each pilot exchange use profile throttle below 14 m/s, full throttle otherwise; not a latched switch.",
+          "fresh_state_per_attempt": true,
+          "stop_on_first_full_pass": true
+        },
+        "passed_attempt": null,
+        "attempted_count": 3,
+        "stopped_early": false
+      }
+    }
+  ],
+  "diagnostics": {
+    "reference_equations": "Independent mass points, centroid, inertia, local sections and coupled E-L solve; no candidate counters/helpers used as expectations."
+  },
+  "geometry": []
+}

@@ -1,0 +1,82 @@
+{
+  "title": "Source-first mechanical ornithopter interpretation",
+  "source_derived": {
+    "aspect_ratio": {
+      "value": 8.2844175492,
+      "photo": "Unknown-2.jpg (02)",
+      "reading": "The rounded Say column gives full span b = 7.4 ft. The area paragraph gives S = 6.61 ft^2, so AR = b^2/S.",
+      "exclusion": "The inconsistent 3.135 ft wing-length conversion is not used."
+    },
+    "wrist_span_fraction": {
+      "value": 0.5,
+      "photo": "Unknown-2.jpg (02)",
+      "reading": "Rounded wrist-to-wrist span 3.7 ft divided by rounded full span 7.4 ft."
+    }
+  },
+  "photographs": [
+    {
+      "photo": "Unknown-2.jpg (02)",
+      "principle": "Swan-derived proportions: broad constant-chord inner arm and rounded, tapered outer hand wing; AR and wrist fraction are calculated only from the readable rounded span, wrist span and area paragraph.",
+      "unreadable_or_uncertain": "Faint annotations and the 3.135 ft conversion are uncertain/inconsistent.",
+      "completion": "The supplied 14 m span is scaled at the source AR; helper planform integration determines chord and two half-length outer leaves."
+    },
+    {
+      "photo": "Unknown-8.jpg (08)",
+      "principle": "Curved-plate section data are contextual rather than a reliable full-scale polar.",
+      "unreadable_or_uncertain": "Axes, curve identities and applicability of the photographed low-Re chart are ambiguous.",
+      "completion": "Inner and outer CL/CD arrays in engineering.json are explicitly illustrative assumptions, not digitised Stanley data."
+    },
+    {
+      "photo": "Unknown-9.jpg (09)",
+      "principle": "Compare candidate cyclic wing forces with a desired trajectory and pursue human-carrying powered mechanical flight.",
+      "unreadable_or_uncertain": "No complete numerical design algorithm or validated man-carrying solution is present.",
+      "completion": "The simulator computes local forces causally and only reports comparison residuals; it does not prescribe the trajectory."
+    },
+    {
+      "photo": "Unknown-10.jpg (10)",
+      "principle": "Straight flight has cyclic lift and thrust and consequently small undulation; the text explicitly discusses a powered man-carrying ornithopter.",
+      "unreadable_or_uncertain": "Marginal handwriting is not treated as a numerical specification.",
+      "completion": "A finite 16 kW assumed engine drives the integrated linkage and cyclic strip forces."
+    },
+    {
+      "photo": "Unknown-11.jpg (11)",
+      "principle": "Low-speed working/downstroke lasts longer, cruise timing is equal, candidate lift/drag should be compared with required values, and wing/body/wishbone act as a resonant system.",
+      "unreadable_or_uncertain": "Crossed-out and marginal revisions are uncertain.",
+      "completion": "A fixed timing-bias linkage and supplied spring, distributed masses and inertias provide the explicit mechanical realization."
+    },
+    {
+      "photo": "Unknown-12.jpg (12)",
+      "principle": "Fore/aft hand-wing motion, recovery closing, elastic/inertial exchange and reaction pitching about the common CG must be retained; local force direction follows actual motion.",
+      "unreadable_or_uncertain": "The prose supplies no complete phase curves, stiffness, inertia or closure geometry.",
+      "completion": "The supplied amplitudes, sliding overlap law, 30 kg wing allocation and geometric Jacobians fill those gaps."
+    },
+    {
+      "photo": "Unknown-13.jpg (13)",
+      "principle": "The opening continuation calls for reduced recovery area/span and adjusted local incidence; camber, incidence and thickness remain distinct properties.",
+      "unreadable_or_uncertain": "The later goshawk dimensions and 13/10/9/6 percent camber labels are an example, not swan specifications.",
+      "completion": "Independent twist, curved camber geometry and section coefficient adjustments are engineering completions."
+    },
+    {
+      "photo": "Unknown-14.jpg (14)",
+      "principle": "The arm section is about 5–6 percent thick; the outer hand is a thin slotted curved plate whose working and closing recovery actions differ. Conventional tail/rudder controls are compatible.",
+      "unreadable_or_uncertain": "No structural sizing, control derivatives or full outer-section polar is specified.",
+      "completion": "A 5.5 percent inner metadata value, thin overlapping leaves, supplied control coefficients and a conventional tail/fin/rudder are used."
+    },
+    {
+      "photo": "Unknown-15.jpg (15)",
+      "principle": "Glide work is D times V and powered work additionally includes aerodynamic, trajectory and wing-inertia terms; elastic storage cannot provide net energy.",
+      "unreadable_or_uncertain": "The photographed note is an accounting outline, not a complete set of equations or efficiencies.",
+      "completion": "Shaft work, aerodynamic dissipation, transmission/damping heat and control work are accumulated from physical torques and velocities."
+    }
+  ],
+  "engineering_assumptions": {
+    "mass": "55 kg seated pilot; 173.9 kg dry including pilot; 3.6 kg initial fuel; 177.5 kg initially wet, from the supplied revised budget.",
+    "power_and_structure": "The engine, transmission, spring, mass allocations, numerical phase curves, section tables and control derivatives are supplied favourable educational assumptions. Stanley did not specify this engine, pilot, coefficient data or buildable structure.",
+    "model_scope": "Quasi-steady strips, fixed finite-difference Jacobians, point masses, rigid leaves and a reduced three-wheel ground constraint. Section moments, overlap flow interaction, unsteady wakes, structural flexibility and roll/yaw inertial coupling are omitted."
+  },
+  "limitations": [
+    "This is not an experimentally validated aircraft prediction or a human-flight safety design.",
+    "Missing appendices, original section measurements and revised equations remain missing.",
+    "The mechanical aircraft translates source relationships rather than imitating an animal."
+  ]
+}

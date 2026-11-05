@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "client_request_id": "87b0ede9-8130-471b-be1c-2a27a569d276",
+  "endpoint": "https://api.openai.com/v1/responses",
+  "model": "gpt-5.4",
+  "started_utc": "2026-11-05T15:29:12.583266+00:00",
+  "timeout_seconds": 463.4860370839997,
+  "status": "succeeded",
+  "phase": "completed",
+  "request_index": 5,
+  "transport_started_utc": "2026-11-05T15:29:12.637720+00:00",
+  "request_bytes": 1664508,
+  "transport_elapsed_seconds": 4.112482,
+  "http_status": 200,
+  "response_headers": {
+    "content-type": "application/json",
+    "content-length": "5448",
+    "openai-processing-ms": "3173",
+    "openai-version": "2020-10-01",
+    "x-ratelimit-limit-requests": "15000",
+    "x-ratelimit-limit-tokens": "40000000",
+    "x-ratelimit-remaining-requests": "14999",
+    "x-ratelimit-remaining-tokens": "39996880",
+    "x-ratelimit-reset-requests": "4ms",
+    "x-ratelimit-reset-tokens": "4ms",
+    "x-request-id": "req_59e10204eeb842119cf1c539b0dfb85a"
+  },
+  "response_headers_seconds": 4.110539,
+  "response_bytes": 5448,
+  "finished_utc": "2026-11-05T15:29:16.747879+00:00",
+  "elapsed_seconds": 4.176754,
+  "worker_exit_code": 0
+}

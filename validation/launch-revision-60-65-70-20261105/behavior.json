@@ -1,0 +1,16 @@
+{
+  "reference_passes_all_seven": true,
+  "fresh_initial_states": true,
+  "first_failed_attempt_retained": true,
+  "stops_after_second_pass": true,
+  "attempted_profiles": [
+    0.6,
+    0.65
+  ],
+  "unattempted_profile": 0.7,
+  "model_api_calls": 0,
+  "all_failed_profiles_retained": true,
+  "static_power_failure_cannot_be_rescued": true,
+  "all_nine_mutants_rejected": true,
+  "historical_default_power_probe_unchanged": true
+}

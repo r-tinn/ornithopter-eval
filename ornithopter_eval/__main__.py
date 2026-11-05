@@ -140,7 +140,7 @@ def main(argv=None):
     cli_config=str(ROOT/'configs/source-first-v7.json')
     p = commands.add_parser("prepare");p.add_argument("output");p.add_argument("--config",default=cli_config)
     p = commands.add_parser("run");p.add_argument("--model",required=True);p.add_argument("--output",required=True);p.add_argument("--config",default=cli_config)
-    p = commands.add_parser("grade");p.add_argument("submission");p.add_argument("--output",required=True);p.add_argument("--node",default="node");p.add_argument('--task-version')
+    p = commands.add_parser("grade");p.add_argument("submission");p.add_argument("--output",required=True);p.add_argument("--node",default="node");p.add_argument('--task-version');p.add_argument('--grading-revision',choices=['v7-launch-60-65-70-v1'])
     p = commands.add_parser("judge");p.add_argument("submission");p.add_argument("grade_dir");p.add_argument("--model",required=True)
     p = commands.add_parser("review");p.add_argument("grade_dir");p.add_argument("review_json");p.add_argument("--reviewer",required=True)
     p = commands.add_parser("validate");p.add_argument("--node",default="node")
@@ -149,6 +149,7 @@ def main(argv=None):
     p.add_argument('--sequential',action='store_true',help='Generate and grade one model at a time, in the supplied order')
     p.add_argument('--stop-on-error',action='store_true',help='With --sequential, stop on the first infrastructure error or interrupted API deadline')
     p = commands.add_parser("export");p.add_argument("source");p.add_argument("destination")
+    p = commands.add_parser('regrade-experiment');p.add_argument('source');p.add_argument('--output',required=True);p.add_argument('--grading-revision',required=True,choices=['v7-launch-60-65-70-v1']);p.add_argument('--node',default='node')
     p = commands.add_parser("serve-artifacts");p.add_argument("directory");p.add_argument("--port",type=int,default=8765);p.add_argument("--original-camera",action="store_true",help="Serve the exact archived host without playback updates")
     p = commands.add_parser("prepare-world");p.add_argument("output");p.add_argument("--reference",action="store_true")
     p = commands.add_parser("prepare-piloted");p.add_argument("output");p.add_argument("--reference",action="store_true")
@@ -175,9 +176,13 @@ def main(argv=None):
         elif args.command == "grade":
             manifest=Path(args.submission).resolve().parent/'manifest.json'
             version=args.task_version or (json.loads(manifest.read_text()).get('task_version') if manifest.is_file() else TASK_VERSION)
-            report = grade_submission(args.submission,args.output,node=args.node,task_version=version)
+            report = grade_submission(args.submission,args.output,node=args.node,task_version=version,grading_revision=args.grading_revision)
             print(json.dumps(summarize(report),indent=2))
             return 1 if report["status"] in ("infrastructure_error","submission_timeout") else 0
+        elif args.command == 'regrade-experiment':
+            from .regrading import regrade_experiment
+            result=regrade_experiment(args.source,args.output,grading_revision=args.grading_revision,node=args.node)
+            print(json.dumps(result['models'],indent=2))
         elif args.command == "judge":
             print(json.dumps(summarize(judge(args.submission,args.grade_dir,args.model)),indent=2))
         elif args.command == "review":

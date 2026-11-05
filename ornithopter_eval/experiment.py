@@ -118,7 +118,7 @@ def refresh_workbench(root, experiment):
                "comparison_scope":f"{total} deterministic checks; {visual_count} visual checks remain separately ungraded.",
                "full_task_pass_rate":None,"note":f"{experiment['repeats']} repeat(s) per model; exploratory, not a definitive ranking.",
                "trials":experiment["trials"]}
-    for name in ('execution','stopped_after_trial','stop_reason'):
+    for name in ('execution','stopped_after_trial','stop_reason','grading_revision','regrade'):
         if name in experiment:
             summary[name]=experiment[name]
     write_json(root / "summary.json", summary)
@@ -147,6 +147,10 @@ def refresh_workbench(root, experiment):
         if version in SOURCE_FIRST_VERSIONS:
             protocol=(t.get('rollout_review') or {}).get('pass')
             reason+='<br><small>File-only: '+('pass' if protocol is True else 'fail — excluded from mean' if protocol is False else 'unavailable')+'</small>'
+        if 'launch_attempts' in t:
+            reason += '<br><small>Takeoff profiles: ' + (' → '.join(
+                str(round(a['low_speed_throttle']*100))+'% '+('pass' if a['pass'] else 'fail')
+                for a in t['launch_attempts']) or 'not reached') + '</small>'
         rows.append('<tr><td>'+str(t["repeat"])+'</td><td>'+html.escape(t["model"])+'</td><td><strong>'+score+'</strong></td><td><span class="badge">'+html.escape(t["status"])+'</span>'+reason+'</td><td class="actions">'+actions+'</td></tr>')
     effort = html.escape(str(experiment["config"].get("reasoning_effort","default")))
     tokens = str(experiment["config"]["max_output_tokens_total"])
@@ -160,6 +164,8 @@ def refresh_workbench(root, experiment):
                           '<strong>'+str(total)+' binary task graders.</strong> File-only validity is separate. Your 1–5 aesthetic realism score awaits your own flight and review. Means include protocol-valid attempts only; the table retains every raw result.')
     if (root / "CALIBRATION.md").exists():
         body = '<p><strong>Read before comparing scores:</strong> <a href="CALIBRATION.md">Calibration findings and known protocol problems</a>.</p>' + body
+    if experiment.get('regrade'):
+        body = '<p><strong>Regraded saved submissions · '+html.escape(experiment['grading_revision'])+'</strong><br>No new model generations. Takeoff profiles: 60%, 65%, 70% below 14 m/s, full throttle above it. Stop at the first complete pass. Original grades remain linked as “Initial grading”.</p>' + body
     _write_html(root / "index.html", _page("Frontier model calibration", body))
     return summary
 

@@ -1,0 +1,12 @@
+{
+  "grading_revision": "v7-launch-60-65-70-v1",
+  "reference_all_seven_pass": true,
+  "all_nine_targeted_mutants_rejected": true,
+  "early_stop_and_fresh_state_confirmed": true,
+  "model_api_calls": 0,
+  "grader_sha256": {
+    "grader/source-probes.mjs": "5713bede6ea375a91a86d8e66699a6eaa4ddc3919dcc09a36b1fd50b452d3fc2",
+    "grader/source-first-v7.mjs": "4358ec08841ca00e80479ff2e73c646f6e08bbb3bccc1e7ffe7b1a81b404c5af",
+    "ornithopter_eval/grading.py": "48c583c84f407408190fdcbea257039c30b86aec013937fcf1b2792c21375e47"
+  }
+}

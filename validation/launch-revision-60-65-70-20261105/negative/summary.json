@@ -1,0 +1,64 @@
+{
+  "task_version": "mechanical-v7-source-first",
+  "grading_revision": "v7-launch-60-65-70-v1",
+  "reference_physics": "validation/current-instructions-reference-20261105/corrected-physics.mjs",
+  "kind": "handwritten author mutant calibration, not model trials",
+  "all_targeted_defects_rejected": true,
+  "results": [
+    {
+      "variant": "clamped_camber_cosine",
+      "target": "power_limited_flight",
+      "rejected": true,
+      "evidence": "clamped_camber_cosine/result.json"
+    },
+    {
+      "variant": "no_recovery_closing",
+      "target": "wing_cycle_force_coupling",
+      "rejected": true,
+      "evidence": "no_recovery_closing/result.json"
+    },
+    {
+      "variant": "shared_section_table",
+      "target": "wing_cycle_force_coupling",
+      "rejected": true,
+      "evidence": "shared_section_table/result.json"
+    },
+    {
+      "variant": "no_spring_torque",
+      "target": "elastic_inertial_exchange",
+      "rejected": true,
+      "evidence": "no_spring_torque/result.json"
+    },
+    {
+      "variant": "no_inertial_pitch_reaction",
+      "target": "wing_body_pitch_coupling",
+      "rejected": true,
+      "evidence": "no_inertial_pitch_reaction/result.json"
+    },
+    {
+      "variant": "overpowered_engine",
+      "target": "power_limited_flight",
+      "rejected": true,
+      "evidence": "overpowered_engine/result.json"
+    },
+    {
+      "variant": "glide_altitude_hold",
+      "target": "unpowered_glide_balance",
+      "rejected": true,
+      "evidence": "glide_altitude_hold/result.json"
+    },
+    {
+      "variant": "wrong_wheel_axis",
+      "target": "wheel_rotation_axis",
+      "rejected": true,
+      "evidence": "wrong_wheel_axis/result.json"
+    },
+    {
+      "variant": "insufficient_pitch_damping",
+      "target": "powered_pitch_stability",
+      "rejected": true,
+      "evidence": "insufficient_pitch_damping/result.json"
+    }
+  ],
+  "live_model_calls": 0
+}

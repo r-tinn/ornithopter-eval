@@ -40,9 +40,14 @@ class SubmissionServer(http.server.BaseHTTPRequestHandler):
         self.wfile.write(body)
 
 
-def grade_submission(submission, output, node="node", timeout=None, task_version=TASK_VERSION):
+LAUNCH_GRADING_REVISION = 'v7-launch-60-65-70-v1'
+
+
+def grade_submission(submission, output, node="node", timeout=None, task_version=TASK_VERSION, grading_revision=None):
     if task_version not in (TASK_VERSION,*MECHANICAL_VERSIONS):
         raise ValueError('Unsupported task version')
+    if grading_revision is not None and (grading_revision != LAUNCH_GRADING_REVISION or task_version != LATEST_SOURCE_FIRST_VERSION):
+        raise ValueError('Unsupported grading revision for this task')
     if timeout is None:
         timeout = 180 if task_version==LATEST_SOURCE_FIRST_VERSION else 120 if task_version in MECHANICAL_VERSIONS else 60
     checks = checklist(task_version)
@@ -67,6 +72,8 @@ def grade_submission(submission, output, node="node", timeout=None, task_version
                              "Visual judgments cover five specific geometry/motion predicates; model judges can be wrong.",
                              "Real-clock callback timing is diagnostic only; it does not prove presented-frame rate or absence of jitter.",
                              "Browser isolation is defense in depth, not a hardened sandbox for hostile code."]}
+    if grading_revision:
+        report['grading_revision'] = grading_revision
     if task_version==PILOTED_VERSION:
         report['grader_sha256'].update({p.name:digest(p) for p in (ROOT/'grader').glob('piloted-*.mjs')})
         report['grader_sha256']['expected_engineering.json']=digest(ROOT/'candidate/mechanical-v5/engineering.json')
@@ -123,6 +130,8 @@ def grade_submission(submission, output, node="node", timeout=None, task_version
     thread.start()
     try:
         command = [node,str(ROOT / "grader" / browser_file), f"http://127.0.0.1:{server.server_port}",str(output),task_version]
+        if grading_revision:
+            command.append(grading_revision)
         with (output / "grader.log").open("w") as log:
             process = subprocess.Popen(command, env=clean_env, stdout=log, stderr=log, start_new_session=True)
             try:

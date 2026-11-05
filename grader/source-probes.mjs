@@ -1,6 +1,7 @@
 // Browser-only independent implementation of the published reduced model.
 // Never imports candidate geometry, mass helpers, counters or section functions as an oracle.
-export async function sourceProbe({E,scenario='all'}){
+export async function sourceProbe({E,scenario='all',launchProfiles=null}){
+  if(launchProfiles!==null&&(!Array.isArray(launchProfiles)||!launchProfiles.length||launchProfiles.some(t=>!Number.isFinite(t)||t<=0||t>1)))throw Error('Invalid launch profiles');
   const result={physics:[],diagnostics:{},geometry:[]};
   const add=(a,b)=>a.map((x,i)=>x+b[i]),sub=(a,b)=>a.map((x,i)=>x-b[i]),scale=(a,k)=>a.map(x=>x*k),dot=(a,b)=>a.reduce((v,x,i)=>v+x*b[i],0),norm=a=>Math.hypot(...a),unit=a=>norm(a)>1e-12?scale(a,1/norm(a)):[1,0,0],cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
   const names=['leftInner','leftOuter','rightInner','rightOuter'],AR=7.4**2/6.61,p={aspect_ratio:AR,wrist_span_fraction:.5,span_m:14,wing_area_m2:196/AR,dry_mass_kg:E.dry_mass_including_pilot_kg},h=E.coupled.derivative_step;
@@ -103,19 +104,36 @@ export async function sourceProbe({E,scenario='all'}){
         correct=want.power*E.engine.transmission_efficiency-want.wing_dissipation_W-E.coupled.phase_damping_Nm_s*s.omega**2-E.coupled.pitch_damping_Nm_s*s.pitch_rate**2+E.coupled.pitch_control_torque_Nm*c.pitch*s.pitch_rate;
       derivatives.push({phase,actual_energy_rate_W:rate,expected_energy_rate_W:correct,pass:near(rate,correct,10,.003)});
     }
-    const W=await import('/environment/world.mjs'),field=W.AIRFIELDS[0],e={...env,surfaceHeight:W.surfaceHeight};let s=initial({position:[field.x+field.start,2,field.z],velocity:[0,0,0],omega:0,phase:0,pitch:0,pitch_rate:0,timing_bias:.3,status:'grounded'});s.position[1]=P.contactHeight(s,e);
+    const W=await import('/environment/world.mjs'),field=W.AIRFIELDS[0];
+    function flightAttempt(lowThrottle){
+    const e={...env,wind:[0,0,0],surfaceHeight:W.surfaceHeight};let s=initial({position:[field.x+field.start,2,field.z],velocity:[0,0,0],omega:0,phase:0,pitch:0,pitch_rate:0,timing_bias:.3,status:'grounded'});s.position[1]=P.contactHeight(s,e);
+    const initialState=structuredClone(s);
     let shaftWork=0,fuelUsedExpected=0,firstSustained=null,clearFor=0,bad=false;const trajectory=[];
     for(let i=0;i<70*120;i++){
-      const c={...controls,throttle:1,pitch:clamp(4*(.12-s.pitch)-s.pitch_rate,-1,1),bank:s.time>62?clamp(2*(.45-s.roll)-s.roll_rate,-1,1):0},f=P.forces(s,c,e),before=s;
+      const throttle=launchProfiles===null?1:Math.hypot(s.velocity[0],s.velocity[2])<14?lowThrottle:1;
+      const c={...controls,throttle,pitch:clamp(4*(.12-s.pitch)-s.pitch_rate,-1,1),bank:s.time>62?clamp(2*(.45-s.roll)-s.roll_rate,-1,1):0},f=P.forces(s,c,e),before=s;
       if(!Number.isFinite(f.power)||f.power<0||f.power>16000.001){bad=true;break;}
       s=P.step(s,c,e,1/120);const f1=P.forces(s,c,e),work=(f.power+f1.power)/2/120;shaftWork+=work;fuelUsedExpected+=(work*E.fuel.bsfc_kg_kWh/3600000+E.fuel.idle_kg_s/120);
       const clearance=s.position[1]-P.contactHeight(s,e);clearFor=clearance>.3&&s.status==='flying'?clearFor+1/120:0;
       if(clearFor>=2&&firstSustained===null)firstSustained={time:s.time,x:s.position[0],clearance};
-      if(i%12===0)trajectory.push({state:s,clearance,power_W:f1.power,independent_force_residual_N:norm(sub(f1.force,expected(s,c,e).force))});
+      if(i%12===0)trajectory.push({state:s,clearance,power_W:f1.power,independent_force_residual_N:norm(sub(f1.force,expected(s,c,e).force)),...(launchProfiles===null?{}:{controls:{...c}})});
       if(!s.position.every(Number.isFinite)||s.status==='crashed'){bad=true;break;}
     }
     const fuelUsed=3.6-s.fuel_kg,runwayEnd=field.x+field.length/2,finalClearance=s.position[1]-P.contactHeight(s,e),trajectoryForceCorrect=trajectory.every(x=>x.independent_force_residual_N<.1),fuelCorrect=near(fuelUsed,fuelUsedExpected,.0001,.01),airborne=firstSustained!==null&&firstSustained.x<runwayEnd&&s.time>=69.99&&s.status==='flying'&&finalClearance>1&&s.roll>.25;
-    return {pass:!bad&&limits.every(x=>x.pass)&&derivatives.every(x=>x.pass)&&trajectoryForceCorrect&&fuelCorrect&&airborne,limits,derivatives,first_sustained_takeoff:firstSustained,runway_end_x:runwayEnd,final_state:s,final_clearance_m:finalClearance,shaft_work_integral_J:shaftWork,fuel_used_kg:fuelUsed,expected_fuel_used_kg:fuelUsedExpected,trajectory_force_correct:trajectoryForceCorrect,fuel_correct:fuelCorrect,trajectory,tolerance:'Engine cap exact to .001 W; energy derivative 10 W + 0.3%; fuel 0.1 g + 1%; source forces within .1 N; >=2 s clear by .3 m before runway end, bank >.25 rad and >1 m clear at 70 s.'};
+    return {pass:!bad&&limits.every(x=>x.pass)&&derivatives.every(x=>x.pass)&&trajectoryForceCorrect&&fuelCorrect&&airborne,first_sustained_takeoff:firstSustained,runway_end_x:runwayEnd,final_state:s,final_clearance_m:finalClearance,shaft_work_integral_J:shaftWork,fuel_used_kg:fuelUsed,expected_fuel_used_kg:fuelUsedExpected,trajectory_force_correct:trajectoryForceCorrect,fuel_correct:fuelCorrect,trajectory,...(launchProfiles===null?{}:{low_speed_throttle:lowThrottle,initial_state:initialState}),tolerance:'Engine cap exact to .001 W; energy derivative 10 W + 0.3%; fuel 0.1 g + 1%; source forces within .1 N; >=2 s clear by .3 m before runway end, bank >.25 rad and >1 m clear at 70 s.'};
+    }
+    if(launchProfiles===null)return {...flightAttempt(1),limits,derivatives};
+    const attempts=[];
+    for(const throttle of launchProfiles){
+      let attempt;
+      try{attempt=flightAttempt(throttle);}catch(error){attempt={pass:false,low_speed_throttle:throttle,error:String(error),trajectory:[]};}
+      attempts.push(attempt);
+      if(attempt.pass)break;
+    }
+    const winner=attempts.findIndex(a=>a.pass),selected=attempts[winner<0?attempts.length-1:winner];
+    return {...selected,pass:winner>=0,limits,derivatives,attempts,
+      launch_protocol:{id:'v7-launch-60-65-70-v1',low_speed_throttles:launchProfiles,transition_horizontal_speed_m_s:14,high_speed_throttle:1,rule:'At each pilot exchange use profile throttle below 14 m/s, full throttle otherwise; not a latched switch.',fresh_state_per_attempt:true,stop_on_first_full_pass:true},
+      passed_attempt:winner<0?null:winner+1,attempted_count:attempts.length,stopped_early:winner>=0&&attempts.length<launchProfiles.length};
   });
   if(scenario==='all'||scenario==='glide')await check('unpowered_glide_balance',async()=>{
     const cases=[];

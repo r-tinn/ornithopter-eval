@@ -1,0 +1,568 @@
+FILE: aircraft.mjs
+import {E} from './environment/engineering.mjs';
+import {wingPose} from './kinematics.mjs';
+import {makePanel,planform,chordFactor,PANEL_NAMES} from './environment/source-mechanism.mjs';
+
+export function createAircraft(T,p) {
+  const root=new T.Group();root.name='Tinn — experimental mechanical sailplane';
+  const a={root,wingPanels:{},wheels:[],wingDetails:[],wristLinks:[],T,p};
+  const material=(color,metalness=0,roughness=.6)=>new T.MeshStandardMaterial({color,metalness,roughness});
+  const steel=material(0x36464a,.78,.3),aluminium=material(0xb7c4c3,.75,.27);
+  const brass=material(0xb28a48,.65,.35),rubber=material(0x202829,0,.92);
+  const blue=material(0x174d58,.35,.42),leather=material(0x633d2e,0,.85);
+  const fabric=new T.MeshStandardMaterial({color:0xece2c6,side:T.DoubleSide,roughness:.91,metalness:0});
+  const outerFabric=new T.MeshStandardMaterial({color:0xf6eed9,side:T.DoubleSide,roughness:.88});
+  const skin=material(0xc78b65,0,.85),suit=material(0x344c5c,0,.95),visor=material(0x233b42,.5,.15);
+  function mesh(geo,mat,parent=root,pos=[0,0,0]) {
+    const m=new T.Mesh(geo,mat);m.position.fromArray(pos);parent.add(m);return m;
+  }
+  function ball(pos,size,mat,parent=root) {
+    const m=mesh(new T.SphereGeometry(1,16,10),mat,parent,pos);m.scale.set(...size);return m;
+  }
+  function box(pos,size,mat,parent=root) {return mesh(new T.BoxGeometry(...size),mat,parent,pos);}
+  function tube(from,to,r,mat,parent=root) {
+    const m=mesh(new T.CylinderGeometry(r,r,1,8),mat,parent);
+    setRod(m,from,to);return m;
+  }
+  function group(name,pos=[0,0,0],parent=root) {
+    const g=new T.Group();g.name=name;g.position.fromArray(pos);parent.add(g);return g;
+  }
+  function plate(points,mat,parent=root) {
+    const geo=new T.BufferGeometry(),v=[];
+    for(let i=1;i<points.length-1;i++)v.push(...points[0],...points[i],...points[i+1]);
+    geo.setAttribute('position',new T.Float32BufferAttribute(v,3));geo.computeVertexNormals();
+    return mesh(geo,mat,parent);
+  }
+  // Identity wing containers: production leaf vertices are mounted by the host.
+  for(const name of PANEL_NAMES) {
+    a[name]=group(name);a[name+'Surface']=group(name+'Surface',[0,0,0],a[name]);
+    a.wingPanels[name]=[];
+    const outer=name.endsWith('Outer');
+    for(let leaf=0;leaf<(outer?2:1);leaf++) {
+      const panel=mesh(makePanel(T,p,name,leaf),outer?outerFabric:fabric,a[name+'Surface']);
+      panel.name=name+' sliding material leaf '+leaf;a.wingPanels[name].push(panel);
+      // Ribs follow the same curved material coordinates, including overlap.
+      const count=outer?2:4;
+      for(let j=0;j<=count;j++)for(let u=0;u<2;u++) {
+        const rod=tube([0,0,0],[0,1,0],.009,brass,a[name]);
+        a.wingDetails.push({rod,name,leaf,t0:j/count,u0:u*.5,t1:j/count,u1:(u+1)*.5});
+      }
+      for(const u of [.08,.72])for(let j=0;j<count;j++) {
+        const rod=tube([0,0,0],[0,1,0],u<.1?.024:.013,steel,a[name]);
+        a.wingDetails.push({rod,name,leaf,t0:j/count,u0:u,t1:(j+1)/count,u1:u});
+      }
+      if(!outer) {
+        // The arm is a shallow structural airfoil, unlike the thin hand plate.
+        for(let j=0;j<=count;j++)for(let u=0;u<2;u++) {
+          const rod=tube([0,0,0],[0,1,0],.008,aluminium,a[name]);
+          a.wingDetails.push({rod,name,leaf,t0:j/count,u0:u*.5,t1:j/count,u1:(u+1)*.5,lower:true});
+        }
+      }
+    }
+  }
+  for(const side of [-1,1]) {
+    const bearing=ball([0,0,0],[.13,.13,.10],brass);
+    const cap=ball([0,0,0],[.065,.065,.11],steel);
+    const links=[.08,.72].map(u=>({u,rod:tube([0,0,0],[0,1,0],.028,aluminium)}));
+    a.wristLinks.push({side,bearing,cap,links});
+  }
+  // Triangulated, load-bearing keel and two longerons.
+  const stations=[[-3.05,-.05,.08],[-1.65,-.32,.22],[-.55,-.55,.36],[.65,-.55,.36],[1.8,-.5,.23],[2.35,-.4,.06]];
+  for(let side of [-1,1]) {
+    for(let i=0;i<stations.length-1;i++) {
+      const [x,y,z]=stations[i],[xx,yy,zz]=stations[i+1];
+      tube([x,y,side*z],[xx,yy,side*zz],.032,steel);
+      tube([x,y+.4,side*z*.8],[xx,yy+.4,side*zz*.8],.022,aluminium);
+      tube([x,y,side*z],[xx,yy+.4,side*zz*.8],.016,steel);
+      tube([x,y+.4,side*z*.8],[xx,yy,side*zz],.012,brass);
+    }
+  }
+  for(const [x,y,z] of stations) {
+    tube([x,y,-z],[x,y,z],.025,steel);
+    for(const sign of [-1,1])ball([x,y,sign*z],[.045,.045,.045],brass);
+  }
+  ball([1.6,-.42,0],[.85,.23,.32],blue);
+  ball([-.45,-.42,0],[.65,.20,.3],blue);
+  box([.4,-.35,0],[.55,.12,.52],leather);
+  const seat=box([.14,-.05,0],[.1,.58,.52],leather);seat.rotation.z=.12;
+  // Engine block, cooling fins, intake, exhaust and reduction drive.
+  box([-.8,-.03,0],[.5,.4,.44],steel);
+  for(let i=0;i<7;i++)box([-.8,.12+i*.035,0],[.48,.016,.48],aluminium);
+  tube([-.6,.3,0],[-.6,.52,0],.06,steel);
+  ball([-1.04,.12,.32],[.19,.16,.12],rubber);
+  tube([-.93,.02,-.28],[-1.35,-.15,-.4],.045,brass);
+  tube([-1.35,-.15,-.4],[-1.95,-.2,-.4],.085,steel);
+  a.crank=group('slow reduction crank',[-.15,.52,0]);
+  const disk=mesh(new T.CylinderGeometry(.28,.28,.09,32),brass,a.crank);disk.rotation.x=Math.PI/2;
+  for(let i=0;i<8;i++) {
+    const ang=i*Math.PI/4;
+    tube([0,0,0],[.24*Math.cos(ang),.24*Math.sin(ang),0],.018,steel,a.crank);
+  }
+  ball([-.15,.52,.07],[.075,.075,.045],aluminium);
+  tube([-.8,.1,.27],[-.15,.52,.27],.035,rubber);
+  tube([-.85,.2,.29],[-.2,.62,.29],.025,rubber);
+  // Hinge pylons and the visible paired spring housings.
+  for(const z of [-.25,.25]) {
+    tube([-.5,-.3,z],[0,.8,z],.055,steel);
+    tube([.65,-.3,z],[0,.8,z],.034,aluminium);
+    tube([-.35,.48,z],[-.35,.79,z],.075,brass);
+    for(let j=0;j<6;j++) {
+      const ring=mesh(new T.TorusGeometry(.078,.01,5,12),steel,root,[-.35,.5+j*.05,z]);
+      ring.rotation.x=Math.PI/2;
+    }
+    const hinge=mesh(new T.CylinderGeometry(.11,.11,.12,16),aluminium,root,[0,.8,z]);
+    hinge.rotation.z=Math.PI/2;
+  }
+  a.pushrods=[];
+  for(const side of [-1,1]) {
+    const rod=tube([0,0,0],[0,1,0],.022,aluminium);
+    a.pushrods.push({rod,side});
+  }
+  // Tail surfaces: a conventional long-arm stabilizer, separate elevator and rudder.
+  const tailMat=fabric.clone();tailMat.color.setHex(0xd8d9c6);
+  const stabilizer=group('fixed incidence stabilizer',[-2.8,0,0]);
+  stabilizer.rotation.z=E.coupled.tail_incidence_rad;
+  plate([[.29,0,-1.15],[.08,0,-1.3],[-.12,0,-1.15],[-.12,0,1.15],[.08,0,1.3],[.29,0,1.15]],tailMat,stabilizer);
+  tube([.10,0,-1.25],[.10,0,1.25],.024,steel,stabilizer);
+  a.elevator=group('elevator',[-.12,0,0],stabilizer);
+  plate([[0,0,-1.15],[-.19,0,-1.03],[-.19,0,1.03],[0,0,1.15]],fabric,a.elevator);
+  for(const z of [-.9,-.45,0,.45,.9])tube([.27,.005,z],[-.11,.005,z],.008,brass,stabilizer);
+  plate([[-2.55,0,0],[-2.8,.95,0],[-3.08,1.02,0],[-3.08,0,0]],tailMat);
+  tube([-2.55,0,0],[-2.8,.95,0],.022,steel);
+  a.rudder=group('rudder',[-3.08,0,0]);
+  plate([[0,0,0],[0,1.02,0],[-.3,.88,0],[-.38,.17,0]],fabric,a.rudder);
+  for(const z of [-.3,.3])tube([.35,-.28,z],[-3.02,.08,z*.1],.006,brass);
+  // Three actual tyres: geometry's axle is baked along z; spin remains about z.
+  for(let i=0;i<p.gear_centres.length;i++) {
+    const g=p.gear_centres[i],side=Math.sign(g[2])||1;
+    tube([i===0?1.5:-.25,-.35,i===0?0:side*.3],g,.042,steel);
+    tube([i===0?2.15:-1,-.4,i===0?0:side*.24],g,.026,aluminium);
+    const r=p.wheel_radius_m;
+    const tyreGeo=new T.LatheGeometry([
+      new T.Vector2(.13,-.065),new T.Vector2(r-.035,-.065),
+      new T.Vector2(r-.008,-.044),new T.Vector2(r,-.024),
+      new T.Vector2(r,.024),new T.Vector2(r-.008,.044),
+      new T.Vector2(r-.035,.065),new T.Vector2(.13,.065),
+      new T.Vector2(.13,-.065)
+    ],28);
+    tyreGeo.rotateX(Math.PI/2);
+    const tyre=mesh(tyreGeo,rubber,root,g);tyre.name='Tyre '+i;
+    a.wheels.push(tyre);
+    for(const z of [-.071,.071]) {
+      const hubGeo=new T.CylinderGeometry(.13,.13,.012,20);hubGeo.rotateX(Math.PI/2);
+      mesh(hubGeo,aluminium,tyre,[0,0,z]);
+      for(let j=0;j<6;j++) {
+        const t=j*Math.PI/3;
+        tube([.035*Math.cos(t),.035*Math.sin(t),z*1.1],[.116*Math.cos(t),.116*Math.sin(t),z*1.1],.009,steel,tyre);
+      }
+      ball([0,0,z*1.25],[.043,.043,.025],brass,tyre);
+    }
+  }
+  // Seated adult, not a scale marker: articulated limbs, boots, hands and harness.
+  a.pilot=group('pilot');
+  ball([.47,-.15,0],[.19,.18,.21],suit,a.pilot);
+  const torso=ball([.4,.17,0],[.19,.32,.24],suit,a.pilot);torso.rotation.z=.12;
+  tube([.42,.4,0],[.46,.53,0],.075,skin,a.pilot);
+  ball([.47,.66,0],[.125,.16,.125],skin,a.pilot);
+  ball([.445,.735,0],[.142,.13,.145],blue,a.pilot);
+  ball([.565,.685,0],[.043,.068,.115],visor,a.pilot);
+  ball([.6,.628,0],[.038,.028,.035],skin,a.pilot);
+  for(const z of [-.13,.13]) {
+    tube([.48,-.15,z],[.93,-.25,z],.085,suit,a.pilot);
+    ball([.93,-.25,z],[.085,.09,.08],suit,a.pilot);
+    tube([.93,-.25,z],[1.12,-.65,z],.065,suit,a.pilot);
+    ball([1.22,-.66,z],[.16,.075,.085],leather,a.pilot);
+    tube([.4,.33,z*1.7],[.68,.07,z*2],.062,suit,a.pilot);
+    tube([.68,.07,z*2],[.9,.04,z*.9],.047,suit,a.pilot);
+    ball([.9,.04,z*.9],[.065,.045,.044],skin,a.pilot);
+    tube([.3,.4,z],[.59,-.15,-z],.018,leather,a.pilot);
+  }
+  ball([.6,-.1,0],[.045,.045,.025],brass,a.pilot);
+  tube([.85,-.34,0],[.9,.05,0],.018,steel);
+  tube([.9,.05,-.15],[.9,.05,.15],.023,rubber);
+  box([1.17,.02,0],[.11,.27,.48],blue);
+  for(const z of [-.13,0,.13]) {
+    const gauge=mesh(new T.CylinderGeometry(.045,.045,.015,16),visor,root,[1.105,.06,z]);
+    gauge.rotation.z=Math.PI/2;
+    tube([1.093,.06,z],[1.093,.085,z+.012],.003,aluminium);
+  }
+  const glass=new T.MeshStandardMaterial({color:0xaed4d7,transparent:true,opacity:.22,roughness:.15,metalness:.1,side:T.DoubleSide,depthWrite:false});
+  const screen=ball([1.3,.19,0],[.25,.3,.33],glass);
+  screen.scale.x=.14;
+  tube([1.25,-.05,-.31],[1.25,.3,-.23],.012,brass);
+  tube([1.25,-.05,.31],[1.25,.3,.23],.012,brass);
+  // Fuel tank behind the seat, restrained by two steel bands.
+  ball([-1.38,-.05,0],[.31,.23,.26],blue);
+  for(const x of [-1.5,-1.25]) {
+    const band=mesh(new T.TorusGeometry(.24,.012,6,20),aluminium,root,[x,-.05,0]);band.rotation.y=Math.PI/2;
+  }
+  a.setRod=setRod;
+  function setRod(m,from,to) {
+    const A=new T.Vector3(...from),B=new T.Vector3(...to),d=B.clone().sub(A);
+    m.position.copy(A.add(B).multiplyScalar(.5));m.scale.y=d.length();
+    m.quaternion.setFromUnitVectors(new T.Vector3(0,1,0),d.normalize());
+  }
+  updateAircraft(a,{phase:0,gliding:false,wheel_angle:0},{});return a;
+}
+
+// Material-coordinate structural members track production geometry, not a
+// separate approximate flap animation.
+function wingPoint(p,pose,name,leaf,t,u,lower=false) {
+  const g=planform(p),side=name.startsWith('left')?-1:1,outer=name.endsWith('Outer');
+  const v=pose[name],inn=pose[side<0?'leftInner':'rightInner'];
+  const stroke=inn.stroke+(outer?v.stroke:0),mt=outer?leaf*.5+t*.5:t;
+  let chord=g.chord;
+  if(outer) {
+    const i=Math.min(3,Math.floor(mt*4)),aa=i/4,bb=(i+1)/4;
+    chord*=chordFactor(aa)+(chordFactor(bb)-chordFactor(aa))*(mt-aa)/(bb-aa);
+  }
+  const r=outer?g.outer*(leaf===0?t*.5:(v.exposure-.5)+t*.5):g.inner*t;
+  const thickness=lower?4*u*(1-u)*chord*E.wing.inner_thickness_fraction:0;
+  const x=(.25-u)*chord,y=4*u*(1-u)*chord*v.camber-(outer&&leaf===1?.008:0)+.006-thickness;
+  const xx=x*Math.cos(v.twist)-y*Math.sin(v.twist),yy=x*Math.sin(v.twist)+y*Math.cos(v.twist);
+  const rootY=E.wing.root_height_m+(outer?g.inner*Math.sin(inn.stroke):0);
+  const rootZ=g.hinge+(outer?g.inner*Math.cos(inn.stroke):0);
+  return [xx+v.sweep,rootY+r*Math.sin(stroke)+yy*Math.cos(stroke),side*(rootZ+r*Math.cos(stroke)-yy*Math.sin(stroke))];
+}
+export function updateAircraft(a,s,c={}) {
+  for(const wheel of a.wheels)wheel.rotation.set(0,0,-(s.wheel_angle??0));
+  a.rudder.rotation.y=-(c.rudder??0)*.4;
+  a.elevator.rotation.z=-(c.pitch??0)*.25;
+  a.crank.rotation.z=s.phase;
+  const pose=wingPose(s);
+  for(const d of a.wingDetails)a.setRod(d.rod,wingPoint(a.p,pose,d.name,d.leaf,d.t0,d.u0,d.lower),wingPoint(a.p,pose,d.name,d.leaf,d.t1,d.u1,d.lower));
+  for(const w of a.wristLinks) {
+    const inner=w.side<0?'leftInner':'rightInner',outer=w.side<0?'leftOuter':'rightOuter';
+    const pt=wingPoint(a.p,pose,inner,0,1,.25);
+    w.bearing.position.fromArray(pt);w.cap.position.fromArray(pt);
+    for(const link of w.links)a.setRod(link.rod,wingPoint(a.p,pose,inner,0,.94,link.u),wingPoint(a.p,pose,outer,0,.055,link.u));
+  }
+  for(const d of a.pushrods) {
+    const end=wingPoint(a.p,pose,d.side<0?'leftInner':'rightInner',0,.22,.25);
+    a.setRod(d.rod,[-.15+.2*Math.cos(s.phase),.52+.2*Math.sin(s.phase),d.side*.16],end);
+  }
+}
+
+
+FILE: interpretation.json
+{
+  "title": "Tinn — source-first mechanical sailplane",
+  "status": "Educational engineering completion; not a recovered buildable design or validated flight prediction.",
+  "source_review": "All nine supplied photographs were read directly for this implementation. Printed text is distinguished below from uncertain marginal handwriting.",
+  "source_geometry": {
+    "photograph": "Unknown-2.jpg (02)",
+    "rounded_span_ft": 7.4,
+    "rounded_wrist_to_wrist_ft": 3.7,
+    "original_area_ft2": 6.61,
+    "aspect_ratio_expression": "7.4 * 7.4 / 6.61",
+    "aspect_ratio": 8.284417549167927,
+    "wrist_span_fraction": 0.5,
+    "full_scale_area_expression": "14 * 14 / (7.4 * 7.4 / 6.61)",
+    "excluded": "The original 3.135 ft wing-length conversion is inconsistent with the metric and adjacent imperial entries. The later comparison AR 7.83 is not substituted for the requested original area paragraph."
+  },
+  "photographs": [
+    {
+      "id": "02",
+      "file": "Unknown-2.jpg",
+      "reading": "Mute swan planform: broad arm wing and approximately elliptical outer outline. Say span 7.4 ft, wrist span 3.7 ft = 50% b. Original paragraph gives total area 6.61 ft² and AR about 8.29; notes that outer area and spreading vary.",
+      "used": "Scaled proportions, broad inner chord, rounded tapered hand-wing outline.",
+      "uncertain": "Faint annotations and the inconsistent 3.135 ft entry are not numerical inputs.",
+      "completion": "14 m span; central hinge clearance, piecewise elliptical taper and area-normalized chord from the supplied helper."
+    },
+    {
+      "id": "08",
+      "file": "Unknown-8.jpg",
+      "reading": "Göttingen 417a curved-plate chart, several coefficient axes and curves, with Reynolds labels 168000 and 42000.",
+      "used": "Different arm and curved outer section treatments; explicit section-coefficient modelling.",
+      "uncertain": "Exact ordinate associations, curve digitisation and full-scale extrapolation are not reliable.",
+      "completion": "Separate illustrative inner/outer tables, linear alpha interpolation and nominal-AR induced drag are supplied assumptions, not Stanley's measured coefficients."
+    },
+    {
+      "id": "09",
+      "file": "Unknown-9.jpg",
+      "reading": "Bird flight as a guide to ornithopter design, © 2007 Stanley J.O. Tinn. An ideal sine-wave trajectory and cruising speed/frequency define required vertical forces; candidate wing actions can be compared using steady aerodynamics. Human-carrying powered flight is the aim.",
+      "used": "Pilot-carrying engineered airframe and an independent required-versus-candidate force comparison, never a prescribed flight path.",
+      "uncertain": "Handwritten historical update is not used as performance evidence.",
+      "completion": "55 kg seated adult, 16 kW motor, finite fuel and strip simulation are engineering additions."
+    },
+    {
+      "id": "10",
+      "file": "Unknown-10.jpg",
+      "reading": "Straight and level flapping flight cannot be exactly straight: cyclic lift and thrust create a gently undulating trajectory and varying airspeed. Bounding flight and ring-gait wakes are discussed.",
+      "used": "Instantaneous force integration permits small wingbeat responses without forcing an ideal trajectory.",
+      "uncertain": "Top handwritten revision and missing appendices are not reconstructed.",
+      "completion": "Quasi-steady local forces rather than resolved vortex rings or unsteady wake computation."
+    },
+    {
+      "id": "11",
+      "file": "Unknown-11.jpg",
+      "reading": "Low-speed downstroke lasts longer than recovery; cruise periods become equal. Wing–wishbone–body resonance can reduce inertial power. Candidate wing forces should be matched against required forces; fore/aft acceleration also exists.",
+      "used": "Fixed timing-bias linkage settings, spring energy and coupled wing/body inertia; comparison remains diagnostic.",
+      "uncertain": "Dense marginal trajectory revisions are not treated as final equations; quoted bird L/D is not imposed on this aircraft.",
+      "completion": "theta=phi-b*sin(phi), b=.3 or 0 only on reset, supplied spring and damping coefficients."
+    },
+    {
+      "id": "12",
+      "file": "Unknown-12.jpg",
+      "reading": "Wing and body masses oscillate about their common CG. Fore/aft wing movement changes CG-to-lift separation and pitching moment, with help from the tail. Arm and hand wings move up/forward on recovery and down/back against the air; fingers/feathers close on recovery.",
+      "used": "Local airflow and generalized force work, body-CG reaction, fore/aft sweep, independent articulated arm/hand motion and recovery overlap.",
+      "uncertain": "No quantitative mechanical linkage or complete inertial derivation is recoverable from this page.",
+      "completion": "Two rigid half-span sliding outer leaves retain all their mass; supplied mass-point helper and two-coordinate Lagrange equations replace unspecified biological mechanics."
+    },
+    {
+      "id": "13",
+      "file": "Unknown-13.jpg",
+      "reading": "Opening continuation explicitly says reduced area and span on recovery, then local incidences are adjusted; handwritten addition reads 'and camber'. Later goshawk sections show different local shapes and printed cambers 13%, 10%, 9%, 6%.",
+      "used": "Exposure, incidence and camber are separate variables; actual curved geometry changes with camber.",
+      "uncertain": "The goshawk's dimensions and percentages are not swan specifications.",
+      "completion": "Supplied small camber curves and twist curves are explicit mechanical hypotheses, not samples digitised from these drawings."
+    },
+    {
+      "id": "14",
+      "file": "Unknown-14.jpg",
+      "reading": "Arm thickness is 5–6%; outer hand is effectively a thin slotted curved plate. At low speed steep local motion rotates lift/drag into forward and vertical components. Partial recovery closure removes tip area/drag. Conventional tail, fin/rudder or weight shift are compatible. Takeoff wing angles and frequency changes describe birds.",
+      "used": "5.5% arm thickness metadata, thin curved sliding hand leaves, conventional long-arm stabilizer/elevator/fin/rudder, resolved local force direction.",
+      "uncertain": "Bird takeoff angles, 10% frequency increase and conjectured 20% stiffness increase are not imposed as an aircraft control schedule.",
+      "completion": "Three-wheel ground reduction and finite pilot controls; no free takeoff leap or automatic frequency schedule."
+    },
+    {
+      "id": "15",
+      "file": "Unknown-15.jpg",
+      "reading": "Glide baseline power is Dg*V, with imperial division by 550 for horsepower. Flapping adds aerodynamic, fore/aft, vertical and wing-inertia terms; ideal undamped inertia can exchange energy. Appendix 12 is referenced but absent.",
+      "used": "Aerodynamic dissipation, engine work, transmission/damping heat and pilot work are separately integrated. Springs store and return energy, never provide net fuel-free propulsion.",
+      "uncertain": "Marginal dimensional notes and unavailable design algorithm are not fabricated.",
+      "completion": "Finite shaft torque and 85% transmission; BSFC and idle consumption; RK2 numerical integration of actual translation and coupled coordinates."
+    }
+  ],
+  "engineering": {
+    "dry_mass_including_pilot_kg": 173.9,
+    "pilot_kg": 55,
+    "initial_fuel_kg": 3.6,
+    "initial_wet_mass_kg": 177.5,
+    "allocations": "Full supplied component budget exported unchanged through parameters.mass_budget.",
+    "stability": "Supplied passive pitch damping 1000 N m s/rad is a declared engineering addition; no neutral-input pitch or altitude autopilot.",
+    "motor_off": "Throttle removal coasts the same spring/inertia/air mechanism. It does not enter frozen glide.",
+    "glide": "Separate deliberately initialized extended, frozen, unpowered configuration uses the supplied derived glide trim, not the Approach preset.",
+    "approach": "Host preset is already-powered 16 m/s flight, pitch .1, omega 6, 90% throttle and low-speed timing bias. Its kinetic energy belongs to the initial state.",
+    "rendering": "Production leaf meshes use makePanel and host-mounted wingPose. Material-coordinate ribs and spars track those same curves. Actual tyre geometry has a baked lateral z axle and spins around z."
+  },
+  "limitations": [
+    "Favourable lightweight mass budget is not a structural substantiation or human-flight safety assessment.",
+    "No CFD, flexible aeroelasticity, unsteady wakes, stall hysteresis, leaf-overlap flow or section pitching moments.",
+    "Longitudinal moving-mass coupling is represented; roll/yaw inertial coupling is omitted as specified.",
+    "Ground contact is a reduced three-wheel constraint, not a suspension model. Rolling and braking dissipate energy; touchdown impulses are not an elastic bounce model.",
+    "Detailed tubes, spring housings and cockpit are visual engineering completions. No claim Stanley specified these materials, engine, pilot or numerical tables.",
+    "No execution, preview, test or empirical flight verification was performed under the file-only protocol."
+  ]
+}
+
+
+FILE: kinematics.mjs
+import {E} from './environment/engineering.mjs';
+// Mechanical linkage law. Phase is integrated, never read from a clock.
+export function wingPose(s) {
+  const w=E.wing,phi=s.gliding?0:s.phase,b=s.timing_bias??w.timing_bias_low_speed;
+  const theta=phi-b*Math.sin(phi),sn=Math.sin(theta),cs=Math.cos(theta),scale=s.sweep_scale??1;
+  const inner={stroke:w.dihedral_rad-(s.gliding?0:w.inner_amplitude_rad*sn),
+    twist:w.incidence_rad-(s.gliding?0:w.inner_twist_amplitude_rad*cs),
+    sweep:s.gliding?0:-.5*w.sweep_amplitude_m*sn*scale,exposure:1,
+    camber:w.camber_inner_base+(s.gliding?0:w.camber_inner_amplitude*cs)};
+  const outer={stroke:s.gliding?0:-w.outer_amplitude_rad*sn,
+    twist:w.incidence_rad-(s.gliding?0:w.outer_twist_amplitude_rad*cs),
+    sweep:s.gliding?0:-w.sweep_amplitude_m*sn*scale,
+    exposure:s.gliding?1:1-(1-w.recovery_exposure)*(.5-.5*Math.tanh(4*cs)/Math.tanh(4)),
+    camber:w.camber_outer_base+(s.gliding?0:w.camber_outer_amplitude*cs)};
+  return {leftInner:{...inner},rightInner:{...inner},leftOuter:{...outer},rightOuter:{...outer}};
+}
+
+
+FILE: physics.mjs
+import {E} from './environment/engineering.mjs';
+import {wingPose} from './kinematics.mjs';
+import {mechanics,centre,add,sub,mul,dot,cross,unit,bodyToWorld,worldToBody} from './environment/source-mechanism.mjs';
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const AR=7.4*7.4/6.61;
+export const parameters={
+  aspect_ratio:AR,wrist_span_fraction:3.7/7.4,span_m:E.span_m,
+  wing_area_m2:E.span_m**2/AR,body_length_m:E.body_length_m,
+  pilot_mass_kg:E.pilot_mass_kg,dry_mass_kg:E.dry_mass_including_pilot_kg,
+  mass_kg:E.dry_mass_including_pilot_kg+E.fuel.initial_kg,
+  mass_budget:E.mass_budget,wheel_radius_m:E.wheel_radius_m,gear_centres:E.gear_centres_m
+};
+export function polar(region,alpha,camber) {
+  const table=E.sections[region],x=E.sections.alpha_rad;
+  let i=0;while(i<x.length-2&&alpha>x[i+1])i++;
+  const t=clamp((alpha-x[i])/(x[i+1]-x[i]),0,1),lerp=a=>a[i]+(a[i+1]-a[i])*t;
+  const CL=lerp(table.cl_base)+table.camber_lift_gain*(camber-table.camber_reference)*Math.cos(alpha);
+  const CD=lerp(table.cd_base)+CL*CL/(Math.PI*E.aero.span_efficiency*AR);
+  return {CL,CD,cl:CL,cd:CD};
+}
+export function forces(s,c={},e={},poseOverride) {
+  const m=mechanics(parameters,s,poseOverride?()=>poseOverride:wingPose);
+  const rho=e.rho??E.rho_kg_m3,air=worldToBody(sub(s.velocity,e.wind??[0,0,0]),s);
+  let total=[0,0,0],wing=[0,0,0],Qphi=0,Qpitch=0,loss=0;
+  function apply(F,jphi,jtheta,dissipation) {
+    total=add(total,F);Qphi+=dot(F,jphi);Qpitch+=dot(F,jtheta);loss+=dissipation;
+  }
+  for(const v of m.samples) {
+    let u=add(air,v.velocity);u=sub(u,mul(v.span,dot(u,v.span)));
+    const speed=Math.hypot(...u);
+    if(speed<1e-12||v.area<=0)continue;
+    const d=mul(u,1/speed),alpha=Math.atan2(-dot(d,v.normal),dot(d,v.chord));
+    const {CL,CD}=polar(v.region,alpha,v.camber),q=.5*rho*speed*speed*v.area;
+    const F=mul(sub(mul(unit(cross(v.span,d)),CL),mul(d,CD)),q);
+    wing=add(wing,F);apply(F,v.jphi,v.jtheta,q*CD*speed);
+  }
+  const j0=mul(m.dc,-1),r0=mul(m.cg,-1),jt0=[-r0[1],r0[0],0];
+  const u0=add(air,add(mul(j0,s.omega),mul(jt0,s.pitch_rate))),v0=Math.hypot(...u0);
+  const drag=.5*rho*v0*v0*Object.values(E.aero.body_flat_plate_areas_m2).reduce((a,b)=>a+b,0);
+  if(v0>1e-12)apply(mul(u0,-drag/v0),j0,jt0,drag*v0);
+  const rt=sub([-E.coupled.tail_arm_m,0,0],m.cg),jtt=[-rt[1],rt[0],0];
+  const ut=add(air,add(mul(j0,s.omega),mul(jtt,s.pitch_rate))),vt=Math.hypot(ut[0],ut[1]);
+  if(vt>1e-12) {
+    const d=[ut[0]/vt,ut[1]/vt,0],alpha=Math.atan2(-ut[1],ut[0]);
+    const CL=E.coupled.tail_lift_slope*clamp(alpha+E.coupled.tail_incidence_rad,-.35,.35);
+    const CD=E.coupled.tail_drag_coefficient+.08*alpha*alpha,q=.5*rho*vt*vt*E.coupled.tail_area_m2;
+    apply(mul(sub(mul(cross([0,0,1],d),CL),mul(d,CD)),q),j0,jtt,q*CD*vt);
+  }
+  let world=bodyToWorld(total,s);
+  const relative=sub(s.velocity,e.wind??[0,0,0]),horizontal=Math.hypot(relative[0],relative[2]);
+  const rudder=(c.rudder??0)*E.controls.rudder_coefficient*.5*rho*horizontal*horizontal;
+  if(horizontal>1e-12)world=add(world,[-relative[2]/horizontal*rudder,0,relative[0]/horizontal*rudder]);
+  world[1]-=m.mass*(e.gravity??E.gravity_m_s2);
+  const throttle=clamp(c.throttle??0,0,1),on=s.fuel_kg>0&&throttle>0&&e.motor_enabled!==false&&!s.gliding;
+  let shaftTorque=0;
+  if(on&&s.omega>=0) {
+    const target=2*Math.PI*E.engine.maximum_wingbeat_hz*throttle;
+    shaftTorque=clamp(E.engine.governor_torque_gain_Nm_s*(target-s.omega),0,
+      Math.min(E.engine.starting_torque_Nm,E.engine.continuous_shaft_limit_W*throttle/Math.max(.5,Math.abs(s.omega))));
+  }
+  const damping=e.damping_scale??1;
+  return {
+    lift:bodyToWorld(wing,s)[1],thrust:wing[0],drag,power:shaftTorque*s.omega,
+    airspeed:Math.hypot(...air),aero_power_W:-Qphi*s.omega,wing_dissipation_W:loss,
+    mass_kg:m.mass,Qphi,Qpitch,motor_torque_Nm:shaftTorque*E.engine.transmission_efficiency,
+    control_torque_Nm:E.coupled.pitch_control_torque_Nm*(c.pitch??0),
+    phase_damping_Nm:E.coupled.phase_damping_Nm_s*damping*s.omega,
+    pitch_damping_Nm:E.coupled.pitch_damping_Nm_s*damping*s.pitch_rate,
+    force:world,wing_force_body_N:wing,mechanics:m,motor_on:on
+  };
+}
+function coupled(s,c,e,f) {
+  const m=f.mechanics,w=s.omega,q=s.pitch_rate;
+  const R1=f.motor_torque_Nm+f.Qphi-m.Up-f.phase_damping_Nm-.5*m.Ap*w*w+.5*m.Cp*q*q;
+  const R2=f.Qpitch+f.control_torque_Nm-f.pitch_damping_Nm-m.Bp*w*w-m.Cp*w*q;
+  const det=m.A*m.C-m.B*m.B;
+  let phase_accel=e.pitch_locked?R1/m.A:(R1*m.C-m.B*R2)/det;
+  const pitch_accel=e.pitch_locked?0:(m.A*R2-m.B*R1)/det;
+  if(s.gliding)phase_accel=0;
+  return {phase_accel,pitch_accel,force:f.force};
+}
+export function accelerations(s,c={},e={}) {return coupled(s,c,e,forces(s,c,e));}
+function heightWithCG(s,e,cg) {
+  let height=-Infinity;
+  const axle=bodyToWorld([0,0,1],s),axial=Math.abs(axle[1]);
+  const radial=Math.sqrt(Math.max(0,1-axle[1]*axle[1])),r=parameters.wheel_radius_m;
+  // Support of the actual rounded tyre profile, including its finite width.
+  const support=Math.max(r*radial+.024*axial,(r-.008)*radial+.044*axial,(r-.035)*radial+.065*axial);
+  for(const g of parameters.gear_centres) {
+    const r=bodyToWorld(sub(g,cg),s),x=s.position[0]+r[0],z=s.position[2]+r[2];
+    height=Math.max(height,(e.surfaceHeight?.(x,z)??0)+support-r[1]);
+  }
+  return height;
+}
+export function contactHeight(s,e={}) {return heightWithCG(s,e,centre(parameters,s,wingPose));}
+function rate(s,c,e,allowGround) {
+  const f=forces(s,c,e),m=f.mechanics;
+  let a=coupled(s,c,e,f),normal=0,ground=false;
+  if(allowGround&&!e.pitch_locked) {
+    const Ag=m.A+m.mass*m.dc[1]**2,Agp=m.Ap+2*m.mass*m.dc[1]*m.ddc[1];
+    const wa=(f.motor_torque_Nm+f.Qphi-m.Up-f.phase_damping_Nm-.5*Agp*s.omega**2+f.force[1]*m.dc[1])/Ag;
+    normal=m.mass*(m.ddc[1]*s.omega**2+m.dc[1]*wa)-f.force[1];
+    if(normal>=0) {ground=true;a={...a,phase_accel:wa,pitch_accel:0};}
+  }
+  const acc=mul(f.force,1/m.mass),vel=s.velocity.slice();
+  if(ground) {
+    const speed=Math.hypot(vel[0],vel[2]);
+    const resistance=E.controls.rolling_friction_coefficient*normal+E.controls.brake_force_N*clamp(c.brake??0,0,1);
+    if(speed>1e-8) {
+      const decel=resistance/m.mass*Math.min(1,speed/.08);
+      acc[0]-=decel*vel[0]/speed;acc[2]-=decel*vel[2]/speed;
+    }
+    acc[1]=m.ddc[1]*s.omega**2+m.dc[1]*a.phase_accel;vel[1]=m.dc[1]*s.omega;
+  }
+  const rollAcceleration=ground?0:E.controls.roll_accel_rad_s2*clamp(c.bank??0,-1,1)-E.controls.roll_damping_per_s*s.roll_rate;
+  const headingRate=ground?(c.rudder??0)*Math.hypot(s.velocity[0],s.velocity[2])*.025:(c.rudder??0)*E.controls.rudder_coefficient;
+  return {
+    position:vel,velocity:acc,phase:s.gliding?0:s.omega,omega:a.phase_accel,
+    pitch:e.pitch_locked||ground?0:s.pitch_rate,pitch_rate:a.pitch_accel,
+    roll:ground?0:s.roll_rate,roll_rate:rollAcceleration,heading:headingRate,
+    shaft_work_J:f.power,aero_work_J:f.wing_dissipation_W,
+    drive_heat_J:f.power*(1-E.engine.transmission_efficiency)+f.phase_damping_Nm*s.omega+f.pitch_damping_Nm*s.pitch_rate,
+    control_work_J:f.control_torque_Nm*s.pitch_rate,
+    fuel_kg:-(f.power*E.fuel.bsfc_kg_kWh/3600000+(f.motor_on?E.fuel.idle_kg_s:0)),
+    wheel_angle:ground?worldToBody(s.velocity,s)[0]/parameters.wheel_radius_m:0,ground,normal
+  };
+}
+const scalars=['phase','omega','pitch','pitch_rate','roll','roll_rate','heading','shaft_work_J','aero_work_J','drive_heat_J','control_work_J','fuel_kg','wheel_angle'];
+function advance(s,k,h) {
+  const n={...s,position:add(s.position,mul(k.position,h)),velocity:add(s.velocity,mul(k.velocity,h))};
+  for(const key of scalars)n[key]=(s[key]??0)+h*k[key];
+  n.fuel_kg=Math.max(0,n.fuel_kg);n.time=(s.time??0)+h;return n;
+}
+export function step(state,c={},e={},dt) {
+  let s={...state,position:state.position.slice(),velocity:state.velocity.slice()};
+  if(s.status==='crashed'||dt<=0)return s;
+  let remaining=dt;
+  while(remaining>1e-14) {
+    let h=Math.min(remaining,E.coupled.integration_dt_max);
+    // Resolve exhaustion before supplying work. This bound is independent of
+    // the governor's changing instantaneous load and is valid at both RK stages.
+    if(s.fuel_kg>0&&(c.throttle??0)>0&&e.motor_enabled!==false&&!s.gliding) {
+      const bound=E.engine.continuous_shaft_limit_W*clamp(c.throttle,0,1)*E.fuel.bsfc_kg_kWh/3600000+E.fuel.idle_kg_s;
+      if(s.fuel_kg<1e-12)s.fuel_kg=0;
+      else h=Math.min(h,s.fuel_kg/bound);
+    }
+    const touch=s.position[1]<=contactHeight(s,e)+1e-7;
+    if(touch&&!e.pitch_locked) {
+      s.pitch=0;s.pitch_rate=0;s.roll=0;s.roll_rate=0;
+      const m=mechanics(parameters,s,wingPose);
+      s.position[1]=heightWithCG(s,e,m.cg);s.velocity[1]=m.dc[1]*s.omega;
+    }
+    const k1=rate(s,c,e,touch);
+    let mid=advance(s,k1,h/2);
+    if(k1.ground) {
+      mid.pitch=0;mid.pitch_rate=0;mid.roll=0;mid.roll_rate=0;
+      const m=mechanics(parameters,mid,wingPose);
+      mid.position[1]=heightWithCG(mid,e,m.cg);mid.velocity[1]=m.dc[1]*mid.omega;
+    }
+    const k2=rate(mid,c,e,k1.ground);
+    let n=advance(s,k2,h);
+    if(k2.ground) {
+      n.pitch=0;n.pitch_rate=0;n.roll=0;n.roll_rate=0;
+      const m=mechanics(parameters,n,wingPose);
+      n.position[1]=heightWithCG(n,e,m.cg);n.velocity[1]=m.dc[1]*n.omega;n.status='grounded';
+    } else {
+      n.status='flying';
+      const m=mechanics(parameters,n,wingPose),floor=heightWithCG(n,e,m.cg);
+      if(n.position[1]<floor) {
+        let sink=-Infinity;
+        for(const gear of parameters.gear_centres) {
+          const r=sub(gear,m.cg),jtheta=[-r[1],r[0],0];
+          const local=add(mul(m.dc,-n.omega),mul(jtheta,n.pitch_rate));
+          sink=Math.max(sink,-n.velocity[1]-bodyToWorld(local,n)[1]);
+        }
+        const speed=Math.hypot(n.velocity[0],n.velocity[2]);
+        const unsafe=sink>E.controls.safe_touchdown_sink_m_s||speed>E.controls.safe_touchdown_speed_m_s||Math.abs(n.roll)>E.controls.safe_touchdown_bank_rad;
+        n.status=unsafe?'crashed':'grounded';n.pitch=0;n.pitch_rate=0;n.roll=0;n.roll_rate=0;
+        n.position[1]=contactHeight(n,e);n.velocity[1]=m.dc[1]*n.omega;
+      }
+    }
+    if(Math.abs(n.roll)>E.controls.bank_limit_rad) {
+      n.roll=clamp(n.roll,-E.controls.bank_limit_rad,E.controls.bank_limit_rad);n.roll_rate=0;
+    }
+    s=n;remaining-=h;if(s.status==='crashed')break;
+  }
+  return s;
+}
+

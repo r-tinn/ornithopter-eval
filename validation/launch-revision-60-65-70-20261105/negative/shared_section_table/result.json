@@ -1,0 +1,540 @@
+{
+  "physics": [
+    {
+      "id": "wing_cycle_force_coupling",
+      "pass": false,
+      "detail": {
+        "pass": false,
+        "cases": [
+          {
+            "phase": 0,
+            "omega": 0,
+            "bias": 0,
+            "pass": false,
+            "expected": {
+              "lift": 334.42411414965505,
+              "thrust": -85.39121112525231,
+              "drag": 105.43848110902643,
+              "Qphi": 373.04672424631815,
+              "Qpitch": 31.22537243661577,
+              "aero_power_W": 0,
+              "wing_dissipation_W": 4076.7624281635167,
+              "mass_kg": 177.5
+            },
+            "actual": {
+              "lift": 65.54135699236795,
+              "thrust": -130.27608952033992,
+              "drag": 105.43848110902643,
+              "Qphi": 883.3460649410995,
+              "Qpitch": 54.94594148436808,
+              "aero_power_W": 0,
+              "wing_dissipation_W": 4437.899619916345,
+              "mass_kg": 177.5
+            }
+          },
+          {
+            "phase": 0,
+            "omega": 4,
+            "bias": 0,
+            "pass": false,
+            "expected": {
+              "lift": 3709.2902289828216,
+              "thrust": 994.0765253806443,
+              "drag": 109.52559123054249,
+              "Qphi": -5661.963062242333,
+              "Qpitch": -684.7548974052776,
+              "aero_power_W": 22647.85224896933,
+              "wing_dissipation_W": 12972.354271885377,
+              "mass_kg": 177.5
+            },
+            "actual": {
+              "lift": 3675.693063184705,
+              "thrust": 954.200509857258,
+              "drag": 109.5255912305425,
+              "Qphi": -5598.923101609079,
+              "Qpitch": -644.779152805113,
+              "aero_power_W": 22395.692406436316,
+              "wing_dissipation_W": 13380.69770241805,
+              "mass_kg": 177.5
+            }
+          },
+          {
+            "phase": 0.7,
+            "omega": 0,
+            "bias": 0,
+            "pass": false,
+            "expected": {
+              "lift": 1152.3636789175746,
+              "thrust": -26.00618124165769,
+              "drag": 105.29688276416624,
+              "Qphi": -423.26200199408976,
+              "Qpitch": -254.38844309081935,
+              "aero_power_W": 0,
+              "wing_dissipation_W": 4389.520149408846,
+              "mass_kg": 177.5
+            },
+            "actual": {
+              "lift": 958.8704951448655,
+              "thrust": -43.75879598011976,
+              "drag": 105.29688276416624,
+              "Qphi": -134.35989563019365,
+              "Qpitch": -185.48228182542084,
+              "aero_power_W": 0,
+              "wing_dissipation_W": 4383.149129405867,
+              "mass_kg": 177.5
+            }
+          },
+          {
+            "phase": 0.7,
+            "omega": 4,
+            "bias": 0,
+            "pass": false,
+            "expected": {
+              "lift": 3688.9664326659126,
+              "thrust": 771.9850484262083,
+              "drag": 108.46631842371283,
+              "Qphi": -4081.8508589342036,
+              "Qpitch": -873.137353135482,
+              "aero_power_W": 16327.403435736815,
+              "wing_dissipation_W": 10633.62784014666,
+              "mass_kg": 177.5
+            },
+            "actual": {
+              "lift": 3650.204374757783,
+              "thrust": 736.4329234484486,
+              "drag": 108.46631842371282,
+              "Qphi": -4015.9479548584973,
+              "Qpitch": -869.64731508542,
+              "aero_power_W": 16063.791819433989,
+              "wing_dissipation_W": 10947.040688497424,
+              "mass_kg": 177.5
+            }
+          },
+          {
+            "phase": 1.8,
+            "omega": 0,
+            "bias": 0,
+            "pass": false,
+            "expected": {
+              "lift": 3583.5245675175147,
+              "thrust": -73.91737408766252,
+              "drag": 105.23633583186347,
+              "Qphi": 611.1034811838642,
+              "Qpitch": -1401.2770365776817,
+              "aero_power_W": 0,
+              "wing_dissipation_W": 9383.051927048977,
+              "mass_kg": 177.5
+            },
+            "actual": {
+              "lift": 3588.674327782341,
+              "thrust": -85.29711848693704,
+              "drag": 105.23633583186346,
+              "Qphi": 611.6154276698342,
+              "Qpitch": -1409.5888987373255,
+              "aero_power_W": 0,
+              "wing_dissipation_W": 9597.292720237489,
+              "mass_kg": 177.5
+            }
+          },
+          {
+            "phase": 1.8,
+            "omega": 4,
+            "bias": 0,
+            "pass": false,
+            "expected": {
+              "lift": 3519.9871566052834,
+              "thrust": -146.2182192815435,
+              "drag": 104.3634824244749,
+              "Qphi": 553.2685872913078,
+              "Qpitch": -1406.4883483940675,
+              "aero_power_W": -2213.074349165231,
+              "wing_dissipation_W": 8350.546851729549,
+              "mass_kg": 177.5
+            },
+            "actual": {
+              "lift": 3530.958390912049,
+              "thrust": -145.5038124127911,
+              "drag": 104.36348242447492,
+              "Qphi": 556.6899741778943,
+              "Qpitch": -1411.9472100032262,
+              "aero_power_W": -2226.7598967115773,
+              "wing_dissipation_W": 8342.913566601446,
+              "mass_kg": 177.5
+            }
+          },
+          {
+            "phase": 3.2,
+            "omega": 0,
+            "bias": 0,
+            "pass": false,
+            "expected": {
+              "lift": 3620.5005516916362,
+              "thrust": -589.8435191683064,
+              "drag": 105.4130320693131,
+              "Qphi": 2335.864990331685,
+              "Qpitch": 856.2411642109106,
+              "aero_power_W": 0,
+              "wing_dissipation_W": 18573.76988569724,
+              "mass_kg": 177.5
+            },
+            "actual": {
+              "lift": 3703.475948735321,
+              "thrust": -619.2411742433904,
+              "drag": 105.4130320693131,
+              "Qphi": 2440.3105581847976,
+              "Qpitch": 897.1148867530335,
+              "aero_power_W": 0,
+              "wing_dissipation_W": 19238.900435837102,
+              "mass_kg": 177.5
+            }
+          },
+          {
+            "phase": 3.2,
+            "omega": 4,
+            "bias": 0,
+            "pass": false,
+            "expected": {
+              "lift": 3940.078367725115,
+              "thrust": -705.4384441813664,
+              "drag": 101.74890819681607,
+              "Qphi": 2438.9750914460924,
+              "Qpitch": 891.6024979732682,
+              "aero_power_W": -9755.90036578437,
+              "wing_dissipation_W": 11309.312451695607,
+              "mass_kg": 177.5
+            },
+            "actual": {
+              "lift": 3981.173713870477,
+              "thrust": -723.1516457709787,
+              "drag": 101.74890819681607,
+              "Qphi": 2487.0617266765553,
+              "Qpitch": 914.501093991502,
+              "aero_power_W": -9948.246906706221,
+              "wing_dissipation_W": 11503.066438921207,
+              "mass_kg": 177.5
+            }
+          },
+          {
+            "phase": 4.9,
+            "omega": 0,
+            "bias": 0,
+            "pass": false,
+            "expected": {
+              "lift": 2677.61969683419,
+              "thrust": 0.6073200583347287,
+              "drag": 105.61764491215087,
+              "Qphi": -637.9455857885081,
+              "Qpitch": 1282.5793320776534,
+              "aero_power_W": 0,
+              "wing_dissipation_W": 6354.835638160563,
+              "mass_kg": 177.5
+            },
+            "actual": {
+              "lift": 2641.3920879373627,
+              "thrust": 9.955052647906719,
+              "drag": 105.61764491215087,
+              "Qphi": -621.8369269138808,
+              "Qpitch": 1229.9805955564505,
+              "aero_power_W": 0,
+              "wing_dissipation_W": 6131.600546445708,
+              "mass_kg": 177.5
+            }
+          },
+          {
+            "phase": 4.9,
+            "omega": 4,
+            "bias": 0,
+            "pass": false,
+            "expected": {
+              "lift": 3399.279803595244,
+              "thrust": 171.4138944568368,
+              "drag": 106.5384082747884,
+              "Qphi": -928.237647713355,
+              "Qpitch": 1310.340934307295,
+              "aero_power_W": 3712.95059085342,
+              "wing_dissipation_W": 8185.685500272295,
+              "mass_kg": 177.5
+            },
+            "actual": {
+              "lift": 3392.835518705307,
+              "thrust": 170.37053336567405,
+              "drag": 106.5384082747884,
+              "Qphi": -925.4176055914353,
+              "Qpitch": 1311.1472617201014,
+              "aero_power_W": 3701.670422365741,
+              "wing_dissipation_W": 8182.869756973945,
+              "mass_kg": 177.5
+            }
+          },
+          {
+            "phase": 0,
+            "omega": 0,
+            "bias": 0.3,
+            "pass": false,
+            "expected": {
+              "lift": 334.42411414965505,
+              "thrust": -85.39121112525231,
+              "drag": 105.43848110902643,
+              "Qphi": 261.1327089337948,
+              "Qpitch": 31.22537243661577,
+              "aero_power_W": 0,
+              "wing_dissipation_W": 4076.7624281635167,
+              "mass_kg": 177.5
+            },
+            "actual": {
+              "lift": 65.54135699236795,
+              "thrust": -130.27608952033992,
+              "drag": 105.43848110902643,
+              "Qphi": 618.3422499675428,
+              "Qpitch": 54.94594148436808,
+              "aero_power_W": 0,
+              "wing_dissipation_W": 4437.899619916345,
+              "mass_kg": 177.5
+            }
+          },
+          {
+            "phase": 0,
+            "omega": 4,
+            "bias": 0.3,
+            "pass": false,
+            "expected": {
+              "lift": 3164.3462966093034,
+              "thrust": 744.4472143592793,
+              "drag": 108.23560580765958,
+              "Qphi": -3409.363616332159,
+              "Qpitch": -521.7009514742679,
+              "aero_power_W": 13637.454465328636,
+              "wing_dissipation_W": 7537.7313747032595,
+              "mass_kg": 177.5
+            },
+            "actual": {
+              "lift": 3085.2042369972983,
+              "thrust": 713.1266187174285,
+              "drag": 108.23560580765957,
+              "Qphi": -3302.788853552423,
+              "Qpitch": -494.17773156829344,
+              "aero_power_W": 13211.155414209692,
+              "wing_dissipation_W": 7542.854720286704,
+              "mass_kg": 177.5
+            }
+          },
+          {
+            "phase": 0.7,
+            "omega": 0,
+            "bias": 0.3,
+            "pass": false,
+            "expected": {
+              "lift": 790.6154913683367,
+              "thrust": -50.55558231092685,
+              "drag": 105.33233083995728,
+              "Qphi": -88.7457603748554,
+              "Qpitch": -114.6949987903894,
+              "aero_power_W": 0,
+              "wing_dissipation_W": 4217.929105865442,
+              "mass_kg": 177.5
+            },
+            "actual": {
+              "lift": 561.796268555503,
+              "thrust": -80.53195157847905,
+              "drag": 105.33233083995728,
+              "Qphi": 206.69523533070065,
+              "Qpitch": -51.58609817558143,
+              "aero_power_W": 0,
+              "wing_dissipation_W": 4373.672331970669,
+              "mass_kg": 177.5
+            }
+          },
+          {
+            "phase": 0.7,
+            "omega": 4,
+            "bias": 0.3,
+            "pass": false,
+            "expected": {
+              "lift": 3408.110944438297,
+              "thrust": 727.9803017927923,
+              "drag": 108.0794163019285,
+              "Qphi": -3396.143812174675,
+              "Qpitch": -708.2499643310869,
+              "aero_power_W": 13584.5752486987,
+              "wing_dissipation_W": 8199.941029605872,
+              "mass_kg": 177.5
+            },
+            "actual": {
+              "lift": 3345.842662830425,
+              "thrust": 698.9310357517348,
+              "drag": 108.0794163019285,
+              "Qphi": -3311.0794900375463,
+              "Qpitch": -693.2030123920028,
+              "aero_power_W": 13244.317960150185,
+              "wing_dissipation_W": 8279.205623105749,
+              "mass_kg": 177.5
+            }
+          },
+          {
+            "phase": 1.8,
+            "omega": 0,
+            "bias": 0.3,
+            "pass": false,
+            "expected": {
+              "lift": 3507.7934459659946,
+              "thrust": 18.322882653509367,
+              "drag": 105.22357879524297,
+              "Qphi": -437.052338098393,
+              "Qpitch": -1430.0464125410817,
+              "aero_power_W": 0,
+              "wing_dissipation_W": 7610.500853245636,
+              "mass_kg": 177.5
+            },
+            "actual": {
+              "lift": 3500.230666745156,
+              "thrust": 23.003549508171066,
+              "drag": 105.22357879524296,
+              "Qphi": -435.7869650228389,
+              "Qpitch": -1422.3841131286047,
+              "aero_power_W": 0,
+              "wing_dissipation_W": 7513.771623331068,
+              "mass_kg": 177.5
+            }
+          },
+          {
+            "phase": 1.8,
+            "omega": 4,
+            "bias": 0.3,
+            "pass": false,
+            "expected": {
+              "lift": 3815.7980413744167,
+              "thrust": 96.68370255737436,
+              "drag": 105.69129140816474,
+              "Qphi": -490.7870714497377,
+              "Qpitch": -1569.0785281952608,
+              "aero_power_W": 1963.1482857989508,
+              "wing_dissipation_W": 8675.255528069416,
+              "mass_kg": 177.5
+            },
+            "actual": {
+              "lift": 3819.8447749849734,
+              "thrust": 96.10304597734289,
+              "drag": 105.69129140816474,
+              "Qphi": -491.55551897857265,
+              "Qpitch": -1572.6381820018198,
+              "aero_power_W": 1966.2220759142906,
+              "wing_dissipation_W": 8695.653149275557,
+              "mass_kg": 177.5
+            }
+          },
+          {
+            "phase": 3.2,
+            "omega": 0,
+            "bias": 0.3,
+            "pass": false,
+            "expected": {
+              "lift": 3617.380751497961,
+              "thrust": -588.6297493877269,
+              "drag": 105.41624563229195,
+              "Qphi": 3033.979313509782,
+              "Qpitch": 894.3123602905798,
+              "aero_power_W": 0,
+              "wing_dissipation_W": 18543.70028360585,
+              "mass_kg": 177.5
+            },
+            "actual": {
+              "lift": 3699.935196360808,
+              "thrust": -618.0379878517542,
+              "drag": 105.41624563229193,
+              "Qphi": 3168.9920315676854,
+              "Qpitch": 936.9337184246031,
+              "aero_power_W": 0,
+              "wing_dissipation_W": 19208.18910398937,
+              "mass_kg": 177.5
+            }
+          },
+          {
+            "phase": 3.2,
+            "omega": 4,
+            "bias": 0.3,
+            "pass": false,
+            "expected": {
+              "lift": 3492.2697728460103,
+              "thrust": -649.8851127374453,
+              "drag": 100.75799181993094,
+              "Qphi": 2229.0583939023445,
+              "Qpitch": 781.892838781943,
+              "aero_power_W": -8916.233575609378,
+              "wing_dissipation_W": 10363.754106636961,
+              "mass_kg": 177.5
+            },
+            "actual": {
+              "lift": 3517.2486791229953,
+              "thrust": -651.9618100992542,
+              "drag": 100.75799181993094,
+              "Qphi": 2254.8721044697118,
+              "Qpitch": 785.4735692229189,
+              "aero_power_W": -9019.488417878847,
+              "wing_dissipation_W": 10339.214463324335,
+              "mass_kg": 177.5
+            }
+          },
+          {
+            "phase": 4.9,
+            "omega": 0,
+            "bias": 0.3,
+            "pass": false,
+            "expected": {
+              "lift": 1802.1189499916718,
+              "thrust": 0.07226551177986362,
+              "drag": 105.60883449972457,
+              "Qphi": -691.5525494635176,
+              "Qpitch": 709.0899928365699,
+              "aero_power_W": 0,
+              "wing_dissipation_W": 4945.04186560026,
+              "mass_kg": 177.5
+            },
+            "actual": {
+              "lift": 1703.0194490910078,
+              "thrust": 9.588232545101091,
+              "drag": 105.60883449972455,
+              "Qphi": -594.2645042468205,
+              "Qpitch": 615.2102228177491,
+              "aero_power_W": 0,
+              "wing_dissipation_W": 4617.431185425659,
+              "mass_kg": 177.5
+            }
+          },
+          {
+            "phase": 4.9,
+            "omega": 4,
+            "bias": 0.3,
+            "pass": false,
+            "expected": {
+              "lift": 3324.3334817118784,
+              "thrust": 427.9008213228571,
+              "drag": 107.3308801967253,
+              "Qphi": -2136.7570850750167,
+              "Qpitch": 591.5507228744956,
+              "aero_power_W": 8547.028340300067,
+              "wing_dissipation_W": 8341.287207144629,
+              "mass_kg": 177.5
+            },
+            "actual": {
+              "lift": 3297.069219899963,
+              "thrust": 412.960199152222,
+              "drag": 107.33088019672529,
+              "Qphi": -2105.7924785534524,
+              "Qpitch": 620.7301246153045,
+              "aero_power_W": 8423.16991421381,
+              "wing_dissipation_W": 8439.422773891949,
+              "mass_kg": 177.5
+            }
+          }
+        ],
+        "production_vertex_samples": 264,
+        "max_geometry_error_m": 2.51311800551039e-7,
+        "tolerance": "forces 0.01% + 1e-4 SI; pose 1e-7; actual vertex positions 0.2 mm"
+      }
+    }
+  ],
+  "diagnostics": {
+    "reference_equations": "Independent mass points, centroid, inertia, local sections and coupled E-L solve; no candidate counters/helpers used as expectations."
+  },
+  "geometry": []
+}

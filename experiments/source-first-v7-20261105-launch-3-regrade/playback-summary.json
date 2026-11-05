@@ -1,0 +1,414 @@
+{
+  "kind": "Derived regrade observations, not new model trials",
+  "grading_revision": "v7-launch-60-65-70-v1",
+  "model_api_calls": 0,
+  "trials": [
+    {
+      "model": "gpt-6.1-sol",
+      "report": "trials/gpt-6.1-sol-01/grade-v7-launch-60-65-70-v1/report.json",
+      "report_sha256": "18bdfb826caae7da565c23302cf1cb81fba5c61f8558c26692e6e2ab00db207e",
+      "simulator_initializes": true,
+      "initial_checks": {
+        "passed": 6,
+        "total": 7,
+        "failed": [
+          "power_limited_flight"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 5,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 1,
+            "total": 1
+          }
+        }
+      },
+      "regraded_checks": {
+        "passed": 6,
+        "total": 7,
+        "failed": [
+          "power_limited_flight"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 5,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 1,
+            "total": 1
+          }
+        }
+      },
+      "launch_attempts": [
+        {
+          "low_speed_throttle": 0.6,
+          "pass": false,
+          "error": null,
+          "final_status": "crashed",
+          "final_time_s": 67.32500000002094,
+          "first_sustained_takeoff": {
+            "time": 60.17500000002092,
+            "x": -29.647645083125738,
+            "clearance": 2.242579865905383
+          }
+        },
+        {
+          "low_speed_throttle": 0.65,
+          "pass": false,
+          "error": null,
+          "final_status": "crashed",
+          "final_time_s": 68.88750000001951,
+          "first_sustained_takeoff": {
+            "time": 50.75000000001342,
+            "x": -83.98473617828658,
+            "clearance": 2.1159319466548947
+          }
+        },
+        {
+          "low_speed_throttle": 0.7,
+          "pass": false,
+          "error": null,
+          "final_status": "crashed",
+          "final_time_s": 40.454166666671895,
+          "first_sustained_takeoff": null
+        }
+      ]
+    },
+    {
+      "model": "gpt-6-astra",
+      "report": "trials/gpt-6-astra-01/grade-v7-launch-60-65-70-v1/report.json",
+      "report_sha256": "93a38d830ec1b9fa4dbce47b13a81bbb98984efdf40a356a7bc49b6ec21258af",
+      "simulator_initializes": true,
+      "initial_checks": {
+        "passed": 6,
+        "total": 7,
+        "failed": [
+          "power_limited_flight"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 5,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 1,
+            "total": 1
+          }
+        }
+      },
+      "regraded_checks": {
+        "passed": 6,
+        "total": 7,
+        "failed": [
+          "power_limited_flight"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 5,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 1,
+            "total": 1
+          }
+        }
+      },
+      "launch_attempts": [
+        {
+          "low_speed_throttle": 0.6,
+          "pass": false,
+          "error": null,
+          "final_status": "crashed",
+          "final_time_s": 67.3625000000209,
+          "first_sustained_takeoff": {
+            "time": 60.15833333335424,
+            "x": -28.548953322587767,
+            "clearance": 2.2744873729167088
+          }
+        },
+        {
+          "low_speed_throttle": 0.65,
+          "pass": false,
+          "error": null,
+          "final_status": "crashed",
+          "final_time_s": 68.91250000001949,
+          "first_sustained_takeoff": {
+            "time": 50.74166666668008,
+            "x": -83.0266926353601,
+            "clearance": 2.1520649023004266
+          }
+        },
+        {
+          "low_speed_throttle": 0.7,
+          "pass": false,
+          "error": null,
+          "final_status": "crashed",
+          "final_time_s": 69.9333333333519,
+          "first_sustained_takeoff": {
+            "time": 43.83333333334125,
+            "x": -122.50475457070901,
+            "clearance": 1.9625627686211597
+          }
+        }
+      ]
+    },
+    {
+      "model": "gpt-5.6-sol",
+      "report": "trials/gpt-5.6-sol-01/grade-v7-launch-60-65-70-v1/report.json",
+      "report_sha256": "7f829608e9326572acd6fd31a5536e8df5933184887f32b1764f7d923c669056",
+      "simulator_initializes": true,
+      "initial_checks": {
+        "passed": 5,
+        "total": 7,
+        "failed": [
+          "wing_cycle_force_coupling",
+          "power_limited_flight"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 4,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 1,
+            "total": 1
+          }
+        }
+      },
+      "regraded_checks": {
+        "passed": 6,
+        "total": 7,
+        "failed": [
+          "wing_cycle_force_coupling"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 5,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 1,
+            "total": 1
+          }
+        }
+      },
+      "launch_attempts": [
+        {
+          "low_speed_throttle": 0.6,
+          "pass": true,
+          "error": null,
+          "final_status": "flying",
+          "final_time_s": 70.0000000000185,
+          "first_sustained_takeoff": {
+            "time": 59.25000000002019,
+            "x": -44.63224281918412,
+            "clearance": 1.577899373349044
+          }
+        }
+      ]
+    },
+    {
+      "model": "gpt-5.5",
+      "report": "trials/gpt-5.5-01/grade-v7-launch-60-65-70-v1/report.json",
+      "report_sha256": "84265851536c275b58545ba30d983f3d68de26490de7eaef3f104cb3493f1e69",
+      "simulator_initializes": true,
+      "initial_checks": {
+        "passed": 4,
+        "total": 7,
+        "failed": [
+          "wing_cycle_force_coupling",
+          "wing_body_pitch_coupling",
+          "power_limited_flight"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 3,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 1,
+            "total": 1
+          }
+        }
+      },
+      "regraded_checks": {
+        "passed": 4,
+        "total": 7,
+        "failed": [
+          "wing_cycle_force_coupling",
+          "wing_body_pitch_coupling",
+          "power_limited_flight"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 3,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 1,
+            "total": 1
+          }
+        }
+      },
+      "launch_attempts": [
+        {
+          "low_speed_throttle": 0.6,
+          "pass": false,
+          "error": null,
+          "final_status": "flying",
+          "final_time_s": 70.0000000000185,
+          "first_sustained_takeoff": {
+            "time": 60.05000000002082,
+            "x": -27.90480755602658,
+            "clearance": 1.7161316883969082
+          }
+        },
+        {
+          "low_speed_throttle": 0.65,
+          "pass": false,
+          "error": null,
+          "final_status": "flying",
+          "final_time_s": 70.0000000000185,
+          "first_sustained_takeoff": {
+            "time": 49.14166666667881,
+            "x": -98.53115673646498,
+            "clearance": 1.3136298447633155
+          }
+        },
+        {
+          "low_speed_throttle": 0.7,
+          "pass": false,
+          "error": null,
+          "final_status": "flying",
+          "final_time_s": 70.0000000000185,
+          "first_sustained_takeoff": {
+            "time": 42.27500000000668,
+            "x": -134.6743485903151,
+            "clearance": 1.4949281931035916
+          }
+        }
+      ]
+    },
+    {
+      "model": "gpt-5.4",
+      "report": "trials/gpt-5.4-01/grade-v7-launch-60-65-70-v1/report.json",
+      "report_sha256": "98df96fb54e955e285eabf909fdcb8f61879629df510e869b07d79d09c45803a",
+      "simulator_initializes": true,
+      "initial_checks": {
+        "passed": 0,
+        "total": 7,
+        "failed": [
+          "wing_cycle_force_coupling",
+          "elastic_inertial_exchange",
+          "wing_body_pitch_coupling",
+          "power_limited_flight",
+          "unpowered_glide_balance",
+          "powered_pitch_stability",
+          "wheel_rotation_axis"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 0,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 0,
+            "total": 1
+          }
+        }
+      },
+      "regraded_checks": {
+        "passed": 0,
+        "total": 7,
+        "failed": [
+          "wing_cycle_force_coupling",
+          "elastic_inertial_exchange",
+          "wing_body_pitch_coupling",
+          "power_limited_flight",
+          "unpowered_glide_balance",
+          "powered_pitch_stability",
+          "wheel_rotation_axis"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 0,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 0,
+            "total": 1
+          }
+        }
+      },
+      "launch_attempts": [
+        {
+          "low_speed_throttle": 0.6,
+          "pass": false,
+          "error": null,
+          "final_status": "flying",
+          "final_time_s": 7.1916666666665785,
+          "first_sustained_takeoff": null
+        },
+        {
+          "low_speed_throttle": 0.65,
+          "pass": false,
+          "error": null,
+          "final_status": "crashed",
+          "final_time_s": 6.691666666666607,
+          "first_sustained_takeoff": null
+        },
+        {
+          "low_speed_throttle": 0.7,
+          "pass": false,
+          "error": null,
+          "final_status": "crashed",
+          "final_time_s": 6.29166666666663,
+          "first_sustained_takeoff": null
+        }
+      ]
+    }
+  ]
+}

@@ -9,7 +9,7 @@ import json
 from pathlib import Path
 
 from ornithopter_eval.checks import LATEST_SOURCE_FIRST_VERSION
-from ornithopter_eval.grading import grade_submission
+from ornithopter_eval.grading import LAUNCH_GRADING_REVISION, grade_submission
 from ornithopter_eval.runner import ROOT, digest, write_json
 from ornithopter_eval.world_candidate import prepare_world
 
@@ -37,6 +37,7 @@ def main():
     parser.add_argument('packet', type=Path)
     parser.add_argument('grades', type=Path)
     parser.add_argument('--node', default='node')
+    parser.add_argument('--grading-revision', choices=[LAUNCH_GRADING_REVISION])
     args = parser.parse_args()
     if args.packet.exists() or args.grades.exists():
         parser.error('Use fresh output directories; previous evidence is preserved')
@@ -53,7 +54,8 @@ def main():
             'change': 'Measure actual contacting tyre sink before clamping impact state, including pitch rotation and CG motion; enforce existing touchdown speed/bank limits. No engineering constant or crash threshold changes.'})
     write_json(args.packet / 'manifest.json', manifest)
     report = grade_submission(args.packet / 'submission', args.grades,
-                              node=args.node, task_version=LATEST_SOURCE_FIRST_VERSION)
+                              node=args.node, task_version=LATEST_SOURCE_FIRST_VERSION,
+                              grading_revision=args.grading_revision)
     rows = [row for dimension in report['dimensions'].values()
             for row in dimension.get('checks', [])]
     print(json.dumps({'status': report['status'],
