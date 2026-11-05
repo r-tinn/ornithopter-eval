@@ -52,6 +52,8 @@ def write_transcript(run):
                 parts.append("\nTOOL RESULT\n" + json.dumps(event["result"],indent=2))
             elif event["event"] == "budget_notice":
                 parts.append("\nBUDGET NOTICE\n" + event["text"])
+            elif event["event"] == "run_end":
+                parts.append("\nRUN END\n" + json.dumps(event,indent=2))
             elif event["event"] == "response":
                 response = event["response"]
                 parts.append("\nRESPONSE " + str(response.get("id")) + " / " + str(response.get("status")))
@@ -60,6 +62,8 @@ def write_transcript(run):
                         parts.append("[Private reasoning is not rendered; raw encrypted metadata is retained in events.jsonl.]")
                     else:
                         parts.append(json.dumps(item,indent=2))
+    if (run/'api-diagnostics.json').is_file():
+        parts.append('\nAPI DIAGNOSTICS\n' + (run/'api-diagnostics.json').read_text())
     (run / "transcript.txt").write_text("\n".join(parts)+"\n")
 
 
@@ -129,6 +133,8 @@ def refresh_workbench(root, experiment):
         actions = '<a target="_blank" rel="noopener" href="'+prefix+'submission/index.html">'+simulator_label+'</a><a href="'+prefix+'evidence.html">Captures</a><a href="'+prefix+'grade/report.json">Checks</a><a href="'+prefix+'transcript.txt">Transcript</a><a href="'+prefix+'submission-source.txt">Source</a>' if t["status"] not in ("prepared","running") else '<span class="muted">Artifacts appear when this attempt finishes.</span>'
         if (root / prefix / 'rollout-review.json').is_file():
             actions += '<a href="'+prefix+'rollout-review.json">File-only audit</a>'
+        if (root / prefix / 'api-diagnostics.json').is_file():
+            actions += '<a href="'+prefix+'api-diagnostics.json">API diagnostics</a>'
         if t.get('grade_directory') and t['grade_directory']!='grade':
             actions=actions.replace('href="'+prefix+'grade/report.json"','href="'+prefix+t['grade_directory']+'/report.json"')
             actions+='<a href="'+prefix+'grade/report.json">Initial grading</a>'
@@ -216,6 +222,8 @@ def run_experiment(output, models, repeats, config_path, node="node", transport=
                     manifest = future.result()
                     trial.update(status=manifest["status"],reason=manifest.get("reason"),usage=manifest.get("usage"),elapsed_seconds=manifest.get("elapsed_seconds"))
                     trial['rollout_review'] = manifest.get('rollout_review')
+                    if manifest.get('api_diagnostics'):
+                        trial['api_diagnostics'] = manifest['api_diagnostics']
                     if manifest["status"] in ("submitted","budget_exhausted"):
                         report = (grader(run / "submission",run / "grade",node=node,task_version=version)
                                   if grader is grade_submission else grader(run / "submission",run / "grade",node=node))

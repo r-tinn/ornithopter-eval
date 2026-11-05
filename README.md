@@ -88,6 +88,31 @@ source interpretation guide,the public probe specification and visual design
 brief. No live key is passed to a submission or committed. Generation logs,
 manifest hashes,grader trajectories and screenshots are retained for inspection.
 
+Fresh live runs also save `api-diagnostics.json`, linked as **API diagnostics**
+in the results gallery and included in the transcript/export. Per-request atomic
+snapshots live in `api-diagnostics/request-0001.json`, etc. They record:
+
+- UTC start/end times, request index, byte counts and observed durations.
+- A unique client request ID and any received server request ID, following
+  [OpenAI's request-debugging guidance](https://developers.openai.com/api/reference/overview#debugging-requests).
+- HTTP status, structured provider error type/code/message, `Retry-After`, and
+  received processing-time/rate-limit headers from an explicit allowlist.
+- Underlying exception types, redacted messages, OS error numbers and TLS
+  certificate diagnostics when available. DNS, TLS, proxy-tunnel, connection
+  reset/refusal and timeout errors have distinct categories.
+- The last observed phase if the deadline kills a request, including whether
+  response headers had arrived and the body was being read. Interrupted usage
+  remains unknown.
+
+Waiting for headers includes connection setup, request upload and server
+processing; that phase alone cannot identify which was slow. Parent request
+`elapsed_seconds` includes worker startup/cleanup; `transport_elapsed_seconds`
+and `response_headers_seconds` measure observations inside the HTTP worker.
+Diagnostics retain bounded, credential-redacted fields, without dumping request
+bodies, image payloads, cookies, authorization headers or proxy credentials.
+Generation budgets, time notices, no-retry behaviour and the scoring protocol
+stay as configured. Published attempts are not rewritten to add missing data.
+
 For a labelled author reference (never a model result), call
 `prepare_world(...,reference=True,task_version=LATEST_SOURCE_FIRST_VERSION)` from the
 Python preparation API. Author mutant calibration is reproducible with

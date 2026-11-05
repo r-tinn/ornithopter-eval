@@ -13,6 +13,7 @@ from .policy import FilePolicy, PolicyError
 from .checks import TASK_VERSION, MECHANICAL_VERSIONS
 from .protocol import load_config, validate_config
 from .deadline import DeadlineExceeded, call_before_deadline
+from .diagnostics import new_request, save_snapshot, utc_now
 from .rollout import POLICY_VERSION, ProtocolViolation, audit_rollout
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -164,6 +165,7 @@ def run_model(run, model, transport=create_response, *, clock=None):
     write_json(run / "manifest.json", manifest)
     status, reason = "budget_exhausted", "request_limit"
     undispatched = []
+    api_records = []
     try:
         with (run / "events.jsonl").open("x") as log:
             while config['max_requests'] is None or usage['requests'] < config['max_requests']:
@@ -205,15 +207,24 @@ def run_model(run, model, transport=create_response, *, clock=None):
                 if tokens is not None:
                     payload['max_output_tokens'] = min(tokens, config['max_output_tokens_per_response'])
                 payload["reasoning"] = {"effort": config.get("reasoning_effort") or "medium"}
+                diagnostic = new_request(model, remaining) if transport is create_response else None
+                diagnostic_path = run / 'api-diagnostics' / f'request-{usage["requests"]+1:04d}.json'
+                if diagnostic is not None:
+                    diagnostic['request_index'] = usage['requests']+1
                 log.write(json.dumps({"event":"request","index":usage["requests"]+1,
                     "model":model,"max_output_tokens":payload.get("max_output_tokens"),
                     "reasoning":payload.get("reasoning"),"tools":payload["tools"],
                     "instructions":payload["instructions"],
-                    "input_sha256":hashlib.sha256(json.dumps(history,sort_keys=True).encode()).hexdigest()})+"\n")
+                    "input_sha256":hashlib.sha256(json.dumps(history,sort_keys=True).encode()).hexdigest(),
+                    **({'client_request_id':diagnostic['client_request_id'],
+                        'diagnostic_file':str(diagnostic_path.relative_to(run))} if diagnostic is not None else {})})+"\n")
                 log.flush()
                 try:
                     if timed and transport is create_response:
-                        response = call_before_deadline(transport, payload, config['max_wall_seconds'] - (clock() - started))
+                        response = call_before_deadline(transport, payload, config['max_wall_seconds'] - (clock() - started),
+                                                       diagnostics=diagnostic, diagnostic_path=diagnostic_path)
+                    elif transport is create_response:
+                        response = transport(payload, timeout=max(1, remaining), diagnostics=diagnostic, diagnostic_path=diagnostic_path)
                     else:
                         response = transport(payload, timeout=remaining if timed else max(1, remaining))
                 except DeadlineExceeded:
@@ -221,7 +232,22 @@ def run_model(run, model, transport=create_response, *, clock=None):
                     usage['interrupted_requests'] = usage.get('interrupted_requests', 0) + 1
                     log.write(json.dumps({'event': 'request_interrupted', 'index': usage['requests'] + 1,
                                           'reason': reason, 'tool_dispatch': False}) + '\n')
+                    if diagnostic is not None and diagnostic['status'] == 'pending':
+                        diagnostic.update(status='deadline_exceeded', category='generation_deadline', usage_unknown=True,
+                                          finished_utc=utc_now())
                     break
+                except APIError as exc:
+                    if diagnostic is not None:
+                        diagnostic.update(exc.diagnostics or {})
+                        if diagnostic['status'] == 'pending':
+                            diagnostic.update(status='failed', category='transport_setup_error', finished_utc=utc_now())
+                    raise
+                finally:
+                    if diagnostic is not None:
+                        save_snapshot(diagnostic_path, diagnostic)
+                        api_records.append(diagnostic)
+                        write_json(run/'api-diagnostics.json', {'schema_version':1, 'requests':api_records,
+                            'scope':'Harness HTTP observations only. Waiting for headers includes network setup, upload and server processing; it does not identify which was slow. Interrupted usage is unknown.'})
                 usage["requests"] += 1
                 log.write(json.dumps({"event": "response", "response": response}) + "\n")
                 log.flush()
@@ -306,6 +332,9 @@ def run_model(run, model, transport=create_response, *, clock=None):
                     elapsed_seconds=round(clock() - started, 3),
                     submission_sha256={str(p.relative_to(run / "submission")): digest(p)
                                        for p in sorted((run / "submission").rglob("*")) if p.is_file()})
+    if api_records:
+        manifest['api_diagnostics'] = {'file':'api-diagnostics.json', 'sha256':digest(run/'api-diagnostics.json'),
+                                       'requests':len(api_records)}
     write_json(run / "manifest.json", manifest)
     review = audit_rollout(run)
     write_json(run / 'rollout-review.json', review)
