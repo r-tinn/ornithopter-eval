@@ -146,6 +146,8 @@ def main(argv=None):
     p = commands.add_parser("validate");p.add_argument("--node",default="node")
     p = commands.add_parser("audit-reviews");p.add_argument("reviews",nargs="+")
     p = commands.add_parser("compare");p.add_argument("--models",nargs="+",required=True);p.add_argument("--repeats",type=int,default=3);p.add_argument("--output",required=True);p.add_argument("--config",default=cli_config);p.add_argument("--node",default="node")
+    p.add_argument('--sequential',action='store_true',help='Generate and grade one model at a time, in the supplied order')
+    p.add_argument('--stop-on-error',action='store_true',help='With --sequential, stop on the first infrastructure error or interrupted API deadline')
     p = commands.add_parser("export");p.add_argument("source");p.add_argument("destination")
     p = commands.add_parser("serve-artifacts");p.add_argument("directory");p.add_argument("--port",type=int,default=8765);p.add_argument("--original-camera",action="store_true",help="Serve the exact archived host without playback updates")
     p = commands.add_parser("prepare-world");p.add_argument("output");p.add_argument("--reference",action="store_true")
@@ -197,7 +199,8 @@ def main(argv=None):
             print(json.dumps(result,indent=2))
             return 0 if result["consistent"] else 1
         elif args.command == "compare":
-            result = run_experiment(args.output,args.models,args.repeats,args.config,node=args.node,generation_profile=args.generation_profile)
+            result = run_experiment(args.output,args.models,args.repeats,args.config,node=args.node,generation_profile=args.generation_profile,
+                                    sequential=args.sequential,stop_on_error=args.stop_on_error)
             print(json.dumps({"status":result["status"],"models":result["models"]},indent=2))
             return 0 if result["status"]=="completed" else 1
         elif args.command == "export":

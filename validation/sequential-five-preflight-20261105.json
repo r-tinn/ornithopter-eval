@@ -1,0 +1,36 @@
+{
+  "kind": "Preflight reuse of unchanged calibrated graders; not a model trial",
+  "positive_reference_report": "validation/five-model-preflight-20261105/positive/report.json",
+  "positive_reference_report_sha256": "92649da554fcc34231b6c2ee29926fc4e765de7970fef1e1854529293e8168d5",
+  "author_reference_all_seven_pass": true,
+  "all_grader_hashes_still_match": {
+    "source-first-v7.mjs": true,
+    "grading.py": true,
+    "checks.py": true,
+    "wheel-axis.mjs": true,
+    "source-probes.mjs": true,
+    "source-calibrate.mjs": true,
+    "source-first-v6.mjs": true,
+    "expected_engineering.json": true,
+    "pitch-stability.mjs": true
+  },
+  "nine_targeted_mutants_rejected": true,
+  "mutant_summary": "validation/source-first-v7/summary.json",
+  "execution": {
+    "concurrency": 1,
+    "stop_on_error": true,
+    "stop_on_interrupted_api_deadline": true
+  },
+  "model_order": [
+    "gpt-6.1-sol",
+    "gpt-6-astra",
+    "gpt-5.6-sol",
+    "gpt-5.5",
+    "gpt-5.4"
+  ],
+  "config": "configs/source-first-v7.json",
+  "reasoning": "medium",
+  "seconds": 480,
+  "benchmark_token_cap": null,
+  "tests_passed": 110
+}

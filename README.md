@@ -59,7 +59,7 @@ recorded budgets and task packets. The original
 `configs/source-first-time.json` profile remains available unchanged.
 
 ```sh
-python3 -m ornithopter_eval compare --models gpt-5.6-sol gpt-6.1-sol --repeats 1 --config configs/source-first-v7.json --output runs/source-first-v7-comparison
+python3 -m ornithopter_eval compare --models gpt-5.6-sol gpt-6.1-sol --repeats 1 --config configs/source-first-v7.json --output runs/source-first-v7-comparison --sequential --stop-on-error
 python3 -m ornithopter_eval serve-artifacts runs/source-first-v7-comparison --port 8772
 ```
 
@@ -112,6 +112,14 @@ Diagnostics retain bounded, credential-redacted fields, without dumping request
 bodies, image payloads, cookies, authorization headers or proxy credentials.
 Generation budgets, time notices, no-retry behaviour and the scoring protocol
 stay as configured. Published attempts are not rewritten to add missing data.
+
+For a cautious comparison, use `compare --sequential --stop-on-error`. Each
+model finishes generation and grading before the next model starts. The batch
+stops on its first API/transport error, grading infrastructure error or API
+request interrupted by the generation deadline. Remaining attempts stay
+prepared with no API calls and are labelled not started. Ordinary binary-check
+failures do not stop the comparison. Both flags and the model order are saved
+in the experiment protocol; original parallel cohorts retain their settings.
 
 For a labelled author reference (never a model result), call
 `prepare_world(...,reference=True,task_version=LATEST_SOURCE_FIRST_VERSION)` from the

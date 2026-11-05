@@ -118,6 +118,9 @@ def refresh_workbench(root, experiment):
                "comparison_scope":f"{total} deterministic checks; {visual_count} visual checks remain separately ungraded.",
                "full_task_pass_rate":None,"note":f"{experiment['repeats']} repeat(s) per model; exploratory, not a definitive ranking.",
                "trials":experiment["trials"]}
+    for name in ('execution','stopped_after_trial','stop_reason'):
+        if name in experiment:
+            summary[name]=experiment[name]
     write_json(root / "summary.json", summary)
     if version in SOURCE_FIRST_VERSIONS:
         summary['comparison_scope']=str(total)+' binary task outcomes; aggregates include valid file-only attempts only. Report protocol invalid rate separately. Human aesthetic realism 1–5 is separate and ungraded until the owner reviews.'
@@ -135,6 +138,8 @@ def refresh_workbench(root, experiment):
             actions += '<a href="'+prefix+'rollout-review.json">File-only audit</a>'
         if (root / prefix / 'api-diagnostics.json').is_file():
             actions += '<a href="'+prefix+'api-diagnostics.json">API diagnostics</a>'
+        if t['status']=='prepared' and experiment.get('stopped_after_trial'):
+            actions='<span class="muted">Not started; batch stopped.</span>'
         if t.get('grade_directory') and t['grade_directory']!='grade':
             actions=actions.replace('href="'+prefix+'grade/report.json"','href="'+prefix+t['grade_directory']+'/report.json"')
             actions+='<a href="'+prefix+'grade/report.json">Initial grading</a>'
@@ -159,7 +164,7 @@ def refresh_workbench(root, experiment):
     return summary
 
 
-def run_experiment(output, models, repeats, config_path, node="node", transport=create_response, grader=grade_submission, generation_profile=None):
+def run_experiment(output, models, repeats, config_path, node="node", transport=create_response, grader=grade_submission, generation_profile=None, *, sequential=False, stop_on_error=False):
     root = Path(output).resolve()
     if root.exists():
         raise ValueError("Experiment directory already exists; preserve all previous attempts")
@@ -167,6 +172,8 @@ def run_experiment(output, models, repeats, config_path, node="node", transport=
         raise ValueError("Provide between two and eight distinct explicit model IDs")
     if type(repeats) is not int or not 1<=repeats<=20:
         raise ValueError("Repeats must be between 1 and 20")
+    if type(sequential) is not bool or type(stop_on_error) is not bool or (stop_on_error and not sequential):
+        raise ValueError("Stop-on-error requires sequential execution")
     if transport is create_response and not get_api_key():
         raise ValueError("A local API key is required; no experiment was created")
     config = load_config(config_path, generation_profile)
@@ -189,7 +196,10 @@ def run_experiment(output, models, repeats, config_path, node="node", transport=
     experiment = {"task_version":version,"created_utc":datetime.now(timezone.utc).isoformat(),
         "git_commit":commit,"frozen_sha256":frozen,"config_sha256":digest(root / "config.json"),
         "models":models,"repeats":repeats,"config":config,"status":"prepared",
-        "protocol":f"{len(models)} generators in parallel per round; {repeats} independent rounds; grading only after submission; no retries.",
+        "protocol":(f"Sequential generation and grading in model-list order; {repeats} independent rounds; no retries. "
+                    + ("Stop before the next model on an infrastructure/grading error or an API request interrupted by the generation deadline." if stop_on_error else "")
+                    if sequential else f"{len(models)} generators in parallel per round; {repeats} independent rounds; grading only after submission; no retries."),
+        "execution":{"concurrency":1 if sequential else len(models),"stop_on_error":stop_on_error},
         "visual_review":"Not scored: previous image judge failed calibration.","trials":[]}
     for repeat in range(1,repeats+1):
         for model in models:
@@ -205,16 +215,18 @@ def run_experiment(output, models, repeats, config_path, node="node", transport=
         write_transcript(run)
         return manifest
 
-    with ThreadPoolExecutor(max_workers=len(models)) as pool:
-        for repeat in range(1,repeats+1):
+    batches = [[t] for t in experiment['trials']] if sequential else [
+        [t for t in experiment['trials'] if t['repeat']==repeat] for repeat in range(1,repeats+1)]
+    had_error = False
+    with ThreadPoolExecutor(max_workers=1 if sequential else len(models)) as pool:
+        for batch in batches:
             if digest(root / "config.json")!=experiment["config_sha256"] or any(digest(ROOT/name)!=sha for name,sha in frozen.items()):
                 raise ValueError("Task, harness, grader or configuration changed during the frozen experiment")
-            round_trials = [t for t in experiment["trials"] if t["repeat"]==repeat]
-            for trial in round_trials:
+            for trial in batch:
                 trial["status"]="running"
             experiment["status"]="running"
             refresh_workbench(root,experiment)
-            pending = {pool.submit(generate,t):t for t in round_trials}
+            pending = {pool.submit(generate,t):t for t in batch}
             for future in as_completed(pending):
                 trial = pending[future]
                 run = root / "trials" / trial["id"]
@@ -239,10 +251,19 @@ def run_experiment(output, models, repeats, config_path, node="node", transport=
                 print(trial["id"]+": "+json.dumps({k:trial.get(k) for k in ("status","automated","reason","grading_error")}),flush=True)
             if digest(root / "config.json")!=experiment["config_sha256"] or any(digest(ROOT/name)!=sha for name,sha in frozen.items()):
                 raise ValueError("Frozen experiment files changed during generation or grading")
-            if any(t["status"]=="infrastructure_error" or t.get("grading_error") for t in round_trials):
+            failures = [t for t in batch if t['status']=='infrastructure_error' or t.get('grading_error') or
+                        (stop_on_error and (t.get('usage') or {}).get('interrupted_requests',0))]
+            had_error = had_error or bool(failures)
+            if failures and (not sequential or stop_on_error):
                 experiment["status"]="attention_required"
+                experiment['stopped_after_trial']=failures[0]['id']
+                experiment['stop_reason']=('generation_deadline_during_api_request'
+                    if failures[0]['status']=='budget_exhausted' else 'infrastructure_or_grading_error')
+                for trial in experiment['trials']:
+                    if trial['status']=='prepared':
+                        trial['reason']='Not started: batch stopped after '+failures[0]['id']
                 return refresh_workbench(root,experiment)
-    experiment["status"]="completed"
+    experiment["status"]="attention_required" if had_error else "completed"
     return refresh_workbench(root,experiment)
 
 

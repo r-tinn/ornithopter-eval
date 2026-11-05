@@ -18,6 +18,75 @@ def fake_grade(submission,output,node):
 
 
 class ExperimentTests(unittest.TestCase):
+    def test_sequential_fail_fast_grades_before_next_model_and_never_dispatches_after_api_error(self):
+        from ornithopter_eval.api import APIError
+        order=[]
+        def transport(payload,timeout):
+            model=payload['model'];order.append('generate:'+model)
+            if model=='model-c':raise APIError('Fixture HTTP 503')
+            return {'status':'completed','output':[],'usage':{'input_tokens':1,'output_tokens':1}}
+        def grade(submission,output,node):
+            order.append('grade:'+submission.parent.name)
+            report=fake_grade(submission,output,node)
+            report['dimensions']['physics']['checks'][0]['pass']=False
+            write_json(output/'report.json',report)
+            return report
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp)/'sequential'
+            result=run_experiment(root,['model-a','model-b','model-c','model-d','model-e'],2,
+                ROOT/'configs/frontier-calibration.json',transport=transport,grader=grade,sequential=True,stop_on_error=True)
+            self.assertEqual(order,['generate:model-a','grade:model-a-01','generate:model-b','grade:model-b-01','generate:model-c'])
+            self.assertEqual(result['status'],'attention_required')
+            self.assertEqual(result['stopped_after_trial'],'model-c-01')
+            self.assertEqual(result['execution'],{'concurrency':1,'stop_on_error':True})
+            self.assertEqual(sum(t['status']=='prepared' for t in result['trials']),7)
+            self.assertEqual(result['trials'][0]['automated']['passed'],19)
+            for trial in result['trials'][3:]:
+                run=root/'trials'/trial['id']
+                self.assertEqual(json.loads((run/'manifest.json').read_text())['status'],'prepared')
+                self.assertFalse((run/'events.jsonl').exists())
+            self.assertIn('Not started; batch stopped.',(root/'index.html').read_text())
+
+    def test_sequential_fail_fast_stops_on_grading_infrastructure_error(self):
+        calls=[]
+        def transport(payload,timeout):
+            calls.append(payload['model'])
+            return {'status':'completed','output':[],'usage':{'input_tokens':1,'output_tokens':1}}
+        def grade(submission,output,node):
+            output.mkdir();report={'status':'infrastructure_error','error':'Fixture browser unavailable'}
+            write_json(output/'report.json',report);return report
+        with tempfile.TemporaryDirectory() as temp:
+            result=run_experiment(Path(temp)/'batch',['model-a','model-b'],1,ROOT/'configs/frontier-calibration.json',
+                transport=transport,grader=grade,sequential=True,stop_on_error=True)
+            self.assertEqual(calls,['model-a'])
+            self.assertEqual(result['status'],'attention_required')
+            self.assertEqual(result['trials'][1]['status'],'prepared')
+
+    def test_sequential_fail_fast_stops_after_interrupted_request_even_if_partial_files_grade(self):
+        from unittest.mock import patch
+        from ornithopter_eval.deadline import DeadlineExceeded
+        from ornithopter_eval.checks import LATEST_SOURCE_FIRST_VERSION,checklist
+        def grade(submission,output,node):
+            output.mkdir();report={'task_version':LATEST_SOURCE_FIRST_VERSION,'status':'awaiting_review','dimensions':{
+                group:{'checks':[{'id':name,'pass':True} for name in names]}
+                for group,names in checklist(LATEST_SOURCE_FIRST_VERSION).items() if group!='visual'},'evidence':{'screenshots':[]}}
+            write_json(output/'report.json',report);return report
+        with tempfile.TemporaryDirectory() as temp,patch('ornithopter_eval.experiment.get_api_key',return_value='fixture'),patch('ornithopter_eval.runner.call_before_deadline',side_effect=DeadlineExceeded()) as request:
+            result=run_experiment(Path(temp)/'batch',['model-a','model-b'],1,ROOT/'configs/source-first-v7.json',
+                                  grader=grade,sequential=True,stop_on_error=True)
+            self.assertEqual(request.call_count,1)
+            self.assertEqual(result['status'],'attention_required')
+            self.assertEqual(result['stop_reason'],'generation_deadline_during_api_request')
+            self.assertEqual(result['trials'][0]['automated']['passed'],7)
+            self.assertEqual(result['trials'][1]['status'],'prepared')
+
+    def test_fail_fast_requires_sequential_before_creating_batch(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root=Path(temp)/'invalid'
+            with self.assertRaisesRegex(ValueError,'requires sequential'):
+                run_experiment(root,['model-a','model-b'],1,ROOT/'configs/source-first-v7.json',stop_on_error=True)
+            self.assertFalse(root.exists())
+
     def test_five_models_each_get_one_independent_attempt_and_a_failure_does_not_skip_peers(self):
         from ornithopter_eval.api import APIError
         models=['model-a','model-b','model-c','model-d','model-e']
