@@ -6,7 +6,7 @@ from contextlib import redirect_stdout
 from pathlib import Path
 
 from ornithopter_eval.__main__ import main
-from ornithopter_eval.checks import SOURCE_FIRST_VERSION,checklist
+from ornithopter_eval.checks import SOURCE_FIRST_VERSION,LATEST_SOURCE_FIRST_VERSION,checklist
 from ornithopter_eval.runner import ROOT,digest,initial_input,prepare
 from ornithopter_eval.world_candidate import CandidateFilePolicy
 from ornithopter_eval.policy import PolicyError
@@ -34,11 +34,11 @@ class SourceFirstTests(unittest.TestCase):
             policy=CandidateFilePolicy(run)
             with self.assertRaises(PolicyError):policy.apply({'type':'delete_file','path':'submission/environment/source-mechanism.mjs'})
 
-    def test_default_cli_is_revised_task_with_exactly_six_binary_task_targets(self):
+    def test_default_cli_is_v7_with_seven_targets_and_v6_stays_six(self):
         with tempfile.TemporaryDirectory() as temp,redirect_stdout(io.StringIO()):
             self.assertEqual(main(['prepare',str(Path(temp)/'run')]),0)
             manifest=json.loads((Path(temp)/'run/manifest.json').read_text())
-            self.assertEqual(manifest['task_version'],SOURCE_FIRST_VERSION)
+            self.assertEqual(manifest['task_version'],LATEST_SOURCE_FIRST_VERSION)
             self.assertEqual(manifest['config']['max_wall_seconds'],480)
             self.assertEqual(manifest['config']['reasoning_effort'],'medium')
             self.assertIsNone(manifest['config']['max_output_tokens_total'])
@@ -46,6 +46,19 @@ class SourceFirstTests(unittest.TestCase):
         self.assertEqual(sum(map(len,checks.values())),6)
         self.assertEqual(set(checks['interaction']),{'wheel_rotation_axis'})
         self.assertEqual(len(checks['physics']),5)
+        updated=checklist(LATEST_SOURCE_FIRST_VERSION)
+        self.assertEqual(sum(map(len,updated.values())),7)
+        self.assertIn('powered_pitch_stability',updated['physics'])
+
+    def test_v7_changes_only_declared_pitch_damping_and_keeps_original_inputs(self):
+        old=json.loads((ROOT/'candidate/mechanical-v6/engineering.json').read_text())
+        new=json.loads((ROOT/'candidate/mechanical-v7/engineering.json').read_text())
+        self.assertEqual(new['coupled']['pitch_damping_Nm_s'],1000)
+        new['status']=old['status'];new['coupled']['pitch_damping_Nm_s']=old['coupled']['pitch_damping_Nm_s']
+        self.assertEqual(new,old)
+        self.assertEqual((ROOT/'candidate/mechanical-v6/source-selection.json').read_bytes(),(ROOT/'candidate/mechanical-v7/source-selection.json').read_bytes())
+        runtime=(ROOT/'candidate/mechanical-v7/scaffold/environment/engineering.mjs').read_text().split('=',1)[1].strip().rstrip(';')
+        self.assertEqual(json.loads(runtime),json.loads((ROOT/'candidate/mechanical-v7/engineering.json').read_text()))
 
     def test_human_mass_and_section_data_are_internally_consistent(self):
         candidate=ROOT/'candidate/mechanical-v6'

@@ -1,0 +1,13 @@
+{
+  "observed_model": "gpt-5.6-sol",
+  "observation": "Archived eight-minute submission, full throttle, neutral pilot input, unchanged model physics",
+  "raw_pitch_range_deg": [
+    -20.05352282957881,
+    25.783100780887047
+  ],
+  "new_standard_probe": "gpt-5.6-standard-probe/summary.json",
+  "original_six_grades_changed": false,
+  "approach_controls_verified": "approach-review.json",
+  "new_rubric": "../source-first-v7/summary.json",
+  "new_model_generations": 0
+}

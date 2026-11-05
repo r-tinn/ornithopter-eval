@@ -2,7 +2,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
-from ornithopter_eval.playback import CameraPlayback
+from ornithopter_eval.playback import CameraPlayback,powered_approach_playback
 from ornithopter_eval.runner import ROOT,digest,write_json
 from ornithopter_eval.checks import MECHANICAL_VERSION,PILOTED_VERSION
 
@@ -46,27 +46,41 @@ class PlaybackTests(unittest.TestCase):
             write_json(trial/'manifest.json',{'task_version':MECHANICAL_VERSION,'readonly_sha256':{'environment/platform.mjs':'wrong hash'}})
             self.assertFalse(CameraPlayback(root).trials)
 
-    def test_v6_sharper_rendering_changes_only_two_options_and_keeps_archive_intact(self):
+    def test_v6_control_overlay_is_labelled_and_keeps_archived_physics_intact(self):
         root=ROOT/'experiments/source-first-v6-20261104-one-each'
         playback=CameraPlayback(root)
         self.assertEqual(len(playback.trials),2)
-        self.assertIn(b'Interactive rendering updated',playback.response('index.html'))
+        self.assertIn(b'Interactive playback updated',playback.response('index.html'))
         for trial in playback.trials:
             prefix=f'trials/{trial}/submission/'
             path=root/prefix/'environment/platform.mjs'
             before=digest(path)
             original=path.read_bytes()
             updated=playback.response(prefix+'environment/platform.mjs')
-            self.assertEqual(updated,original.replace(b'antialias:false',b'antialias:true',1).replace(
+            expected,patched=powered_approach_playback(original.replace(b'antialias:false',b'antialias:true',1).replace(
                 b'Math.min(devicePixelRatio,WORLD.pixel_ratio)',b'Math.min(devicePixelRatio,2)',1))
-            self.assertIn(b'Sharper rendering playback',playback.response(prefix+'index.html'))
+            self.assertTrue(patched)
+            self.assertEqual(updated,expected)
+            self.assertIn(b'releaseGlideForPower',playback.response(prefix+'environment/flight-modes.mjs'))
+            self.assertIn(b'Approach throttle engages wings',playback.response(prefix+'index.html'))
             self.assertIn(b'platform.mjs?original=1',playback.response(prefix+'index.html','original=1'))
-            for name in ('environment/platform.mjs','physics.mjs','environment/world.mjs','environment/view-motion.mjs'):
+            for name in ('environment/platform.mjs','environment/flight-modes.mjs','physics.mjs','environment/world.mjs','environment/view-motion.mjs'):
                 self.assertIsNone(playback.response(prefix+name,'original=1'))
             for name in ('physics.mjs','environment/world.mjs','environment/view-motion.mjs'):
                 self.assertIsNone(playback.response(prefix+name))
             self.assertEqual(digest(path),before)
         provenance=json.loads(playback.response('viewer-camera.json'))
-        self.assertEqual(provenance['kind'],'rendering-only interactive playback update')
+        self.assertEqual(provenance['kind'],'rendering and Approach-control interactive playback update')
         self.assertFalse(provenance['original_files_rewritten'])
         self.assertFalse(provenance['scores_or_captures_changed'])
+
+    def test_current_v6_gets_approach_fix_even_with_already_sharp_rendering(self):
+        root=ROOT/'experiments/source-first-v6-20261105-8min-one-each'
+        playback=CameraPlayback(root)
+        self.assertEqual(set(playback.trials),{'gpt-5.6-sol-01','gpt-6.1-sol-01'})
+        self.assertEqual(len(playback.approach_trials),2)
+        for trial in playback.trials:
+            prefix=f'trials/{trial}/submission/'
+            self.assertIn(b'engagePower();',playback.response(prefix+'environment/platform.mjs'))
+            self.assertIsNone(playback.response(prefix+'physics.mjs'))
+            self.assertIsNone(playback.response(prefix+'kinematics.mjs'))

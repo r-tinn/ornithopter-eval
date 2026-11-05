@@ -8,7 +8,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 from .runner import ROOT, digest, write_json
-from .checks import CHECKS, TASK_VERSION, MECHANICAL_VERSION, MECHANICAL_VERSIONS, PILOTED_VERSION, SOURCE_FIRST_VERSION, checklist, normalize_checks, refresh_verdict
+from .checks import CHECKS, TASK_VERSION, MECHANICAL_VERSION, MECHANICAL_VERSIONS, PILOTED_VERSION, SOURCE_FIRST_VERSION, SOURCE_FIRST_VERSIONS, LATEST_SOURCE_FIRST_VERSION, checklist, normalize_checks, refresh_verdict
 
 
 class SubmissionServer(http.server.BaseHTTPRequestHandler):
@@ -44,9 +44,9 @@ def grade_submission(submission, output, node="node", timeout=None, task_version
     if task_version not in (TASK_VERSION,*MECHANICAL_VERSIONS):
         raise ValueError('Unsupported task version')
     if timeout is None:
-        timeout = 120 if task_version in MECHANICAL_VERSIONS else 60
+        timeout = 180 if task_version==LATEST_SOURCE_FIRST_VERSION else 120 if task_version in MECHANICAL_VERSIONS else 60
     checks = checklist(task_version)
-    browser_file = 'source-first-v6.mjs' if task_version==SOURCE_FIRST_VERSION else ("piloted-v5.mjs" if task_version==PILOTED_VERSION else ("mechanical-v4.mjs" if task_version in MECHANICAL_VERSIONS else "browser.mjs"))
+    browser_file = ('source-first-v7.mjs' if task_version==LATEST_SOURCE_FIRST_VERSION else 'source-first-v6.mjs') if task_version in SOURCE_FIRST_VERSIONS else ("piloted-v5.mjs" if task_version==PILOTED_VERSION else ("mechanical-v4.mjs" if task_version in MECHANICAL_VERSIONS else "browser.mjs"))
     submission, output = Path(submission).resolve(), Path(output).resolve()
     if not submission.is_dir():
         raise ValueError("Submission directory missing")
@@ -70,10 +70,11 @@ def grade_submission(submission, output, node="node", timeout=None, task_version
     if task_version==PILOTED_VERSION:
         report['grader_sha256'].update({p.name:digest(p) for p in (ROOT/'grader').glob('piloted-*.mjs')})
         report['grader_sha256']['expected_engineering.json']=digest(ROOT/'candidate/mechanical-v5/engineering.json')
-    if task_version==SOURCE_FIRST_VERSION:
+    if task_version in SOURCE_FIRST_VERSIONS:
         report['grader_sha256'].update({p.name:digest(p) for p in (ROOT/'grader').glob('source-*.mjs')})
-        report['grader_sha256']['expected_engineering.json']=digest(ROOT/'candidate/mechanical-v6/engineering.json')
-        report['score_scope']='Six binary task outcomes only; file-only protocol and human aesthetic realism are separate.'
+        report['grader_sha256']['expected_engineering.json']=digest(ROOT/('candidate/mechanical-v7/engineering.json' if task_version==LATEST_SOURCE_FIRST_VERSION else 'candidate/mechanical-v6/engineering.json'))
+        report['score_scope']=str(sum(len(rows) for rows in checks.values()))+' binary task outcomes only; file-only protocol and human aesthetic realism are separate.'
+        if task_version==LATEST_SOURCE_FIRST_VERSION:report['grader_sha256']['pitch-stability.mjs']=digest(ROOT/'grader/pitch-stability.mjs')
         report['aesthetic_realism']={'kind':'human','score':None,'range':[1,5]}
         rollout=submission.parent/'rollout-review.json'
         if rollout.is_file():report['file_only_validity']=json.loads(rollout.read_text())

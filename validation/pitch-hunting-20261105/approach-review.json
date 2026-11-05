@@ -1,0 +1,379 @@
+{
+  "kind": "Interactive host-control regression, not model grading",
+  "trials": [
+    {
+      "model": "gpt-5.6-sol",
+      "pass": true,
+      "glide": {
+        "position": [
+          -174.26938946149943,
+          6.9877577613114035,
+          -165
+        ],
+        "velocity": [
+          10.73174311926003,
+          -1.475316847245627,
+          2.2844953500928388e-18
+        ],
+        "pitch": 0.012753810336358355,
+        "roll": 0,
+        "heading": 0,
+        "phase": 0,
+        "omega": 0,
+        "gliding": true,
+        "timing_bias": 0,
+        "control_work_J": 0,
+        "fuel_kg": 3.6,
+        "pitch_rate": -0.0005323667984828563,
+        "roll_rate": 0,
+        "wheel_angle": 46.65481272295574,
+        "shaft_work_J": 0,
+        "aero_work_J": 2561.129148416429,
+        "drive_heat_J": 0.000019528529864929832,
+        "time": 0.9999999999999977,
+        "status": "flying"
+      },
+      "release": {
+        "position": [
+          -174.26938946149943,
+          6.9877577613114035,
+          -165
+        ],
+        "velocity": [
+          10.73174311926003,
+          -1.475316847245627,
+          2.2844953500928388e-18
+        ],
+        "pitch": 0.012753810336358355,
+        "roll": 0,
+        "heading": 0,
+        "phase": 0,
+        "omega": 0,
+        "gliding": false,
+        "timing_bias": 0,
+        "control_work_J": 0,
+        "fuel_kg": 3.6,
+        "pitch_rate": -0.0005242129442602699,
+        "roll_rate": 0,
+        "wheel_angle": 46.65481272295574,
+        "shaft_work_J": 0,
+        "aero_work_J": 2561.129148416429,
+        "drive_heat_J": 0.00002031636959242512,
+        "time": 0.9999999999999977,
+        "status": "flying",
+        "mode_transition": {
+          "kind": "pilot-requested glide clutch release",
+          "time": 0.9999999999999977,
+          "pitch_momentum_before": -0.19324351551759614,
+          "pitch_momentum_after": -0.1932435155175961,
+          "mechanical_energy_before_J": 0.0000514382158418374,
+          "mechanical_energy_after_J": 0.000050650376114342116,
+          "heat_J": 7.878397274952865e-7
+        }
+      },
+      "powered": {
+        "position": [
+          -162.97957113029486,
+          4.14236512941723,
+          -165
+        ],
+        "velocity": [
+          11.90098061006058,
+          -4.63994997417986,
+          1.0854780431930626e-15
+        ],
+        "pitch": -0.2585300101046777,
+        "roll": 0,
+        "heading": 0,
+        "phase": 0.6556060239735558,
+        "omega": 0.40436315765039293,
+        "gliding": false,
+        "timing_bias": 0,
+        "control_work_J": 0,
+        "fuel_kg": 3.599629481499392,
+        "pitch_rate": -0.39771323006949905,
+        "roll_rate": 0,
+        "wheel_angle": 95.73041263220404,
+        "shaft_work_J": 2097.9392767153768,
+        "aero_work_J": 4227.198989867641,
+        "drive_heat_J": 329.3340492331362,
+        "time": 1.9999999999999942,
+        "status": "flying",
+        "mode_transition": {
+          "kind": "pilot-requested glide clutch release",
+          "time": 0.9999999999999977,
+          "pitch_momentum_before": -0.19324351551759614,
+          "pitch_momentum_after": -0.1932435155175961,
+          "mechanical_energy_before_J": 0.0000514382158418374,
+          "mechanical_energy_after_J": 0.000050650376114342116,
+          "heat_J": 7.878397274952865e-7
+        }
+      },
+      "shaft_power_W": 1293.9621044812575,
+      "coast": {
+        "position": [
+          -161.7864277374001,
+          3.8647789215798554,
+          -165
+        ],
+        "velocity": [
+          11.92021370606965,
+          -0.45384113779397345,
+          1.149780652895363e-15
+        ],
+        "pitch": 0.0007492401532657382,
+        "roll": 0,
+        "heading": 0,
+        "phase": 0.6579657997505934,
+        "omega": -0.2998640681161494,
+        "gliding": false,
+        "timing_bias": 0,
+        "control_work_J": 0,
+        "fuel_kg": 3.599629481499392,
+        "pitch_rate": 0.034304467643801566,
+        "roll_rate": 0,
+        "wheel_angle": 100.9178115157771,
+        "shaft_work_J": 2097.9392767153768,
+        "aero_work_J": 4385.220657773983,
+        "drive_heat_J": 330.47324813662306,
+        "time": 2.099999999999999,
+        "status": "flying",
+        "mode_transition": {
+          "kind": "pilot-requested glide clutch release",
+          "time": 0.9999999999999977,
+          "pitch_momentum_before": -0.19324351551759614,
+          "pitch_momentum_after": -0.1932435155175961,
+          "mechanical_energy_before_J": 0.0000514382158418374,
+          "mechanical_energy_after_J": 0.000050650376114342116,
+          "heat_J": 7.878397274952865e-7
+        }
+      },
+      "keyboard": {
+        "position": [
+          -179.86224470012533,
+          7.281391388830588,
+          -165
+        ],
+        "velocity": [
+          10.975979578830508,
+          -3.2341630438682687,
+          1.58436972082841e-16
+        ],
+        "pitch": -0.013597707567960431,
+        "roll": 0,
+        "heading": 0,
+        "phase": -0.11629838746199037,
+        "omega": -0.4344117883718469,
+        "gliding": false,
+        "timing_bias": 0,
+        "control_work_J": 0,
+        "fuel_kg": 3.5999762500000094,
+        "pitch_rate": -0.1352775354884066,
+        "roll_rate": 0,
+        "wheel_angle": 22.335857783606503,
+        "shaft_work_J": 0,
+        "aero_work_J": 768.9315141313992,
+        "drive_heat_J": 0.5127400804986035,
+        "time": 0.47499999999999953,
+        "status": "flying",
+        "mode_transition": {
+          "kind": "pilot-requested glide clutch release",
+          "time": 0,
+          "pitch_momentum_before": 0,
+          "pitch_momentum_after": 0,
+          "mechanical_energy_before_J": 0,
+          "mechanical_energy_after_J": 0,
+          "heat_J": 0
+        }
+      },
+      "original_playback_gliding": true
+    },
+    {
+      "model": "gpt-6.1-sol",
+      "pass": true,
+      "glide": {
+        "position": [
+          -174.26999729723548,
+          6.9899989061864405,
+          -165
+        ],
+        "velocity": [
+          10.73000270276694,
+          -1.4715654536564347,
+          -2.3589734914228164e-17
+        ],
+        "pitch": 0.013083471741964251,
+        "roll": 0,
+        "heading": 0,
+        "phase": 0,
+        "omega": 0,
+        "gliding": true,
+        "timing_bias": 0,
+        "control_work_J": 0,
+        "fuel_kg": 3.6,
+        "pitch_rate": 7.681668672430856e-16,
+        "roll_rate": 0,
+        "wheel_angle": 46.65218566420434,
+        "shaft_work_J": 0,
+        "aero_work_J": 2561.52510570774,
+        "drive_heat_J": 3.3832508041374973e-29,
+        "time": 0.9999999999999977,
+        "status": "flying"
+      },
+      "release": {
+        "position": [
+          -174.26999729723548,
+          6.9899989061864405,
+          -165
+        ],
+        "velocity": [
+          10.73000270276694,
+          -1.4715654536564347,
+          -2.3589734914228164e-17
+        ],
+        "pitch": 0.013083471741964251,
+        "roll": 0,
+        "heading": 0,
+        "phase": 0,
+        "omega": 0,
+        "gliding": false,
+        "timing_bias": 0,
+        "control_work_J": 0,
+        "fuel_kg": 3.6,
+        "pitch_rate": 7.563941833806299e-16,
+        "roll_rate": 0,
+        "wheel_angle": 46.65218566420434,
+        "shaft_work_J": 0,
+        "aero_work_J": 2561.52510570774,
+        "drive_heat_J": 3.547391902832757e-29,
+        "time": 0.9999999999999977,
+        "status": "flying",
+        "mode_transition": {
+          "kind": "pilot-requested glide clutch release",
+          "time": 0.9999999999999977,
+          "pitch_momentum_before": 2.7885077118009166e-13,
+          "pitch_momentum_after": 2.7885077118009166e-13,
+          "mechanical_energy_before_J": 1.0710196166286475e-28,
+          "mechanical_energy_after_J": 1.0546055067591216e-28,
+          "heat_J": 1.6414109869525953e-30
+        }
+      },
+      "powered": {
+        "position": [
+          -162.98299762040216,
+          4.150529427952734,
+          -165
+        ],
+        "velocity": [
+          11.897249545880547,
+          -4.631765804175481,
+          -3.3053464357726344e-16
+        ],
+        "pitch": -0.2579178768570631,
+        "roll": 0,
+        "heading": 0,
+        "phase": 0.6552154654916527,
+        "omega": 0.403961819289442,
+        "gliding": false,
+        "timing_bias": 0,
+        "control_work_J": 0,
+        "fuel_kg": 3.599629672439093,
+        "pitch_rate": -0.3977061985385481,
+        "roll_rate": 0,
+        "wheel_angle": 95.72609730261024,
+        "shaft_work_J": 2096.6894895732894,
+        "aero_work_J": 4227.5644118262935,
+        "drive_heat_J": 329.12725184017853,
+        "time": 1.9999999999999942,
+        "status": "flying",
+        "mode_transition": {
+          "kind": "pilot-requested glide clutch release",
+          "time": 0.9999999999999977,
+          "pitch_momentum_before": 2.7885077118009166e-13,
+          "pitch_momentum_after": 2.7885077118009166e-13,
+          "mechanical_energy_before_J": 1.0710196166286475e-28,
+          "mechanical_energy_after_J": 1.0546055067591216e-28,
+          "heat_J": 1.6414109869525953e-30
+        }
+      },
+      "shaft_power_W": 1292.6778217262145,
+      "coast": {
+        "position": [
+          -162.2873044274998,
+          3.875920312578458,
+          -165
+        ],
+        "velocity": [
+          0,
+          0,
+          0
+        ],
+        "pitch": -0.2802249835103871,
+        "roll": 0,
+        "heading": 0,
+        "phase": 0.6648599222457742,
+        "omega": -0.06455124591189149,
+        "gliding": false,
+        "timing_bias": 0,
+        "control_work_J": 0,
+        "fuel_kg": 3.599629672439093,
+        "pitch_rate": -0.36682675594632547,
+        "roll_rate": 0,
+        "wheel_angle": 98.75085031522921,
+        "shaft_work_J": 2096.6894895732894,
+        "aero_work_J": 4327.055566840736,
+        "drive_heat_J": 330.3354356220458,
+        "time": 2.0583333333333305,
+        "status": "crashed",
+        "mode_transition": {
+          "kind": "pilot-requested glide clutch release",
+          "time": 0.9999999999999977,
+          "pitch_momentum_before": 2.7885077118009166e-13,
+          "pitch_momentum_after": 2.7885077118009166e-13,
+          "mechanical_energy_before_J": 1.0710196166286475e-28,
+          "mechanical_energy_after_J": 1.0546055067591216e-28,
+          "heat_J": 1.6414109869525953e-30
+        }
+      },
+      "keyboard": {
+        "position": [
+          -179.86225370792872,
+          7.281671050379044,
+          -165
+        ],
+        "velocity": [
+          10.975914547685747,
+          -3.2329441590083827,
+          1.0170990252499223e-16
+        ],
+        "pitch": -0.013560397668719512,
+        "roll": 0,
+        "heading": 0,
+        "phase": -0.11632031679088879,
+        "omega": -0.43442925307504177,
+        "gliding": false,
+        "timing_bias": 0,
+        "control_work_J": 0,
+        "fuel_kg": 3.5999762500000094,
+        "pitch_rate": -0.1351074036027967,
+        "roll_rate": 0,
+        "wheel_angle": 22.338027356831088,
+        "shaft_work_J": 0,
+        "aero_work_J": 769.2672534057546,
+        "drive_heat_J": 0.511933104365625,
+        "time": 0.47499999999999953,
+        "status": "flying",
+        "mode_transition": {
+          "kind": "pilot-requested glide clutch release",
+          "time": 0,
+          "pitch_momentum_before": 0,
+          "pitch_momentum_after": 0,
+          "mechanical_energy_before_J": 0,
+          "mechanical_energy_after_J": 0,
+          "heat_J": 0
+        }
+      },
+      "original_playback_gliding": true
+    }
+  ]
+}

@@ -7,7 +7,7 @@ import subprocess
 import threading
 import http.server
 
-from ornithopter_eval.checks import SOURCE_FIRST_VERSION
+from ornithopter_eval.checks import SOURCE_FIRST_VERSION,LATEST_SOURCE_FIRST_VERSION,SOURCE_FIRST_VERSIONS
 from ornithopter_eval.grading import SubmissionServer
 from ornithopter_eval.runner import ROOT, write_json
 from ornithopter_eval.world_candidate import prepare_world
@@ -21,11 +21,12 @@ MUTANTS = {
     'overpowered_engine': ('physics.mjs', 'power=shaftTorque*Math.max(0,s.omega)', 'power=2*shaftTorque*Math.max(0,s.omega)', 'power', 'power_limited_flight'),
     'glide_altitude_hold': ('physics.mjs', 'return out;}', 'return s.gliding?{...out,position:[out.position[0],s.position[1],out.position[2]],velocity:[out.velocity[0],0,out.velocity[2]]}:out;}', 'glide', 'unpowered_glide_balance'),
     'wrong_wheel_axis': ('aircraft.mjs', 'wheel.rotation.z=', 'wheel.rotation.y=', 'wheel', 'wheel_rotation_axis'),
+    'insufficient_pitch_damping': ('environment/engineering.mjs', '"pitch_damping_Nm_s": 1000', '"pitch_damping_Nm_s": 140', 'stability', 'powered_pitch_stability'),
 }
 
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('output');parser.add_argument('--node',required=True);args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('output');parser.add_argument('--node',required=True);parser.add_argument('--task-version',choices=SOURCE_FIRST_VERSIONS,default=LATEST_SOURCE_FIRST_VERSION);args=parser.parse_args()
     root=Path(args.output).resolve()
     if root.exists():raise ValueError('Use a new calibration directory')
     root.mkdir(parents=True)
@@ -33,7 +34,8 @@ def main():
     clean={k:v for k,v in os.environ.items() if k in ('PATH','TMPDIR','SYSTEMROOT','DISPLAY')}
     clean['PLAYWRIGHT_BROWSERS_PATH']=str(ROOT/'.cache/browsers')
     for name,(file,old,new,scenario,target) in MUTANTS.items():
-        trial=prepare_world(root/name,reference=True,task_version=SOURCE_FIRST_VERSION)
+        if scenario=='stability' and args.task_version==SOURCE_FIRST_VERSION:continue
+        trial=prepare_world(root/name,reference=True,task_version=args.task_version)
         path=trial/'submission'/file;raw=path.read_text()
         if old not in raw:raise ValueError('Calibration mutation anchor missing: '+name)
         path.write_text(raw.replace(old,new))
@@ -41,13 +43,13 @@ def main():
         thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
         try:
             with (trial/'calibration.log').open('w') as log:
-                subprocess.run([args.node,str(ROOT/'grader/source-calibrate.mjs'),f'http://127.0.0.1:{server.server_port}',str(trial/'result.json'),scenario],env=clean,stdout=log,stderr=log,timeout=120,check=True)
+                subprocess.run([args.node,str(ROOT/'grader/source-calibrate.mjs'),f'http://127.0.0.1:{server.server_port}',str(trial/'result.json'),scenario,args.task_version],env=clean,stdout=log,stderr=log,timeout=120,check=True)
             raw=json.loads((trial/'result.json').read_text());check=raw if scenario=='wheel' else next(x for x in raw['physics'] if x['id']==target)
             results.append({'variant':name,'target':target,'rejected':check['pass'] is False,'evidence':str((trial/'result.json').relative_to(root))})
             print(json.dumps(results[-1]),flush=True)
         finally:
             server.shutdown();server.server_close();thread.join()
-    write_json(root/'summary.json',{'task_version':SOURCE_FIRST_VERSION,'kind':'handwritten author mutant calibration, not model trials','all_targeted_defects_rejected':all(x['rejected'] for x in results),'results':results,'live_model_calls':0})
+    write_json(root/'summary.json',{'task_version':args.task_version,'kind':'handwritten author mutant calibration, not model trials','all_targeted_defects_rejected':all(x['rejected'] for x in results),'results':results,'live_model_calls':0})
     return 0 if all(x['rejected'] for x in results) else 1
 
 

@@ -1,0 +1,28 @@
+{
+  "scope": "Post-submission regression demonstration; no model trial or new full-task score",
+  "submission_sha256": {
+    "index.html": "8a002bff386959b06dcaaa7bc09228496ff59036e2856552c2edc6b4190743d6",
+    "aircraft.mjs": "85f53ec7b88cb36bee8c61aca52d99fcdb9cfee6e5e15d308051b3b704882bf7",
+    "interpretation.json": "3d5a0c15957d51526ebf2ebf92e273f7661ac62caf86a5db96c27e5f93fe78fa",
+    "kinematics.mjs": "bc7bb22a13b8b3dc17ba6d9d1ed2845d48903a1909c3796ac6b912e003a93c48",
+    "physics.mjs": "497f88853f608633f7fcc88e47f9505f076657bae96b8c3720216281fb4515bd",
+    "environment/engineering.mjs": "7ffdb081962101bcdf8a61b969527c4d92e5f8cb21aaf34b847c2b28438bdfb4",
+    "environment/view-motion.mjs": "a01247f64b5244a8223f490b10044296c779284e6fa685e75344421499ef92b1",
+    "environment/world.mjs": "a6b172f743a1f07ca60d543b32604774124a1034478a25b794f7730c22846c00",
+    "environment/source-mechanism.mjs": "cb55fd96906c7d708ea948a1010c2a9e6d688224ff65155b7e1eeb91c9db3b4d",
+    "environment/style.css": "21db9f38d2ab3f0c10c667245fed2748689382465c4164e281bed102b2b7f5ed",
+    "environment/platform.mjs": "1c6da97f51dd767bfb88e557d2fb27532e5c8b6e250e76761d29f02d0bd2ddad",
+    "environment/vendor/three.core.min.js": "05b2609338c76cd65daf74f3ac515bc9a5045e1b3b33edc07d8c9bd55250fa90",
+    "environment/vendor/THREE-LICENSE.txt": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+    "environment/vendor/three.module.min.js": "86bcee248b64f44bcfc23c331ae74619061957d59cab040171dcb6fb5900beb6"
+  },
+  "grader_sha256": "932049248f583e913532a09e8f53937b9af772bcb49f523b2aa0dea93dfdcc4d",
+  "id": "powered_pitch_stability",
+  "pass": false,
+  "slow_pitch_range_deg": [
+    -19.35500151379621,
+    24.498420724770526
+  ],
+  "large_reversals": 11,
+  "error": null
+}

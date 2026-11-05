@@ -1,0 +1,75 @@
+{
+  "task_version": "mechanical-v7-source-first",
+  "kind": "handwritten author mutant calibration, not model trials",
+  "all_targeted_defects_rejected": true,
+  "results": [
+    {
+      "variant": "clamped_camber_cosine",
+      "target": "power_limited_flight",
+      "rejected": true,
+      "evidence": "clamped_camber_cosine/result.json"
+    },
+    {
+      "variant": "no_recovery_closing",
+      "target": "wing_cycle_force_coupling",
+      "rejected": true,
+      "evidence": "no_recovery_closing/result.json"
+    },
+    {
+      "variant": "shared_section_table",
+      "target": "wing_cycle_force_coupling",
+      "rejected": true,
+      "evidence": "shared_section_table/result.json"
+    },
+    {
+      "variant": "no_spring_torque",
+      "target": "elastic_inertial_exchange",
+      "rejected": true,
+      "evidence": "no_spring_torque/result.json"
+    },
+    {
+      "variant": "no_inertial_pitch_reaction",
+      "target": "wing_body_pitch_coupling",
+      "rejected": true,
+      "evidence": "no_inertial_pitch_reaction/result.json"
+    },
+    {
+      "variant": "overpowered_engine",
+      "target": "power_limited_flight",
+      "rejected": true,
+      "evidence": "overpowered_engine/result.json"
+    },
+    {
+      "variant": "glide_altitude_hold",
+      "target": "unpowered_glide_balance",
+      "rejected": true,
+      "evidence": "glide_altitude_hold/result.json"
+    },
+    {
+      "variant": "wrong_wheel_axis",
+      "target": "wheel_rotation_axis",
+      "rejected": true,
+      "evidence": "wrong_wheel_axis/result.json"
+    },
+    {
+      "variant": "insufficient_pitch_damping",
+      "target": "powered_pitch_stability",
+      "rejected": true,
+      "evidence": "insufficient_pitch_damping/result.json"
+    }
+  ],
+  "live_model_calls": 0,
+  "positive_reference_all_seven_pass": true,
+  "positive_reference_report": "positive/report.json",
+  "original_v6_results_modified": false,
+  "engineering_change": {
+    "field": "coupled.pitch_damping_Nm_s",
+    "v6": 140,
+    "v7": 1000,
+    "kind": "explicit illustrative passive damping, dissipated energy included"
+  },
+  "new_check_implementation_sha256": "932049248f583e913532a09e8f53937b9af772bcb49f523b2aa0dea93dfdcc4d",
+  "python_unit_tests_passed": 90,
+  "javascript_tests_passed": 14,
+  "approach_host_regression": "../pitch-hunting-20261105/approach-review.json"
+}

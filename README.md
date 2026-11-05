@@ -4,11 +4,11 @@
 
 Serve this cohort with `python3 -m ornithopter_eval serve-artifacts experiments/source-first-v6-20261105-8min-one-each --port 8773`. The gallery includes your separate human-rating UI.
 
-The runnable task is [source-first v6](candidate/mechanical-v6/TASK.md). A fresh
+The next-run task is [source-first v7](candidate/mechanical-v7/TASK.md). A fresh
 model receives **nine original notebook photographs (02,08–15)** plus clearly
 labelled engineering completions:55kg adult pilot,14m span,**177.5kg initial all-up
 mass**,16kW petrol engine and finite fuel. Read [the numerical assumptions and
-feasibility changes](candidate/mechanical-v6/ENGINEERING_NOTES.md).
+feasibility changes](candidate/mechanical-v7/ENGINEERING_NOTES.md).
 
 The model creates a mechanical ornithopter in the supplied lightweight hills,
 trees and two-strip world. Shared geometry/mass bookkeeping supports closing
@@ -16,14 +16,28 @@ outer leaves, distinct region camber and sections, real spring/wing inertia,
 whole-aircraft CG movement and coupled wing/body pitch. Forces and work follow
 the actual linked motion. No original-project runtime dependency.
 
-There are **six binary task graders**:wing-cycle forces/production geometry,
+There are **seven binary task graders**:wing-cycle forces/production geometry,
 elastic/inertial energy,wing/body pitch,finite-power takeoff/bank,unpowered glide
-balance,and actual wheel rotation axis. **File-only tool validity** is separate.
+balance,actual wheel rotation axis,and neutral-input powered pitch stability. **File-only tool validity** is separate.
 **Human aesthetic realism (1–5)** is entered after you fly the simulator.
-[Exact probes/tolerances](candidate/mechanical-v6/GRADERS.md) and
-[positive/negative calibration](validation/source-first-v6/summary.json) are saved.
-The corrected reference passes six; all eight targeted defects are rejected. The [post-submission oracle correction](validation/source-first-v6/corrected-camber-oracle/summary.json) and initial grading are both retained; model scores are unchanged. This checks
-an educational reduced model, not a flight-validated aircraft design.
+[Exact probes/tolerances](candidate/mechanical-v7/GRADERS.md) and
+[v7 positive/negative calibration](validation/source-first-v7/summary.json) are saved.
+The labelled author reference passes all seven; all nine deliberate defects are
+rejected. The observed 5.6 slow oscillation is retained as a separate regression
+example, without changing its published six-check score. These are checks on an
+educational reduced model, not a flight-validated aircraft design.
+
+The old full-throttle runway grader used a pitch controller. The new stability
+check uses neutral pilot input, filters out small wingbeat motion and detects
+persistent large slow reversals. V6's reference also hunted, so v7 explicitly
+increases the illustrative passive pitch damping from140 to1000 N m s/rad and
+accounts for its dissipation. Other engineering constants and crash limits are
+unchanged. [Observation evidence](validation/pitch-hunting-20261105/index.html).
+
+Approach initially glides with zero throttle. Adding throttle now releases the
+glide clutch and starts the finite engine-driven mechanism; reducing power
+coasts it. The old v6 viewer gets a labelled host-control fix, with original
+playback still available. Saved model physics, captures and grades are intact.
 
 New CLI runs use **480 seconds (eight minutes)**, **medium reasoning**, and **no benchmark token
 or request cap**. The model knows the deadline upfront. Warnings arrive at the
@@ -33,17 +47,17 @@ files survive cutoff; late edits are discarded.
 
 The initial task explicitly requires sustained takeoff before the runway ends,
 without unstable bouncing or premature ground-contact release. The eight-minute baseline
-uses `configs/source-first-v6.json`; its explicit budget overlay is
-`configs/source-first-time-8min.json`. The published comparison retains its
-original four-minute configuration and task packet. The original
+uses `configs/source-first-v7.json`; its explicit budget overlay is
+`configs/source-first-time-8min.json`. Published cohorts retain their
+recorded budgets and task packets. The original
 `configs/source-first-time.json` profile remains available unchanged.
 
 ```sh
-python3 -m ornithopter_eval compare --models gpt-5.6-sol gpt-6.1-sol --repeats 1 --config configs/source-first-v6.json --output runs/source-first-v6-comparison
-python3 -m ornithopter_eval serve-artifacts runs/source-first-v6-comparison --port 8772
+python3 -m ornithopter_eval compare --models gpt-5.6-sol gpt-6.1-sol --repeats 1 --config configs/source-first-v7.json --output runs/source-first-v7-comparison
+python3 -m ornithopter_eval serve-artifacts runs/source-first-v7-comparison --port 8772
 ```
 
-The gallery links each playable submission, six grader results, captured views,
+The gallery links each playable submission, seven grader results, captured views,
 raw transcript,source,and file-only audit. **Rate aesthetic realism ·1–5** opens
 the human review UI. Scores bind to complete submission hashes and retain every
 revision. Local ledgers are Git-ignored in reviews/aesthetics; export JSON from
@@ -55,7 +69,7 @@ brief. No live key is passed to a submission or committed. Generation logs,
 manifest hashes,grader trajectories and screenshots are retained for inspection.
 
 For a labelled author reference (never a model result), call
-`prepare_world(...,reference=True,task_version=SOURCE_FIRST_VERSION)` from the
+`prepare_world(...,reference=True,task_version=LATEST_SOURCE_FIRST_VERSION)` from the
 Python preparation API. Author mutant calibration is reproducible with
 `PYTHONPATH=. python3 analysis/calibrate_source_first.py runs/new-calibration --node /path/to/node`.
 

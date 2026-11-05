@@ -30,6 +30,10 @@ class AestheticStore:
         self.ledger = Path(ledger)
         self.artifact_url = artifact_url.rstrip('/')
         self.camera_updates = camera_updates
+        self.playback_provenance = None
+        if camera_updates:
+            from .playback import CameraPlayback
+            self.playback_provenance = getattr(CameraPlayback(self.root), 'provenance', None)
         self.lock = threading.Lock()
         experiment = json.loads((self.root / 'experiment.json').read_text())
         identity = {key: experiment.get(key) for key in ('created_utc', 'git_commit', 'task_version', 'models')}
@@ -100,6 +104,7 @@ class AestheticStore:
                            'sources_url': self.artifact_url + '/trials/' + name + '/inputs/SOURCE_GUIDE.md'})
         return {'grader': 'aesthetic_realism', 'rubric_version': 'human-aesthetic-v1', 'rubric': RUBRIC,
                 'cohort_id': self.cohort_id, 'task_version': self.task_version,
+                'interactive_playback': self.playback_provenance,
                 'trials': trials, 'records': records}
 
     def save(self, data):
@@ -126,6 +131,7 @@ class AestheticStore:
                    'created_utc': datetime.now(timezone.utc).isoformat(),
                    'submission_digest': submission_digest, 'submission_sha256': manifest['submission_sha256'],
                    'camera_mode': 'updated viewer where supported' if self.camera_updates else 'original',
+                   'interactive_playback': self.playback_provenance,
                    'revision': 1 + sum(r['trial_id'] == name for r in history)}
             self.ledger.parent.mkdir(parents=True, exist_ok=True)
             with self.ledger.open('a') as stream:

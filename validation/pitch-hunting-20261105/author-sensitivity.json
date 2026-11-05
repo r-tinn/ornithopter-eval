@@ -1,0 +1,32 @@
+{
+  "kind": "author-only stability sensitivity; not model results",
+  "cases": [
+    {
+      "pitch_damping_Nm_s": 140,
+      "pitch_range_deg": [
+        -27.131222502844242,
+        33.60795838812197
+      ],
+      "final_status": "flying",
+      "final_time": 80.00000000000941
+    },
+    {
+      "pitch_damping_Nm_s": 1000,
+      "pitch_range_deg": [
+        1.4286920292069376,
+        9.400075110607828
+      ],
+      "final_status": "flying",
+      "final_time": 80.00000000000941
+    },
+    {
+      "pitch_damping_Nm_s": 4000,
+      "pitch_range_deg": [
+        4.213618414226098,
+        6.947135000743838
+      ],
+      "final_status": "flying",
+      "final_time": 80.00000000000941
+    }
+  ]
+}
