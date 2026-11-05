@@ -12,8 +12,8 @@ const $=s=>document.querySelector(s),canvas=$('[data-testid=scene]'),viewport=$(
 const scene=new T.Scene();scene.background=new T.Color(0xb8cece);scene.fog=new T.Fog(0xb8cece,700,3100);
 scene.add(new T.HemisphereLight(0xf3f1df,0x6d7d50,2.4));
 const sun=new T.DirectionalLight(0xfff0ce,2.1);sun.position.set(-160,280,130);scene.add(sun);
-const renderer=new T.WebGLRenderer({canvas,antialias:false,powerPreference:'low-power'});
-renderer.setPixelRatio(Math.min(devicePixelRatio,WORLD.pixel_ratio));renderer.shadowMap.enabled=false;
+const renderer=new T.WebGLRenderer({canvas,antialias:true,powerPreference:'low-power'});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=false;
 renderer.outputColorSpace=T.SRGBColorSpace;renderer.toneMapping=T.NeutralToneMapping;
 const camera=new T.PerspectiveCamera(48,1,.5,6500),world=createWorld(T,scene);
 const shadow=new T.Mesh(new T.CircleGeometry(1,16),new T.MeshBasicMaterial({color:0x253d2f,transparent:true,opacity:.13,depthWrite:false}));

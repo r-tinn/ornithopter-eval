@@ -45,3 +45,28 @@ class PlaybackTests(unittest.TestCase):
             write_json(root/'experiment.json',{'task_version':MECHANICAL_VERSION,'trials':[{'id':'model-01'}]})
             write_json(trial/'manifest.json',{'task_version':MECHANICAL_VERSION,'readonly_sha256':{'environment/platform.mjs':'wrong hash'}})
             self.assertFalse(CameraPlayback(root).trials)
+
+    def test_v6_sharper_rendering_changes_only_two_options_and_keeps_archive_intact(self):
+        root=ROOT/'experiments/source-first-v6-20261104-one-each'
+        playback=CameraPlayback(root)
+        self.assertEqual(len(playback.trials),2)
+        self.assertIn(b'Interactive rendering updated',playback.response('index.html'))
+        for trial in playback.trials:
+            prefix=f'trials/{trial}/submission/'
+            path=root/prefix/'environment/platform.mjs'
+            before=digest(path)
+            original=path.read_bytes()
+            updated=playback.response(prefix+'environment/platform.mjs')
+            self.assertEqual(updated,original.replace(b'antialias:false',b'antialias:true',1).replace(
+                b'Math.min(devicePixelRatio,WORLD.pixel_ratio)',b'Math.min(devicePixelRatio,2)',1))
+            self.assertIn(b'Sharper rendering playback',playback.response(prefix+'index.html'))
+            self.assertIn(b'platform.mjs?original=1',playback.response(prefix+'index.html','original=1'))
+            for name in ('environment/platform.mjs','physics.mjs','environment/world.mjs','environment/view-motion.mjs'):
+                self.assertIsNone(playback.response(prefix+name,'original=1'))
+            for name in ('physics.mjs','environment/world.mjs','environment/view-motion.mjs'):
+                self.assertIsNone(playback.response(prefix+name))
+            self.assertEqual(digest(path),before)
+        provenance=json.loads(playback.response('viewer-camera.json'))
+        self.assertEqual(provenance['kind'],'rendering-only interactive playback update')
+        self.assertFalse(provenance['original_files_rewritten'])
+        self.assertFalse(provenance['scores_or_captures_changed'])

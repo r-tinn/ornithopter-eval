@@ -25,11 +25,18 @@ balance,and actual wheel rotation axis. **File-only tool validity** is separate.
 The corrected reference passes six; all eight targeted defects are rejected. The [post-submission oracle correction](validation/source-first-v6/corrected-camber-oracle/summary.json) and initial grading are both retained; model scores are unchanged. This checks
 an educational reduced model, not a flight-validated aircraft design.
 
-New CLI runs use **240 seconds**, **medium reasoning**, and **no benchmark token
+New CLI runs use **480 seconds (eight minutes)**, **medium reasoning**, and **no benchmark token
 or request cap**. The model knows the deadline upfront. Warnings arrive at the
-next exchange after120/180s. Only targeted virtual file reads and declared
+next exchange after240/360s. Only targeted virtual file reads and declared
 patches are allowed; no execution, tests, browser or grader feedback. Completed
 files survive cutoff; late edits are discarded.
+
+The initial task explicitly requires sustained takeoff before the runway ends,
+without unstable bouncing or premature ground-contact release. The eight-minute baseline
+uses `configs/source-first-v6.json`; its explicit budget overlay is
+`configs/source-first-time-8min.json`. The published comparison retains its
+original four-minute configuration and task packet. The original
+`configs/source-first-time.json` profile remains available unchanged.
 
 ```sh
 python3 -m ornithopter_eval compare --models gpt-5.6-sol gpt-6.1-sol --repeats 1 --config configs/source-first-v6.json --output runs/source-first-v6-comparison
@@ -138,7 +145,7 @@ The earlier swan task is **swan-v3.1**: its task and starter require scalar `lif
 The first live cohort remains archived as swan-v3.0 with its original grades.
 These preserved swan configurations use **32,000 total output tokens, including
 reasoning**, with **medium reasoning** and two token checkpoints after 50% and
-75% usage. New CLI runs use the four-minute configuration described above. The first
+75% usage. New CLI runs use the eight-minute configuration described above. The first
 16,000-token cohort retains its original settings and scores.
 
 The two selected family source photographs and reference preview are included

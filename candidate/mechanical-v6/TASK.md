@@ -7,13 +7,19 @@ assumptions from Stanley's work. Build the aircraft and working flight simulatio
 inside the supplied hills, trees and two-strip world. The world, renderer,
 controls and geometric/mass helper are provided; no external assets or packages.
 
-**240 seconds total generation time**, including reading images, reasoning,
+**480 seconds (eight minutes) total generation time**, including reading images, reasoning,
 API latency and file operations. Medium reasoning; no benchmark output-token or
-request-count cap. Warnings at the next exchange after 120 and 180 seconds.
+request-count cap. Warnings at the next exchange after 240 and 360 seconds.
 Only targeted file reads and native patches are available. No execution,
 verification, tests, syntax checks, browser previews, HTTP or grader feedback.
 Complete the four declared files before the cutoff: physics.mjs, kinematics.mjs,
 aircraft.mjs, interpretation.json. Reading and thinking through edits is allowed.
+
+## Smooth takeoff — required
+
+Starting from rest on either supplied runway, accelerate and transition into
+sustained powered flight before the runway ends, using the supplied engine and
+pilot controls. Avoid unstable bouncing or premature ground-contact release.
 
 ## Source and visual design
 

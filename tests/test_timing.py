@@ -75,6 +75,34 @@ class TimingTests(unittest.TestCase):
                 self.assertEqual(result['reason'], None if elapsed < 240 else 'wall_time_limit')
                 self.assertIs(audit_rollout(run)['pass'], True)
 
+    def test_eight_minute_baseline_warns_at_four_and_six_minutes(self):
+        profile=ROOT/'configs/source-first-time-8min.json'
+        active=load_config(ROOT/'configs/source-first-v6.json')
+        overlaid=load_config(ROOT/'configs/source-first-v6.json',profile)
+        overlaid.pop('generation_profile')
+        self.assertEqual(active,overlaid)
+        run=prepare(self.root/'eight-minute-attempt',ROOT/'configs/source-first-v6.json',generation_profile=profile)
+        now,sent=[0],[]
+        def transport(payload,**kwargs):
+            sent.append(copy.deepcopy(payload))
+            now[0]+=[241,120,1][len(sent)-1]
+            result=fast_transport(payload)
+            if len(sent)<3:
+                result['output']=[{'type':'shell_call','call_id':str(len(sent)),
+                                  'action':{'commands':['ls submission']}}]
+            return result
+        result=run_model(run,'offline-fixture',transport,clock=lambda:now[0])
+        self.assertEqual(result['status'],'submitted')
+        self.assertEqual(result['time_notice_percentages_sent'],[50,75])
+        self.assertTrue(all('max_output_tokens' not in p for p in sent))
+        self.assertTrue(all(p['reasoning']=={'effort':'medium'} for p in sent))
+        events=[json.loads(line) for line in (run/'events.jsonl').read_text().splitlines()]
+        notices=[e for e in events if e['event']=='budget_notice']
+        self.assertEqual([e['elapsed_seconds'] for e in notices],[241,361])
+        self.assertEqual([e['remaining_seconds'] for e in notices],[239,119])
+        self.assertEqual(load_config(ROOT/'configs/source-first-time.json')['max_wall_seconds'],240)
+        self.assertIs(audit_rollout(run)['pass'],True)
+
     def test_interrupted_request_is_explicit_and_usage_is_unknown(self):
         run = self.prepare()
         with patch('ornithopter_eval.runner.call_before_deadline', side_effect=DeadlineExceeded()):
