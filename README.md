@@ -36,10 +36,13 @@ increases the illustrative passive pitch damping from140 to1000 N m s/rad and
 accounts for its dissipation. Other engineering constants and crash limits are
 unchanged. [Observation evidence](validation/pitch-hunting-20261105/index.html).
 
-Approach initially glides with zero throttle. Adding throttle now releases the
+Approach starts 450 m before the runway and 100 m above local ground contact,
+paused in a zero-throttle glide. Adding throttle releases the
 glide clutch and starts the finite engine-driven mechanism; reducing power
-coasts it. The old v6 viewer gets a labelled host-control fix, with original
+coasts it. Saved v6/v7 viewers get labelled host-control/preset updates, with original
 playback still available. Saved model physics, captures and grades are intact.
+The higher start gives recovery room; it does not guarantee that a submitted
+aircraft can recover from glide to powered flight. [Approach observations](validation/earlier-approach-20261105/README.md).
 
 New CLI runs use **480 seconds (eight minutes)**, **medium reasoning**, and **no benchmark token
 or request cap**. The model knows the deadline upfront. Warnings arrive at the

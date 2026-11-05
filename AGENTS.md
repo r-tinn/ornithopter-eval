@@ -57,7 +57,8 @@ full throttle and neutral pilot input; small wingbeat pitch motion is acceptable
 V6's handwritten reference also hunted, so v7 explicitly changes the illustrative
 passive pitch damping from140 to1000 N m s/rad, with its dissipated energy counted.
 All other engineering constants, notebook sources, mass and crash limits stay fixed.
-Approach starts as a zero-power glide. A user throttle request releases the
+Approach starts paused, 450 m before the runway and 100 m above local gear
+contact, as a zero-power glide. A user throttle request releases the
 glide clutch; the finite engine spins the wings up, and zero power then coasts.
-Old v6 playback gets a labelled host-control overlay and an original-playback
+Saved v6/v7 playback gets a labelled host-control/preset overlay and an original-playback
 option. Never repair saved model physics or overwrite their recorded grades.

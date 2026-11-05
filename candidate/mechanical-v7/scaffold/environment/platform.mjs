@@ -26,9 +26,9 @@ let orbitYaw=2.4,orbitPitch=.38,orbitDistance=E.span_m*1.25,drag=null,lastUI=0;
 const keys=new Set(),position=new T.Vector3(),target=new T.Vector3(),desired=new T.Vector3();
 function setStatus(message){$('#flight-status').textContent=message;}
 function preset(approach=false){
-  const x=approach?field.x-65:field.x+field.start,z=field.z;
-  state={position:[x,surfaceHeight(x,z)+1.43+(approach?5:0),z],velocity:approach?E.glide.velocity_m_s.slice():[0,0,0],pitch:approach?E.glide.pitch_rad:0,roll:0,heading:0,phase:E.wing.parked_phase_rad,omega:0,gliding:approach,timing_bias:approach?0:E.wing.timing_bias_low_speed,control_work_J:0,fuel_kg:E.fuel.initial_kg,pitch_rate:0,roll_rate:0,wheel_angle:0,shaft_work_J:0,aero_work_J:0,drive_heat_J:0,time:0,status:approach?'flying':'grounded'};
-  if(ready&&typeof physics.contactHeight==='function')state.position[1]=physics.contactHeight(state,environment)+(approach?5:0);
+  const x=approach?field.x-field.length/2-450:field.x+field.start,z=field.z;
+  state={position:[x,surfaceHeight(x,z)+1.43+(approach?100:0),z],velocity:approach?E.glide.velocity_m_s.slice():[0,0,0],pitch:approach?E.glide.pitch_rad:0,roll:0,heading:0,phase:E.wing.parked_phase_rad,omega:0,gliding:approach,timing_bias:approach?0:E.wing.timing_bias_low_speed,control_work_J:0,fuel_kg:E.fuel.initial_kg,pitch_rate:0,roll_rate:0,wheel_angle:0,shaft_work_J:0,aero_work_J:0,drive_heat_J:0,time:0,status:approach?'flying':'grounded'};
+  if(ready&&typeof physics.contactHeight==='function')state.position[1]=physics.contactHeight(state,environment)+(approach?100:0);
   previousState=copyPose(state);renderState=copyPose(state);
   Object.assign(controls,{throttle:0,pitch:0,bank:0,rudder:0,brake:0});keys.clear();running=false;accumulator=0;last=null;nextDraw=0;
   $('[data-testid=throttle]').value='0';$('#field-label').textContent=field.name;lastUI=0;

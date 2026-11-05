@@ -2,7 +2,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
-from ornithopter_eval.playback import CameraPlayback,powered_approach_playback
+from ornithopter_eval.playback import CameraPlayback,powered_approach_playback,earlier_approach_playback
 from ornithopter_eval.runner import ROOT,digest,write_json
 from ornithopter_eval.checks import MECHANICAL_VERSION,PILOTED_VERSION
 
@@ -59,7 +59,9 @@ class PlaybackTests(unittest.TestCase):
             updated=playback.response(prefix+'environment/platform.mjs')
             expected,patched=powered_approach_playback(original.replace(b'antialias:false',b'antialias:true',1).replace(
                 b'Math.min(devicePixelRatio,WORLD.pixel_ratio)',b'Math.min(devicePixelRatio,2)',1))
+            expected,earlier=earlier_approach_playback(expected)
             self.assertTrue(patched)
+            self.assertTrue(earlier)
             self.assertEqual(updated,expected)
             self.assertIn(b'releaseGlideForPower',playback.response(prefix+'environment/flight-modes.mjs'))
             self.assertIn(b'Approach throttle engages wings',playback.response(prefix+'index.html'))
@@ -84,3 +86,22 @@ class PlaybackTests(unittest.TestCase):
             self.assertIn(b'engagePower();',playback.response(prefix+'environment/platform.mjs'))
             self.assertIsNone(playback.response(prefix+'physics.mjs'))
             self.assertIsNone(playback.response(prefix+'kinematics.mjs'))
+
+    def test_v7_approach_start_overlay_preserves_saved_submissions_and_scores(self):
+        root=ROOT/'experiments/source-first-v7-20261105-one-each'
+        hashes={str(p.relative_to(root)):digest(p) for p in root.rglob('*') if p.is_file()}
+        playback=CameraPlayback(root)
+        self.assertEqual(set(playback.approach_start_trials),{'gpt-5.6-sol-01','gpt-6.1-sol-01'})
+        for trial in playback.approach_start_trials:
+            prefix=f'trials/{trial}/submission/'
+            updated=playback.response(prefix+'environment/platform.mjs')
+            self.assertIn(b'field.x-field.length/2-450',updated)
+            self.assertEqual(updated.count(b'+(approach?100:0)'),2)
+            self.assertEqual(earlier_approach_playback(updated),(updated,False))
+            self.assertIn(b'100 m above local ground',playback.response(prefix+'index.html'))
+            self.assertIn(b'platform.mjs?original=1',playback.response(prefix+'index.html','original=1'))
+            for name in ('environment/platform.mjs','physics.mjs','aircraft.mjs','kinematics.mjs'):
+                self.assertIsNone(playback.response(prefix+name,'original=1'))
+            for name in ('physics.mjs','aircraft.mjs','kinematics.mjs','environment/world.mjs'):
+                self.assertIsNone(playback.response(prefix+name))
+        self.assertEqual(hashes,{str(p.relative_to(root)):digest(p) for p in root.rglob('*') if p.is_file()})
