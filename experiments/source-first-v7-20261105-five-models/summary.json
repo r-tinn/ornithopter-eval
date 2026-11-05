@@ -1,0 +1,197 @@
+{
+  "task_version": "mechanical-v7-source-first",
+  "status": "attention_required",
+  "models": {
+    "gpt-6.1-sol": {
+      "attempts": 1,
+      "graded_attempts": 0,
+      "mean_passed": null,
+      "total_checks": 7,
+      "all_automated_passes": 0,
+      "range": null,
+      "protocol_valid_attempts": 0,
+      "protocol_invalid_attempts": 0,
+      "aesthetic_realism": "Human review pending; separate from task score"
+    },
+    "gpt-6-astra": {
+      "attempts": 1,
+      "graded_attempts": 1,
+      "mean_passed": 0.0,
+      "total_checks": 7,
+      "all_automated_passes": 0,
+      "range": [
+        0,
+        0
+      ],
+      "protocol_valid_attempts": 1,
+      "protocol_invalid_attempts": 0,
+      "aesthetic_realism": "Human review pending; separate from task score"
+    },
+    "gpt-5.6-sol": {
+      "attempts": 1,
+      "graded_attempts": 0,
+      "mean_passed": null,
+      "total_checks": 7,
+      "all_automated_passes": 0,
+      "range": null,
+      "protocol_valid_attempts": 0,
+      "protocol_invalid_attempts": 0,
+      "aesthetic_realism": "Human review pending; separate from task score"
+    },
+    "gpt-5.5": {
+      "attempts": 1,
+      "graded_attempts": 0,
+      "mean_passed": null,
+      "total_checks": 7,
+      "all_automated_passes": 0,
+      "range": null,
+      "protocol_valid_attempts": 0,
+      "protocol_invalid_attempts": 0,
+      "aesthetic_realism": "Human review pending; separate from task score"
+    },
+    "gpt-5.4": {
+      "attempts": 1,
+      "graded_attempts": 0,
+      "mean_passed": null,
+      "total_checks": 7,
+      "all_automated_passes": 0,
+      "range": null,
+      "protocol_valid_attempts": 0,
+      "protocol_invalid_attempts": 0,
+      "aesthetic_realism": "Human review pending; separate from task score"
+    }
+  },
+  "comparison_scope": "7 binary task outcomes; aggregates include valid file-only attempts only. Report protocol invalid rate separately. Human aesthetic realism 1\u20135 is separate and ungraded until the owner reviews.",
+  "full_task_pass_rate": null,
+  "note": "1 repeat(s) per model; exploratory, not a definitive ranking.",
+  "trials": [
+    {
+      "id": "gpt-6.1-sol-01",
+      "model": "gpt-6.1-sol",
+      "repeat": 1,
+      "status": "infrastructure_error",
+      "automated": null,
+      "reason": "Responses API transport failed (URLError); no automatic retry",
+      "usage": {
+        "input_tokens": 188462,
+        "output_tokens": 4712,
+        "requests": 6
+      },
+      "elapsed_seconds": 78.168,
+      "rollout_review": {
+        "file": "rollout-review.json",
+        "pass": null,
+        "status": "evidence_unavailable",
+        "sha256": "eff674b27255b3b67fa47e9e5e4935fc413cb58758dfd77840db17d04383bbbd"
+      }
+    },
+    {
+      "id": "gpt-6-astra-01",
+      "model": "gpt-6-astra",
+      "repeat": 1,
+      "status": "budget_exhausted",
+      "automated": {
+        "passed": 0,
+        "total": 7,
+        "failed": [
+          "wing_cycle_force_coupling",
+          "elastic_inertial_exchange",
+          "wing_body_pitch_coupling",
+          "power_limited_flight",
+          "unpowered_glide_balance",
+          "powered_pitch_stability",
+          "wheel_rotation_axis"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 0,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 0,
+            "total": 1
+          }
+        }
+      },
+      "reason": "wall_time_limit",
+      "usage": {
+        "input_tokens": 85138,
+        "output_tokens": 108,
+        "requests": 3,
+        "interrupted_requests": 1
+      },
+      "elapsed_seconds": 480.01,
+      "rollout_review": {
+        "file": "rollout-review.json",
+        "pass": true,
+        "status": "completed",
+        "sha256": "17ba8a1c0799b958a266bdd34dd21e6c15639317ac45e18d4cf99903c21d71a5"
+      },
+      "grading_status": "failed"
+    },
+    {
+      "id": "gpt-5.6-sol-01",
+      "model": "gpt-5.6-sol",
+      "repeat": 1,
+      "status": "infrastructure_error",
+      "automated": null,
+      "reason": "Responses API transport failed (URLError); no automatic retry",
+      "usage": {
+        "input_tokens": 85970,
+        "output_tokens": 251,
+        "requests": 3
+      },
+      "elapsed_seconds": 17.786,
+      "rollout_review": {
+        "file": "rollout-review.json",
+        "pass": null,
+        "status": "evidence_unavailable",
+        "sha256": "04878c406797f6403fdf71ac46a23fe2d74cfafa495908328a59e1403d70a385"
+      }
+    },
+    {
+      "id": "gpt-5.5-01",
+      "model": "gpt-5.5",
+      "repeat": 1,
+      "status": "infrastructure_error",
+      "automated": null,
+      "reason": "Responses API returned HTTP 503; no automatic retry",
+      "usage": {
+        "input_tokens": 56729,
+        "output_tokens": 248,
+        "requests": 2
+      },
+      "elapsed_seconds": 15.05,
+      "rollout_review": {
+        "file": "rollout-review.json",
+        "pass": null,
+        "status": "evidence_unavailable",
+        "sha256": "c774aa699f2a6108c2c87e67900a5291a32bc0398403d142e78e7f35d627c598"
+      }
+    },
+    {
+      "id": "gpt-5.4-01",
+      "model": "gpt-5.4",
+      "repeat": 1,
+      "status": "infrastructure_error",
+      "automated": null,
+      "reason": "Responses API transport failed (URLError); no automatic retry",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "requests": 0
+      },
+      "elapsed_seconds": 3.015,
+      "rollout_review": {
+        "file": "rollout-review.json",
+        "pass": null,
+        "status": "evidence_unavailable",
+        "sha256": "fb03bf4d3337ff0a661f2bf3c944bd0085d15e76f9d141a0c8a21357b622ebd6"
+      }
+    }
+  ]
+}

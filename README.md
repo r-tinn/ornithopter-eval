@@ -1,8 +1,8 @@
 # Ornithopter Eval
 
-**Latest comparison:** [Source-first v7: GPT-5.6 Sol vs GPT-6.1 Sol, one run each](experiments/source-first-v7-20261105-one-each/index.html). Both simulators open and both file-only audits pass. 5.6 scores 4/7 and 6.1 scores 6/7. Both pass airborne pitch stability and wheel rotation, but both crash before sustained runway takeoff. [Findings and exact scope](experiments/source-first-v7-20261105-one-each/CALIBRATION.md) · [Download all artifacts](experiments/source-first-v7-20261105-one-each/artifacts.zip).
+**Latest five-model attempt:** [GPT-6.1 Sol, GPT-6 Astra, GPT-5.6 Sol, GPT-5.5 and GPT-5.4](experiments/source-first-v7-20261105-five-models/index.html), one run each at medium reasoning and 480 seconds. Four attempts stopped on API/transport errors and remain unscored. Astra hit the deadline during an in-flight response and its incomplete starter scored a raw 0/7. No usable simulator completed; this batch does not support a model ranking. [Exact records and interpretation](experiments/source-first-v7-20261105-five-models/CALIBRATION.md) · [All artifacts](experiments/source-first-v7-20261105-five-models/artifacts.zip).
 
-Serve this cohort with `python3 -m ornithopter_eval serve-artifacts experiments/source-first-v7-20261105-one-each --port 8774`. The gallery includes your separate human-rating UI.
+Serve this cohort with `python3 -m ornithopter_eval serve-artifacts experiments/source-first-v7-20261105-five-models --port 8774`. The gallery retains each original failure and Astra's grading evidence.
 
 The current task is [source-first v7](candidate/mechanical-v7/TASK.md). A fresh
 model receives **nine original notebook photographs (02,08–15)** plus clearly

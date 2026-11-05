@@ -1,0 +1,11 @@
+{
+  "id": "no_verification_tools",
+  "policy_version": "targeted-files-only-v1",
+  "pass": null,
+  "status": "evidence_unavailable",
+  "violations": [],
+  "observed_tool_calls": 0,
+  "scope": "Observed tool requests only. Blocked out-of-policy requests fail. File rereads, patch feedback and mental review are allowed; private reasoning is not inspected.",
+  "events_sha256": "dcd921758bca8c5ce12292e86f065ffb878eb721ad6c093059fbe58b08dd3ac5",
+  "reason": "Attempt is incomplete or has inconsistent final metadata"
+}

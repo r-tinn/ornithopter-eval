@@ -1,0 +1,20 @@
+FILE: aircraft.mjs
+export function createAircraft(T,p){throw Error('Build the mechanical aircraft');}
+export function updateAircraft(a,s,c){}
+
+
+FILE: interpretation.json
+{}
+
+
+FILE: kinematics.mjs
+export function wingPose(state){throw Error('Interpret the source and implement linked motion');}
+
+
+FILE: physics.mjs
+export const parameters={};
+export function polar(region,alpha,camber){throw Error('Implement the section model');}
+export function forces(state,controls,environment,poseOverride){throw Error('Implement forces');}
+export function accelerations(state,controls,environment){throw Error('Implement coupled dynamics');}
+export function step(state,controls,environment,dt){throw Error('Implement integration');}
+

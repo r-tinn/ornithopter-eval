@@ -1,0 +1,246 @@
+{
+  "task_version": "mechanical-v7-source-first",
+  "submission_sha256": {
+    "aircraft.mjs": "9f96ecfe245cc0c38aa943d36b2e4c22cb309b84d21309ff067b85b5d955052a",
+    "environment/capture.mjs": "163afc21a91601ef467f554816f8c0565289fa9a2f45454dce97256703161618",
+    "environment/engineering.mjs": "c4b8598f927d5d130e4f4b16c7d59f74c23aadfd246d00f1b82bb65031e66d5c",
+    "environment/flight-modes.mjs": "791aee69341621305c6c0ea2f7e4c129cbc0a02a7a60e7a1cfc2265d01d41d62",
+    "environment/platform.mjs": "be26d96516749b728e5ca45cd1e3b665abdadcf90a2695c9198e4ffea03bb3e4",
+    "environment/source-mechanism.mjs": "cb55fd96906c7d708ea948a1010c2a9e6d688224ff65155b7e1eeb91c9db3b4d",
+    "environment/style.css": "21db9f38d2ab3f0c10c667245fed2748689382465c4164e281bed102b2b7f5ed",
+    "environment/vendor/THREE-LICENSE.txt": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+    "environment/vendor/three.core.min.js": "05b2609338c76cd65daf74f3ac515bc9a5045e1b3b33edc07d8c9bd55250fa90",
+    "environment/vendor/three.module.min.js": "86bcee248b64f44bcfc23c331ae74619061957d59cab040171dcb6fb5900beb6",
+    "environment/view-motion.mjs": "a01247f64b5244a8223f490b10044296c779284e6fa685e75344421499ef92b1",
+    "environment/world.mjs": "cf5859d1582b6b7b77fcab7a69f5c6cab25c7ae48c482f31d62e39967b52aa85",
+    "index.html": "c8ad6882313e105f01e3598e741b82df5e02e7d052a985d2d19056aadf41ccce",
+    "interpretation.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+    "kinematics.mjs": "ef8c18094f2b8ec47dea26548d202021ed1954c059fe811997b7db39ec215e43",
+    "physics.mjs": "4b8edc18537b6ee4602b2889f55acb48384deef5e57fa09d18e893a744cd3bf8"
+  },
+  "grader_sha256": {
+    "source-first-v7.mjs": "52e32177e3d8def260346d55658ea103ff03607a5daa6d87e78658e171ef5d5a",
+    "grading.py": "f6afa457ec80f39600d9859b70a4e33185564ac136b9c2655a83efa0aeffdc52",
+    "checks.py": "9b1e51cca2d04cc53a6c451dda139806ca1a2179486631f7612dcb08d18dc04f",
+    "wheel-axis.mjs": "a887902fa5c75256c18ee468a15da99c118fc9b8f4ce3366863481fa1d6bdb37",
+    "source-probes.mjs": "76780f2fc141c21a15494b2a00a88aa5fd2dd0de138b8fe40fd4ab5b49142149",
+    "source-calibrate.mjs": "73f383f775688b220971a67cc65d1783f8bfba00a84c800a525d5b5265c05c30",
+    "source-first-v6.mjs": "a2c76bab60b2302f125c3d91492310f0bb4f06f74956ceacbda0962e4fafa686",
+    "expected_engineering.json": "2952e9b0acc66dc3f7d9d183aedcc3cb5d09560409ed39dbae108d45c790eb81",
+    "pitch-stability.mjs": "932049248f583e913532a09e8f53937b9af772bcb49f523b2aa0dea93dfdcc4d"
+  },
+  "passed": false,
+  "status": "failed",
+  "dimensions": {
+    "source": {
+      "kind": "deterministic",
+      "checks": [],
+      "passed": true
+    },
+    "physics": {
+      "kind": "deterministic",
+      "checks": [
+        {
+          "id": "wing_cycle_force_coupling",
+          "question": "Do the source-linked production surfaces and distinct section models produce the independently reconstructed forces?",
+          "pass": false,
+          "detail": {
+            "error": "Error: Implement forces",
+            "production_render_error": {
+              "mode": "chase",
+              "field": "valley",
+              "ready": false,
+              "running": false,
+              "terrain_triangles": 8192,
+              "trees": 48,
+              "airfields": 2,
+              "draw_calls": 6,
+              "triangles": 9704,
+              "render_frames": 1,
+              "paused_rendering": "on demand",
+              "external_assets": false
+            }
+          }
+        },
+        {
+          "id": "elastic_inertial_exchange",
+          "question": "Do the actual moving wing masses exchange spring/kinetic energy consistently, including known damping?",
+          "pass": false,
+          "detail": {
+            "error": "Error: Implement integration"
+          }
+        },
+        {
+          "id": "wing_body_pitch_coupling",
+          "question": "Do coupled wing/body accelerations and a short neutral-input response match the independent mass-matrix model?",
+          "pass": false,
+          "detail": {
+            "error": "Error: Implement coupled dynamics"
+          }
+        },
+        {
+          "id": "power_limited_flight",
+          "question": "Does the aircraft complete the published takeoff/bank scenario using the finite engine and fuel allowance?",
+          "pass": false,
+          "detail": {
+            "error": "Error: Implement forces"
+          }
+        },
+        {
+          "id": "unpowered_glide_balance",
+          "question": "Does the configured motor-off glide descend with force-derived aerodynamic energy loss?",
+          "pass": false,
+          "detail": {
+            "error": "Error: Implement integration"
+          }
+        },
+        {
+          "id": "powered_pitch_stability",
+          "question": "Does steady full-throttle neutral-input flight avoid repeated large slow pitch surges?",
+          "pass": false,
+          "detail": {
+            "error": "Error: page.evaluate: Error: Implement integration\n    at Module.step (http://127.0.0.1:49711/physics.mjs:5:59)\n    at capturePoweredPitch (eval at evaluate (:311:30), <anonymous>:10:9)\n    at async <anonymous>:337:30"
+          }
+        }
+      ],
+      "passed": false
+    },
+    "interaction": {
+      "kind": "deterministic",
+      "checks": [
+        {
+          "id": "wheel_rotation_axis",
+          "question": "Do all three actual tyre axles stay aligned with the lateral airframe axis during straight rolling and flight?",
+          "pass": false,
+          "detail": {
+            "tolerance_deg": 1,
+            "speed_m_s": 10,
+            "attitude_rad": [
+              0,
+              0,
+              0
+            ],
+            "steering": 0,
+            "samples": [],
+            "error": "Error: Build the mechanical aircraft"
+          }
+        }
+      ],
+      "passed": false
+    },
+    "visual": {
+      "kind": "review",
+      "checks": [],
+      "passed": true
+    }
+  },
+  "limitations": [
+    "Provisional mechanical-v7-source-first smoke test; one task and selected properties, not scientific validation.",
+    "The supplied world and UI earn no model points. Aircraft state hooks do not prove all mesh coupling.",
+    "0 binary visual checks remain ungraded; automated totals are not full-task scores.",
+    "Browser isolation is defense in depth, not a hardened hostile-code sandbox."
+  ],
+  "score_scope": "7 binary task outcomes only; file-only protocol and human aesthetic realism are separate.",
+  "aesthetic_realism": {
+    "kind": "human",
+    "score": null,
+    "range": [
+      1,
+      5
+    ]
+  },
+  "file_only_validity": {
+    "id": "no_verification_tools",
+    "policy_version": "targeted-files-only-v1",
+    "pass": true,
+    "status": "completed",
+    "violations": [],
+    "observed_tool_calls": 3,
+    "scope": "Observed tool requests only. Blocked out-of-policy requests fail. File rereads, patch feedback and mental review are allowed; private reasoning is not inspected.",
+    "events_sha256": "e87297c91e88567561d856cd0e6da771d5b6f2f1ee6d82dc765dc1c926920800",
+    "interrupted_requests": 1,
+    "reason": "Only allowed file operations requested"
+  },
+  "attempt": {
+    "model": "gpt-6-astra",
+    "status": "budget_exhausted",
+    "reason": "wall_time_limit",
+    "config": {
+      "task_version": "mechanical-v7-source-first",
+      "budget_mode": "wall_time",
+      "max_output_tokens_total": null,
+      "max_output_tokens_per_response": null,
+      "max_requests": null,
+      "max_wall_seconds": 480,
+      "max_submission_bytes": 2000000,
+      "reasoning_effort": "medium",
+      "output_token_notice_percentages": [],
+      "time_notice_percentages": [
+        50,
+        75
+      ]
+    },
+    "usage": {
+      "input_tokens": 85138,
+      "output_tokens": 108,
+      "requests": 3,
+      "interrupted_requests": 1
+    },
+    "elapsed_seconds": 480.01,
+    "input_sha256": {
+      "inputs/AIRCRAFT_API.md": "98eb564cbed8e4fdb7d382e390ae7bf1d88b799ad80f842ee41eb1148792ee2a",
+      "inputs/DESIGN_BRIEF.md": "fc9d5f9406b3826c8d19899f3f16a4e9d649a0b6edf1123f5cf9f226e4d13e73",
+      "inputs/ENGINEERING_NOTES.md": "06d1ad691465d9877fe58c1602a6dddb423dc2521a100f2d73fcc2c87ad14bd3",
+      "inputs/GRADERS.md": "63ef99dad0f74429755a5c7cf28b05cbe9796a42b40ea5887bbf3951aece8502",
+      "inputs/SOURCE_GUIDE.md": "ea0ad3616a67781e46a39e1cbb709cf82429bf862f922677ea16c530ceabc7c8",
+      "inputs/TASK.md": "1c70285e0c521d3578161c0af498d090917225fee066b5ec3ac0b97b0362ee41",
+      "inputs/engineering.json": "2952e9b0acc66dc3f7d9d183aedcc3cb5d09560409ed39dbae108d45c790eb81",
+      "inputs/sources/Unknown-10.jpg": "61aa7012757f1ed9eaa41cd97add95d96e653008c97996f9e50e5e5ecdf0a728",
+      "inputs/sources/Unknown-11.jpg": "5af32b5955dcd63b509ccc1c8f9f852cc4b038624af7cdec7d4559bef6dbfefc",
+      "inputs/sources/Unknown-12.jpg": "b203e7e32b70f3a87a8bfe85859f9901ba12fd191ac4908b908179f63cd07d38",
+      "inputs/sources/Unknown-13.jpg": "71b43e76e76c3bf0f031b8ff339329c4b255e9457e5710c3dfd029292211dfac",
+      "inputs/sources/Unknown-14.jpg": "889697309f83ec195a90d91974ff30e5374ab321284a759bbe8c929f5e8e405e",
+      "inputs/sources/Unknown-15.jpg": "d47f1d827d666153804c7cdf018565c13e3febcf880df9365b665b9e9b987465",
+      "inputs/sources/Unknown-2.jpg": "5c0a94b3f137307104f8062c23c3a6a3c6366c88f2f18c8fafed9ee3ddf0cbd9",
+      "inputs/sources/Unknown-8.jpg": "c765fd61b0d8bb15fd932a05a42276c18d91163e53170d743292d66d6e2ff290",
+      "inputs/sources/Unknown-9.jpg": "87fcd95b10c35c0e098592c15cca7f81d265420f2d61778a008314a24f63ab9c"
+    },
+    "runtime": {
+      "python": "3.14.7 (main, Aug  5 2026, 10:29:49) [Clang 21.0.0 (clang-2100.1.1.101)]",
+      "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O"
+    }
+  },
+  "diagnostics": {
+    "errors": [],
+    "numeric": {
+      "reference_equations": "Independent mass points, centroid, inertia, local sections and coupled E-L solve; no candidate counters/helpers used as expectations."
+    },
+    "initial": {
+      "mode": "chase",
+      "field": "valley",
+      "ready": false,
+      "running": false,
+      "terrain_triangles": 8192,
+      "trees": 48,
+      "airfields": 2,
+      "draw_calls": 6,
+      "triangles": 9704,
+      "render_frames": 1,
+      "paused_rendering": "on demand",
+      "external_assets": false
+    },
+    "runtime": {
+      "browser": "151.0.7922.34",
+      "viewport": [
+        1280,
+        900
+      ],
+      "fps_scored": false
+    }
+  },
+  "evidence": {
+    "screenshots": [
+      "initialization-failure.png"
+    ]
+  }
+}

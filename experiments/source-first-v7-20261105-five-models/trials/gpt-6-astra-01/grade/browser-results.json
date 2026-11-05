@@ -1,0 +1,112 @@
+{
+  "source": [],
+  "physics": [
+    {
+      "id": "wing_cycle_force_coupling",
+      "pass": false,
+      "detail": {
+        "error": "Error: Implement forces",
+        "production_render_error": {
+          "mode": "chase",
+          "field": "valley",
+          "ready": false,
+          "running": false,
+          "terrain_triangles": 8192,
+          "trees": 48,
+          "airfields": 2,
+          "draw_calls": 6,
+          "triangles": 9704,
+          "render_frames": 1,
+          "paused_rendering": "on demand",
+          "external_assets": false
+        }
+      }
+    },
+    {
+      "id": "elastic_inertial_exchange",
+      "pass": false,
+      "detail": {
+        "error": "Error: Implement integration"
+      }
+    },
+    {
+      "id": "wing_body_pitch_coupling",
+      "pass": false,
+      "detail": {
+        "error": "Error: Implement coupled dynamics"
+      }
+    },
+    {
+      "id": "power_limited_flight",
+      "pass": false,
+      "detail": {
+        "error": "Error: Implement forces"
+      }
+    },
+    {
+      "id": "unpowered_glide_balance",
+      "pass": false,
+      "detail": {
+        "error": "Error: Implement integration"
+      }
+    },
+    {
+      "id": "powered_pitch_stability",
+      "pass": false,
+      "detail": {
+        "error": "Error: page.evaluate: Error: Implement integration\n    at Module.step (http://127.0.0.1:49711/physics.mjs:5:59)\n    at capturePoweredPitch (eval at evaluate (:311:30), <anonymous>:10:9)\n    at async <anonymous>:337:30"
+      }
+    }
+  ],
+  "interaction": [
+    {
+      "id": "wheel_rotation_axis",
+      "pass": false,
+      "detail": {
+        "tolerance_deg": 1,
+        "speed_m_s": 10,
+        "attitude_rad": [
+          0,
+          0,
+          0
+        ],
+        "steering": 0,
+        "samples": [],
+        "error": "Error: Build the mechanical aircraft"
+      }
+    }
+  ],
+  "diagnostics": {
+    "errors": [],
+    "numeric": {
+      "reference_equations": "Independent mass points, centroid, inertia, local sections and coupled E-L solve; no candidate counters/helpers used as expectations."
+    },
+    "initial": {
+      "mode": "chase",
+      "field": "valley",
+      "ready": false,
+      "running": false,
+      "terrain_triangles": 8192,
+      "trees": 48,
+      "airfields": 2,
+      "draw_calls": 6,
+      "triangles": 9704,
+      "render_frames": 1,
+      "paused_rendering": "on demand",
+      "external_assets": false
+    },
+    "runtime": {
+      "browser": "151.0.7922.34",
+      "viewport": [
+        1280,
+        900
+      ],
+      "fps_scored": false
+    }
+  },
+  "evidence": {
+    "screenshots": [
+      "initialization-failure.png"
+    ]
+  }
+}

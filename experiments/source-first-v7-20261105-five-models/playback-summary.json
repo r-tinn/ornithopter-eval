@@ -1,0 +1,123 @@
+{
+  "kind": "Derived observations from unmodified trial records; no retries, repairs or additional grades",
+  "cohort_interpretation": "Infrastructure-affected batch; no usable simulator and no defensible model ranking",
+  "rows": [
+    {
+      "model": "gpt-6.1-sol",
+      "trial": "gpt-6.1-sol-01",
+      "termination": "infrastructure_error",
+      "reason": "Responses API transport failed (URLError); no automatic retry",
+      "elapsed_generation_seconds": 78.168,
+      "usage": {
+        "input_tokens": 188462,
+        "output_tokens": 4712,
+        "requests": 6
+      },
+      "raw_task_checks": null,
+      "file_only_validity": null,
+      "production_startup_ready": null,
+      "completed_simulator": false,
+      "human_aesthetic_realism": null,
+      "performance_interpretation": "Unscored infrastructure failure"
+    },
+    {
+      "model": "gpt-6-astra",
+      "trial": "gpt-6-astra-01",
+      "termination": "budget_exhausted",
+      "reason": "wall_time_limit",
+      "elapsed_generation_seconds": 480.01,
+      "usage": {
+        "input_tokens": 85138,
+        "output_tokens": 108,
+        "requests": 3,
+        "interrupted_requests": 1
+      },
+      "raw_task_checks": {
+        "passed": 0,
+        "total": 7,
+        "failed": [
+          "wing_cycle_force_coupling",
+          "elastic_inertial_exchange",
+          "wing_body_pitch_coupling",
+          "power_limited_flight",
+          "unpowered_glide_balance",
+          "powered_pitch_stability",
+          "wheel_rotation_axis"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 0,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 0,
+            "total": 1
+          }
+        }
+      },
+      "file_only_validity": true,
+      "production_startup_ready": false,
+      "completed_simulator": false,
+      "human_aesthetic_realism": null,
+      "performance_interpretation": "Incomplete at deadline; raw 0/7, prolonged in-flight request makes attribution uncertain"
+    },
+    {
+      "model": "gpt-5.6-sol",
+      "trial": "gpt-5.6-sol-01",
+      "termination": "infrastructure_error",
+      "reason": "Responses API transport failed (URLError); no automatic retry",
+      "elapsed_generation_seconds": 17.786,
+      "usage": {
+        "input_tokens": 85970,
+        "output_tokens": 251,
+        "requests": 3
+      },
+      "raw_task_checks": null,
+      "file_only_validity": null,
+      "production_startup_ready": null,
+      "completed_simulator": false,
+      "human_aesthetic_realism": null,
+      "performance_interpretation": "Unscored infrastructure failure"
+    },
+    {
+      "model": "gpt-5.5",
+      "trial": "gpt-5.5-01",
+      "termination": "infrastructure_error",
+      "reason": "Responses API returned HTTP 503; no automatic retry",
+      "elapsed_generation_seconds": 15.05,
+      "usage": {
+        "input_tokens": 56729,
+        "output_tokens": 248,
+        "requests": 2
+      },
+      "raw_task_checks": null,
+      "file_only_validity": null,
+      "production_startup_ready": null,
+      "completed_simulator": false,
+      "human_aesthetic_realism": null,
+      "performance_interpretation": "Unscored infrastructure failure"
+    },
+    {
+      "model": "gpt-5.4",
+      "trial": "gpt-5.4-01",
+      "termination": "infrastructure_error",
+      "reason": "Responses API transport failed (URLError); no automatic retry",
+      "elapsed_generation_seconds": 3.015,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "requests": 0
+      },
+      "raw_task_checks": null,
+      "file_only_validity": null,
+      "production_startup_ready": null,
+      "completed_simulator": false,
+      "human_aesthetic_realism": null,
+      "performance_interpretation": "Unscored infrastructure failure"
+    }
+  ]
+}
