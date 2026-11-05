@@ -24,8 +24,13 @@ balance,actual wheel rotation axis,and neutral-input powered pitch stability. **
 **Human aesthetic realism (1–5)** is entered after you fly the simulator.
 [Exact probes/tolerances](candidate/mechanical-v7/GRADERS.md) and
 [v7 positive/negative calibration](validation/source-first-v7/summary.json) are saved.
-The labelled author reference passes all seven; all nine deliberate defects are
-rejected. The observed 5.6 slow oscillation is retained as a separate regression
+The original labelled author reference scored seven passes and all nine deliberate
+defects were rejected. A [subsequent contact audit](validation/current-instructions-reference-20261105/README.md)
+found that the reference erased downward impact speed before judging touchdown.
+The corrected author candidate scores six passes and crashes on takeoff; a fully
+compliant takeoff reference has **not yet been established**. Treat the original
+positive calibration as insufficient evidence of task solvability. Published
+model scores remain unchanged. The observed 5.6 slow oscillation is retained as a separate regression
 example, without changing its published six-check score. These are checks on an
 educational reduced model, not a flight-validated aircraft design.
 

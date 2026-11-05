@@ -1,0 +1,67 @@
+{
+  "kind": "Author-reference compliance audit, not a model trial or new cohort score",
+  "old_packet_matches_current": {
+    "TASK.md": true,
+    "engineering.json": true,
+    "SOURCE_GUIDE.md": true,
+    "AIRCRAFT_API.md": true,
+    "source_photos": true,
+    "fixture_implementation": true
+  },
+  "old_reference_bug": "out.velocity and v alias the same array. out.velocity[1]=Math.max(0,out.velocity[1]) erases downward impact speed before wheelSink=v[1]-... is evaluated. Pitch rotation is omitted, and horizontal touchdown speed is not checked.",
+  "correction": "Snapshot impact position/velocity before contact projection; measure actual contacting tyres including pitch rotation and moving CG; enforce unchanged engine, mass and crash limits.",
+  "corrected_reference_checks": {
+    "wing_cycle_force_coupling": true,
+    "elastic_inertial_exchange": true,
+    "wing_body_pitch_coupling": true,
+    "power_limited_flight": false,
+    "unpowered_glide_balance": true,
+    "powered_pitch_stability": true,
+    "wheel_rotation_axis": true
+  },
+  "corrected_reference_final_time_s": 16.57499999999938,
+  "corrected_reference_final_status": "crashed",
+  "last_corrected_impact": {
+    "time": 16.570833333332715,
+    "wheel_vertical_speed_m_s": -2.184168214664073,
+    "pitch_rate_rad_s": 0.2692120545739943,
+    "pitch_rad": 0.014649894353476495,
+    "velocity": [
+      10.841216745049552,
+      -1.4110498228364403,
+      2.387276165147071e-13
+    ],
+    "old_sink_without_pitch_rotation": -2.1106789853519112
+  },
+  "conclusion": "Prior 7/7 author fixture is not a valid compliant solvability witness. No fully compliant takeoff witness established; this is not a proof of impossibility or a diagnosis of insufficient engine power.",
+  "control_search_scope": "14 additional legal brake-hold, throttle-ramp and low-power launch plans on unchanged Sol physics all crashed; finite diagnostic search only.",
+  "unchanged": [
+    "Published model submissions and grades",
+    "Original author fixture and calibration reports",
+    "Task instructions and engineering constants",
+    "Crash thresholds"
+  ],
+  "reproduce": "python3 -m analysis.audit_takeoff_reference runs/fresh-author-audit validation/fresh-author-audit --node /path/to/node",
+  "evidence_sha256": {
+    "browser-results.json": "4b7295ef04771046652a4f4412b3c54e6bea564f3f25649be41e80b1b3a120a5",
+    "corrected-physics.mjs": "eba5a6644245dc3a5602633220ff11e3f462a3e55cb0a9424a2f1a2c76251f54",
+    "flap-0.png": "8a118fb0cef843dd6c0a316858244f5b894c0e2abe173984353789726d98b08c",
+    "flap-1.png": "e5ab191d9912cf8c255c56d5517a74e69fd9b73aefa9a1704f916406849e2e4c",
+    "flap-2.png": "00877ed927d5a8485eb035d9b1a395d05e453a287190416c08b27cc01758667f",
+    "flap-3.png": "742c8bfc81fec26c1ff289a9d99e53b27b07b7e25075f8402645de8875f37c52",
+    "flight.png": "4f63955eb40c12c7312be5290d48825e2147eaae988131fbe05f7068c64c2f8d",
+    "grader.log": "a4452d94d453dffb063ad2f16aeefe20b0eb5f1804a78c35051f21687889d7d0",
+    "initial.png": "82feb4642d870c998465e00bd3c32aaa75e2bc0c06b90166ac8bb798c413d401",
+    "inspection-front.png": "0258a2bbbc74c834b778a691db5960a4dda204d54da2c827f9401c474b2d7c30",
+    "inspection-orbit.png": "08bd1cbbeb9e45a372bed3f1d4789c53c97a6b31ee0a3461d7a5110d47c13870",
+    "inspection-pilot.png": "7c80911f1d9a069f1841fb06d7230e81446d04d0d803b07fc4f36885ceb334d8",
+    "inspection-side.png": "501a0d572a7efa9ede2b91d1d3f54874d3cb399786e50247b691af015b7d4e18",
+    "inspection-top.png": "e319277a68a4e146a25c8a9f4c31257bb52a618f803159fbfd5dad4018ee1938",
+    "reference-manifest.json": "ec0aeec97d209c25a20966359f37e56ac358cde3c5ce255b6fa45635e0ce1cd2",
+    "report.json": "065f9105853433fd231d0a89c8a7a81500dd489f93fd8193997c15dc4bea4bb8",
+    "results-current-contact.json": "85332a4991836dcef59d4727131c9ad15ebd17cb9cb80fcc77d2547b11cedf05",
+    "results-extra.json": "de9625d5c419b6b82eadaa40dab9b8fddfaab77bdd61ba9722ff409d1edd6898",
+    "results-launch-plans.json": "711fc1d711ecb53e88dd67f39dab99e0c16c4e76a92e43cd371308b98d060007",
+    "results.json": "1d4ec27d8bbe0d07da5d47a7996f44892549542fc6d831646af7da8fe0de82ad"
+  }
+}
