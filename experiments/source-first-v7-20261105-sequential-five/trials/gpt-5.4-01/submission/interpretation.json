@@ -1,0 +1,147 @@
+{
+  "summary": {
+    "approach": "Source-first mechanical translation of Stanley J.O. Tinn's readable principles into the supplied reduced educational ornithopter model.",
+    "derived_from_photo_02": {
+      "full_span_ft": 7.4,
+      "wrist_span_ft": 3.7,
+      "wrist_span_fraction": 0.5,
+      "wing_area_ft2": 6.61,
+      "aspect_ratio_b2_over_S": 8.29,
+      "implemented_span_m": 14,
+      "implemented_area_m2": 23.643,
+      "excluded_inconsistent_value": "3.135 ft wing-length conversion"
+    }
+  },
+  "selected_photographs": [
+    {
+      "photo": "Unknown-2.jpg",
+      "source_id": "02",
+      "principle_used": "Mute swan span, wrist span proportion, broad inner wing and rounded tapered outer planform basis.",
+      "readable_evidence": [
+        "Rounded 'Say' values: span 7.4 ft and wrist span 3.7 ft = 50% span.",
+        "Area paragraph states total area 6.61 ft^2 and AR = b^2/S = 8.29."
+      ],
+      "uncertain_or_rejected": [
+        "The 3.135 ft wing-length conversion is inconsistent and was not used."
+      ],
+      "engineering_completion": "Scaled to the supplied 14 m full span, giving wing_area_m2 = 14^2 / 8.29."
+    },
+    {
+      "photo": "Unknown-8.jpg",
+      "source_id": "08",
+      "principle_used": "Section chart treated as qualitative context only, especially for curved-plate outer-wing behaviour.",
+      "readable_evidence": [
+        "Multi-axis Göttingen 417a curved-plate plot suggests high-lift/high-drag qualitative behaviour."
+      ],
+      "uncertain_or_rejected": [
+        "Low-Re graph is ambiguous in the photograph and not suitable for direct full-scale digitisation."
+      ],
+      "engineering_completion": "Used the supplied illustrative inner/outer section tables from engineering.json instead of inventing recovered coefficients."
+    },
+    {
+      "photo": "Unknown-9.jpg",
+      "source_id": "09",
+      "principle_used": "Human-carrying ornithopter intent and ideal sine-wave target-trajectory method for required wing forces.",
+      "readable_evidence": [
+        "Text describes defining an ideal trajectory as a sine wave and evaluating candidate wing actions against that requirement.",
+        "Text explicitly frames a manned mechanical flapping-flight challenge."
+      ],
+      "uncertain_or_rejected": [
+        "No recoverable full design algorithm appendix values are visible here."
+      ],
+      "engineering_completion": "Implemented force generation from actual local strip velocities and retained the supplied human-carrying mass/engine reduction."
+    },
+    {
+      "photo": "Unknown-10.jpg",
+      "source_id": "10",
+      "principle_used": "Straight-and-level flapping is cyclic, with ring-gait context at low speed and powered human-carrying motivation.",
+      "readable_evidence": [
+        "Text says lift and thrust vary cyclically and progress follows an undulating trajectory.",
+        "Text mentions further work toward a powered man-carrying ornithopter."
+      ],
+      "uncertain_or_rejected": [
+        "The marginal handwritten note is not fully readable."
+      ],
+      "engineering_completion": "Model keeps genuinely cyclic wing forces rather than prescribing constant lift or thrust."
+    },
+    {
+      "photo": "Unknown-11.jpg",
+      "source_id": "11",
+      "principle_used": "Longer downstroke duration at low speed, equal timing in cruise, and wing/body resonance to reduce inertial power.",
+      "readable_evidence": [
+        "Text states low-speed flap-down lasts longer than recovery, tending to equal periods as speed increases.",
+        "Text discusses matching required and candidate forces and modelling the wing-wishbone-body assembly as a resonant system."
+      ],
+      "uncertain_or_rejected": [
+        "Many handwritten marginal revisions are uncertain."
+      ],
+      "engineering_completion": "Implemented timing bias theta = phi - b sin(phi), low-speed default b = 0.3, cruise b = 0, and a coupled spring-inertia solve."
+    },
+    {
+      "photo": "Unknown-12.jpg",
+      "source_id": "12",
+      "principle_used": "Actual local-force directions from wing motion, fore/aft motion, recovery closing, elastic exchange, and body pitching reaction.",
+      "readable_evidence": [
+        "Text describes wing/body inertias with springiness as a resonant system.",
+        "Text says fore and aft wing movement changes the separation between cg and centre of lift, creating oscillating pitching moments.",
+        "Wing-action paragraph describes wrist/finger trailing on recovery and working-stroke drag/lift generation."
+      ],
+      "uncertain_or_rejected": [
+        "Some handwritten annotations are too faint to recover confidently."
+      ],
+      "engineering_completion": "Forces are resolved from body-relative airflow plus actual strip motion; sweep, exposure change and body-pitch coupling are all active in the same dynamics."
+    },
+    {
+      "photo": "Unknown-13.jpg",
+      "source_id": "13",
+      "principle_used": "Incidence, camber and thickness treated as distinct, with the goshawk figure used only as a generic sectional illustration.",
+      "readable_evidence": [
+        "Opening continuation refers to adjustment of local incidences to optimise thrust and drag.",
+        "The page introduces another bird wing and shows different cross-sectional cambers."
+      ],
+      "uncertain_or_rejected": [
+        "The goshawk dimensions and listed camber percentages are not taken as swan specifications."
+      ],
+      "engineering_completion": "Implemented separate phase-varying twist and camber fields, while thickness stays in the supplied structural metadata."
+    },
+    {
+      "photo": "Unknown-14.jpg",
+      "source_id": "14",
+      "principle_used": "5-6% thick inner arm wing, negligible-thickness slotted curved outer hand wing, plus compatibility of conventional tail/rudder controls.",
+      "readable_evidence": [
+        "Text states arm-wing thickness is 5 to 6% and the outer hand wing is effectively a slotted curved plate.",
+        "Text says trailing/partial closing on recovery reduces the high-drag outer area.",
+        "Text explicitly allows a more conventional tail or weight-shift technique for manoeuvring."
+      ],
+      "uncertain_or_rejected": [
+        "Takeoff stroke angles are descriptive rather than a complete numerical mechanism specification."
+      ],
+      "engineering_completion": "Used the supplied 0.055 inner and 0.008 outer thickness fractions, sliding overlapping outer leaves, and a conventional tailplane/rudder completion."
+    },
+    {
+      "photo": "Unknown-15.jpg",
+      "source_id": "15",
+      "principle_used": "Glide D*V baseline work and additional aerodynamic, trajectory and inertial power terms, with spring energy as transfer not free propulsion.",
+      "readable_evidence": [
+        "Text defines base gliding power from drag times speed.",
+        "Text lists added power from extra lift/thrust, fore-aft acceleration, cyclic vertical motion and inertial wing motion."
+      ],
+      "uncertain_or_rejected": [
+        "No appendix algorithm details are visible on this page."
+      ],
+      "engineering_completion": "Energy accounting records shaft work, aerodynamic dissipation, damping/transmission heat and pilot control work separately; the spring only stores and returns mechanical energy."
+    }
+  ],
+  "explicit_engineering_assumptions_not_claimed_as_source": [
+    "14 m aircraft span, 55 kg seated pilot, 173.9 kg dry mass and 3.6 kg initial fuel.",
+    "16 kW capped engine model, 85% transmission efficiency and reflected drive inertia.",
+    "Illustrative inner/outer aerodynamic coefficient tables in engineering.json.",
+    "Specific linkage-completion phase curves for stroke, twist, sweep, exposure and camber.",
+    "Conventional tricycle landing gear, runway contact reduction and simplified roll/yaw treatment."
+  ],
+  "limitations": [
+    "The photographs do not provide a complete validated full-scale aircraft design, stability analysis or structural proof.",
+    "Missing appendices, uncertain handwriting and the ambiguous low-Re section chart leave major gaps filled only by the supplied educational engineering model.",
+    "The implemented simulation is a reduced strip-and-mass-point model, not CFD, flexible-structure analysis or experimentally validated flight prediction."
+  ]
+}

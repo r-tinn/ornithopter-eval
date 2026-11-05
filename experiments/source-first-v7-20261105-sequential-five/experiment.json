@@ -1,0 +1,424 @@
+{
+  "task_version": "mechanical-v7-source-first",
+  "created_utc": "2026-11-05T15:07:53.482580+00:00",
+  "git_commit": "485fd4d47ab9bf5781dc67fb50815c80f551dabb",
+  "frozen_sha256": {
+    "ornithopter_eval/__init__.py": "cf2e15d3648bbebad0684ba37d53870ab138f103137e6aff4a07972396944741",
+    "ornithopter_eval/__main__.py": "caf7aeded1dd5625861060c99d30d09f47dbf9887ed11a7151a284cebd276d5d",
+    "ornithopter_eval/aesthetics.py": "4342161ab7f4ea1c1ae288c4eece524f414f1555385d797134c95157cbda7d76",
+    "ornithopter_eval/api.py": "f77b3f94e94dd7eece719d020f2955e357def0b7f175aab3e3cd95c9392d5097",
+    "ornithopter_eval/captures.py": "d045be7c985abdce49ca0dda90cbd77076b395139a4ed215d13b3fa81cb9baca",
+    "ornithopter_eval/checks.py": "9b1e51cca2d04cc53a6c451dda139806ca1a2179486631f7612dcb08d18dc04f",
+    "ornithopter_eval/deadline.py": "6abfa6da5f3d5610724ea26d4a6e8aafa740e00e909468330a72d228f7ee0f5c",
+    "ornithopter_eval/diagnostics.py": "3530928fc658294cc436d6261d50bd4f1fce54b4dda4d415c4bf6ef8cc1107c2",
+    "ornithopter_eval/experiment.py": "e285929493cabdd829a561acde39d7774ae14f5f6430fc063b449f78e25e2e71",
+    "ornithopter_eval/grading.py": "f6afa457ec80f39600d9859b70a4e33185564ac136b9c2655a83efa0aeffdc52",
+    "ornithopter_eval/mechanical_validation.py": "24a8c6056495ca1f824aba23c9a81e0d99d43c1ff089ede8f55e176b7e791acf",
+    "ornithopter_eval/piloted_validation.py": "3084546e776e08e841cf85e74988cc21dbb9baba94421762ae6e0a66a26864e2",
+    "ornithopter_eval/playback.py": "f45a0274fc2a40515ba2dd62cd56bd1d88e36bb0ef0505a1c4c038e5846d1922",
+    "ornithopter_eval/policy.py": "e24cbe3c5026e4928660f1d1692c9b44c22d0c7a7652c390ec462d27f08f635e",
+    "ornithopter_eval/protocol.py": "9434064bd12b3001e1f9cab1a94e8110fe2cebd9335c7ddd1097304df7eb2e5f",
+    "ornithopter_eval/review.py": "e17056c632454ec278253bc277eb434c87c34078ac5c17ae41615112ca4acdf1",
+    "ornithopter_eval/rollout.py": "9ecc37cf752e7ae003c8bdbb7482e333ffbd2a74016f370ce02baf585ecab4f9",
+    "ornithopter_eval/runner.py": "43a4bde3bb5c8449162db9028c4320eb4ae67a564d3997f3c62bb8c47d53389e",
+    "ornithopter_eval/wheel_audit.py": "aea5a4ae64be7e05a2f024ce00a28333539ac0c8b2f8949d603ebbfb9a396ed2",
+    "ornithopter_eval/world_candidate.py": "ecc3d69fd7e3bae52fe48ee93dcefb1543190621694ed28c934d8a6c5dcf1485",
+    "ornithopter_eval/aesthetic_ui.html": "4fbf5ec6c9922fb6bee2c477fb86108b74aa9468afec54c88535afa229a57737",
+    "grader/browser.mjs": "8bdbaf053d9668016dc3f645a08966260f1d7efa58f4d68806c63e05d1804fe5",
+    "grader/mechanical-v4.mjs": "ed8228ed362e8f034428cf1eb7aed2a6b9e91c3da608ae82bba374b65f7f3c75",
+    "grader/piloted-geometry.mjs": "4b496b69f698b6071bac04f1cd7dbcaa716178bdd251a6ab6e22d85e73980ec4",
+    "grader/piloted-numeric.mjs": "a72938b7567ef400b6b36a6a3cb0857af15f70046e8d7482a1851c43871011c0",
+    "grader/piloted-v5.mjs": "b40e7a2d484a4bac144094b154b16d205ecf7740dd7220cbe6cad2fc27358872",
+    "grader/pitch-stability.mjs": "932049248f583e913532a09e8f53937b9af772bcb49f523b2aa0dea93dfdcc4d",
+    "grader/playback-review.mjs": "043192a78cbe9839ef2f3260bfee4f2329744804d66ab93d2664103c26f90011",
+    "grader/source-calibrate.mjs": "73f383f775688b220971a67cc65d1783f8bfba00a84c800a525d5b5265c05c30",
+    "grader/source-first-v6.mjs": "a2c76bab60b2302f125c3d91492310f0bb4f06f74956ceacbda0962e4fafa686",
+    "grader/source-first-v7.mjs": "52e32177e3d8def260346d55658ea103ff03607a5daa6d87e78658e171ef5d5a",
+    "grader/source-probes.mjs": "76780f2fc141c21a15494b2a00a88aa5fd2dd0de138b8fe40fd4ab5b49142149",
+    "grader/wheel-axis-review.mjs": "de3addee8ba18c0fada16f94f7ec37912f18ee3499dbb405dfdc7702d4af6f78",
+    "grader/wheel-axis.mjs": "a887902fa5c75256c18ee468a15da99c118fc9b8f4ce3366863481fa1d6bdb37",
+    "grader/world-review.mjs": "39fa58db05188cdd2d2d66bd47d32d76430e93ab65b6103040a18cda3fe1471c",
+    "task/DESIGN_BRIEF.md": "fc9d5f9406b3826c8d19899f3f16a4e9d649a0b6edf1123f5cf9f226e4d13e73",
+    "task/SOURCE_GUIDE.md": "8ceaae0207c5b378b708489f78479fa2397f11d1b65846cc438af596275c0117",
+    "task/TASK.md": "27cd8e4bc4ea256c517d312bb99af592dc80f2b890a8e521450d7e69dc150d0a",
+    "task/starter/index.html": "38d212328cf4a327fa3a7672e4c6f117dff120a853deec32cb10c4d090dbd92f",
+    "task/starter/interpretation.json": "3f5bbb3adf4b6d80d5628ffd76ac5a787640b2b3d433afbc5ce51d2b2d583aaa",
+    "task/starter/physics.mjs": "eeae447f2f6d3ca4b7ae29ab2205dc856112ff92ff725361bd9e8f32c5c8ace6",
+    "task/sources/Unknown-14.jpg": "889697309f83ec195a90d91974ff30e5374ab321284a759bbe8c929f5e8e405e",
+    "task/sources/Unknown-2.jpg": "5c0a94b3f137307104f8062c23c3a6a3c6366c88f2f18c8fafed9ee3ddf0cbd9",
+    "candidate/mechanical-v4/AIRCRAFT_API.md": "37ce9391c489ab3b981a1b41547e9103962e49e3990dc493ca0a16406b6f84ba",
+    "candidate/mechanical-v4/GRADERS.md": "85b10f56910b0bd8ab8785eb4d5f61f05397b2faff016ddef023783db8f630c4",
+    "candidate/mechanical-v4/PROVENANCE.json": "9b6f91dab6cd6c9eda4cb7eb3e872d31efc168daa906aa446c034ddd4a44a0f6",
+    "candidate/mechanical-v4/README.md": "8242b26b5f6838382f480cb31be18d34a3dcf5a11ad1e15982f071a55c797666",
+    "candidate/mechanical-v4/SOURCE_AUDIT.md": "bae9134595e412daba31316e638c3c6c47b225fb61b7cc8f21baf17d1bb6f388",
+    "candidate/mechanical-v4/SOURCE_GUIDE.md": "1b25ee299cd033223d4a5d0c5b07fd5bd69f0bf780156ced433202a9541fa5db",
+    "candidate/mechanical-v4/TASK.md": "6769d067002a214a9fdbbb4b0a3ccec31e81f8097bb90d3bb6076272825f440f",
+    "candidate/mechanical-v4/engineering.json": "110bc006a5ab34018f58eff9385c615eb7a92f51af7b87519c15dc6bc83b59b9",
+    "candidate/mechanical-v4/scaffold/aircraft.mjs": "a8d74bf688691be65471b67c2cae2b8422beffe8df3d20e1f37f6d157e73f3b7",
+    "candidate/mechanical-v4/scaffold/environment/platform.mjs": "2f9bbcbde3f9a3fbbb9d68e110aaeee259586de643c6a7d3f713af146bfd3980",
+    "candidate/mechanical-v4/scaffold/environment/style.css": "21db9f38d2ab3f0c10c667245fed2748689382465c4164e281bed102b2b7f5ed",
+    "candidate/mechanical-v4/scaffold/environment/vendor/THREE-LICENSE.txt": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+    "candidate/mechanical-v4/scaffold/environment/vendor/three.core.min.js": "05b2609338c76cd65daf74f3ac515bc9a5045e1b3b33edc07d8c9bd55250fa90",
+    "candidate/mechanical-v4/scaffold/environment/vendor/three.module.min.js": "86bcee248b64f44bcfc23c331ae74619061957d59cab040171dcb6fb5900beb6",
+    "candidate/mechanical-v4/scaffold/environment/view-motion.mjs": "de6f50f40f1a40ccaf401344c162659adb0b791d85e1383040dd8f4905dd1e51",
+    "candidate/mechanical-v4/scaffold/environment/world.mjs": "a9508dc6e6cc844211fce7c800ae8a1ae422adb961c700e7533169815b4abcb7",
+    "candidate/mechanical-v4/scaffold/index.html": "cc3859c2e59abd4a4d22abe9e19df2bf95c5d8d29ad0a3f470c7ed066322dc88",
+    "candidate/mechanical-v4/scaffold/interpretation.json": "f929fe8d5a737d35febccd19f40536813cf56773ef0f9a288be1c5b7e2357678",
+    "candidate/mechanical-v4/scaffold/physics.mjs": "cbecaa7415b5ee012a696d94433395e28aac9cbdf01cc12962d62867b73277ce",
+    "candidate/mechanical-v5/AIRCRAFT_API.md": "17712f9b00d996c2df05dd9556c8ae859c2df9362889c23c4885a25e3ee279b6",
+    "candidate/mechanical-v5/ENGINEERING_NOTES.md": "75866e65cce8ce894c220323f46cda10112ab65634a5df0b3687c9a909f49c2b",
+    "candidate/mechanical-v5/GRADERS.md": "1c045218b6da3571d210570b7baf0f482ffa6ff46e82c0182bbb2b0c0713fe8e",
+    "candidate/mechanical-v5/PROVENANCE.json": "6cfbfb69525ea3e58463bb7824e0b2252c6da6e3d4abe351160a5bba084893bf",
+    "candidate/mechanical-v5/README.md": "d14ba6913e9bfa1e538d795c81a6a0ab1c41f59ccdc0d740b0854be973644a61",
+    "candidate/mechanical-v5/REFERENCE_ANCHORS.json": "58fb53cc8cc0374beebe18d5c26fc33fc1e6ec4dc0d29abc9743115b3f067f25",
+    "candidate/mechanical-v5/SOURCE_AUDIT.md": "8fcf3c848e845d8db4c4ed6473e23941c4a0cf6c2df43f1743051fb58b471432",
+    "candidate/mechanical-v5/SOURCE_GUIDE.md": "6c6e00e5fb710cfce9685a9e882bb8dba1abe896288fa94949594881b11f1ab4",
+    "candidate/mechanical-v5/TASK.md": "289330ad6f005c1dc9d6b96dd84d403e8062f91264ab4f1e09db3de234cae662",
+    "candidate/mechanical-v5/engineering.json": "05924f0bf71088687fc05f3525c0c8614682df701a2c0e3676238cf47974a2f3",
+    "candidate/mechanical-v5/scaffold/aircraft.mjs": "a8d74bf688691be65471b67c2cae2b8422beffe8df3d20e1f37f6d157e73f3b7",
+    "candidate/mechanical-v5/scaffold/environment/engineering.mjs": "7f6d9ee792326ef38ed917d42ffeef28655705a9824a8c1d5e31459081670fa3",
+    "candidate/mechanical-v5/scaffold/environment/mechanism.mjs": "8a3d20081900e7b859673c88712978a894e65946bb8eff85c3fe8369a47e621e",
+    "candidate/mechanical-v5/scaffold/environment/platform.mjs": "4494cf585db5af884161c19fe2d71fbfeadb9bd8f787211502966e7043092175",
+    "candidate/mechanical-v5/scaffold/environment/style.css": "21db9f38d2ab3f0c10c667245fed2748689382465c4164e281bed102b2b7f5ed",
+    "candidate/mechanical-v5/scaffold/environment/vendor/THREE-LICENSE.txt": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+    "candidate/mechanical-v5/scaffold/environment/vendor/three.core.min.js": "05b2609338c76cd65daf74f3ac515bc9a5045e1b3b33edc07d8c9bd55250fa90",
+    "candidate/mechanical-v5/scaffold/environment/vendor/three.module.min.js": "86bcee248b64f44bcfc23c331ae74619061957d59cab040171dcb6fb5900beb6",
+    "candidate/mechanical-v5/scaffold/environment/view-motion.mjs": "a01247f64b5244a8223f490b10044296c779284e6fa685e75344421499ef92b1",
+    "candidate/mechanical-v5/scaffold/environment/world.mjs": "a6b172f743a1f07ca60d543b32604774124a1034478a25b794f7730c22846c00",
+    "candidate/mechanical-v5/scaffold/index.html": "976bfa114d0a0925ea208963ad804bb2f6fe27a97a8caa3aa04689bc0b934018",
+    "candidate/mechanical-v5/scaffold/interpretation.json": "f929fe8d5a737d35febccd19f40536813cf56773ef0f9a288be1c5b7e2357678",
+    "candidate/mechanical-v5/scaffold/kinematics.mjs": "7acc4c13c33367ccb838d49db4b4d65d0b4c2d865d633041094f05cc943ae92c",
+    "candidate/mechanical-v5/scaffold/physics.mjs": "bbf4fed62f97d9b810940959098e3fc528ab9f3166c46db1fea70294164f98f4",
+    "candidate/mechanical-v6/AIRCRAFT_API.md": "b98292be28661d36bdad8a29667f71fa47b0907b021c6ba7f58b69f990baf76b",
+    "candidate/mechanical-v6/ENGINEERING_NOTES.md": "d3e5ce7c9aafb6961dc6e040f1ec269527ead4183cafd46682f9758787744caa",
+    "candidate/mechanical-v6/GRADERS.md": "90b4c419e454af3d39c781c4a543205a5a04ded2684f3bbf377229ef72af892e",
+    "candidate/mechanical-v6/SOURCE_GUIDE.md": "ea0ad3616a67781e46a39e1cbb709cf82429bf862f922677ea16c530ceabc7c8",
+    "candidate/mechanical-v6/TASK.md": "d0c760f885503525858eec6fb82e4fb771b621937b494b28f124e2a0db125459",
+    "candidate/mechanical-v6/engineering.json": "a3ccbd018f729bb3fc8aa80db13477ab005ac314ea672564cb2fb5a936900384",
+    "candidate/mechanical-v6/scaffold/aircraft.mjs": "9f96ecfe245cc0c38aa943d36b2e4c22cb309b84d21309ff067b85b5d955052a",
+    "candidate/mechanical-v6/scaffold/environment/engineering.mjs": "7ffdb081962101bcdf8a61b969527c4d92e5f8cb21aaf34b847c2b28438bdfb4",
+    "candidate/mechanical-v6/scaffold/environment/platform.mjs": "1c6da97f51dd767bfb88e557d2fb27532e5c8b6e250e76761d29f02d0bd2ddad",
+    "candidate/mechanical-v6/scaffold/environment/source-mechanism.mjs": "cb55fd96906c7d708ea948a1010c2a9e6d688224ff65155b7e1eeb91c9db3b4d",
+    "candidate/mechanical-v6/scaffold/environment/style.css": "21db9f38d2ab3f0c10c667245fed2748689382465c4164e281bed102b2b7f5ed",
+    "candidate/mechanical-v6/scaffold/environment/vendor/THREE-LICENSE.txt": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+    "candidate/mechanical-v6/scaffold/environment/vendor/three.core.min.js": "05b2609338c76cd65daf74f3ac515bc9a5045e1b3b33edc07d8c9bd55250fa90",
+    "candidate/mechanical-v6/scaffold/environment/vendor/three.module.min.js": "86bcee248b64f44bcfc23c331ae74619061957d59cab040171dcb6fb5900beb6",
+    "candidate/mechanical-v6/scaffold/environment/view-motion.mjs": "a01247f64b5244a8223f490b10044296c779284e6fa685e75344421499ef92b1",
+    "candidate/mechanical-v6/scaffold/environment/world.mjs": "a6b172f743a1f07ca60d543b32604774124a1034478a25b794f7730c22846c00",
+    "candidate/mechanical-v6/scaffold/index.html": "8a002bff386959b06dcaaa7bc09228496ff59036e2856552c2edc6b4190743d6",
+    "candidate/mechanical-v6/scaffold/interpretation.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+    "candidate/mechanical-v6/scaffold/kinematics.mjs": "ef8c18094f2b8ec47dea26548d202021ed1954c059fe811997b7db39ec215e43",
+    "candidate/mechanical-v6/scaffold/physics.mjs": "4b8edc18537b6ee4602b2889f55acb48384deef5e57fa09d18e893a744cd3bf8",
+    "candidate/mechanical-v6/source-selection.json": "5b069f11c7f0f0a6b5a4abe1740715ee1a9b23b122f073ae95bb9eb76ce5bcf6",
+    "candidate/mechanical-v7/AIRCRAFT_API.md": "98eb564cbed8e4fdb7d382e390ae7bf1d88b799ad80f842ee41eb1148792ee2a",
+    "candidate/mechanical-v7/ENGINEERING_NOTES.md": "06d1ad691465d9877fe58c1602a6dddb423dc2521a100f2d73fcc2c87ad14bd3",
+    "candidate/mechanical-v7/GRADERS.md": "63ef99dad0f74429755a5c7cf28b05cbe9796a42b40ea5887bbf3951aece8502",
+    "candidate/mechanical-v7/SOURCE_GUIDE.md": "ea0ad3616a67781e46a39e1cbb709cf82429bf862f922677ea16c530ceabc7c8",
+    "candidate/mechanical-v7/TASK.md": "1c70285e0c521d3578161c0af498d090917225fee066b5ec3ac0b97b0362ee41",
+    "candidate/mechanical-v7/engineering.json": "2952e9b0acc66dc3f7d9d183aedcc3cb5d09560409ed39dbae108d45c790eb81",
+    "candidate/mechanical-v7/scaffold/aircraft.mjs": "9f96ecfe245cc0c38aa943d36b2e4c22cb309b84d21309ff067b85b5d955052a",
+    "candidate/mechanical-v7/scaffold/environment/capture.mjs": "163afc21a91601ef467f554816f8c0565289fa9a2f45454dce97256703161618",
+    "candidate/mechanical-v7/scaffold/environment/engineering.mjs": "c4b8598f927d5d130e4f4b16c7d59f74c23aadfd246d00f1b82bb65031e66d5c",
+    "candidate/mechanical-v7/scaffold/environment/flight-modes.mjs": "791aee69341621305c6c0ea2f7e4c129cbc0a02a7a60e7a1cfc2265d01d41d62",
+    "candidate/mechanical-v7/scaffold/environment/platform.mjs": "be26d96516749b728e5ca45cd1e3b665abdadcf90a2695c9198e4ffea03bb3e4",
+    "candidate/mechanical-v7/scaffold/environment/source-mechanism.mjs": "cb55fd96906c7d708ea948a1010c2a9e6d688224ff65155b7e1eeb91c9db3b4d",
+    "candidate/mechanical-v7/scaffold/environment/style.css": "21db9f38d2ab3f0c10c667245fed2748689382465c4164e281bed102b2b7f5ed",
+    "candidate/mechanical-v7/scaffold/environment/vendor/THREE-LICENSE.txt": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+    "candidate/mechanical-v7/scaffold/environment/vendor/three.core.min.js": "05b2609338c76cd65daf74f3ac515bc9a5045e1b3b33edc07d8c9bd55250fa90",
+    "candidate/mechanical-v7/scaffold/environment/vendor/three.module.min.js": "86bcee248b64f44bcfc23c331ae74619061957d59cab040171dcb6fb5900beb6",
+    "candidate/mechanical-v7/scaffold/environment/view-motion.mjs": "a01247f64b5244a8223f490b10044296c779284e6fa685e75344421499ef92b1",
+    "candidate/mechanical-v7/scaffold/environment/world.mjs": "cf5859d1582b6b7b77fcab7a69f5c6cab25c7ae48c482f31d62e39967b52aa85",
+    "candidate/mechanical-v7/scaffold/index.html": "c8ad6882313e105f01e3598e741b82df5e02e7d052a985d2d19056aadf41ccce",
+    "candidate/mechanical-v7/scaffold/interpretation.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+    "candidate/mechanical-v7/scaffold/kinematics.mjs": "ef8c18094f2b8ec47dea26548d202021ed1954c059fe811997b7db39ec215e43",
+    "candidate/mechanical-v7/scaffold/physics.mjs": "4b8edc18537b6ee4602b2889f55acb48384deef5e57fa09d18e893a744cd3bf8",
+    "candidate/mechanical-v7/source-selection.json": "5b069f11c7f0f0a6b5a4abe1740715ee1a9b23b122f073ae95bb9eb76ce5bcf6",
+    "audits/source-compatibility-20261104/sources/Unknown-10.jpg": "61aa7012757f1ed9eaa41cd97add95d96e653008c97996f9e50e5e5ecdf0a728",
+    "audits/source-compatibility-20261104/sources/Unknown-11.jpg": "5af32b5955dcd63b509ccc1c8f9f852cc4b038624af7cdec7d4559bef6dbfefc",
+    "audits/source-compatibility-20261104/sources/Unknown-12.jpg": "b203e7e32b70f3a87a8bfe85859f9901ba12fd191ac4908b908179f63cd07d38",
+    "audits/source-compatibility-20261104/sources/Unknown-13.jpg": "71b43e76e76c3bf0f031b8ff339329c4b255e9457e5710c3dfd029292211dfac",
+    "audits/source-compatibility-20261104/sources/Unknown-14.jpg": "889697309f83ec195a90d91974ff30e5374ab321284a759bbe8c929f5e8e405e",
+    "audits/source-compatibility-20261104/sources/Unknown-15.jpg": "d47f1d827d666153804c7cdf018565c13e3febcf880df9365b665b9e9b987465",
+    "audits/source-compatibility-20261104/sources/Unknown-2.jpg": "5c0a94b3f137307104f8062c23c3a6a3c6366c88f2f18c8fafed9ee3ddf0cbd9",
+    "audits/source-compatibility-20261104/sources/Unknown-3.jpg": "5772a9b841ac2f0a4c00ed6e7fa09e5fc7a4eae195caa3fc4c6c72aa8b43ef86",
+    "audits/source-compatibility-20261104/sources/Unknown-4.jpg": "d2c7b2b0257a79dcfbf057642626bf537e932ee79a88f1c798c2a7efcb130d74",
+    "audits/source-compatibility-20261104/sources/Unknown-5.jpg": "d3f1c4428cc44f785fc3913a6f5e44c49dfb312dd94261fe446de944e83c2092",
+    "audits/source-compatibility-20261104/sources/Unknown-6.jpg": "e2de1730ee3f816d41b09d9bf30d7d522feda63a9ab430b187e18d84e90b49ab",
+    "audits/source-compatibility-20261104/sources/Unknown-7.jpg": "503200ed9f97c8b52c8c3a2a1ea4d1f2c5b77f6d8083ffa1ff315f543fd3ea4c",
+    "audits/source-compatibility-20261104/sources/Unknown-8.jpg": "c765fd61b0d8bb15fd932a05a42276c18d91163e53170d743292d66d6e2ff290",
+    "audits/source-compatibility-20261104/sources/Unknown-9.jpg": "87fcd95b10c35c0e098592c15cca7f81d265420f2d61778a008314a24f63ab9c",
+    "audits/source-compatibility-20261104/sources/Unknown.jpg": "77c7fd5f98590e99d8ceee238fb45d5efd2d5d17f3168bb1d4f1e19007e996cc"
+  },
+  "config_sha256": "a27c313f3ca6402d157cb859764226a82678f4a357884b4a7b7380b9d086a103",
+  "models": [
+    "gpt-6.1-sol",
+    "gpt-6-astra",
+    "gpt-5.6-sol",
+    "gpt-5.5",
+    "gpt-5.4"
+  ],
+  "repeats": 1,
+  "config": {
+    "task_version": "mechanical-v7-source-first",
+    "budget_mode": "wall_time",
+    "max_output_tokens_total": null,
+    "max_output_tokens_per_response": null,
+    "max_requests": null,
+    "max_wall_seconds": 480,
+    "max_submission_bytes": 2000000,
+    "reasoning_effort": "medium",
+    "output_token_notice_percentages": [],
+    "time_notice_percentages": [
+      50,
+      75
+    ]
+  },
+  "status": "completed",
+  "protocol": "Sequential generation and grading in model-list order; 1 independent rounds; no retries. Stop before the next model on an infrastructure/grading error or an API request interrupted by the generation deadline.",
+  "execution": {
+    "concurrency": 1,
+    "stop_on_error": true
+  },
+  "visual_review": "Not scored: previous image judge failed calibration.",
+  "trials": [
+    {
+      "id": "gpt-6.1-sol-01",
+      "model": "gpt-6.1-sol",
+      "repeat": 1,
+      "status": "submitted",
+      "automated": {
+        "passed": 6,
+        "total": 7,
+        "failed": [
+          "power_limited_flight"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 5,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 1,
+            "total": 1
+          }
+        }
+      },
+      "reason": null,
+      "usage": {
+        "input_tokens": 522030,
+        "output_tokens": 16958,
+        "requests": 12
+      },
+      "elapsed_seconds": 361.128,
+      "rollout_review": {
+        "file": "rollout-review.json",
+        "pass": true,
+        "status": "completed",
+        "sha256": "129dee4de0852183c9c2849e85879babd011d904cbab802b6bb562e32b73d8c4"
+      },
+      "api_diagnostics": {
+        "file": "api-diagnostics.json",
+        "sha256": "1e17cac4c43fb56d0300ae48ab15e818516272548eba2dfd5cb1b8e83a6c67d6",
+        "requests": 12
+      },
+      "grading_status": "failed"
+    },
+    {
+      "id": "gpt-6-astra-01",
+      "model": "gpt-6-astra",
+      "repeat": 1,
+      "status": "submitted",
+      "automated": {
+        "passed": 6,
+        "total": 7,
+        "failed": [
+          "power_limited_flight"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 5,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 1,
+            "total": 1
+          }
+        }
+      },
+      "reason": null,
+      "usage": {
+        "input_tokens": 1028292,
+        "output_tokens": 22889,
+        "requests": 23
+      },
+      "elapsed_seconds": 431.669,
+      "rollout_review": {
+        "file": "rollout-review.json",
+        "pass": true,
+        "status": "completed",
+        "sha256": "9a728ebee7af5b96eaf8ecbc04755798dd9f68ef0a319a6e772ee851670a1b28"
+      },
+      "api_diagnostics": {
+        "file": "api-diagnostics.json",
+        "sha256": "1e1ac399dc363a6d9032bbec01493aeed922cb02ddfacab878a53a63db5e0737",
+        "requests": 23
+      },
+      "grading_status": "failed"
+    },
+    {
+      "id": "gpt-5.6-sol-01",
+      "model": "gpt-5.6-sol",
+      "repeat": 1,
+      "status": "submitted",
+      "automated": {
+        "passed": 5,
+        "total": 7,
+        "failed": [
+          "wing_cycle_force_coupling",
+          "power_limited_flight"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 4,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 1,
+            "total": 1
+          }
+        }
+      },
+      "reason": null,
+      "usage": {
+        "input_tokens": 842937,
+        "output_tokens": 17198,
+        "requests": 16
+      },
+      "elapsed_seconds": 220.027,
+      "rollout_review": {
+        "file": "rollout-review.json",
+        "pass": true,
+        "status": "completed",
+        "sha256": "894494a7f93e1842b243087df9cb5b25efd4a8e027541f7d1c7a00b0d0905263"
+      },
+      "api_diagnostics": {
+        "file": "api-diagnostics.json",
+        "sha256": "bc3f39abdb5f3d1f02651f4479b47ba8ff66b4465ac603d79d92ca73c2b862e2",
+        "requests": 16
+      },
+      "grading_status": "failed"
+    },
+    {
+      "id": "gpt-5.5-01",
+      "model": "gpt-5.5",
+      "repeat": 1,
+      "status": "submitted",
+      "automated": {
+        "passed": 4,
+        "total": 7,
+        "failed": [
+          "wing_cycle_force_coupling",
+          "wing_body_pitch_coupling",
+          "power_limited_flight"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 3,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 1,
+            "total": 1
+          }
+        }
+      },
+      "reason": null,
+      "usage": {
+        "input_tokens": 682692,
+        "output_tokens": 14157,
+        "requests": 14
+      },
+      "elapsed_seconds": 195.319,
+      "rollout_review": {
+        "file": "rollout-review.json",
+        "pass": false,
+        "status": "completed",
+        "sha256": "52c652c9b83b19fee93fe24d5e897f4e64ef0f50c753e77eb0217574c0a7adba"
+      },
+      "api_diagnostics": {
+        "file": "api-diagnostics.json",
+        "sha256": "a8ec3c7cf8bb9a740200aae3dbab39d98fb34ab6c3d8f41fcc9e31a915db801a",
+        "requests": 14
+      },
+      "grading_status": "failed"
+    },
+    {
+      "id": "gpt-5.4-01",
+      "model": "gpt-5.4",
+      "repeat": 1,
+      "status": "submitted",
+      "automated": {
+        "passed": 0,
+        "total": 7,
+        "failed": [
+          "wing_cycle_force_coupling",
+          "elastic_inertial_exchange",
+          "wing_body_pitch_coupling",
+          "power_limited_flight",
+          "unpowered_glide_balance",
+          "powered_pitch_stability",
+          "wheel_rotation_axis"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 0,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 0,
+            "total": 1
+          }
+        }
+      },
+      "reason": null,
+      "usage": {
+        "input_tokens": 632580,
+        "output_tokens": 27588,
+        "requests": 12
+      },
+      "elapsed_seconds": 448.554,
+      "rollout_review": {
+        "file": "rollout-review.json",
+        "pass": true,
+        "status": "completed",
+        "sha256": "8529e2b99437b7d53da2122dc5c42a5fe57ad830befa708575e0cd2086b28827"
+      },
+      "api_diagnostics": {
+        "file": "api-diagnostics.json",
+        "sha256": "b2d91c4dddf74c161a2df16dd506b0dd0daf220187bd50460b0640719abaa7bd",
+        "requests": 12
+      },
+      "grading_status": "failed"
+    }
+  ]
+}

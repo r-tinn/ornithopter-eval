@@ -1,8 +1,8 @@
 # Ornithopter Eval
 
-**Latest five-model attempt:** [GPT-6.1 Sol, GPT-6 Astra, GPT-5.6 Sol, GPT-5.5 and GPT-5.4](experiments/source-first-v7-20261105-five-models/index.html), one run each at medium reasoning and 480 seconds. Four attempts stopped on API/transport errors and remain unscored. Astra hit the deadline during an in-flight response and its incomplete starter scored a raw 0/7. No usable simulator completed; this batch does not support a model ranking. [Exact records and interpretation](experiments/source-first-v7-20261105-five-models/CALIBRATION.md) · [All artifacts](experiments/source-first-v7-20261105-five-models/artifacts.zip).
+**Latest comparison:** [Five models, run sequentially with stop-on-error](experiments/source-first-v7-20261105-sequential-five/index.html). All five submitted inside eight minutes with medium reasoning and no API/transport failures. Raw task checks: GPT-6.1 Sol 6/7, GPT-6 Astra 6/7, GPT-5.6 Sol 5/7, GPT-5.5 4/7, GPT-5.4 0/7. GPT-5.5's file-only audit failed on a chained directory-listing command; its raw score is excluded from valid-attempt means. All simulators initialize, and none passes the complete powered-flight check. [Exact grader and flight observations](experiments/source-first-v7-20261105-sequential-five/CALIBRATION.md) · [All artifacts](experiments/source-first-v7-20261105-sequential-five/artifacts.zip).
 
-Serve this cohort with `python3 -m ornithopter_eval serve-artifacts experiments/source-first-v7-20261105-five-models --port 8774`. The gallery retains each original failure and Astra's grading evidence.
+Serve this cohort with `python3 -m ornithopter_eval serve-artifacts experiments/source-first-v7-20261105-sequential-five --port 8774`. Open each submission to inspect or fly it, including powered Approach, and use API diagnostics to inspect request metadata.
 
 The current task is [source-first v7](candidate/mechanical-v7/TASK.md). A fresh
 model receives **nine original notebook photographs (02,08–15)** plus clearly

@@ -1,0 +1,321 @@
+{
+  "task_version": "mechanical-v7-source-first",
+  "status": "completed",
+  "models": {
+    "gpt-6.1-sol": {
+      "attempts": 1,
+      "graded_attempts": 1,
+      "mean_passed": 6.0,
+      "total_checks": 7,
+      "all_automated_passes": 0,
+      "range": [
+        6,
+        6
+      ],
+      "protocol_valid_attempts": 1,
+      "protocol_invalid_attempts": 0,
+      "aesthetic_realism": "Human review pending; separate from task score"
+    },
+    "gpt-6-astra": {
+      "attempts": 1,
+      "graded_attempts": 1,
+      "mean_passed": 6.0,
+      "total_checks": 7,
+      "all_automated_passes": 0,
+      "range": [
+        6,
+        6
+      ],
+      "protocol_valid_attempts": 1,
+      "protocol_invalid_attempts": 0,
+      "aesthetic_realism": "Human review pending; separate from task score"
+    },
+    "gpt-5.6-sol": {
+      "attempts": 1,
+      "graded_attempts": 1,
+      "mean_passed": 5.0,
+      "total_checks": 7,
+      "all_automated_passes": 0,
+      "range": [
+        5,
+        5
+      ],
+      "protocol_valid_attempts": 1,
+      "protocol_invalid_attempts": 0,
+      "aesthetic_realism": "Human review pending; separate from task score"
+    },
+    "gpt-5.5": {
+      "attempts": 1,
+      "graded_attempts": 0,
+      "mean_passed": null,
+      "total_checks": 7,
+      "all_automated_passes": 0,
+      "range": null,
+      "protocol_valid_attempts": 0,
+      "protocol_invalid_attempts": 1,
+      "aesthetic_realism": "Human review pending; separate from task score"
+    },
+    "gpt-5.4": {
+      "attempts": 1,
+      "graded_attempts": 1,
+      "mean_passed": 0.0,
+      "total_checks": 7,
+      "all_automated_passes": 0,
+      "range": [
+        0,
+        0
+      ],
+      "protocol_valid_attempts": 1,
+      "protocol_invalid_attempts": 0,
+      "aesthetic_realism": "Human review pending; separate from task score"
+    }
+  },
+  "comparison_scope": "7 binary task outcomes; aggregates include valid file-only attempts only. Report protocol invalid rate separately. Human aesthetic realism 1\u20135 is separate and ungraded until the owner reviews.",
+  "full_task_pass_rate": null,
+  "note": "1 repeat(s) per model; exploratory, not a definitive ranking.",
+  "trials": [
+    {
+      "id": "gpt-6.1-sol-01",
+      "model": "gpt-6.1-sol",
+      "repeat": 1,
+      "status": "submitted",
+      "automated": {
+        "passed": 6,
+        "total": 7,
+        "failed": [
+          "power_limited_flight"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 5,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 1,
+            "total": 1
+          }
+        }
+      },
+      "reason": null,
+      "usage": {
+        "input_tokens": 522030,
+        "output_tokens": 16958,
+        "requests": 12
+      },
+      "elapsed_seconds": 361.128,
+      "rollout_review": {
+        "file": "rollout-review.json",
+        "pass": true,
+        "status": "completed",
+        "sha256": "129dee4de0852183c9c2849e85879babd011d904cbab802b6bb562e32b73d8c4"
+      },
+      "api_diagnostics": {
+        "file": "api-diagnostics.json",
+        "sha256": "1e17cac4c43fb56d0300ae48ab15e818516272548eba2dfd5cb1b8e83a6c67d6",
+        "requests": 12
+      },
+      "grading_status": "failed"
+    },
+    {
+      "id": "gpt-6-astra-01",
+      "model": "gpt-6-astra",
+      "repeat": 1,
+      "status": "submitted",
+      "automated": {
+        "passed": 6,
+        "total": 7,
+        "failed": [
+          "power_limited_flight"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 5,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 1,
+            "total": 1
+          }
+        }
+      },
+      "reason": null,
+      "usage": {
+        "input_tokens": 1028292,
+        "output_tokens": 22889,
+        "requests": 23
+      },
+      "elapsed_seconds": 431.669,
+      "rollout_review": {
+        "file": "rollout-review.json",
+        "pass": true,
+        "status": "completed",
+        "sha256": "9a728ebee7af5b96eaf8ecbc04755798dd9f68ef0a319a6e772ee851670a1b28"
+      },
+      "api_diagnostics": {
+        "file": "api-diagnostics.json",
+        "sha256": "1e1ac399dc363a6d9032bbec01493aeed922cb02ddfacab878a53a63db5e0737",
+        "requests": 23
+      },
+      "grading_status": "failed"
+    },
+    {
+      "id": "gpt-5.6-sol-01",
+      "model": "gpt-5.6-sol",
+      "repeat": 1,
+      "status": "submitted",
+      "automated": {
+        "passed": 5,
+        "total": 7,
+        "failed": [
+          "wing_cycle_force_coupling",
+          "power_limited_flight"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 4,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 1,
+            "total": 1
+          }
+        }
+      },
+      "reason": null,
+      "usage": {
+        "input_tokens": 842937,
+        "output_tokens": 17198,
+        "requests": 16
+      },
+      "elapsed_seconds": 220.027,
+      "rollout_review": {
+        "file": "rollout-review.json",
+        "pass": true,
+        "status": "completed",
+        "sha256": "894494a7f93e1842b243087df9cb5b25efd4a8e027541f7d1c7a00b0d0905263"
+      },
+      "api_diagnostics": {
+        "file": "api-diagnostics.json",
+        "sha256": "bc3f39abdb5f3d1f02651f4479b47ba8ff66b4465ac603d79d92ca73c2b862e2",
+        "requests": 16
+      },
+      "grading_status": "failed"
+    },
+    {
+      "id": "gpt-5.5-01",
+      "model": "gpt-5.5",
+      "repeat": 1,
+      "status": "submitted",
+      "automated": {
+        "passed": 4,
+        "total": 7,
+        "failed": [
+          "wing_cycle_force_coupling",
+          "wing_body_pitch_coupling",
+          "power_limited_flight"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 3,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 1,
+            "total": 1
+          }
+        }
+      },
+      "reason": null,
+      "usage": {
+        "input_tokens": 682692,
+        "output_tokens": 14157,
+        "requests": 14
+      },
+      "elapsed_seconds": 195.319,
+      "rollout_review": {
+        "file": "rollout-review.json",
+        "pass": false,
+        "status": "completed",
+        "sha256": "52c652c9b83b19fee93fe24d5e897f4e64ef0f50c753e77eb0217574c0a7adba"
+      },
+      "api_diagnostics": {
+        "file": "api-diagnostics.json",
+        "sha256": "a8ec3c7cf8bb9a740200aae3dbab39d98fb34ab6c3d8f41fcc9e31a915db801a",
+        "requests": 14
+      },
+      "grading_status": "failed"
+    },
+    {
+      "id": "gpt-5.4-01",
+      "model": "gpt-5.4",
+      "repeat": 1,
+      "status": "submitted",
+      "automated": {
+        "passed": 0,
+        "total": 7,
+        "failed": [
+          "wing_cycle_force_coupling",
+          "elastic_inertial_exchange",
+          "wing_body_pitch_coupling",
+          "power_limited_flight",
+          "unpowered_glide_balance",
+          "powered_pitch_stability",
+          "wheel_rotation_axis"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 0,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 0,
+            "total": 1
+          }
+        }
+      },
+      "reason": null,
+      "usage": {
+        "input_tokens": 632580,
+        "output_tokens": 27588,
+        "requests": 12
+      },
+      "elapsed_seconds": 448.554,
+      "rollout_review": {
+        "file": "rollout-review.json",
+        "pass": true,
+        "status": "completed",
+        "sha256": "8529e2b99437b7d53da2122dc5c42a5fe57ad830befa708575e0cd2086b28827"
+      },
+      "api_diagnostics": {
+        "file": "api-diagnostics.json",
+        "sha256": "b2d91c4dddf74c161a2df16dd506b0dd0daf220187bd50460b0640719abaa7bd",
+        "requests": 12
+      },
+      "grading_status": "failed"
+    }
+  ],
+  "execution": {
+    "concurrency": 1,
+    "stop_on_error": true
+  }
+}

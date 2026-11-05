@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "client_request_id": "76c01443-5b22-4060-8148-7d3b82719b7d",
+  "endpoint": "https://api.openai.com/v1/responses",
+  "model": "gpt-5.6-sol",
+  "started_utc": "2026-11-05T15:23:24.045447+00:00",
+  "timeout_seconds": 368.2815852500007,
+  "status": "succeeded",
+  "phase": "completed",
+  "request_index": 9,
+  "transport_started_utc": "2026-11-05T15:23:24.105383+00:00",
+  "request_bytes": 1773238,
+  "transport_elapsed_seconds": 18.942469,
+  "http_status": 200,
+  "response_headers": {
+    "content-type": "application/json",
+    "content-length": "21728",
+    "openai-processing-ms": "17618",
+    "openai-version": "2020-10-01",
+    "x-ratelimit-limit-requests": "15000",
+    "x-ratelimit-limit-tokens": "40000000",
+    "x-ratelimit-remaining-requests": "14999",
+    "x-ratelimit-remaining-tokens": "39995801",
+    "x-ratelimit-reset-requests": "4ms",
+    "x-ratelimit-reset-tokens": "6ms",
+    "x-request-id": "req_1218444bb9b04d96b7a1a016468d35ec"
+  },
+  "response_headers_seconds": 18.939635,
+  "response_bytes": 21728,
+  "finished_utc": "2026-11-05T15:23:43.045097+00:00",
+  "elapsed_seconds": 19.012649,
+  "worker_exit_code": 0
+}
