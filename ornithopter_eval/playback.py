@@ -29,13 +29,17 @@ def powered_approach_playback(original):
     return updated.replace(anchors[4],b'GLIDE (add throttle to engage wings)',1),True
 
 
-def earlier_approach_playback(original):
-    position=b'const x=approach?field.x-65:field.x+field.start,z=field.z;'
-    height=b'+(approach?5:0)'
-    if position not in original or original.count(height)!=2:
+def powered_approach_preset_playback(original):
+    # Copy only the trusted host's preset function. Keep the archived renderer,
+    # environment, model implementation and recorded initial-state evidence.
+    pattern=rb'function preset\(approach=false\)\{.*?\n\}\n(?=function engagePower\()'
+    source=(ROOT/'candidate/mechanical-v7/scaffold/environment/platform.mjs').read_bytes()
+    current=re.search(pattern,source,re.S)
+    recorded=re.search(pattern,original,re.S)
+    if not current or not recorded:
         return original,False
-    updated=original.replace(position,b'const x=approach?field.x-field.length/2-450:field.x+field.start,z=field.z;',1)
-    return updated.replace(height,b'+(approach?100:0)'),True
+    updated=original[:recorded.start()]+current[0]+original[recorded.end():]
+    return updated,updated!=original
 
 
 class CameraPlayback:
@@ -72,14 +76,14 @@ class CameraPlayback:
                 updated=original.replace(b'antialias:false',b'antialias:true',1).replace(
                     b'Math.min(devicePixelRatio,WORLD.pixel_ratio)',b'Math.min(devicePixelRatio,2)',1)
                 updated,approach=powered_approach_playback(updated)
-                updated,earlier=earlier_approach_playback(updated)
+                updated,preset=powered_approach_preset_playback(updated)
                 if updated==original:
                     continue
                 self.trial_files[name]={'platform.mjs':updated}
                 if approach:
                     self.approach_trials.append(name)
                     self.trial_files[name]['flight-modes.mjs']=(ROOT/'candidate/mechanical-v7/scaffold/environment/flight-modes.mjs').read_bytes()
-                if earlier:
+                if preset:
                     self.approach_start_trials.append(name)
             elif platform.read_bytes()!=self.files['platform.mjs']:
                 self.trial_files[name]=self.files
@@ -91,7 +95,9 @@ class CameraPlayback:
             'original_files_rewritten':False,'scores_or_captures_changed':False,
             'model_physics_or_geometry_rewritten':False,'approach_controls_updated':self.approach_trials,
             'approach_start_updated':self.approach_start_trials,
-            'approach_start':{'distance_before_runway_m':450,'height_above_local_gear_contact_m':100} if self.approach_start_trials else None,
+            'approach_start':{'distance_before_runway_m':450,'height_above_local_gear_contact_m':100,
+                              'airspeed_m_s':16,'pitch_rad':.1,'wing_omega_rad_s':6,'throttle':.9,'gliding':False,
+                              'kind':'already-powered initial condition; not a glide restart or scored flight'} if self.approach_start_trials else None,
             'original_platform_sha256':self.trials,
             'playback_sha256':{} if self.source_first else {name:hashlib.sha256(data).hexdigest() for name,data in self.files.items()},
             'trial_playback_sha256':{trial:{name:hashlib.sha256(data).hexdigest() for name,data in files.items()} for trial,files in self.trial_files.items()},
@@ -105,7 +111,7 @@ class CameraPlayback:
         if name=='index.html':
             description='Interactive playback updated:</strong> sharper rendering; adding throttle in Approach engages the powered wings.' if self.source_first else 'Interactive camera updated:</strong> centred chase view and smoother rendering.'
             if self.approach_start_trials:
-                description+=' Approach starts 450 m before the runway and 100 m above local ground contact.'
+                description='Interactive playback updated:</strong> Approach starts already flapping at 90% throttle, 450 m before the runway and 100 m above local ground contact.'
             banner=('<p role="status"><strong>'+description+' '
                     'Saved submissions, scores and grader captures retain the original rendering. '
                     '<a href="viewer-camera.json">Playback details</a></p>')
@@ -122,7 +128,7 @@ class CameraPlayback:
             else:
                 note=('Updated playback: Approach throttle engages wings.' if self.source_first else 'Updated camera playback.')+' Saved trial and grades preserved. <a href="?original=1">Original playback</a>.'
                 if match[1] in self.approach_start_trials:
-                    note='Approach starts 450 m before the runway and 100 m above local ground contact. '+note
+                    note='Updated playback: Approach starts already flapping at 90% throttle, 450 m before the runway and 100 m above local ground contact. Saved trial and grades preserved. <a href="?original=1">Original playback</a>.'
             return body.replace('Shared scaffold · aircraft implementation pending.',note).encode()
         if original:
             return None

@@ -58,7 +58,9 @@ V6's handwritten reference also hunted, so v7 explicitly changes the illustrativ
 passive pitch damping from140 to1000 N m s/rad, with its dissipated energy counted.
 All other engineering constants, notebook sources, mass and crash limits stay fixed.
 Approach starts paused, 450 m before the runway and 100 m above local gear
-contact, as a zero-power glide. A user throttle request releases the
-glide clutch; the finite engine spins the wings up, and zero power then coasts.
+contact, already flapping at omega=6 rad/s with forward speed 16 m/s, pitch .1 rad,
+low-speed timing bias and 90% throttle. This is a powered-flight initial
+condition, not a claim of successful glide-to-powered restart. Initial kinetic
+energy belongs to the preset, not new engine work. Zero throttle then coasts.
 Saved v6/v7 playback gets a labelled host-control/preset overlay and an original-playback
 option. Never repair saved model physics or overwrite their recorded grades.

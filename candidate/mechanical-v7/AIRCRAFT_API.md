@@ -48,7 +48,9 @@ moments, flow between overlapping leaves and unsteady wakes are omitted. Point
 forces include the represented camber/twist/slide work through their actual
 application-point velocities. These are declared reduced-model assumptions.
 
-The host may release Approach's glide clutch after an explicit positive throttle
-request. Expect gliding=false, phase=0, omega=0 with preserved CG translation,
-fuel and pitch angular momentum. Never disable the engine solely because the
-aircraft was initially created with Approach; use the current state.gliding.
+Approach initializes gliding=false, forward speed 16 m/s, pitch .1 rad,
+phase=0, omega=6 rad/s, low-speed timing bias and 90% throttle. It represents
+already-powered flight, not a restart from stationary glide wings. Initial
+mechanical energy is part of that preset's initial condition. Use the current
+state.gliding when deciding whether engine torque is enabled. A separate
+unpowered glide state remains supported for the glide probes.

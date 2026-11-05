@@ -2,7 +2,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
-from ornithopter_eval.playback import CameraPlayback,powered_approach_playback,earlier_approach_playback
+from ornithopter_eval.playback import CameraPlayback,powered_approach_playback,powered_approach_preset_playback
 from ornithopter_eval.runner import ROOT,digest,write_json
 from ornithopter_eval.checks import MECHANICAL_VERSION,PILOTED_VERSION
 
@@ -59,12 +59,12 @@ class PlaybackTests(unittest.TestCase):
             updated=playback.response(prefix+'environment/platform.mjs')
             expected,patched=powered_approach_playback(original.replace(b'antialias:false',b'antialias:true',1).replace(
                 b'Math.min(devicePixelRatio,WORLD.pixel_ratio)',b'Math.min(devicePixelRatio,2)',1))
-            expected,earlier=earlier_approach_playback(expected)
+            expected,preset=powered_approach_preset_playback(expected)
             self.assertTrue(patched)
-            self.assertTrue(earlier)
+            self.assertTrue(preset)
             self.assertEqual(updated,expected)
             self.assertIn(b'releaseGlideForPower',playback.response(prefix+'environment/flight-modes.mjs'))
-            self.assertIn(b'Approach throttle engages wings',playback.response(prefix+'index.html'))
+            self.assertIn(b'Approach starts already flapping',playback.response(prefix+'index.html'))
             self.assertIn(b'platform.mjs?original=1',playback.response(prefix+'index.html','original=1'))
             for name in ('environment/platform.mjs','environment/flight-modes.mjs','physics.mjs','environment/world.mjs','environment/view-motion.mjs'):
                 self.assertIsNone(playback.response(prefix+name,'original=1'))
@@ -97,8 +97,12 @@ class PlaybackTests(unittest.TestCase):
             updated=playback.response(prefix+'environment/platform.mjs')
             self.assertIn(b'field.x-field.length/2-450',updated)
             self.assertEqual(updated.count(b'+(approach?100:0)'),2)
-            self.assertEqual(earlier_approach_playback(updated),(updated,False))
+            self.assertIn(b'omega:approach?6:0,gliding:false',updated)
+            self.assertIn(b'velocity:approach?[16,0,0]',updated)
+            self.assertIn(b'throttle:approach?.9:0',updated)
+            self.assertEqual(powered_approach_preset_playback(updated),(updated,False))
             self.assertIn(b'100 m above local ground',playback.response(prefix+'index.html'))
+            self.assertIn(b'90% throttle',playback.response(prefix+'index.html'))
             self.assertIn(b'platform.mjs?original=1',playback.response(prefix+'index.html','original=1'))
             for name in ('environment/platform.mjs','physics.mjs','aircraft.mjs','kinematics.mjs'):
                 self.assertIsNone(playback.response(prefix+name,'original=1'))

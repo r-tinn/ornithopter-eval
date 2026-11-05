@@ -37,12 +37,13 @@ accounts for its dissipation. Other engineering constants and crash limits are
 unchanged. [Observation evidence](validation/pitch-hunting-20261105/index.html).
 
 Approach starts 450 m before the runway and 100 m above local ground contact,
-paused in a zero-throttle glide. Adding throttle releases the
-glide clutch and starts the finite engine-driven mechanism; reducing power
-coasts it. Saved v6/v7 viewers get labelled host-control/preset updates, with original
+paused with the wings already flapping, 16 m/s forward speed and **90% throttle**.
+This is an already-powered initial condition. Reducing throttle coasts the
+mechanism under the same physics. Saved v6/v7 viewers get labelled host-control/preset updates, with original
 playback still available. Saved model physics, captures and grades are intact.
-The higher start gives recovery room; it does not guarantee that a submitted
-aircraft can recover from glide to powered flight. [Approach observations](validation/earlier-approach-20261105/README.md).
+This avoids the failed stopped-wing restart in the earlier Approach preset;
+it does not repair or certify that transition. [Original failed restart observations](validation/earlier-approach-20261105/README.md)
+remain intact. [Powered Approach review](validation/powered-approach-20261105/README.md).
 
 New CLI runs use **480 seconds (eight minutes)**, **medium reasoning**, and **no benchmark token
 or request cap**. The model knows the deadline upfront. Warnings arrive at the

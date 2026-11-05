@@ -120,12 +120,15 @@ Integrate COM translation and both coupled coordinates with midpoint RK2 or
 better, substeps <=integration_dt_max. Record cumulative shaft_work_J,
 aero_work_J (total aerodynamic dissipation), drive_heat_J (transmission+damping),
 control_work_J. No counter may substitute for actual physical energy in grading.
-Glide preset directly initialises stroke=dihedral for Inner/0 for Outer, twist=incidence, sweep=0, exposure=1 and region base camber, at omega=0, gliding=true;
-it is also the initial configuration for Approach, with zero throttle. The host
-releases the glide clutch when the pilot requests positive throttle; the engine
-then accelerates the wings from rest. The host preserves CG translation and pitch
-angular momentum and records any configuration-energy reduction as heat. Returning
-throttle to zero coasts the same mechanism; it does not re-enter the glide preset.
+The separate glide configuration uses stroke=dihedral for Inner/0 for Outer,
+twist=incidence, sweep=0, exposure=1 and region base camber, at omega=0,
+gliding=true. The glide grader directly initializes this unpowered state.
+Interactive Approach instead initializes already-powered flight: 16 m/s forward
+speed, pitch .1 rad, omega 6 rad/s, low-speed timing bias and 90% throttle,
+450 m before the runway and 100 m above local gear contact. It starts paused,
+with the mechanism already rotating; its initial kinetic energy is part of
+the initial condition, not newly supplied engine work or a simulated glide restart.
+Returning throttle to zero coasts the same mechanism; it does not enter glide mode.
 Do not add automatic mode changes or alter timing settings during flight.
 
 Position is total-aircraft CG. The renderer subtracts rotated cg to place the
@@ -151,9 +154,9 @@ are allowed. This is a reduced three-wheel runway model, not a suspension model.
 
 The deliberate glide preset is in engineering.glide: its speed, pitch and flight
 path are derived by zero pitching moment, aerodynamic D/L and weight balance of
-the extended frozen model. Use these values for Approach. The glide grader also
+the extended frozen model. Use these values for isolated unpowered glides. The glide grader also
 perturbs initial speed by +/-10% without requesting power, so it remains unpowered.
-Only the explicit user-operated Approach clutch release may change glide mode.
+There is no automatic transition between powered flight and glide mode.
 There is no hidden trim autopilot.
 
 The supplied comparison panel samples required m*(g-A*omega²*sin(omega*t)) and
