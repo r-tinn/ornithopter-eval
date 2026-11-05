@@ -8,7 +8,7 @@ import threading
 import http.server
 
 from ornithopter_eval.checks import SOURCE_FIRST_VERSION,LATEST_SOURCE_FIRST_VERSION,SOURCE_FIRST_VERSIONS
-from ornithopter_eval.grading import SubmissionServer
+from ornithopter_eval.grading import SubmissionServer, GRADING_REVISIONS, BANK_GRADING_REVISION
 from ornithopter_eval.runner import ROOT, write_json
 from ornithopter_eval.world_candidate import prepare_world
 
@@ -27,7 +27,7 @@ MUTANTS = {
 
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('output');parser.add_argument('--node',required=True);parser.add_argument('--task-version',choices=SOURCE_FIRST_VERSIONS,default=LATEST_SOURCE_FIRST_VERSION)
-    parser.add_argument('--grading-revision',choices=['v7-launch-60-65-70-v1'])
+    parser.add_argument('--grading-revision',choices=GRADING_REVISIONS)
     parser.add_argument('--reference-physics',type=Path,help='Explicit corrected author implementation; original fixture is preserved')
     args=parser.parse_args()
     root=Path(args.output).resolve()
@@ -36,7 +36,10 @@ def main():
     results=[]
     clean={k:v for k,v in os.environ.items() if k in ('PATH','TMPDIR','SYSTEMROOT','DISPLAY')}
     clean['PLAYWRIGHT_BROWSERS_PATH']=str(ROOT/'.cache/browsers')
-    for name,(file,old,new,scenario,target) in MUTANTS.items():
+    mutants=dict(MUTANTS)
+    if args.grading_revision==BANK_GRADING_REVISION:
+        mutants['roll_input_ignored']=('physics.mjs','E.controls.roll_accel_rad_s2*c.bank','0*c.bank','power','power_limited_flight')
+    for name,(file,old,new,scenario,target) in mutants.items():
         if scenario=='stability' and args.task_version==SOURCE_FIRST_VERSION:continue
         trial=prepare_world(root/name,reference=True,task_version=args.task_version)
         if args.reference_physics:

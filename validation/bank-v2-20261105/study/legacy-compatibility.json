@@ -1,0 +1,10 @@
+[
+  {
+    "mode": "original",
+    "power_probe_exact_match": true
+  },
+  {
+    "mode": "v1",
+    "power_probe_exact_match": true
+  }
+]

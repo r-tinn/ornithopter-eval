@@ -1,0 +1,1 @@
+{"checks":[{"id":"wing_cycle_force_coupling","pass":false},{"id":"elastic_inertial_exchange","pass":true},{"id":"wing_body_pitch_coupling","pass":false},{"id":"power_limited_flight","pass":false},{"id":"unpowered_glide_balance","pass":true},{"id":"powered_pitch_stability","pass":true},{"id":"wheel_rotation_axis","pass":true}]}

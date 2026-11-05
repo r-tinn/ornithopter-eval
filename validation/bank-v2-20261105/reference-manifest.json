@@ -1,0 +1,84 @@
+{
+  "task_version": "mechanical-v7-source-first",
+  "status": "submitted",
+  "reference_fixture": true,
+  "not_a_model_submission": true,
+  "editable_files": [
+    "submission/aircraft.mjs",
+    "submission/physics.mjs",
+    "submission/kinematics.mjs",
+    "submission/interpretation.json"
+  ],
+  "readonly_sha256": {
+    "environment/capture.mjs": "163afc21a91601ef467f554816f8c0565289fa9a2f45454dce97256703161618",
+    "environment/engineering.mjs": "c4b8598f927d5d130e4f4b16c7d59f74c23aadfd246d00f1b82bb65031e66d5c",
+    "environment/flight-modes.mjs": "791aee69341621305c6c0ea2f7e4c129cbc0a02a7a60e7a1cfc2265d01d41d62",
+    "environment/platform.mjs": "be26d96516749b728e5ca45cd1e3b665abdadcf90a2695c9198e4ffea03bb3e4",
+    "environment/source-mechanism.mjs": "cb55fd96906c7d708ea948a1010c2a9e6d688224ff65155b7e1eeb91c9db3b4d",
+    "environment/style.css": "21db9f38d2ab3f0c10c667245fed2748689382465c4164e281bed102b2b7f5ed",
+    "environment/vendor/THREE-LICENSE.txt": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+    "environment/vendor/three.core.min.js": "05b2609338c76cd65daf74f3ac515bc9a5045e1b3b33edc07d8c9bd55250fa90",
+    "environment/vendor/three.module.min.js": "86bcee248b64f44bcfc23c331ae74619061957d59cab040171dcb6fb5900beb6",
+    "environment/view-motion.mjs": "a01247f64b5244a8223f490b10044296c779284e6fa685e75344421499ef92b1",
+    "environment/world.mjs": "cf5859d1582b6b7b77fcab7a69f5c6cab25c7ae48c482f31d62e39967b52aa85",
+    "index.html": "c8ad6882313e105f01e3598e741b82df5e02e7d052a985d2d19056aadf41ccce"
+  },
+  "input_sha256": {
+    "inputs/AIRCRAFT_API.md": "98eb564cbed8e4fdb7d382e390ae7bf1d88b799ad80f842ee41eb1148792ee2a",
+    "inputs/DESIGN_BRIEF.md": "fc9d5f9406b3826c8d19899f3f16a4e9d649a0b6edf1123f5cf9f226e4d13e73",
+    "inputs/ENGINEERING_NOTES.md": "06d1ad691465d9877fe58c1602a6dddb423dc2521a100f2d73fcc2c87ad14bd3",
+    "inputs/GRADERS.md": "63ef99dad0f74429755a5c7cf28b05cbe9796a42b40ea5887bbf3951aece8502",
+    "inputs/SOURCE_GUIDE.md": "ea0ad3616a67781e46a39e1cbb709cf82429bf862f922677ea16c530ceabc7c8",
+    "inputs/TASK.md": "1c70285e0c521d3578161c0af498d090917225fee066b5ec3ac0b97b0362ee41",
+    "inputs/engineering.json": "2952e9b0acc66dc3f7d9d183aedcc3cb5d09560409ed39dbae108d45c790eb81",
+    "inputs/sources/Unknown-10.jpg": "61aa7012757f1ed9eaa41cd97add95d96e653008c97996f9e50e5e5ecdf0a728",
+    "inputs/sources/Unknown-11.jpg": "5af32b5955dcd63b509ccc1c8f9f852cc4b038624af7cdec7d4559bef6dbfefc",
+    "inputs/sources/Unknown-12.jpg": "b203e7e32b70f3a87a8bfe85859f9901ba12fd191ac4908b908179f63cd07d38",
+    "inputs/sources/Unknown-13.jpg": "71b43e76e76c3bf0f031b8ff339329c4b255e9457e5710c3dfd029292211dfac",
+    "inputs/sources/Unknown-14.jpg": "889697309f83ec195a90d91974ff30e5374ab321284a759bbe8c929f5e8e405e",
+    "inputs/sources/Unknown-15.jpg": "d47f1d827d666153804c7cdf018565c13e3febcf880df9365b665b9e9b987465",
+    "inputs/sources/Unknown-2.jpg": "5c0a94b3f137307104f8062c23c3a6a3c6366c88f2f18c8fafed9ee3ddf0cbd9",
+    "inputs/sources/Unknown-8.jpg": "c765fd61b0d8bb15fd932a05a42276c18d91163e53170d743292d66d6e2ff290",
+    "inputs/sources/Unknown-9.jpg": "87fcd95b10c35c0e098592c15cca7f81d265420f2d61778a008314a24f63ab9c"
+  },
+  "config": {
+    "task_version": "mechanical-v7-source-first",
+    "budget_mode": "wall_time",
+    "max_output_tokens_total": null,
+    "max_output_tokens_per_response": null,
+    "max_requests": null,
+    "max_wall_seconds": 480,
+    "max_submission_bytes": 2000000,
+    "reasoning_effort": "medium",
+    "output_token_notice_percentages": [],
+    "time_notice_percentages": [
+      50,
+      75
+    ]
+  },
+  "grading_status": "proposed checklist for review; not a scored model trial",
+  "runtime_dependencies": "Only files inside this packet; no original-project paths, package install or network assets",
+  "submission_sha256": {
+    "aircraft.mjs": "aa5cbd7153f63e832e95bae3b05ee15d8ac9bc71967c2d14501539c7fac1a893",
+    "environment/capture.mjs": "163afc21a91601ef467f554816f8c0565289fa9a2f45454dce97256703161618",
+    "environment/engineering.mjs": "c4b8598f927d5d130e4f4b16c7d59f74c23aadfd246d00f1b82bb65031e66d5c",
+    "environment/flight-modes.mjs": "791aee69341621305c6c0ea2f7e4c129cbc0a02a7a60e7a1cfc2265d01d41d62",
+    "environment/platform.mjs": "be26d96516749b728e5ca45cd1e3b665abdadcf90a2695c9198e4ffea03bb3e4",
+    "environment/source-mechanism.mjs": "cb55fd96906c7d708ea948a1010c2a9e6d688224ff65155b7e1eeb91c9db3b4d",
+    "environment/style.css": "21db9f38d2ab3f0c10c667245fed2748689382465c4164e281bed102b2b7f5ed",
+    "environment/vendor/THREE-LICENSE.txt": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+    "environment/vendor/three.core.min.js": "05b2609338c76cd65daf74f3ac515bc9a5045e1b3b33edc07d8c9bd55250fa90",
+    "environment/vendor/three.module.min.js": "86bcee248b64f44bcfc23c331ae74619061957d59cab040171dcb6fb5900beb6",
+    "environment/view-motion.mjs": "a01247f64b5244a8223f490b10044296c779284e6fa685e75344421499ef92b1",
+    "environment/world.mjs": "cf5859d1582b6b7b77fcab7a69f5c6cab25c7ae48c482f31d62e39967b52aa85",
+    "index.html": "c8ad6882313e105f01e3598e741b82df5e02e7d052a985d2d19056aadf41ccce",
+    "interpretation.json": "4f388540dc66824cf3850dd2012096a3735d7b078e169f3a534c05f8e95c333f",
+    "kinematics.mjs": "3c6bd41b1ff702216bc02bf2122623eb786fdd4e7040ba2cc3320548896308c7",
+    "physics.mjs": "9a1863b8d18c8dd6bba69c5a97985bd50d1ed8606c28dcb17902e43d8202a626"
+  },
+  "reference_revision": {
+    "kind": "Author reference correction; not a model trial or independent from-scratch generation",
+    "base_physics_sha256": "9e5ff915d993092e57d95c201d07a9cd706c4d4629e55fb269af791e7e1c3976",
+    "change": "Measure actual contacting tyre sink before clamping impact state, including pitch rotation and CG motion; enforce existing touchdown speed/bank limits. No engineering constant or crash threshold changes."
+  }
+}

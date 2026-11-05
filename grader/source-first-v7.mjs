@@ -5,14 +5,15 @@ import {sourceProbe} from './source-probes.mjs';
 import {wheelRotationAxis} from './wheel-axis.mjs';
 import {capturePoweredPitch,pitchHuntingVerdict} from './pitch-stability.mjs';
 const [base,output,,revision]=process.argv.slice(2),E=JSON.parse(await fs.readFile(new URL('../candidate/mechanical-v7/engineering.json',import.meta.url))),report={source:[],physics:[],interaction:[],diagnostics:{errors:[]},evidence:{screenshots:[]}};
-if(revision&&revision!=='v7-launch-60-65-70-v1')throw Error('Unknown grading revision');
+if(revision&&!['v7-launch-60-65-70-v1','v7-launch-60-65-70-bank-v2'].includes(revision))throw Error('Unknown grading revision');
+const bankPolicy=revision==='v7-launch-60-65-70-bank-v2'?JSON.parse(await fs.readFile(new URL('./protocols/'+revision+'.json',import.meta.url))):null;
 let browser;
 try{
   browser=await chromium.launch({headless:true,chromiumSandbox:true});
   const context=await browser.newContext({viewport:{width:1280,height:900},serviceWorkers:'block'});context.setDefaultTimeout(5000);
   await context.route('**/*',route=>route.request().url().startsWith(base+'/')?route.continue():route.abort());
   const probe=await context.newPage();await probe.goto(base+'/__probe.html');
-  const numeric=await probe.evaluate(sourceProbe,{E,...(revision?{launchProfiles:[.6,.65,.7]}:{})});report.physics=numeric.physics;report.diagnostics.numeric=numeric.diagnostics;
+  const numeric=await probe.evaluate(sourceProbe,{E,...(revision?{launchProfiles:[.6,.65,.7]}:{}),bankPolicy});report.physics=numeric.physics;report.diagnostics.numeric=numeric.diagnostics;
   if(revision)report.diagnostics.grading_revision=revision;
   report.interaction.push(await probe.evaluate(wheelRotationAxis,{submission_url:base}));
   try{const samples=await probe.evaluate(capturePoweredPitch,{submission_url:base});const verdict=pitchHuntingVerdict(samples);verdict.detail.samples=samples;report.physics.push(verdict);}

@@ -1,0 +1,9 @@
+{
+  "grading_revision": "v7-launch-60-65-70-bank-v2",
+  "reference_all_seven_pass": true,
+  "author_contact_timestep_variants_passed": 8,
+  "targeted_mutants_rejected": 10,
+  "model_api_calls": 0,
+  "policy_sha256": "28c100682e7948673214dcb62eb3bcdb18ca753dd65d495f1d2dea355a2dd34e",
+  "source_probe_sha256": "9fdbbd25d3df8ff4e7459055dd95b3e0cd88ac74fa01b64e357a46769576a213"
+}

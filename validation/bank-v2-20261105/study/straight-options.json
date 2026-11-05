@@ -1,0 +1,1 @@
+{"launchProfiles": [0.65], "bankPolicy": {"id": "author-bank-study", "minimum_clearance_m": 10000, "ready_seconds": 3, "minimum_speed_m_s": 14, "minimum_flight_seconds": 5, "climb_deadline_seconds": 120, "ramp_seconds": 8, "hold_seconds": 6, "recovery_seconds": 8, "target_bank_rad": 0.45, "required_bank_rad": 0.25, "required_hold_seconds": 3, "recovery_bank_tolerance_rad": 0.08}}

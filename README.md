@@ -1,8 +1,8 @@
 # Ornithopter Eval
 
-**Latest results:** [The five saved models regraded with 60%, 65%, 70% launch profiles](experiments/source-first-v7-20261105-launch-3-regrade/index.html). No new model generations or API calls. Raw task checks: GPT-6.1 Sol 6/7, GPT-6 Astra 6/7, GPT-5.6 Sol 6/7, GPT-5.5 4/7, GPT-5.4 0/7. GPT-5.6 Sol passes the complete flight check at 60% and skips the other profiles. Sol and Astra take off on several profiles but crash during the later bank phase. GPT-5.5's file-only validity remains failed and excludes it from means. [Exact attempts and observations](experiments/source-first-v7-20261105-launch-3-regrade/CALIBRATION.md) · [All artifacts](experiments/source-first-v7-20261105-launch-3-regrade/artifacts.zip). The [original sequential cohort and grades](experiments/source-first-v7-20261105-sequential-five/index.html) remain unchanged.
+**Latest results:** [The five saved models regraded with height-gated banking](experiments/source-first-v7-20261105-bank-v2-regrade/index.html). No new model generations, API calls or repaired aircraft. Raw task checks: GPT-6.1 Sol 7/7, GPT-6 Astra 7/7, GPT-5.6 Sol 6/7, GPT-5.5 4/7, GPT-5.4 0/7. The grader waits for 30 m clearance before gradually banking to the original angle and checking roll-out/recovery. Sol, Astra and 5.6 pass the complete flight check at 60%. GPT-5.5's file-only validity remains failed and excludes it from means. [Banking evaluation and attempt table](experiments/source-first-v7-20261105-bank-v2-regrade/bank-evaluation.html) · [All artifacts](experiments/source-first-v7-20261105-bank-v2-regrade/artifacts.zip). The [original grades](experiments/source-first-v7-20261105-sequential-five/index.html) and [earlier launch-only regrade](experiments/source-first-v7-20261105-launch-3-regrade/index.html) remain unchanged.
 
-Serve the regrade with `python3 -m ornithopter_eval serve-artifacts experiments/source-first-v7-20261105-launch-3-regrade --port 8775`. Open each submission to fly it, including powered Approach, or inspect the revised checks and linked initial grades. The explicit [grading revision](docs/grading-revisions/v7-launch-60-65-70-v1.md) preserves the original generation packet and requires a complete passing flight, stopping at the first success. [Corrected-reference and mutant validation](validation/launch-revision-60-65-70-20261105/summary.json) is saved.
+Serve the regrade with `python3 -m ornithopter_eval serve-artifacts experiments/source-first-v7-20261105-bank-v2-regrade --port 8776`. Open each unchanged submission to fly it, including powered Approach, or inspect the revised checks and linked initial grades. The [bank-v2 grading revision](docs/grading-revisions/v7-launch-60-65-70-bank-v2.md) preserves the original aircraft/engine constants and crash limits, requires actual banking and recovery, and stops at the first full success across 60/65/70% launches. [Thorough evaluation, counterfactuals, eight reference variants and ten rejected mutants](validation/bank-v2-20261105/README.md) are saved.
 
 The current task is [source-first v7](candidate/mechanical-v7/TASK.md). A fresh
 model receives **nine original notebook photographs (02,08–15)** plus clearly
@@ -33,10 +33,11 @@ with unchanged physical constants and crash limits, including independent power,
 force, fuel and energy checks. The launch controller and numerical contact
 sensitivity still need calibration; this is not an official seven-pass reference.
 Treat the original positive calibration as insufficient evidence. Published
-model scores remain unchanged. [Launch-profile calibration](validation/launch-profile-calibration-20261105/README.md)
-recommends 65%, 62.5%, 63.75% below 14 m/s, full throttle above it; the proposed
-portfolio covers all eight author contact/timestep variants. This controller
-proposal has not changed the frozen v7 grader. The observed 5.6 slow oscillation is retained as a separate regression
+model scores remain unchanged. An [earlier launch-profile calibration](validation/launch-profile-calibration-20261105/README.md)
+proposed 65%, 62.5%, 63.75%; the owner subsequently selected the explicit
+60/65/70% grading revisions. Bank-v2 additionally replaces the unsafe clock-based
+bank with a height gate and finite manoeuvre. These revisions do not reinterpret
+archived v7 configurations or task packets. The observed 5.6 slow oscillation is retained as a separate regression
 example, without changing its published six-check score. These are checks on an
 educational reduced model, not a flight-validated aircraft design.
 

@@ -7,13 +7,13 @@ from pathlib import Path
 
 from .checks import LATEST_SOURCE_FIRST_VERSION
 from .experiment import automated_result, refresh_workbench, write_trial_pages
-from .grading import LAUNCH_GRADING_REVISION, grade_submission
+from .grading import BANK_GRADING_REVISION, GRADING_REVISIONS, grade_submission
 from .runner import digest
 
 
 def regrade_experiment(source, output, *, grading_revision, node='node', grader=grade_submission):
     source, output = Path(source).resolve(), Path(output).resolve()
-    if grading_revision != LAUNCH_GRADING_REVISION:
+    if grading_revision not in GRADING_REVISIONS:
         raise ValueError('Unsupported grading revision')
     if output.exists() or output.is_relative_to(source):
         raise ValueError('Use a fresh regrade destination outside the original experiment')
@@ -44,6 +44,13 @@ def regrade_experiment(source, output, *, grading_revision, node='node', grader=
         '14 m/s, and full throttle above it. The first complete passing flight '
         'ends the sequence. All attempted failures remain in the new report. '
         'File-only validity and human aesthetics remain separate.\n')
+    if grading_revision == BANK_GRADING_REVISION:
+        with (output / 'CALIBRATION.md').open('a') as notes:
+            notes.write('\nBank v2 waits for 30 m clearance for 3 seconds, rolls into the '
+                        'original 0.45 rad target over 8 seconds, holds 6 seconds, '
+                        'rolls out over 8 seconds and observes 8 seconds of recovery. '
+                        'It fails if the aircraft cannot reach readiness by 150 seconds. '
+                        'The bank must actually occur and flight must survive recovery.\n')
     experiment['generation_protocol'] = experiment.get('protocol')
     experiment['protocol'] = 'Retrospective regrade only; original model generation and submissions unchanged.'
     experiment['grading_revision'] = grading_revision
@@ -66,6 +73,8 @@ def regrade_experiment(source, output, *, grading_revision, node='node', grader=
         report = grader(run / 'submission', run / trial['grade_directory'], node=node,
                         task_version=experiment['task_version'], grading_revision=grading_revision)
         trial['grading_status'] = report['status']
+        if report.get('bank_policy'):
+            experiment['regrade']['bank_policy'] = report['bank_policy']
         trial['automated'] = automated_result(report)
         power = next((row for row in report.get('dimensions', {}).get('physics', {}).get('checks', [])
                       if row['id'] == 'power_limited_flight'), {})
@@ -74,7 +83,8 @@ def regrade_experiment(source, output, *, grading_revision, node='node', grader=
             {'low_speed_throttle': a['low_speed_throttle'], 'pass': a['pass'],
              'error': a.get('error'), 'final_status': a.get('final_state', {}).get('status'),
              'final_time_s': a.get('final_state', {}).get('time'),
-             'first_sustained_takeoff': a.get('first_sustained_takeoff')}
+             'first_sustained_takeoff': a.get('first_sustained_takeoff'),
+             **({'bank_maneuver': a['bank_maneuver']} if 'bank_maneuver' in a else {})}
             for a in detail.get('attempts', [])] if isinstance(detail, dict) else []
         write_trial_pages(run, trial['grade_directory'])
         if trial['automated'] is None:

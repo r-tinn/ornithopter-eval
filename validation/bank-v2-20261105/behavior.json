@@ -1,0 +1,14 @@
+{
+  "reference_all_seven_pass": true,
+  "height_ready_window_observed": true,
+  "bank_start_clearance_m": 32.75708538443646,
+  "bank_hold_seconds": 6.000000000000088,
+  "bank_completed": true,
+  "final_bank_rad": 9.340759552616398e-05,
+  "reference_max_roll_rate_deg_s": 4.74090749739824,
+  "roll_ignored_mutant_cannot_pass": true,
+  "unreachable_height_gate_does_not_pass": true,
+  "original_and_v1_probes_exact_match": true,
+  "all_ten_mutants_rejected": true,
+  "model_api_calls": 0
+}

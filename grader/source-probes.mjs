@@ -1,7 +1,11 @@
 // Browser-only independent implementation of the published reduced model.
 // Never imports candidate geometry, mass helpers, counters or section functions as an oracle.
-export async function sourceProbe({E,scenario='all',launchProfiles=null}){
+export async function sourceProbe({E,scenario='all',launchProfiles=null,bankPolicy=null}){
   if(launchProfiles!==null&&(!Array.isArray(launchProfiles)||!launchProfiles.length||launchProfiles.some(t=>!Number.isFinite(t)||t<=0||t>1)))throw Error('Invalid launch profiles');
+  if(bankPolicy!==null){
+    for(const key of ['minimum_clearance_m','ready_seconds','minimum_speed_m_s','minimum_flight_seconds','climb_deadline_seconds','ramp_seconds','hold_seconds','recovery_seconds','target_bank_rad','required_bank_rad','required_hold_seconds','recovery_bank_tolerance_rad'])if(!Number.isFinite(bankPolicy[key])||bankPolicy[key]<=0)throw Error('Invalid bank policy: '+key);
+    if(bankPolicy.required_bank_rad>=bankPolicy.target_bank_rad||bankPolicy.required_hold_seconds>bankPolicy.hold_seconds)throw Error('Inconsistent bank policy');
+  }
   const result={physics:[],diagnostics:{},geometry:[]};
   const add=(a,b)=>a.map((x,i)=>x+b[i]),sub=(a,b)=>a.map((x,i)=>x-b[i]),scale=(a,k)=>a.map(x=>x*k),dot=(a,b)=>a.reduce((v,x,i)=>v+x*b[i],0),norm=a=>Math.hypot(...a),unit=a=>norm(a)>1e-12?scale(a,1/norm(a)):[1,0,0],cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]],clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
   const names=['leftInner','leftOuter','rightInner','rightOuter'],AR=7.4**2/6.61,p={aspect_ratio:AR,wrist_span_fraction:.5,span_m:14,wing_area_m2:196/AR,dry_mass_kg:E.dry_mass_including_pilot_kg},h=E.coupled.derivative_step;
@@ -109,18 +113,49 @@ export async function sourceProbe({E,scenario='all',launchProfiles=null}){
     const e={...env,wind:[0,0,0],surfaceHeight:W.surfaceHeight};let s=initial({position:[field.x+field.start,2,field.z],velocity:[0,0,0],omega:0,phase:0,pitch:0,pitch_rate:0,timing_bias:.3,status:'grounded'});s.position[1]=P.contactHeight(s,e);
     const initialState=structuredClone(s);
     let shaftWork=0,fuelUsedExpected=0,firstSustained=null,clearFor=0,bad=false;const trajectory=[];
-    for(let i=0;i<70*120;i++){
+    let readyFor=0,bankStart=null,bankStartState=null,bankMinClearance=Infinity,bankAirborne=true,heldFor=0,longestHold=0,maxRollRate=0,bankStage='climb';
+    const maneuverSeconds=bankPolicy?2*bankPolicy.ramp_seconds+bankPolicy.hold_seconds+bankPolicy.recovery_seconds:0;
+    const horizon=bankPolicy?bankPolicy.climb_deadline_seconds+maneuverSeconds:70;
+    const smooth=u=>{u=clamp(u,0,1);return u*u*(3-2*u);};
+    for(let i=0;i<horizon*120;i++){
       const throttle=launchProfiles===null?1:Math.hypot(s.velocity[0],s.velocity[2])<14?lowThrottle:1;
-      const c={...controls,throttle,pitch:clamp(4*(.12-s.pitch)-s.pitch_rate,-1,1),bank:s.time>62?clamp(2*(.45-s.roll)-s.roll_rate,-1,1):0},f=P.forces(s,c,e),before=s;
+      let bankTarget=.45,bankCommand=s.time>62?clamp(2*(.45-s.roll)-s.roll_rate,-1,1):0;
+      if(bankPolicy){
+        const clearance=s.position[1]-P.contactHeight(s,e);
+        if(bankStart===null){
+          const ready=firstSustained!==null&&s.time-firstSustained.time>=bankPolicy.minimum_flight_seconds&&s.status==='flying'&&clearance>=bankPolicy.minimum_clearance_m&&Math.hypot(s.velocity[0],s.velocity[2])>=bankPolicy.minimum_speed_m_s;
+          readyFor=ready?readyFor+1/120:0;
+          if(readyFor>=bankPolicy.ready_seconds){bankStart=s.time;bankStartState={state:structuredClone(s),clearance};}
+          else if(s.time>=bankPolicy.climb_deadline_seconds)break;
+        }
+        bankTarget=0;bankStage='climb';
+        if(bankStart!==null){
+          const elapsed=s.time-bankStart,r=bankPolicy.ramp_seconds,h=bankPolicy.hold_seconds;
+          if(elapsed<r){bankStage='roll_in';bankTarget=bankPolicy.target_bank_rad*smooth(elapsed/r);}
+          else if(elapsed<r+h){bankStage='hold';bankTarget=bankPolicy.target_bank_rad;}
+          else if(elapsed<2*r+h){bankStage='roll_out';bankTarget=bankPolicy.target_bank_rad*(1-smooth((elapsed-r-h)/r));}
+          else bankStage='recover';
+        }
+        bankCommand=bankStart===null?0:clamp(2*(bankTarget-s.roll)-s.roll_rate,-1,1);
+      }
+      const c={...controls,throttle,pitch:clamp(4*(.12-s.pitch)-s.pitch_rate,-1,1),bank:bankCommand},f=P.forces(s,c,e),before=s;
       if(!Number.isFinite(f.power)||f.power<0||f.power>16000.001){bad=true;break;}
       s=P.step(s,c,e,1/120);const f1=P.forces(s,c,e),work=(f.power+f1.power)/2/120;shaftWork+=work;fuelUsedExpected+=(work*E.fuel.bsfc_kg_kWh/3600000+E.fuel.idle_kg_s/120);
       const clearance=s.position[1]-P.contactHeight(s,e);clearFor=clearance>.3&&s.status==='flying'?clearFor+1/120:0;
       if(clearFor>=2&&firstSustained===null)firstSustained={time:s.time,x:s.position[0],clearance};
-      if(i%12===0)trajectory.push({state:s,clearance,power_W:f1.power,independent_force_residual_N:norm(sub(f1.force,expected(s,c,e).force)),...(launchProfiles===null?{}:{controls:{...c}})});
+      if(bankPolicy&&bankStart!==null){
+        bankMinClearance=Math.min(bankMinClearance,clearance);bankAirborne=bankAirborne&&s.status==='flying';maxRollRate=Math.max(maxRollRate,Math.abs(s.roll_rate));
+        heldFor=bankStage==='hold'&&s.roll>bankPolicy.required_bank_rad?heldFor+1/120:0;longestHold=Math.max(longestHold,heldFor);
+      }
+      if(i%12===0)trajectory.push({state:s,clearance,power_W:f1.power,independent_force_residual_N:norm(sub(f1.force,expected(s,c,e).force)),...(launchProfiles===null?{}:{controls:{...c}}),...(bankPolicy?{bank_stage:bankStage,bank_target_rad:bankTarget}:{})});
       if(!s.position.every(Number.isFinite)||s.status==='crashed'){bad=true;break;}
+      if(bankPolicy&&bankStart!==null&&s.time-bankStart>=maneuverSeconds)break;
     }
-    const fuelUsed=3.6-s.fuel_kg,runwayEnd=field.x+field.length/2,finalClearance=s.position[1]-P.contactHeight(s,e),trajectoryForceCorrect=trajectory.every(x=>x.independent_force_residual_N<.1),fuelCorrect=near(fuelUsed,fuelUsedExpected,.0001,.01),airborne=firstSustained!==null&&firstSustained.x<runwayEnd&&s.time>=69.99&&s.status==='flying'&&finalClearance>1&&s.roll>.25;
-    return {pass:!bad&&limits.every(x=>x.pass)&&derivatives.every(x=>x.pass)&&trajectoryForceCorrect&&fuelCorrect&&airborne,first_sustained_takeoff:firstSustained,runway_end_x:runwayEnd,final_state:s,final_clearance_m:finalClearance,shaft_work_integral_J:shaftWork,fuel_used_kg:fuelUsed,expected_fuel_used_kg:fuelUsedExpected,trajectory_force_correct:trajectoryForceCorrect,fuel_correct:fuelCorrect,trajectory,...(launchProfiles===null?{}:{low_speed_throttle:lowThrottle,initial_state:initialState}),tolerance:'Engine cap exact to .001 W; energy derivative 10 W + 0.3%; fuel 0.1 g + 1%; source forces within .1 N; >=2 s clear by .3 m before runway end, bank >.25 rad and >1 m clear at 70 s.'};
+    const fuelUsed=3.6-s.fuel_kg,runwayEnd=field.x+field.length/2,finalClearance=s.position[1]-P.contactHeight(s,e),trajectoryForceCorrect=trajectory.every(x=>x.independent_force_residual_N<.1),fuelCorrect=near(fuelUsed,fuelUsedExpected,.0001,.01);
+    const bankCompleted=bankPolicy&&bankStart!==null&&s.time-bankStart>=maneuverSeconds-1e-6;
+    const maneuverValid=bankPolicy?bankCompleted&&bankAirborne&&longestHold>=bankPolicy.required_hold_seconds&&Math.abs(s.roll)<bankPolicy.recovery_bank_tolerance_rad:s.time>=69.99&&s.roll>.25;
+    const airborne=firstSustained!==null&&firstSustained.x<runwayEnd&&maneuverValid&&s.status==='flying'&&finalClearance>1;
+    return {pass:!bad&&limits.every(x=>x.pass)&&derivatives.every(x=>x.pass)&&trajectoryForceCorrect&&fuelCorrect&&airborne,first_sustained_takeoff:firstSustained,runway_end_x:runwayEnd,final_state:s,final_clearance_m:finalClearance,shaft_work_integral_J:shaftWork,fuel_used_kg:fuelUsed,expected_fuel_used_kg:fuelUsedExpected,trajectory_force_correct:trajectoryForceCorrect,fuel_correct:fuelCorrect,trajectory,...(launchProfiles===null?{}:{low_speed_throttle:lowThrottle,initial_state:initialState}),...(bankPolicy?{bank_maneuver:{policy:bankPolicy,start:bankStartState,completed:bankCompleted,continuous_airborne:bankAirborne,required_bank_hold_seconds:longestHold,min_clearance_m:Number.isFinite(bankMinClearance)?bankMinClearance:null,max_roll_rate_rad_s:maxRollRate,final_bank_rad:s.roll,climb_deadline_reached:bankStart===null&&s.time>=bankPolicy.climb_deadline_seconds}}:{}),tolerance:bankPolicy?'Original engine/energy/fuel/force tolerances; original runway takeoff; height-gated finite bank/roll-out/recovery, >1 m final clearance.':'Engine cap exact to .001 W; energy derivative 10 W + 0.3%; fuel 0.1 g + 1%; source forces within .1 N; >=2 s clear by .3 m before runway end, bank >.25 rad and >1 m clear at 70 s.'};
     }
     if(launchProfiles===null)return {...flightAttempt(1),limits,derivatives};
     const attempts=[];
@@ -132,7 +167,7 @@ export async function sourceProbe({E,scenario='all',launchProfiles=null}){
     }
     const winner=attempts.findIndex(a=>a.pass),selected=attempts[winner<0?attempts.length-1:winner];
     return {...selected,pass:winner>=0,limits,derivatives,attempts,
-      launch_protocol:{id:'v7-launch-60-65-70-v1',low_speed_throttles:launchProfiles,transition_horizontal_speed_m_s:14,high_speed_throttle:1,rule:'At each pilot exchange use profile throttle below 14 m/s, full throttle otherwise; not a latched switch.',fresh_state_per_attempt:true,stop_on_first_full_pass:true},
+      launch_protocol:{id:bankPolicy?.id??'v7-launch-60-65-70-v1',low_speed_throttles:launchProfiles,transition_horizontal_speed_m_s:14,high_speed_throttle:1,rule:'At each pilot exchange use profile throttle below 14 m/s, full throttle otherwise; not a latched switch.',fresh_state_per_attempt:true,stop_on_first_full_pass:true},
       passed_attempt:winner<0?null:winner+1,attempted_count:attempts.length,stopped_early:winner>=0&&attempts.length<launchProfiles.length};
   });
   if(scenario==='all'||scenario==='glide')await check('unpowered_glide_balance',async()=>{

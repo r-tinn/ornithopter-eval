@@ -1,0 +1,1255 @@
+{
+  "kind": "Author policy selection and model counterfactual diagnostics; not new model trials",
+  "author_candidates": 11,
+  "validation_variants": 8,
+  "validation_passes": 8,
+  "all_cases": [
+    {
+      "label": "height-20-bank-0.45-ramp8",
+      "pass": true,
+      "final_status": "flying",
+      "final_time": 114.65833333331122,
+      "final_clearance_m": 43.81972739126296,
+      "bank_maneuver": {
+        "policy": {
+          "id": "author-bank-study",
+          "minimum_clearance_m": 20,
+          "ready_seconds": 3,
+          "minimum_speed_m_s": 14,
+          "minimum_flight_seconds": 5,
+          "climb_deadline_seconds": 150,
+          "ramp_seconds": 8,
+          "hold_seconds": 6,
+          "recovery_seconds": 8,
+          "target_bank_rad": 0.45,
+          "required_bank_rad": 0.25,
+          "required_hold_seconds": 3,
+          "recovery_bank_tolerance_rad": 0.08
+        },
+        "start": {
+          "state": {
+            "position": [
+              411.8341200895298,
+              28.340408291505298,
+              -165
+            ],
+            "velocity": [
+              15.117296554545753,
+              1.2065299410554855,
+              -1.9781704524114953e-13
+            ],
+            "pitch": 0.08619481736837936,
+            "roll": 0,
+            "heading": -1.3085477587040269e-14,
+            "pitch_rate": -0.1861860329600316,
+            "roll_rate": 0,
+            "phase": 433.71307978177725,
+            "omega": 6.1645197162707115,
+            "fuel_kg": 3.5105608108676227,
+            "wheel_angle": 968.7474295069719,
+            "shaft_work_J": 557716.5106833372,
+            "aero_work_J": 384706.76446635363,
+            "drive_heat_J": 96565.45109518828,
+            "control_work_J": -274.2834604594188,
+            "time": 84.65000000000518,
+            "status": "flying",
+            "gliding": false,
+            "timing_bias": 0.3,
+            "sweep_scale": 1
+          },
+          "clearance": 21.927877841621935
+        },
+        "completed": true,
+        "continuous_airborne": true,
+        "required_bank_hold_seconds": 6.000000000000088,
+        "min_clearance_m": 21.947911449408522,
+        "max_roll_rate_rad_s": 0.0827444453620838,
+        "final_bank_rad": 9.340759552616398e-05,
+        "climb_deadline_reached": false
+      }
+    },
+    {
+      "label": "height-20-bank-0.3-ramp8",
+      "pass": true,
+      "final_status": "flying",
+      "final_time": 114.65833333331122,
+      "final_clearance_m": 40.389100799764066,
+      "bank_maneuver": {
+        "policy": {
+          "id": "author-bank-study",
+          "minimum_clearance_m": 20,
+          "ready_seconds": 3,
+          "minimum_speed_m_s": 14,
+          "minimum_flight_seconds": 5,
+          "climb_deadline_seconds": 150,
+          "ramp_seconds": 8,
+          "hold_seconds": 6,
+          "recovery_seconds": 8,
+          "target_bank_rad": 0.3,
+          "required_bank_rad": 0.25,
+          "required_hold_seconds": 3,
+          "recovery_bank_tolerance_rad": 0.08
+        },
+        "start": {
+          "state": {
+            "position": [
+              411.8341200895298,
+              28.340408291505298,
+              -165
+            ],
+            "velocity": [
+              15.117296554545753,
+              1.2065299410554855,
+              -1.9781704524114953e-13
+            ],
+            "pitch": 0.08619481736837936,
+            "roll": 0,
+            "heading": -1.3085477587040269e-14,
+            "pitch_rate": -0.1861860329600316,
+            "roll_rate": 0,
+            "phase": 433.71307978177725,
+            "omega": 6.1645197162707115,
+            "fuel_kg": 3.5105608108676227,
+            "wheel_angle": 968.7474295069719,
+            "shaft_work_J": 557716.5106833372,
+            "aero_work_J": 384706.76446635363,
+            "drive_heat_J": 96565.45109518828,
+            "control_work_J": -274.2834604594188,
+            "time": 84.65000000000518,
+            "status": "flying",
+            "gliding": false,
+            "timing_bias": 0.3,
+            "sweep_scale": 1
+          },
+          "clearance": 21.927877841621935
+        },
+        "completed": true,
+        "continuous_airborne": true,
+        "required_bank_hold_seconds": 6.000000000000088,
+        "min_clearance_m": 21.947911449408522,
+        "max_roll_rate_rad_s": 0.05516296357472259,
+        "final_bank_rad": 6.227173035077615e-05,
+        "climb_deadline_reached": false
+      }
+    },
+    {
+      "label": "height-30-bank-0.3-ramp8",
+      "pass": true,
+      "final_status": "flying",
+      "final_time": 126.60833333330035,
+      "final_clearance_m": 53.61161080517652,
+      "bank_maneuver": {
+        "policy": {
+          "id": "author-bank-study",
+          "minimum_clearance_m": 30,
+          "ready_seconds": 3,
+          "minimum_speed_m_s": 14,
+          "minimum_flight_seconds": 5,
+          "climb_deadline_seconds": 150,
+          "ramp_seconds": 8,
+          "hold_seconds": 6,
+          "recovery_seconds": 8,
+          "target_bank_rad": 0.3,
+          "required_bank_rad": 0.25,
+          "required_hold_seconds": 3,
+          "recovery_bank_tolerance_rad": 0.08
+        },
+        "start": {
+          "state": {
+            "position": [
+              592.4391595581117,
+              36.44060818597607,
+              -165
+            ],
+            "velocity": [
+              14.790884732800007,
+              0.6024467936183552,
+              -1.6085709844512572e-14
+            ],
+            "pitch": 0.11691894094837729,
+            "roll": 0,
+            "heading": -1.0875421000909556e-15,
+            "pitch_rate": -0.1440783401574677,
+            "roll_rate": 0,
+            "phase": 507.9418692086664,
+            "omega": 6.718381756694569,
+            "fuel_kg": 3.4910601415648745,
+            "wheel_angle": 968.7474295069719,
+            "shaft_work_J": 681446.3461182634,
+            "aero_work_J": 471848.59296963323,
+            "drive_heat_J": 117869.37231874191,
+            "control_work_J": -365.6526800056701,
+            "time": 96.59999999999431,
+            "status": "flying",
+            "gliding": false,
+            "timing_bias": 0.3,
+            "sweep_scale": 1
+          },
+          "clearance": 32.757085909930325
+        },
+        "completed": true,
+        "continuous_airborne": true,
+        "required_bank_hold_seconds": 6.000000000000088,
+        "min_clearance_m": 32.771727412698134,
+        "max_roll_rate_rad_s": 0.05516296357472259,
+        "final_bank_rad": 6.227173035077615e-05,
+        "climb_deadline_reached": false
+      }
+    },
+    {
+      "label": "height-30-bank-0.45-ramp8",
+      "pass": true,
+      "final_status": "flying",
+      "final_time": 126.60833333330035,
+      "final_clearance_m": 53.12889166526054,
+      "bank_maneuver": {
+        "policy": {
+          "id": "author-bank-study",
+          "minimum_clearance_m": 30,
+          "ready_seconds": 3,
+          "minimum_speed_m_s": 14,
+          "minimum_flight_seconds": 5,
+          "climb_deadline_seconds": 150,
+          "ramp_seconds": 8,
+          "hold_seconds": 6,
+          "recovery_seconds": 8,
+          "target_bank_rad": 0.45,
+          "required_bank_rad": 0.25,
+          "required_hold_seconds": 3,
+          "recovery_bank_tolerance_rad": 0.08
+        },
+        "start": {
+          "state": {
+            "position": [
+              592.4391595581117,
+              36.44060818597607,
+              -165
+            ],
+            "velocity": [
+              14.790884732800007,
+              0.6024467936183552,
+              -1.6085709844512572e-14
+            ],
+            "pitch": 0.11691894094837729,
+            "roll": 0,
+            "heading": -1.0875421000909556e-15,
+            "pitch_rate": -0.1440783401574677,
+            "roll_rate": 0,
+            "phase": 507.9418692086664,
+            "omega": 6.718381756694569,
+            "fuel_kg": 3.4910601415648745,
+            "wheel_angle": 968.7474295069719,
+            "shaft_work_J": 681446.3461182634,
+            "aero_work_J": 471848.59296963323,
+            "drive_heat_J": 117869.37231874191,
+            "control_work_J": -365.6526800056701,
+            "time": 96.59999999999431,
+            "status": "flying",
+            "gliding": false,
+            "timing_bias": 0.3,
+            "sweep_scale": 1
+          },
+          "clearance": 32.757085909930325
+        },
+        "completed": true,
+        "continuous_airborne": true,
+        "required_bank_hold_seconds": 6.000000000000088,
+        "min_clearance_m": 32.771727412698134,
+        "max_roll_rate_rad_s": 0.0827444453620838,
+        "final_bank_rad": 9.340759552616398e-05,
+        "climb_deadline_reached": false
+      }
+    },
+    {
+      "label": "height-40-bank-0.3-ramp8",
+      "pass": true,
+      "final_status": "flying",
+      "final_time": 138.8249999999559,
+      "final_clearance_m": 67.38711725414993,
+      "bank_maneuver": {
+        "policy": {
+          "id": "author-bank-study",
+          "minimum_clearance_m": 40,
+          "ready_seconds": 3,
+          "minimum_speed_m_s": 14,
+          "minimum_flight_seconds": 5,
+          "climb_deadline_seconds": 150,
+          "ramp_seconds": 8,
+          "hold_seconds": 6,
+          "recovery_seconds": 8,
+          "target_bank_rad": 0.3,
+          "required_bank_rad": 0.25,
+          "required_hold_seconds": 3,
+          "recovery_bank_tolerance_rad": 0.08
+        },
+        "start": {
+          "state": {
+            "position": [
+              777.0074680586478,
+              44.78044291272416,
+              -165
+            ],
+            "velocity": [
+              14.918931948314626,
+              0.9596306179842099,
+              -8.135967769686124e-14
+            ],
+            "pitch": 0.10335728991046605,
+            "roll": 0,
+            "heading": -5.453451894460337e-15,
+            "pitch_rate": -0.1707312915364519,
+            "roll_rate": 0,
+            "phase": 583.9099941687414,
+            "omega": 6.500298063818045,
+            "fuel_kg": 3.4712366961207444,
+            "wheel_angle": 968.7474295069719,
+            "shaft_work_J": 807201.6253876569,
+            "aero_work_J": 562145.278707511,
+            "drive_heat_J": 139541.3056168853,
+            "control_work_J": -459.23918895013094,
+            "time": 108.81666666664987,
+            "status": "flying",
+            "gliding": false,
+            "timing_bias": 0.3,
+            "sweep_scale": 1
+          },
+          "clearance": 42.73554406953092
+        },
+        "completed": true,
+        "continuous_airborne": true,
+        "required_bank_hold_seconds": 6.000000000000088,
+        "min_clearance_m": 42.75422873148871,
+        "max_roll_rate_rad_s": 0.05516296357472259,
+        "final_bank_rad": 6.227173035077615e-05,
+        "climb_deadline_reached": false
+      }
+    },
+    {
+      "label": "height-40-bank-0.45-ramp8",
+      "pass": true,
+      "final_status": "flying",
+      "final_time": 138.8249999999559,
+      "final_clearance_m": 63.62880757503459,
+      "bank_maneuver": {
+        "policy": {
+          "id": "author-bank-study",
+          "minimum_clearance_m": 40,
+          "ready_seconds": 3,
+          "minimum_speed_m_s": 14,
+          "minimum_flight_seconds": 5,
+          "climb_deadline_seconds": 150,
+          "ramp_seconds": 8,
+          "hold_seconds": 6,
+          "recovery_seconds": 8,
+          "target_bank_rad": 0.45,
+          "required_bank_rad": 0.25,
+          "required_hold_seconds": 3,
+          "recovery_bank_tolerance_rad": 0.08
+        },
+        "start": {
+          "state": {
+            "position": [
+              777.0074680586478,
+              44.78044291272416,
+              -165
+            ],
+            "velocity": [
+              14.918931948314626,
+              0.9596306179842099,
+              -8.135967769686124e-14
+            ],
+            "pitch": 0.10335728991046605,
+            "roll": 0,
+            "heading": -5.453451894460337e-15,
+            "pitch_rate": -0.1707312915364519,
+            "roll_rate": 0,
+            "phase": 583.9099941687414,
+            "omega": 6.500298063818045,
+            "fuel_kg": 3.4712366961207444,
+            "wheel_angle": 968.7474295069719,
+            "shaft_work_J": 807201.6253876569,
+            "aero_work_J": 562145.278707511,
+            "drive_heat_J": 139541.3056168853,
+            "control_work_J": -459.23918895013094,
+            "time": 108.81666666664987,
+            "status": "flying",
+            "gliding": false,
+            "timing_bias": 0.3,
+            "sweep_scale": 1
+          },
+          "clearance": 42.73554406953092
+        },
+        "completed": true,
+        "continuous_airborne": true,
+        "required_bank_hold_seconds": 6.000000000000088,
+        "min_clearance_m": 42.75422873148871,
+        "max_roll_rate_rad_s": 0.0827444453620838,
+        "final_bank_rad": 9.340759552616398e-05,
+        "climb_deadline_reached": false
+      }
+    },
+    {
+      "label": "height-50-bank-0.45-ramp8",
+      "pass": true,
+      "final_status": "flying",
+      "final_time": 146.9166666666152,
+      "final_clearance_m": 71.60993094706502,
+      "bank_maneuver": {
+        "policy": {
+          "id": "author-bank-study",
+          "minimum_clearance_m": 50,
+          "ready_seconds": 3,
+          "minimum_speed_m_s": 14,
+          "minimum_flight_seconds": 5,
+          "climb_deadline_seconds": 150,
+          "ramp_seconds": 8,
+          "hold_seconds": 6,
+          "recovery_seconds": 8,
+          "target_bank_rad": 0.45,
+          "required_bank_rad": 0.25,
+          "required_hold_seconds": 3,
+          "recovery_bank_tolerance_rad": 0.08
+        },
+        "start": {
+          "state": {
+            "position": [
+              899.2629949506722,
+              50.29986006283867,
+              -165
+            ],
+            "velocity": [
+              14.92730676818991,
+              0.9763882193566693,
+              -2.9870457482456736e-14
+            ],
+            "pitch": 0.10255068733934115,
+            "roll": 0,
+            "heading": -2.0010614068782107e-15,
+            "pitch_rate": -0.172117969326614,
+            "roll_rate": 0,
+            "phase": 634.2063217760764,
+            "omega": 6.485827627356488,
+            "fuel_kg": 3.458069957504771,
+            "wheel_angle": 968.7474295069719,
+            "shaft_work_J": 890735.7326913557,
+            "aero_work_J": 621660.0838637116,
+            "drive_heat_J": 153931.03830105386,
+            "control_work_J": -521.2935329395709,
+            "time": 116.90833333330917,
+            "status": "flying",
+            "gliding": false,
+            "timing_bias": 0.3,
+            "sweep_scale": 1
+          },
+          "clearance": 55.20314354889891
+        },
+        "completed": true,
+        "continuous_airborne": true,
+        "required_bank_hold_seconds": 6.000000000000088,
+        "min_clearance_m": 55.2240959046105,
+        "max_roll_rate_rad_s": 0.0827444453620838,
+        "final_bank_rad": 9.340759552616398e-05,
+        "climb_deadline_reached": false
+      }
+    },
+    {
+      "label": "height-50-bank-0.3-ramp8",
+      "pass": true,
+      "final_status": "flying",
+      "final_time": 146.9166666666152,
+      "final_clearance_m": 74.62691640532388,
+      "bank_maneuver": {
+        "policy": {
+          "id": "author-bank-study",
+          "minimum_clearance_m": 50,
+          "ready_seconds": 3,
+          "minimum_speed_m_s": 14,
+          "minimum_flight_seconds": 5,
+          "climb_deadline_seconds": 150,
+          "ramp_seconds": 8,
+          "hold_seconds": 6,
+          "recovery_seconds": 8,
+          "target_bank_rad": 0.3,
+          "required_bank_rad": 0.25,
+          "required_hold_seconds": 3,
+          "recovery_bank_tolerance_rad": 0.08
+        },
+        "start": {
+          "state": {
+            "position": [
+              899.2629949506722,
+              50.29986006283867,
+              -165
+            ],
+            "velocity": [
+              14.92730676818991,
+              0.9763882193566693,
+              -2.9870457482456736e-14
+            ],
+            "pitch": 0.10255068733934115,
+            "roll": 0,
+            "heading": -2.0010614068782107e-15,
+            "pitch_rate": -0.172117969326614,
+            "roll_rate": 0,
+            "phase": 634.2063217760764,
+            "omega": 6.485827627356488,
+            "fuel_kg": 3.458069957504771,
+            "wheel_angle": 968.7474295069719,
+            "shaft_work_J": 890735.7326913557,
+            "aero_work_J": 621660.0838637116,
+            "drive_heat_J": 153931.03830105386,
+            "control_work_J": -521.2935329395709,
+            "time": 116.90833333330917,
+            "status": "flying",
+            "gliding": false,
+            "timing_bias": 0.3,
+            "sweep_scale": 1
+          },
+          "clearance": 55.20314354889891
+        },
+        "completed": true,
+        "continuous_airborne": true,
+        "required_bank_hold_seconds": 6.000000000000088,
+        "min_clearance_m": 55.2240959046105,
+        "max_roll_rate_rad_s": 0.05516296357472259,
+        "final_bank_rad": 6.227173035077615e-05,
+        "climb_deadline_reached": false
+      }
+    },
+    {
+      "label": "height30-bank45-ramp0.1",
+      "pass": true,
+      "final_status": "flying",
+      "final_time": 110.80833333331472,
+      "final_clearance_m": 42.51031606015225,
+      "bank_maneuver": {
+        "policy": {
+          "id": "author-bank-study",
+          "minimum_clearance_m": 30,
+          "ready_seconds": 3,
+          "minimum_speed_m_s": 14,
+          "minimum_flight_seconds": 5,
+          "climb_deadline_seconds": 150,
+          "ramp_seconds": 0.1,
+          "hold_seconds": 6,
+          "recovery_seconds": 8,
+          "target_bank_rad": 0.45,
+          "required_bank_rad": 0.25,
+          "required_hold_seconds": 3,
+          "recovery_bank_tolerance_rad": 0.08
+        },
+        "start": {
+          "state": {
+            "position": [
+              592.4391595581117,
+              36.44060818597607,
+              -165
+            ],
+            "velocity": [
+              14.790884732800007,
+              0.6024467936183552,
+              -1.6085709844512572e-14
+            ],
+            "pitch": 0.11691894094837729,
+            "roll": 0,
+            "heading": -1.0875421000909556e-15,
+            "pitch_rate": -0.1440783401574677,
+            "roll_rate": 0,
+            "phase": 507.9418692086664,
+            "omega": 6.718381756694569,
+            "fuel_kg": 3.4910601415648745,
+            "wheel_angle": 968.7474295069719,
+            "shaft_work_J": 681446.3461182634,
+            "aero_work_J": 471848.59296963323,
+            "drive_heat_J": 117869.37231874191,
+            "control_work_J": -365.6526800056701,
+            "time": 96.59999999999431,
+            "status": "flying",
+            "gliding": false,
+            "timing_bias": 0.3,
+            "sweep_scale": 1
+          },
+          "clearance": 32.757085909930325
+        },
+        "completed": true,
+        "continuous_airborne": true,
+        "required_bank_hold_seconds": 4.541666666666682,
+        "min_clearance_m": 32.771727412698134,
+        "max_roll_rate_rad_s": 0.2126840651201444,
+        "final_bank_rad": 0.00020864076414442285,
+        "climb_deadline_reached": false
+      }
+    },
+    {
+      "label": "height30-bank45-ramp4",
+      "pass": true,
+      "final_status": "flying",
+      "final_time": 118.60833333330763,
+      "final_clearance_m": 45.67542459290913,
+      "bank_maneuver": {
+        "policy": {
+          "id": "author-bank-study",
+          "minimum_clearance_m": 30,
+          "ready_seconds": 3,
+          "minimum_speed_m_s": 14,
+          "minimum_flight_seconds": 5,
+          "climb_deadline_seconds": 150,
+          "ramp_seconds": 4,
+          "hold_seconds": 6,
+          "recovery_seconds": 8,
+          "target_bank_rad": 0.45,
+          "required_bank_rad": 0.25,
+          "required_hold_seconds": 3,
+          "recovery_bank_tolerance_rad": 0.08
+        },
+        "start": {
+          "state": {
+            "position": [
+              592.4391595581117,
+              36.44060818597607,
+              -165
+            ],
+            "velocity": [
+              14.790884732800007,
+              0.6024467936183552,
+              -1.6085709844512572e-14
+            ],
+            "pitch": 0.11691894094837729,
+            "roll": 0,
+            "heading": -1.0875421000909556e-15,
+            "pitch_rate": -0.1440783401574677,
+            "roll_rate": 0,
+            "phase": 507.9418692086664,
+            "omega": 6.718381756694569,
+            "fuel_kg": 3.4910601415648745,
+            "wheel_angle": 968.7474295069719,
+            "shaft_work_J": 681446.3461182634,
+            "aero_work_J": 471848.59296963323,
+            "drive_heat_J": 117869.37231874191,
+            "control_work_J": -365.6526800056701,
+            "time": 96.59999999999431,
+            "status": "flying",
+            "gliding": false,
+            "timing_bias": 0.3,
+            "sweep_scale": 1
+          },
+          "clearance": 32.757085909930325
+        },
+        "completed": true,
+        "continuous_airborne": true,
+        "required_bank_hold_seconds": 6.000000000000088,
+        "min_clearance_m": 32.771727412698134,
+        "max_roll_rate_rad_s": 0.1423780338792603,
+        "final_bank_rad": 0.0002674994147089775,
+        "climb_deadline_reached": false
+      }
+    },
+    {
+      "label": "straight-flight-control-no-bank",
+      "pass": false,
+      "final_status": "flying",
+      "final_time": 120.00833333330635,
+      "final_clearance_m": 59.928222998498214,
+      "bank_maneuver": {
+        "policy": {
+          "id": "author-bank-study",
+          "minimum_clearance_m": 10000,
+          "ready_seconds": 3,
+          "minimum_speed_m_s": 14,
+          "minimum_flight_seconds": 5,
+          "climb_deadline_seconds": 120,
+          "ramp_seconds": 8,
+          "hold_seconds": 6,
+          "recovery_seconds": 8,
+          "target_bank_rad": 0.45,
+          "required_bank_rad": 0.25,
+          "required_hold_seconds": 3,
+          "recovery_bank_tolerance_rad": 0.08
+        },
+        "start": null,
+        "completed": false,
+        "continuous_airborne": true,
+        "required_bank_hold_seconds": 0,
+        "min_clearance_m": null,
+        "max_roll_rate_rad_s": 0,
+        "final_bank_rad": 0,
+        "climb_deadline_reached": true
+      }
+    },
+    {
+      "label": "contact-d1-frozen-controller",
+      "pass": true,
+      "final_status": "flying",
+      "final_time": 126.48333333330046,
+      "final_clearance_m": 52.994085130875796,
+      "bank_maneuver": {
+        "policy": {
+          "id": "v7-launch-60-65-70-bank-v2",
+          "minimum_clearance_m": 30,
+          "ready_seconds": 3,
+          "minimum_speed_m_s": 14,
+          "minimum_flight_seconds": 5,
+          "climb_deadline_seconds": 150,
+          "ramp_seconds": 8,
+          "hold_seconds": 6,
+          "recovery_seconds": 8,
+          "target_bank_rad": 0.45,
+          "required_bank_rad": 0.25,
+          "required_hold_seconds": 3,
+          "recovery_bank_tolerance_rad": 0.08
+        },
+        "start": {
+          "state": {
+            "position": [
+              597.6702478757769,
+              36.21878913011131,
+              -165
+            ],
+            "velocity": [
+              14.902331146843279,
+              0.9247144204166649,
+              -8.083174555480697e-13
+            ],
+            "pitch": 0.10494545214426423,
+            "roll": 0,
+            "heading": -5.424100750299683e-14,
+            "pitch_rate": -0.16787899314146262,
+            "roll_rate": 0,
+            "phase": 489.60034600207774,
+            "omega": 6.528392646383587,
+            "fuel_kg": 3.49575616040159,
+            "wheel_angle": 1089.4401756381562,
+            "shaft_work_J": 650749.677369231,
+            "aero_work_J": 448596.06188355596,
+            "drive_heat_J": 112801.40927085404,
+            "control_work_J": -341.22000457780354,
+            "time": 96.47499999999442,
+            "status": "flying",
+            "gliding": false,
+            "timing_bias": 0.3,
+            "sweep_scale": 1
+          },
+          "clearance": 32.70527619990278
+        },
+        "completed": true,
+        "continuous_airborne": true,
+        "required_bank_hold_seconds": 6.000000000000088,
+        "min_clearance_m": 32.72393034812863,
+        "max_roll_rate_rad_s": 0.0827444453620838,
+        "final_bank_rad": 9.340759552616398e-05,
+        "climb_deadline_reached": false
+      }
+    },
+    {
+      "label": "corrected-d1-frozen-controller",
+      "pass": true,
+      "final_status": "flying",
+      "final_time": 126.60833333330035,
+      "final_clearance_m": 53.12889166526054,
+      "bank_maneuver": {
+        "policy": {
+          "id": "v7-launch-60-65-70-bank-v2",
+          "minimum_clearance_m": 30,
+          "ready_seconds": 3,
+          "minimum_speed_m_s": 14,
+          "minimum_flight_seconds": 5,
+          "climb_deadline_seconds": 150,
+          "ramp_seconds": 8,
+          "hold_seconds": 6,
+          "recovery_seconds": 8,
+          "target_bank_rad": 0.45,
+          "required_bank_rad": 0.25,
+          "required_hold_seconds": 3,
+          "recovery_bank_tolerance_rad": 0.08
+        },
+        "start": {
+          "state": {
+            "position": [
+              592.4391595581117,
+              36.44060818597607,
+              -165
+            ],
+            "velocity": [
+              14.790884732800007,
+              0.6024467936183552,
+              -1.6085709844512572e-14
+            ],
+            "pitch": 0.11691894094837729,
+            "roll": 0,
+            "heading": -1.0875421000909556e-15,
+            "pitch_rate": -0.1440783401574677,
+            "roll_rate": 0,
+            "phase": 507.9418692086664,
+            "omega": 6.718381756694569,
+            "fuel_kg": 3.4910601415648745,
+            "wheel_angle": 968.7474295069719,
+            "shaft_work_J": 681446.3461182634,
+            "aero_work_J": 471848.59296963323,
+            "drive_heat_J": 117869.37231874191,
+            "control_work_J": -365.6526800056701,
+            "time": 96.59999999999431,
+            "status": "flying",
+            "gliding": false,
+            "timing_bias": 0.3,
+            "sweep_scale": 1
+          },
+          "clearance": 32.757085909930325
+        },
+        "completed": true,
+        "continuous_airborne": true,
+        "required_bank_hold_seconds": 6.000000000000088,
+        "min_clearance_m": 32.771727412698134,
+        "max_roll_rate_rad_s": 0.0827444453620838,
+        "final_bank_rad": 9.340759552616398e-05,
+        "climb_deadline_reached": false
+      }
+    },
+    {
+      "label": "contact-d2-frozen-controller",
+      "pass": true,
+      "final_status": "flying",
+      "final_time": 126.60833333325927,
+      "final_clearance_m": 52.79955046623493,
+      "bank_maneuver": {
+        "policy": {
+          "id": "v7-launch-60-65-70-bank-v2",
+          "minimum_clearance_m": 30,
+          "ready_seconds": 3,
+          "minimum_speed_m_s": 14,
+          "minimum_flight_seconds": 5,
+          "climb_deadline_seconds": 150,
+          "ramp_seconds": 8,
+          "hold_seconds": 6,
+          "recovery_seconds": 8,
+          "target_bank_rad": 0.45,
+          "required_bank_rad": 0.25,
+          "required_hold_seconds": 3,
+          "recovery_bank_tolerance_rad": 0.08
+        },
+        "start": {
+          "state": {
+            "position": [
+              597.547980636115,
+              36.151004384435396,
+              -165
+            ],
+            "velocity": [
+              15.046032923347665,
+              1.1432231233370107,
+              7.187085138613793e-13
+            ],
+            "pitch": 0.09241536529637136,
+            "roll": 0,
+            "heading": 4.7767309663806736e-14,
+            "pitch_rate": -0.18508412077704967,
+            "roll_rate": 0,
+            "phase": 490.0534695794198,
+            "omega": 6.291997083341968,
+            "fuel_kg": 3.4957844168866354,
+            "wheel_angle": 1093.5667629685288,
+            "shaft_work_J": 650523.8167255054,
+            "aero_work_J": 448874.4198483172,
+            "drive_heat_J": 112632.74666673134,
+            "control_work_J": -342.5377389649853,
+            "time": 96.59999999995323,
+            "status": "flying",
+            "gliding": false,
+            "timing_bias": 0.3,
+            "sweep_scale": 1
+          },
+          "clearance": 32.7086291682315
+        },
+        "completed": true,
+        "continuous_airborne": true,
+        "required_bank_hold_seconds": 6.000000000000088,
+        "min_clearance_m": 32.72931432613267,
+        "max_roll_rate_rad_s": 0.08276929661782108,
+        "final_bank_rad": 9.464474188608232e-05,
+        "climb_deadline_reached": false
+      }
+    },
+    {
+      "label": "corrected-d2-frozen-controller",
+      "pass": true,
+      "final_status": "flying",
+      "final_time": 126.51666666659268,
+      "final_clearance_m": 53.17000952264519,
+      "bank_maneuver": {
+        "policy": {
+          "id": "v7-launch-60-65-70-bank-v2",
+          "minimum_clearance_m": 30,
+          "ready_seconds": 3,
+          "minimum_speed_m_s": 14,
+          "minimum_flight_seconds": 5,
+          "climb_deadline_seconds": 150,
+          "ramp_seconds": 8,
+          "hold_seconds": 6,
+          "recovery_seconds": 8,
+          "target_bank_rad": 0.45,
+          "required_bank_rad": 0.25,
+          "required_hold_seconds": 3,
+          "recovery_bank_tolerance_rad": 0.08
+        },
+        "start": {
+          "state": {
+            "position": [
+              592.0713715131748,
+              36.531209260531895,
+              -165
+            ],
+            "velocity": [
+              14.768666532201536,
+              0.18867845422628432,
+              -5.621065697642048e-13
+            ],
+            "pitch": 0.128464469177049,
+            "roll": 0,
+            "heading": -3.806075305028995e-14,
+            "pitch_rate": -0.11826900287257112,
+            "roll_rate": 0,
+            "phase": 507.33251557283904,
+            "omega": 6.811924218654727,
+            "fuel_kg": 3.491019196153323,
+            "wheel_angle": 966.9089724306011,
+            "shaft_work_J": 681744.3524350524,
+            "aero_work_J": 471086.8397793446,
+            "drive_heat_J": 117891.46904524177,
+            "control_work_J": -365.2461256939991,
+            "time": 96.50833333328664,
+            "status": "flying",
+            "gliding": false,
+            "timing_bias": 0.3,
+            "sweep_scale": 1
+          },
+          "clearance": 32.78974787335358
+        },
+        "completed": true,
+        "continuous_airborne": true,
+        "required_bank_hold_seconds": 6.000000000000088,
+        "min_clearance_m": 32.79528556021828,
+        "max_roll_rate_rad_s": 0.08276929661782108,
+        "final_bank_rad": 9.464474188608232e-05,
+        "climb_deadline_reached": false
+      }
+    },
+    {
+      "label": "contact-d4-frozen-controller",
+      "pass": true,
+      "final_status": "flying",
+      "final_time": 126.83333333323853,
+      "final_clearance_m": 52.0900963805655,
+      "bank_maneuver": {
+        "policy": {
+          "id": "v7-launch-60-65-70-bank-v2",
+          "minimum_clearance_m": 30,
+          "ready_seconds": 3,
+          "minimum_speed_m_s": 14,
+          "minimum_flight_seconds": 5,
+          "climb_deadline_seconds": 150,
+          "ramp_seconds": 8,
+          "hold_seconds": 6,
+          "recovery_seconds": 8,
+          "target_bank_rad": 0.45,
+          "required_bank_rad": 0.25,
+          "required_hold_seconds": 3,
+          "recovery_bank_tolerance_rad": 0.08
+        },
+        "start": {
+          "state": {
+            "position": [
+              594.6737535857924,
+              36.037150166930836,
+              -165
+            ],
+            "velocity": [
+              15.389899572510597,
+              1.2044401591695835,
+              -1.4195703076443126e-13
+            ],
+            "pitch": 0.06119896735895576,
+            "roll": 0,
+            "heading": -9.224038798667313e-15,
+            "pitch_rate": -0.0716208416538825,
+            "roll_rate": 0,
+            "phase": 491.2705404339887,
+            "omega": 5.440844960974928,
+            "fuel_kg": 3.495573766636323,
+            "wheel_angle": 1097.1478642327454,
+            "shaft_work_J": 651828.9820289757,
+            "aero_work_J": 449276.8856247628,
+            "drive_heat_J": 112927.2185014481,
+            "control_work_J": -344.3474804196729,
+            "time": 96.82499999993249,
+            "status": "flying",
+            "gliding": false,
+            "timing_bias": 0.3,
+            "sweep_scale": 1
+          },
+          "clearance": 32.73924590496397
+        },
+        "completed": true,
+        "continuous_airborne": true,
+        "required_bank_hold_seconds": 6.000000000000088,
+        "min_clearance_m": 32.757579266351264,
+        "max_roll_rate_rad_s": 0.08278173475537744,
+        "final_bank_rad": 9.526566515004996e-05,
+        "climb_deadline_reached": false
+      }
+    },
+    {
+      "label": "corrected-d4-frozen-controller",
+      "pass": true,
+      "final_status": "flying",
+      "final_time": 125.93333333323935,
+      "final_clearance_m": 52.06759945197499,
+      "bank_maneuver": {
+        "policy": {
+          "id": "v7-launch-60-65-70-bank-v2",
+          "minimum_clearance_m": 30,
+          "ready_seconds": 3,
+          "minimum_speed_m_s": 14,
+          "minimum_flight_seconds": 5,
+          "climb_deadline_seconds": 150,
+          "ramp_seconds": 8,
+          "hold_seconds": 6,
+          "recovery_seconds": 8,
+          "target_bank_rad": 0.45,
+          "required_bank_rad": 0.25,
+          "required_hold_seconds": 3,
+          "recovery_bank_tolerance_rad": 0.08
+        },
+        "start": {
+          "state": {
+            "position": [
+              583.72553285879,
+              36.3104017899077,
+              -165
+            ],
+            "velocity": [
+              15.376257124091929,
+              1.2162603359851305,
+              -2.7407706721285563e-13
+            ],
+            "pitch": 0.062353654167823874,
+            "roll": 0,
+            "heading": -1.782469329180405e-14,
+            "pitch_rate": -0.08633852674685243,
+            "roll_rate": 0,
+            "phase": 503.7578393601979,
+            "omega": 5.487295340163733,
+            "fuel_kg": 3.4919543981623624,
+            "wheel_angle": 965.6972593747552,
+            "shaft_work_J": 675813.9393112716,
+            "aero_work_J": 468006.05730501126,
+            "drive_heat_J": 116865.87848152994,
+            "control_work_J": -361.1550335097272,
+            "time": 95.9249999999333,
+            "status": "flying",
+            "gliding": false,
+            "timing_bias": 0.3,
+            "sweep_scale": 1
+          },
+          "clearance": 32.79792504223458
+        },
+        "completed": true,
+        "continuous_airborne": true,
+        "required_bank_hold_seconds": 6.000000000000088,
+        "min_clearance_m": 32.816794520547404,
+        "max_roll_rate_rad_s": 0.08278173475537744,
+        "final_bank_rad": 9.526566515004996e-05,
+        "climb_deadline_reached": false
+      }
+    },
+    {
+      "label": "corrected-d8-frozen-controller",
+      "pass": true,
+      "final_status": "flying",
+      "final_time": 125.90833333407367,
+      "final_clearance_m": 52.11182251993953,
+      "bank_maneuver": {
+        "policy": {
+          "id": "v7-launch-60-65-70-bank-v2",
+          "minimum_clearance_m": 30,
+          "ready_seconds": 3,
+          "minimum_speed_m_s": 14,
+          "minimum_flight_seconds": 5,
+          "climb_deadline_seconds": 150,
+          "ramp_seconds": 8,
+          "hold_seconds": 6,
+          "recovery_seconds": 8,
+          "target_bank_rad": 0.45,
+          "required_bank_rad": 0.25,
+          "required_hold_seconds": 3,
+          "recovery_bank_tolerance_rad": 0.08
+        },
+        "start": {
+          "state": {
+            "position": [
+              583.70277200534,
+              36.3107125605867,
+              -165
+            ],
+            "velocity": [
+              15.356309897179301,
+              1.2297006086253832,
+              -1.6995681668089897e-13
+            ],
+            "pitch": 0.06408040083293148,
+            "roll": 0,
+            "heading": -1.1067555800766773e-14,
+            "pitch_rate": -0.10425724469751722,
+            "roll_rate": 0,
+            "phase": 503.6578805868396,
+            "omega": 5.556427177187714,
+            "fuel_kg": 3.491983154713621,
+            "wheel_angle": 965.4106114827971,
+            "shaft_work_J": 675631.1691576835,
+            "aero_work_J": 467949.4641628453,
+            "drive_heat_J": 116835.41183126463,
+            "control_work_J": -361.04237994627533,
+            "time": 95.90833333369169,
+            "status": "flying",
+            "gliding": false,
+            "timing_bias": 0.3,
+            "sweep_scale": 1
+          },
+          "clearance": 32.78317645273181
+        },
+        "completed": true,
+        "continuous_airborne": true,
+        "required_bank_hold_seconds": 6.000000000000088,
+        "min_clearance_m": 32.80264384567806,
+        "max_roll_rate_rad_s": 0.08278795695567737,
+        "final_bank_rad": 9.610795742554127e-05,
+        "climb_deadline_reached": false
+      }
+    },
+    {
+      "label": "contact-d8-frozen-controller",
+      "pass": true,
+      "final_status": "flying",
+      "final_time": 121.5833333340186,
+      "final_clearance_m": 52.28092592450565,
+      "bank_maneuver": {
+        "policy": {
+          "id": "v7-launch-60-65-70-bank-v2",
+          "minimum_clearance_m": 30,
+          "ready_seconds": 3,
+          "minimum_speed_m_s": 14,
+          "minimum_flight_seconds": 5,
+          "climb_deadline_seconds": 150,
+          "ramp_seconds": 8,
+          "hold_seconds": 6,
+          "recovery_seconds": 8,
+          "target_bank_rad": 0.45,
+          "required_bank_rad": 0.25,
+          "required_hold_seconds": 3,
+          "recovery_bank_tolerance_rad": 0.08
+        },
+        "start": {
+          "state": {
+            "position": [
+              568.1023244713257,
+              36.70887606336535,
+              -165
+            ],
+            "velocity": [
+              15.335725193585771,
+              1.2399501863630105,
+              -3.665366586906856e-14
+            ],
+            "pitch": 0.06590287686820283,
+            "roll": 0,
+            "heading": -2.3900836384574173e-15,
+            "pitch_rate": -0.11976310952181822,
+            "roll_rate": 0,
+            "phase": 484.71689451780463,
+            "omega": 5.626354212123738,
+            "fuel_kg": 3.494320913114313,
+            "wheel_angle": 896.4396255831942,
+            "shaft_work_J": 661744.9323518833,
+            "aero_work_J": 457059.24489015795,
+            "drive_heat_J": 114665.61306108464,
+            "control_work_J": -353.9036575572345,
+            "time": 91.58333333363662,
+            "status": "flying",
+            "gliding": false,
+            "timing_bias": 0.3,
+            "sweep_scale": 1
+          },
+          "clearance": 32.87710916102787
+        },
+        "completed": true,
+        "continuous_airborne": true,
+        "required_bank_hold_seconds": 6.000000000000088,
+        "min_clearance_m": 32.89704765707395,
+        "max_roll_rate_rad_s": 0.08278795695567737,
+        "final_bank_rad": 9.610795742554127e-05,
+        "climb_deadline_reached": false
+      }
+    }
+  ],
+  "counterfactual_checks": [
+    {
+      "model": "gpt-6.1-sol",
+      "profile": 0.65,
+      "matched_pre_bank_samples": 620,
+      "states_identical_before_62s": true,
+      "original_final_time": 68.88750000001951,
+      "original_final_status": "crashed",
+      "straight_final_time": 120.00833333330635,
+      "straight_final_status": "flying",
+      "straight_final_clearance_m": 62.37032871106076
+    },
+    {
+      "model": "gpt-6-astra",
+      "profile": 0.65,
+      "matched_pre_bank_samples": 620,
+      "states_identical_before_62s": true,
+      "original_final_time": 68.91250000001949,
+      "original_final_status": "crashed",
+      "straight_final_time": 120.00833333330635,
+      "straight_final_status": "flying",
+      "straight_final_clearance_m": 62.42769510626146
+    }
+  ],
+  "raw_evidence_sha256": {
+    "author-results.json": "5a7b9b8914a0341346e26d0cb5833a58217fc83db508faf659dccd1c46131b38",
+    "reference-validation-results.json": "4070e337c6f433e141fe0334c72ac8181058cb1fedadaf7176d4c66ca1f55857",
+    "gpt-6.1-sol-straight.json": "e74dc557cae678dae06c5eb5a176acfe788e8e8a444bb3fad723e7e37fb50145",
+    "gpt-6-astra-straight.json": "520da1041f866a7d76c4a9197730f888050a287f7ade43fae7df367b59a826cd"
+  },
+  "source_probe_sha256": "9fdbbd25d3df8ff4e7459055dd95b3e0cd88ac74fa01b64e357a46769576a213",
+  "input_sha256": {
+    "inputs/AIRCRAFT_API.md": "98eb564cbed8e4fdb7d382e390ae7bf1d88b799ad80f842ee41eb1148792ee2a",
+    "inputs/DESIGN_BRIEF.md": "fc9d5f9406b3826c8d19899f3f16a4e9d649a0b6edf1123f5cf9f226e4d13e73",
+    "inputs/ENGINEERING_NOTES.md": "06d1ad691465d9877fe58c1602a6dddb423dc2521a100f2d73fcc2c87ad14bd3",
+    "inputs/GRADERS.md": "63ef99dad0f74429755a5c7cf28b05cbe9796a42b40ea5887bbf3951aece8502",
+    "inputs/SOURCE_GUIDE.md": "ea0ad3616a67781e46a39e1cbb709cf82429bf862f922677ea16c530ceabc7c8",
+    "inputs/TASK.md": "1c70285e0c521d3578161c0af498d090917225fee066b5ec3ac0b97b0362ee41",
+    "inputs/engineering.json": "2952e9b0acc66dc3f7d9d183aedcc3cb5d09560409ed39dbae108d45c790eb81",
+    "inputs/sources/Unknown-10.jpg": "61aa7012757f1ed9eaa41cd97add95d96e653008c97996f9e50e5e5ecdf0a728",
+    "inputs/sources/Unknown-11.jpg": "5af32b5955dcd63b509ccc1c8f9f852cc4b038624af7cdec7d4559bef6dbfefc",
+    "inputs/sources/Unknown-12.jpg": "b203e7e32b70f3a87a8bfe85859f9901ba12fd191ac4908b908179f63cd07d38",
+    "inputs/sources/Unknown-13.jpg": "71b43e76e76c3bf0f031b8ff339329c4b255e9457e5710c3dfd029292211dfac",
+    "inputs/sources/Unknown-14.jpg": "889697309f83ec195a90d91974ff30e5374ab321284a759bbe8c929f5e8e405e",
+    "inputs/sources/Unknown-15.jpg": "d47f1d827d666153804c7cdf018565c13e3febcf880df9365b665b9e9b987465",
+    "inputs/sources/Unknown-2.jpg": "5c0a94b3f137307104f8062c23c3a6a3c6366c88f2f18c8fafed9ee3ddf0cbd9",
+    "inputs/sources/Unknown-8.jpg": "c765fd61b0d8bb15fd932a05a42276c18d91163e53170d743292d66d6e2ff290",
+    "inputs/sources/Unknown-9.jpg": "87fcd95b10c35c0e098592c15cca7f81d265420f2d61778a008314a24f63ab9c"
+  },
+  "readonly_sha256": {
+    "environment/capture.mjs": "163afc21a91601ef467f554816f8c0565289fa9a2f45454dce97256703161618",
+    "environment/engineering.mjs": "c4b8598f927d5d130e4f4b16c7d59f74c23aadfd246d00f1b82bb65031e66d5c",
+    "environment/flight-modes.mjs": "791aee69341621305c6c0ea2f7e4c129cbc0a02a7a60e7a1cfc2265d01d41d62",
+    "environment/platform.mjs": "be26d96516749b728e5ca45cd1e3b665abdadcf90a2695c9198e4ffea03bb3e4",
+    "environment/source-mechanism.mjs": "cb55fd96906c7d708ea948a1010c2a9e6d688224ff65155b7e1eeb91c9db3b4d",
+    "environment/style.css": "21db9f38d2ab3f0c10c667245fed2748689382465c4164e281bed102b2b7f5ed",
+    "environment/vendor/THREE-LICENSE.txt": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+    "environment/vendor/three.core.min.js": "05b2609338c76cd65daf74f3ac515bc9a5045e1b3b33edc07d8c9bd55250fa90",
+    "environment/vendor/three.module.min.js": "86bcee248b64f44bcfc23c331ae74619061957d59cab040171dcb6fb5900beb6",
+    "environment/view-motion.mjs": "a01247f64b5244a8223f490b10044296c779284e6fa685e75344421499ef92b1",
+    "environment/world.mjs": "cf5859d1582b6b7b77fcab7a69f5c6cab25c7ae48c482f31d62e39967b52aa85",
+    "index.html": "c8ad6882313e105f01e3598e741b82df5e02e7d052a985d2d19056aadf41ccce"
+  }
+}

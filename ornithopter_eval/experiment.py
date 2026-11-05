@@ -165,7 +165,9 @@ def refresh_workbench(root, experiment):
     if (root / "CALIBRATION.md").exists():
         body = '<p><strong>Read before comparing scores:</strong> <a href="CALIBRATION.md">Calibration findings and known protocol problems</a>.</p>' + body
     if experiment.get('regrade'):
-        body = '<p><strong>Regraded saved submissions · '+html.escape(experiment['grading_revision'])+'</strong><br>No new model generations. Takeoff profiles: 60%, 65%, 70% below 14 m/s, full throttle above it. Stop at the first complete pass. Original grades remain linked as “Initial grading”.</p>' + body
+        bank_note = (' Bank begins only after 30 m clearance held for 3 seconds; gentle 8-second roll-in, 6-second hold, 8-second roll-out and 8-second recovery. No readiness by 150 seconds fails.'
+                     if experiment['grading_revision']=='v7-launch-60-65-70-bank-v2' else '')
+        body = '<p><strong>Regraded saved submissions · '+html.escape(experiment['grading_revision'])+'</strong><br>No new model generations. Takeoff profiles: 60%, 65%, 70% below 14 m/s, full throttle above it. Stop at the first complete pass.'+bank_note+' Original grades remain linked as “Initial grading”.</p>' + body
     _write_html(root / "index.html", _page("Frontier model calibration", body))
     return summary
 

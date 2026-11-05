@@ -1,0 +1,61 @@
+{
+  "source_first_reading": {
+    "Unknown-2.jpg": {
+      "used": "Mute swan planform and scale table. I used the rounded Say full span 7.4 ft and printed area paragraph S=6.61 ft^2, giving AR=b^2/S=8.29. The wrist span Say value 3.7 ft gives wrist_span_fraction=0.5.",
+      "excluded_or_uncertain": "The handwritten/printed wing length conversion around 3.135 ft is inconsistent and not used. Individual specimen variation and spread posture remain uncertain.",
+      "engineering_completion": "The aircraft is scaled to 14 m span with area=14^2/8.29=23.64 m^2; broad inner chord and rounded/tapered outer leaves are produced by the supplied mechanism helper."
+    },
+    "Unknown-8.jpg": {
+      "used": "The low-Re Gottingen curved-plate chart supports treating section data as contextual rather than directly digitised full-scale coefficients.",
+      "excluded_or_uncertain": "Axes and plotted curves are ambiguous in the photograph.",
+      "engineering_completion": "physics.mjs uses the supplied illustrative inner/outer section tables and camber lift gains, declared assumptions rather than Stanley values."
+    },
+    "Unknown-9.jpg": {
+      "used": "The design method is to define a target trajectory/force range for a powered human-carrying ornithopter and evaluate candidate wing actions.",
+      "excluded_or_uncertain": "No engine, mass budget or coefficient table is specified by Stanley.",
+      "engineering_completion": "The model uses the supplied 55 kg pilot, 173.9 kg dry mass including pilot, 3.6 kg initial fuel and finite 16 kW shaft cap."
+    },
+    "Unknown-10.jpg": {
+      "used": "Straight and level flapping flight has cyclic lift/thrust and small undulating speed/trajectory variations; recovery lift may be intermittent at low speed.",
+      "excluded_or_uncertain": "Wake sketches are explanatory, not dimensions for the aircraft.",
+      "engineering_completion": "The simulator does not prescribe the path; strip aerodynamics and coupled dynamics produce the cyclic forces."
+    },
+    "Unknown-11.jpg": {
+      "used": "Low speed downstroke lasts longer than recovery, while cruise tends to equal timing; wing/body/spring resonance reduces inertial power.",
+      "excluded_or_uncertain": "Marginal revisions are not treated as exact equations.",
+      "engineering_completion": "kinematics.mjs implements theta=phi-b*sin(phi), with b fixed per run; the helper spring/inertia model stores and returns energy without creating net power."
+    },
+    "Unknown-12.jpg": {
+      "used": "Wing/body inertias form a resonant mass-spring system; fore/aft wing motion changes centre-of-lift separation and produces body pitching. The wing action separates inner arm wing and outer hand wing; recovery closes/reduces span.",
+      "excluded_or_uncertain": "The prose gives qualitative action, not all linkage dimensions.",
+      "engineering_completion": "The model uses fixed-amplitude stroke, twist, sweep, exposure and camber curves and a conventional tail to complete the mechanism."
+    },
+    "Unknown-13.jpg": {
+      "used": "Incidence and camber are distinct variables; bird wings share basic parts with varying proportions.",
+      "excluded_or_uncertain": "The goshawk camber percentages are an example and not mute-swan specifications.",
+      "engineering_completion": "Inner/outer camber bases and amplitudes are supplied assumptions; geometry renders curved fabric separately from twist."
+    },
+    "Unknown-14.jpg": {
+      "used": "Inner arm sections are about 5-6 percent thick; the outer hand wing is a thin slotted curved plate with high lift/drag, partly closing on recovery. Conventional tail/rudder or weight-shift controls are compatible with a mechanical ornithopter. Takeoff swans use greater hand motion and frequency.",
+      "excluded_or_uncertain": "No validated manned takeoff mechanism is specified.",
+      "engineering_completion": "The visual aircraft has a light frame, seated pilot, engine/transmission, tailplane, fin/rudder and three wheels; physics uses the supplied finite power and larger outer stroke."
+    },
+    "Unknown-15.jpg": {
+      "used": "Power requirement starts from D*V glide work plus induced, acceleration, vertical-cycle and wing-inertial terms; a spring can exchange but not supply net propulsion energy.",
+      "excluded_or_uncertain": "Appendices and revised equations are missing.",
+      "engineering_completion": "Energy counters integrate actual shaft work, aerodynamic dissipation, damping/transmission heat and control work; motor-off coasts the same mechanism."
+    }
+  },
+  "declared_assumptions": {
+    "aspect_ratio": 8.29,
+    "wrist_span_fraction": 0.5,
+    "wing_area_m2": 23.643,
+    "mass_budget": "Supplied favourable engineering.json budget: 55 kg seated adult pilot, 173.9 kg dry mass including pilot, 3.6 kg fuel, 177.5 kg initially wet.",
+    "not_claimed_from_source": "The engine, transmission efficiency, fuel consumption, structural masses, numerical aerodynamic coefficient tables, spring constant and damping values are engineering completions, not Stanley notebook readings."
+  },
+  "limitations": [
+    "Educational reduced model only; not a buildable aircraft design or flight validation.",
+    "No unsteady wake, flexible aeroelasticity, structural stress analysis, overlap leakage or section pitching moments.",
+    "The source photographs guide proportions and causal principles; missing appendices and exact data remain missing."
+  ]
+}

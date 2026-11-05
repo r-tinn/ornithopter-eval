@@ -9,7 +9,7 @@ import json
 from pathlib import Path
 
 from ornithopter_eval.checks import LATEST_SOURCE_FIRST_VERSION
-from ornithopter_eval.grading import LAUNCH_GRADING_REVISION, grade_submission
+from ornithopter_eval.grading import GRADING_REVISIONS, grade_submission
 from ornithopter_eval.runner import ROOT, digest, write_json
 from ornithopter_eval.world_candidate import prepare_world
 
@@ -37,7 +37,7 @@ def main():
     parser.add_argument('packet', type=Path)
     parser.add_argument('grades', type=Path)
     parser.add_argument('--node', default='node')
-    parser.add_argument('--grading-revision', choices=[LAUNCH_GRADING_REVISION])
+    parser.add_argument('--grading-revision', choices=GRADING_REVISIONS)
     args = parser.parse_args()
     if args.packet.exists() or args.grades.exists():
         parser.error('Use fresh output directories; previous evidence is preserved')

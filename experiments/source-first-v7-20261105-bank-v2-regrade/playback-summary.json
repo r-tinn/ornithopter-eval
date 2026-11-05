@@ -1,0 +1,782 @@
+{
+  "kind": "Derived observations from unchanged saved models; no new model trials",
+  "model_api_calls": 0,
+  "grading_revision": "v7-launch-60-65-70-bank-v2",
+  "trials": [
+    {
+      "model": "gpt-6.1-sol",
+      "report": "trials/gpt-6.1-sol-01/grade-v7-launch-60-65-70-bank-v2/report.json",
+      "report_sha256": "cb8d1d0397051ebba02e7e2b9d74347a334ed23cbe9cb2f989220ed1988672fb",
+      "startup_ready": true,
+      "previous_launch_revision_result": {
+        "passed": 6,
+        "total": 7,
+        "failed": [
+          "power_limited_flight"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 5,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 1,
+            "total": 1
+          }
+        }
+      },
+      "current_result": {
+        "passed": 7,
+        "total": 7,
+        "failed": [],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 6,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 1,
+            "total": 1
+          }
+        }
+      },
+      "launch_attempts": [
+        {
+          "low_speed_throttle": 0.6,
+          "pass": true,
+          "error": null,
+          "final_status": "flying",
+          "final_time_s": 132.72499999996145,
+          "first_sustained_takeoff": {
+            "time": 60.17500000002092,
+            "x": -29.647645083125738,
+            "clearance": 2.242579865905383
+          },
+          "bank_maneuver": {
+            "policy": {
+              "id": "v7-launch-60-65-70-bank-v2",
+              "minimum_clearance_m": 30,
+              "ready_seconds": 3,
+              "minimum_speed_m_s": 14,
+              "minimum_flight_seconds": 5,
+              "climb_deadline_seconds": 150,
+              "ramp_seconds": 8,
+              "hold_seconds": 6,
+              "recovery_seconds": 8,
+              "target_bank_rad": 0.45,
+              "required_bank_rad": 0.25,
+              "required_hold_seconds": 3,
+              "recovery_bank_tolerance_rad": 0.08
+            },
+            "start": {
+              "state": {
+                "position": [
+                  613.0323061264992,
+                  36.00750159375314,
+                  -165
+                ],
+                "velocity": [
+                  15.051461816052672,
+                  1.1494856128875106,
+                  1.4241873239901056e-14
+                ],
+                "pitch": 0.091892468911018,
+                "roll": 0,
+                "heading": 0,
+                "pitch_rate": -0.1854372727395328,
+                "roll_rate": 0,
+                "phase": 515.2040120453512,
+                "omega": 6.281456338757322,
+                "fuel_kg": 3.493153979146271,
+                "wheel_angle": -4400.251808572634,
+                "shaft_work_J": 665739.4092226888,
+                "aero_work_J": 460608.40327794984,
+                "drive_heat_J": 121029.61379621766,
+                "control_work_J": -342.8358665676209,
+                "time": 102.71666666665541,
+                "status": "flying",
+                "gliding": false,
+                "timing_bias": 0.3,
+                "sweep_scale": 1
+              },
+              "clearance": 32.856123480681916
+            },
+            "completed": true,
+            "continuous_airborne": true,
+            "required_bank_hold_seconds": 6.000000000000088,
+            "min_clearance_m": 6.779437462993991,
+            "max_roll_rate_rad_s": 0.08279415763141225,
+            "final_bank_rad": 9.588855764780468e-05,
+            "climb_deadline_reached": false
+          }
+        }
+      ]
+    },
+    {
+      "model": "gpt-6-astra",
+      "report": "trials/gpt-6-astra-01/grade-v7-launch-60-65-70-bank-v2/report.json",
+      "report_sha256": "f779a2bb7455c0829aa01a61f8f656a2d48ccfc562becec1b1d572b0538f01dc",
+      "startup_ready": true,
+      "previous_launch_revision_result": {
+        "passed": 6,
+        "total": 7,
+        "failed": [
+          "power_limited_flight"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 5,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 1,
+            "total": 1
+          }
+        }
+      },
+      "current_result": {
+        "passed": 7,
+        "total": 7,
+        "failed": [],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 6,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 1,
+            "total": 1
+          }
+        }
+      },
+      "launch_attempts": [
+        {
+          "low_speed_throttle": 0.6,
+          "pass": true,
+          "error": null,
+          "final_status": "flying",
+          "final_time_s": 132.68333333329483,
+          "first_sustained_takeoff": {
+            "time": 60.15833333335424,
+            "x": -28.548953322587767,
+            "clearance": 2.2744873729167088
+          },
+          "bank_maneuver": {
+            "policy": {
+              "id": "v7-launch-60-65-70-bank-v2",
+              "minimum_clearance_m": 30,
+              "ready_seconds": 3,
+              "minimum_speed_m_s": 14,
+              "minimum_flight_seconds": 5,
+              "climb_deadline_seconds": 150,
+              "ramp_seconds": 8,
+              "hold_seconds": 6,
+              "recovery_seconds": 8,
+              "target_bank_rad": 0.45,
+              "required_bank_rad": 0.25,
+              "required_hold_seconds": 3,
+              "recovery_bank_tolerance_rad": 0.08
+            },
+            "start": {
+              "state": {
+                "position": [
+                  613.7328476419555,
+                  36.03240229017029,
+                  -165
+                ],
+                "velocity": [
+                  14.980772914051013,
+                  1.0602309872748035,
+                  3.7680690599561184e-14
+                ],
+                "pitch": 0.09797337460430579,
+                "roll": 0,
+                "heading": 0,
+                "pitch_rate": -0.1790816706649496,
+                "roll_rate": 0,
+                "phase": 514.9927881820662,
+                "omega": 6.401371441569714,
+                "fuel_kg": 3.493160596833594,
+                "wheel_angle": 1159.9281725830256,
+                "shaft_work_J": 665709.7298147278,
+                "aero_work_J": 460445.3679945242,
+                "drive_heat_J": 115183.0832561139,
+                "control_work_J": -342.44671672557854,
+                "time": 102.67499999998878,
+                "status": "flying",
+                "gliding": false,
+                "timing_bias": 0.3,
+                "sweep_scale": 1
+              },
+              "clearance": 32.85915315379728
+            },
+            "completed": true,
+            "continuous_airborne": true,
+            "required_bank_hold_seconds": 6.000000000000088,
+            "min_clearance_m": 6.820685339572266,
+            "max_roll_rate_rad_s": 0.08279415763141225,
+            "final_bank_rad": 9.588855764780468e-05,
+            "climb_deadline_reached": false
+          }
+        }
+      ]
+    },
+    {
+      "model": "gpt-5.6-sol",
+      "report": "trials/gpt-5.6-sol-01/grade-v7-launch-60-65-70-bank-v2/report.json",
+      "report_sha256": "c2db550d7cf177f065b7bc1e7cf596554bf27b85a43a3079a7210296b289e921",
+      "startup_ready": true,
+      "previous_launch_revision_result": {
+        "passed": 6,
+        "total": 7,
+        "failed": [
+          "wing_cycle_force_coupling"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 5,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 1,
+            "total": 1
+          }
+        }
+      },
+      "current_result": {
+        "passed": 6,
+        "total": 7,
+        "failed": [
+          "wing_cycle_force_coupling"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 5,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 1,
+            "total": 1
+          }
+        }
+      },
+      "launch_attempts": [
+        {
+          "low_speed_throttle": 0.6,
+          "pass": true,
+          "error": null,
+          "final_status": "flying",
+          "final_time_s": 132.8333333332947,
+          "first_sustained_takeoff": {
+            "time": 59.25000000002019,
+            "x": -44.63224281918412,
+            "clearance": 1.577899373349044
+          },
+          "bank_maneuver": {
+            "policy": {
+              "id": "v7-launch-60-65-70-bank-v2",
+              "minimum_clearance_m": 30,
+              "ready_seconds": 3,
+              "minimum_speed_m_s": 14,
+              "minimum_flight_seconds": 5,
+              "climb_deadline_seconds": 150,
+              "ramp_seconds": 8,
+              "hold_seconds": 6,
+              "recovery_seconds": 8,
+              "target_bank_rad": 0.45,
+              "required_bank_rad": 0.25,
+              "required_hold_seconds": 3,
+              "recovery_bank_tolerance_rad": 0.08
+            },
+            "start": {
+              "state": {
+                "position": [
+                  614.1118825197852,
+                  35.87069489860521,
+                  -165
+                ],
+                "velocity": [
+                  15.244368679793551,
+                  1.255069647499406,
+                  4.042496532443211e-14
+                ],
+                "pitch": 0.07427645241402245,
+                "roll": 0,
+                "heading": 0,
+                "pitch_rate": -0.16471475930080956,
+                "roll_rate": 0,
+                "phase": 515.7976411556756,
+                "omega": 5.893826781552512,
+                "fuel_kg": 3.49287632190738,
+                "wheel_angle": 1163.7366456545574,
+                "shaft_work_J": 667521.347513401,
+                "aero_work_J": 462440.8038234446,
+                "drive_heat_J": 115486.34877120765,
+                "control_work_J": -351.04924304883633,
+                "time": 102.82499999998865,
+                "status": "flying",
+                "gliding": false,
+                "timing_bias": 0.3,
+                "sweep_scale": 1
+              },
+              "clearance": 32.839575259715566
+            },
+            "completed": true,
+            "continuous_airborne": true,
+            "required_bank_hold_seconds": 6.000000000000088,
+            "min_clearance_m": 32.86005731229172,
+            "max_roll_rate_rad_s": 0.08279415763141225,
+            "final_bank_rad": 9.588855764780468e-05,
+            "climb_deadline_reached": false
+          }
+        }
+      ]
+    },
+    {
+      "model": "gpt-5.5",
+      "report": "trials/gpt-5.5-01/grade-v7-launch-60-65-70-bank-v2/report.json",
+      "report_sha256": "af7b2423eeddfa40d513fb68d914d1d421ce7d50a542811f4a888b285110f498",
+      "startup_ready": true,
+      "previous_launch_revision_result": {
+        "passed": 4,
+        "total": 7,
+        "failed": [
+          "wing_cycle_force_coupling",
+          "wing_body_pitch_coupling",
+          "power_limited_flight"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 3,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 1,
+            "total": 1
+          }
+        }
+      },
+      "current_result": {
+        "passed": 4,
+        "total": 7,
+        "failed": [
+          "wing_cycle_force_coupling",
+          "wing_body_pitch_coupling",
+          "power_limited_flight"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 3,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 1,
+            "total": 1
+          }
+        }
+      },
+      "launch_attempts": [
+        {
+          "low_speed_throttle": 0.6,
+          "pass": false,
+          "error": null,
+          "final_status": "flying",
+          "final_time_s": 133.54166666662738,
+          "first_sustained_takeoff": {
+            "time": 60.05000000002082,
+            "x": -27.90480755602658,
+            "clearance": 1.7161316883969082
+          },
+          "bank_maneuver": {
+            "policy": {
+              "id": "v7-launch-60-65-70-bank-v2",
+              "minimum_clearance_m": 30,
+              "ready_seconds": 3,
+              "minimum_speed_m_s": 14,
+              "minimum_flight_seconds": 5,
+              "climb_deadline_seconds": 150,
+              "ramp_seconds": 8,
+              "hold_seconds": 6,
+              "recovery_seconds": 8,
+              "target_bank_rad": 0.45,
+              "required_bank_rad": 0.25,
+              "required_hold_seconds": 3,
+              "recovery_bank_tolerance_rad": 0.08
+            },
+            "start": {
+              "state": {
+                "position": [
+                  629.5554630658278,
+                  35.745006587580875,
+                  -164.99999778043406
+                ],
+                "velocity": [
+                  14.956520819614184,
+                  1.013221211603518,
+                  4.730814121662314e-14
+                ],
+                "pitch": 0.10057416576184648,
+                "roll": 0,
+                "heading": 0,
+                "pitch_rate": -0.17516392556743202,
+                "roll_rate": 0,
+                "phase": 521.1796015406151,
+                "omega": 6.45128544737174,
+                "fuel_kg": 3.4952317053209043,
+                "wheel_angle": 4476.328254565392,
+                "shaft_work_J": 651872.474261655,
+                "aero_work_J": 452675.27056682965,
+                "drive_heat_J": 113299.49946674099,
+                "control_work_J": -352.77279649894234,
+                "time": 103.53333333332134,
+                "status": "flying",
+                "gliding": false,
+                "timing_bias": 0.3,
+                "sweep_scale": 1
+              },
+              "clearance": 32.66590962581657
+            },
+            "completed": true,
+            "continuous_airborne": true,
+            "required_bank_hold_seconds": 6.000000000000088,
+            "min_clearance_m": 32.68362735385032,
+            "max_roll_rate_rad_s": 0.08272752301822069,
+            "final_bank_rad": 9.367896428404307e-05,
+            "climb_deadline_reached": false
+          }
+        },
+        {
+          "low_speed_throttle": 0.65,
+          "pass": false,
+          "error": null,
+          "final_status": "flying",
+          "final_time_s": 124.56666666663554,
+          "first_sustained_takeoff": {
+            "time": 49.14166666667881,
+            "x": -98.53115673646498,
+            "clearance": 1.3136298447633155
+          },
+          "bank_maneuver": {
+            "policy": {
+              "id": "v7-launch-60-65-70-bank-v2",
+              "minimum_clearance_m": 30,
+              "ready_seconds": 3,
+              "minimum_speed_m_s": 14,
+              "minimum_flight_seconds": 5,
+              "climb_deadline_seconds": 150,
+              "ramp_seconds": 8,
+              "hold_seconds": 6,
+              "recovery_seconds": 8,
+              "target_bank_rad": 0.45,
+              "required_bank_rad": 0.25,
+              "required_hold_seconds": 3,
+              "recovery_bank_tolerance_rad": 0.08
+            },
+            "start": {
+              "state": {
+                "position": [
+                  588.4478578908097,
+                  36.49364686579384,
+                  -164.99999777682436
+                ],
+                "velocity": [
+                  14.834764570045502,
+                  0.7420861749139542,
+                  -5.668002031687387e-16
+                ],
+                "pitch": 0.1121556897510023,
+                "roll": 0,
+                "heading": 0,
+                "pitch_rate": -0.1538808753737336,
+                "roll_rate": 0,
+                "phase": 501.86930478470424,
+                "omega": 6.647699700675293,
+                "fuel_kg": 3.4949543495894835,
+                "wheel_angle": 4297.599536413114,
+                "shaft_work_J": 656625.1663209337,
+                "aero_work_J": 457730.9019067585,
+                "drive_heat_J": 114092.50558046564,
+                "control_work_J": -375.09905861082154,
+                "time": 94.5583333333295,
+                "status": "flying",
+                "gliding": false,
+                "timing_bias": 0.3,
+                "sweep_scale": 1
+              },
+              "clearance": 32.76418059064636
+            },
+            "completed": true,
+            "continuous_airborne": true,
+            "required_bank_hold_seconds": 6.000000000000088,
+            "min_clearance_m": 32.78089203785805,
+            "max_roll_rate_rad_s": 0.08272752301822069,
+            "final_bank_rad": 9.367896428404307e-05,
+            "climb_deadline_reached": false
+          }
+        },
+        {
+          "low_speed_throttle": 0.7,
+          "pass": false,
+          "error": null,
+          "final_status": "flying",
+          "final_time_s": 117.94166666664157,
+          "first_sustained_takeoff": {
+            "time": 42.27500000000668,
+            "x": -134.6743485903151,
+            "clearance": 1.4949281931035916
+          },
+          "bank_maneuver": {
+            "policy": {
+              "id": "v7-launch-60-65-70-bank-v2",
+              "minimum_clearance_m": 30,
+              "ready_seconds": 3,
+              "minimum_speed_m_s": 14,
+              "minimum_flight_seconds": 5,
+              "climb_deadline_seconds": 150,
+              "ramp_seconds": 8,
+              "hold_seconds": 6,
+              "recovery_seconds": 8,
+              "target_bank_rad": 0.45,
+              "required_bank_rad": 0.25,
+              "required_hold_seconds": 3,
+              "recovery_bank_tolerance_rad": 0.08
+            },
+            "start": {
+              "state": {
+                "position": [
+                  555.8275941647008,
+                  37.03733957300181,
+                  -164.9999977744196
+                ],
+                "velocity": [
+                  15.27738261047406,
+                  1.2547045335818228,
+                  1.2349273416488809e-14
+                ],
+                "pitch": 0.07172217793474495,
+                "roll": 0,
+                "heading": 0,
+                "pitch_rate": -0.1546027948103658,
+                "roll_rate": 0,
+                "phase": 484.47342637530767,
+                "omega": 5.822576794151971,
+                "fuel_kg": 3.495497783353937,
+                "wheel_angle": 4155.772302821326,
+                "shaft_work_J": 655236.3271347906,
+                "aero_work_J": 458316.4189372312,
+                "drive_heat_J": 113762.2569938231,
+                "control_work_J": -379.39192039396676,
+                "time": 87.93333333333553,
+                "status": "flying",
+                "gliding": false,
+                "timing_bias": 0.3,
+                "sweep_scale": 1
+              },
+              "clearance": 33.09820250451734
+            },
+            "completed": true,
+            "continuous_airborne": true,
+            "required_bank_hold_seconds": 6.000000000000088,
+            "min_clearance_m": 33.11974717781632,
+            "max_roll_rate_rad_s": 0.08272752301822069,
+            "final_bank_rad": 9.367896428404307e-05,
+            "climb_deadline_reached": false
+          }
+        }
+      ]
+    },
+    {
+      "model": "gpt-5.4",
+      "report": "trials/gpt-5.4-01/grade-v7-launch-60-65-70-bank-v2/report.json",
+      "report_sha256": "2a37a7f204054c8f438c1f02cafe2367a395c5e4bb3e66e5aad0d8d92b48812e",
+      "startup_ready": true,
+      "previous_launch_revision_result": {
+        "passed": 0,
+        "total": 7,
+        "failed": [
+          "wing_cycle_force_coupling",
+          "elastic_inertial_exchange",
+          "wing_body_pitch_coupling",
+          "power_limited_flight",
+          "unpowered_glide_balance",
+          "powered_pitch_stability",
+          "wheel_rotation_axis"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 0,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 0,
+            "total": 1
+          }
+        }
+      },
+      "current_result": {
+        "passed": 0,
+        "total": 7,
+        "failed": [
+          "wing_cycle_force_coupling",
+          "elastic_inertial_exchange",
+          "wing_body_pitch_coupling",
+          "power_limited_flight",
+          "unpowered_glide_balance",
+          "powered_pitch_stability",
+          "wheel_rotation_axis"
+        ],
+        "groups": {
+          "source": {
+            "passed": 0,
+            "total": 0
+          },
+          "physics": {
+            "passed": 0,
+            "total": 6
+          },
+          "interaction": {
+            "passed": 0,
+            "total": 1
+          }
+        }
+      },
+      "launch_attempts": [
+        {
+          "low_speed_throttle": 0.6,
+          "pass": false,
+          "error": null,
+          "final_status": "flying",
+          "final_time_s": 7.1916666666665785,
+          "first_sustained_takeoff": null,
+          "bank_maneuver": {
+            "policy": {
+              "id": "v7-launch-60-65-70-bank-v2",
+              "minimum_clearance_m": 30,
+              "ready_seconds": 3,
+              "minimum_speed_m_s": 14,
+              "minimum_flight_seconds": 5,
+              "climb_deadline_seconds": 150,
+              "ramp_seconds": 8,
+              "hold_seconds": 6,
+              "recovery_seconds": 8,
+              "target_bank_rad": 0.45,
+              "required_bank_rad": 0.25,
+              "required_hold_seconds": 3,
+              "recovery_bank_tolerance_rad": 0.08
+            },
+            "start": null,
+            "completed": false,
+            "continuous_airborne": true,
+            "required_bank_hold_seconds": 0,
+            "min_clearance_m": null,
+            "max_roll_rate_rad_s": 0,
+            "final_bank_rad": 0,
+            "climb_deadline_reached": false
+          }
+        },
+        {
+          "low_speed_throttle": 0.65,
+          "pass": false,
+          "error": null,
+          "final_status": "crashed",
+          "final_time_s": 6.691666666666607,
+          "first_sustained_takeoff": null,
+          "bank_maneuver": {
+            "policy": {
+              "id": "v7-launch-60-65-70-bank-v2",
+              "minimum_clearance_m": 30,
+              "ready_seconds": 3,
+              "minimum_speed_m_s": 14,
+              "minimum_flight_seconds": 5,
+              "climb_deadline_seconds": 150,
+              "ramp_seconds": 8,
+              "hold_seconds": 6,
+              "recovery_seconds": 8,
+              "target_bank_rad": 0.45,
+              "required_bank_rad": 0.25,
+              "required_hold_seconds": 3,
+              "recovery_bank_tolerance_rad": 0.08
+            },
+            "start": null,
+            "completed": false,
+            "continuous_airborne": true,
+            "required_bank_hold_seconds": 0,
+            "min_clearance_m": null,
+            "max_roll_rate_rad_s": 0,
+            "final_bank_rad": 0,
+            "climb_deadline_reached": false
+          }
+        },
+        {
+          "low_speed_throttle": 0.7,
+          "pass": false,
+          "error": null,
+          "final_status": "crashed",
+          "final_time_s": 6.29166666666663,
+          "first_sustained_takeoff": null,
+          "bank_maneuver": {
+            "policy": {
+              "id": "v7-launch-60-65-70-bank-v2",
+              "minimum_clearance_m": 30,
+              "ready_seconds": 3,
+              "minimum_speed_m_s": 14,
+              "minimum_flight_seconds": 5,
+              "climb_deadline_seconds": 150,
+              "ramp_seconds": 8,
+              "hold_seconds": 6,
+              "recovery_seconds": 8,
+              "target_bank_rad": 0.45,
+              "required_bank_rad": 0.25,
+              "required_hold_seconds": 3,
+              "recovery_bank_tolerance_rad": 0.08
+            },
+            "start": null,
+            "completed": false,
+            "continuous_airborne": true,
+            "required_bank_hold_seconds": 0,
+            "min_clearance_m": null,
+            "max_roll_rate_rad_s": 0,
+            "final_bank_rad": 0,
+            "climb_deadline_reached": false
+          }
+        }
+      ]
+    }
+  ]
+}

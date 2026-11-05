@@ -1,0 +1,683 @@
+{
+  "id": "wheel_rotation_axis",
+  "pass": false,
+  "detail": {
+    "tolerance_deg": 1,
+    "speed_m_s": 10,
+    "attitude_rad": [
+      0,
+      0,
+      0
+    ],
+    "steering": 0,
+    "samples": [
+      {
+        "status": "grounded",
+        "distance_m": 0,
+        "time_s": 0,
+        "axes": [
+          {
+            "wheel": 0,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              0,
+              0,
+              1
+            ],
+            "misalignment_deg": 0
+          },
+          {
+            "wheel": 1,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              0,
+              0,
+              1
+            ],
+            "misalignment_deg": 0
+          },
+          {
+            "wheel": 2,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              0,
+              0,
+              1
+            ],
+            "misalignment_deg": 0
+          }
+        ]
+      },
+      {
+        "status": "grounded",
+        "distance_m": 0.1806415775814131,
+        "time_s": 0.01806415775814131,
+        "axes": [
+          {
+            "wheel": 0,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              -0.7071067811865476,
+              0,
+              0.7071067811865475
+            ],
+            "misalignment_deg": 45.00000000000001
+          },
+          {
+            "wheel": 1,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              -0.7071067811865476,
+              0,
+              0.7071067811865475
+            ],
+            "misalignment_deg": 45.00000000000001
+          },
+          {
+            "wheel": 2,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              -0.7071067811865476,
+              0,
+              0.7071067811865475
+            ],
+            "misalignment_deg": 45.00000000000001
+          }
+        ]
+      },
+      {
+        "status": "grounded",
+        "distance_m": 0.3612831551628262,
+        "time_s": 0.03612831551628262,
+        "axes": [
+          {
+            "wheel": 0,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              -1,
+              0,
+              2.220446049250313e-16
+            ],
+            "misalignment_deg": 89.99999999999999
+          },
+          {
+            "wheel": 1,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              -1,
+              0,
+              2.220446049250313e-16
+            ],
+            "misalignment_deg": 89.99999999999999
+          },
+          {
+            "wheel": 2,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              -1,
+              0,
+              2.220446049250313e-16
+            ],
+            "misalignment_deg": 89.99999999999999
+          }
+        ]
+      },
+      {
+        "status": "grounded",
+        "distance_m": 0.5419247327442394,
+        "time_s": 0.05419247327442393,
+        "axes": [
+          {
+            "wheel": 0,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              -0.7071067811865477,
+              0,
+              -0.7071067811865475
+            ],
+            "misalignment_deg": 45.00000000000001
+          },
+          {
+            "wheel": 1,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              -0.7071067811865477,
+              0,
+              -0.7071067811865475
+            ],
+            "misalignment_deg": 45.00000000000001
+          },
+          {
+            "wheel": 2,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              -0.7071067811865477,
+              0,
+              -0.7071067811865475
+            ],
+            "misalignment_deg": 45.00000000000001
+          }
+        ]
+      },
+      {
+        "status": "grounded",
+        "distance_m": 0.7225663103256524,
+        "time_s": 0.07225663103256524,
+        "axes": [
+          {
+            "wheel": 0,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              -1.2246467991473532e-16,
+              0,
+              -1
+            ],
+            "misalignment_deg": 0
+          },
+          {
+            "wheel": 1,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              -1.2246467991473532e-16,
+              0,
+              -1
+            ],
+            "misalignment_deg": 0
+          },
+          {
+            "wheel": 2,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              -1.2246467991473532e-16,
+              0,
+              -1
+            ],
+            "misalignment_deg": 0
+          }
+        ]
+      },
+      {
+        "status": "grounded",
+        "distance_m": 0.9032078879070655,
+        "time_s": 0.09032078879070655,
+        "axes": [
+          {
+            "wheel": 0,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              0.7071067811865476,
+              0,
+              -0.7071067811865476
+            ],
+            "misalignment_deg": 45
+          },
+          {
+            "wheel": 1,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              0.7071067811865476,
+              0,
+              -0.7071067811865476
+            ],
+            "misalignment_deg": 45
+          },
+          {
+            "wheel": 2,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              0.7071067811865476,
+              0,
+              -0.7071067811865476
+            ],
+            "misalignment_deg": 45
+          }
+        ]
+      },
+      {
+        "status": "grounded",
+        "distance_m": 1.0838494654884787,
+        "time_s": 0.10838494654884787,
+        "axes": [
+          {
+            "wheel": 0,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              1,
+              0,
+              -2.220446049250313e-16
+            ],
+            "misalignment_deg": 89.99999999999999
+          },
+          {
+            "wheel": 1,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              1,
+              0,
+              -2.220446049250313e-16
+            ],
+            "misalignment_deg": 89.99999999999999
+          },
+          {
+            "wheel": 2,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              1,
+              0,
+              -2.220446049250313e-16
+            ],
+            "misalignment_deg": 89.99999999999999
+          }
+        ]
+      },
+      {
+        "status": "grounded",
+        "distance_m": 1.2644910430698917,
+        "time_s": 0.12644910430698916,
+        "axes": [
+          {
+            "wheel": 0,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              0.7071067811865477,
+              0,
+              0.7071067811865474
+            ],
+            "misalignment_deg": 45.00000000000001
+          },
+          {
+            "wheel": 1,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              0.7071067811865477,
+              0,
+              0.7071067811865474
+            ],
+            "misalignment_deg": 45.00000000000001
+          },
+          {
+            "wheel": 2,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              0.7071067811865477,
+              0,
+              0.7071067811865474
+            ],
+            "misalignment_deg": 45.00000000000001
+          }
+        ]
+      },
+      {
+        "status": "grounded",
+        "distance_m": 1.4451326206513049,
+        "time_s": 0.1445132620651305,
+        "axes": [
+          {
+            "wheel": 0,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              2.4492935982947064e-16,
+              0,
+              1
+            ],
+            "misalignment_deg": 0
+          },
+          {
+            "wheel": 1,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              2.4492935982947064e-16,
+              0,
+              1
+            ],
+            "misalignment_deg": 0
+          },
+          {
+            "wheel": 2,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              2.4492935982947064e-16,
+              0,
+              1
+            ],
+            "misalignment_deg": 0
+          }
+        ]
+      },
+      {
+        "status": "flying",
+        "distance_m": 0,
+        "time_s": 0,
+        "axes": [
+          {
+            "wheel": 0,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              0,
+              0,
+              1
+            ],
+            "misalignment_deg": 0
+          },
+          {
+            "wheel": 1,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              0,
+              0,
+              1
+            ],
+            "misalignment_deg": 0
+          },
+          {
+            "wheel": 2,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              0,
+              0,
+              1
+            ],
+            "misalignment_deg": 0
+          }
+        ]
+      },
+      {
+        "status": "flying",
+        "distance_m": 0.1806415775814131,
+        "time_s": 0.01806415775814131,
+        "axes": [
+          {
+            "wheel": 0,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              -0.7071067811865476,
+              0,
+              0.7071067811865475
+            ],
+            "misalignment_deg": 45.00000000000001
+          },
+          {
+            "wheel": 1,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              -0.7071067811865476,
+              0,
+              0.7071067811865475
+            ],
+            "misalignment_deg": 45.00000000000001
+          },
+          {
+            "wheel": 2,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              -0.7071067811865476,
+              0,
+              0.7071067811865475
+            ],
+            "misalignment_deg": 45.00000000000001
+          }
+        ]
+      },
+      {
+        "status": "flying",
+        "distance_m": 0.3612831551628262,
+        "time_s": 0.03612831551628262,
+        "axes": [
+          {
+            "wheel": 0,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              -1,
+              0,
+              2.220446049250313e-16
+            ],
+            "misalignment_deg": 89.99999999999999
+          },
+          {
+            "wheel": 1,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              -1,
+              0,
+              2.220446049250313e-16
+            ],
+            "misalignment_deg": 89.99999999999999
+          },
+          {
+            "wheel": 2,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              -1,
+              0,
+              2.220446049250313e-16
+            ],
+            "misalignment_deg": 89.99999999999999
+          }
+        ]
+      },
+      {
+        "status": "flying",
+        "distance_m": 0.5419247327442394,
+        "time_s": 0.05419247327442393,
+        "axes": [
+          {
+            "wheel": 0,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              -0.7071067811865477,
+              0,
+              -0.7071067811865475
+            ],
+            "misalignment_deg": 45.00000000000001
+          },
+          {
+            "wheel": 1,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              -0.7071067811865477,
+              0,
+              -0.7071067811865475
+            ],
+            "misalignment_deg": 45.00000000000001
+          },
+          {
+            "wheel": 2,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              -0.7071067811865477,
+              0,
+              -0.7071067811865475
+            ],
+            "misalignment_deg": 45.00000000000001
+          }
+        ]
+      },
+      {
+        "status": "flying",
+        "distance_m": 0.7225663103256524,
+        "time_s": 0.07225663103256524,
+        "axes": [
+          {
+            "wheel": 0,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              -1.2246467991473532e-16,
+              0,
+              -1
+            ],
+            "misalignment_deg": 0
+          },
+          {
+            "wheel": 1,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              -1.2246467991473532e-16,
+              0,
+              -1
+            ],
+            "misalignment_deg": 0
+          },
+          {
+            "wheel": 2,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              -1.2246467991473532e-16,
+              0,
+              -1
+            ],
+            "misalignment_deg": 0
+          }
+        ]
+      },
+      {
+        "status": "flying",
+        "distance_m": 0.9032078879070655,
+        "time_s": 0.09032078879070655,
+        "axes": [
+          {
+            "wheel": 0,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              0.7071067811865476,
+              0,
+              -0.7071067811865476
+            ],
+            "misalignment_deg": 45
+          },
+          {
+            "wheel": 1,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              0.7071067811865476,
+              0,
+              -0.7071067811865476
+            ],
+            "misalignment_deg": 45
+          },
+          {
+            "wheel": 2,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              0.7071067811865476,
+              0,
+              -0.7071067811865476
+            ],
+            "misalignment_deg": 45
+          }
+        ]
+      },
+      {
+        "status": "flying",
+        "distance_m": 1.0838494654884787,
+        "time_s": 0.10838494654884787,
+        "axes": [
+          {
+            "wheel": 0,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              1,
+              0,
+              -2.220446049250313e-16
+            ],
+            "misalignment_deg": 89.99999999999999
+          },
+          {
+            "wheel": 1,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              1,
+              0,
+              -2.220446049250313e-16
+            ],
+            "misalignment_deg": 89.99999999999999
+          },
+          {
+            "wheel": 2,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              1,
+              0,
+              -2.220446049250313e-16
+            ],
+            "misalignment_deg": 89.99999999999999
+          }
+        ]
+      },
+      {
+        "status": "flying",
+        "distance_m": 1.2644910430698917,
+        "time_s": 0.12644910430698916,
+        "axes": [
+          {
+            "wheel": 0,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              0.7071067811865477,
+              0,
+              0.7071067811865474
+            ],
+            "misalignment_deg": 45.00000000000001
+          },
+          {
+            "wheel": 1,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              0.7071067811865477,
+              0,
+              0.7071067811865474
+            ],
+            "misalignment_deg": 45.00000000000001
+          },
+          {
+            "wheel": 2,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              0.7071067811865477,
+              0,
+              0.7071067811865474
+            ],
+            "misalignment_deg": 45.00000000000001
+          }
+        ]
+      },
+      {
+        "status": "flying",
+        "distance_m": 1.4451326206513049,
+        "time_s": 0.1445132620651305,
+        "axes": [
+          {
+            "wheel": 0,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              2.4492935982947064e-16,
+              0,
+              1
+            ],
+            "misalignment_deg": 0
+          },
+          {
+            "wheel": 1,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              2.4492935982947064e-16,
+              0,
+              1
+            ],
+            "misalignment_deg": 0
+          },
+          {
+            "wheel": 2,
+            "name": "landing-wheel",
+            "axis_in_aircraft": [
+              2.4492935982947064e-16,
+              0,
+              1
+            ],
+            "misalignment_deg": 0
+          }
+        ]
+      }
+    ],
+    "max_misalignment_deg": 89.99999999999999
+  }
+}

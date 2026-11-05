@@ -1,0 +1,234 @@
+{
+  "physics": [
+    {
+      "id": "wing_body_pitch_coupling",
+      "pass": false,
+      "detail": {
+        "pass": false,
+        "cases": [
+          {
+            "phase": 0.7,
+            "sweep_scale": 1,
+            "pass": false,
+            "expected_acceleration": [
+              -6.128198149956715,
+              0.8911074976014212
+            ],
+            "actual_acceleration": [
+              -6.0635258551542925,
+              0.4492133733934834
+            ],
+            "expected_after_40ms": {
+              "phase": 0.8149743060566789,
+              "omega": 2.746171317157071,
+              "pitch": 0.006704582983233744,
+              "pitch_rate": 0.18491246541802905
+            },
+            "actual_after_40ms": {
+              "position": [
+                0,
+                100,
+                0
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "pitch": 0.006355468181060016,
+              "roll": 0,
+              "heading": 0,
+              "pitch_rate": 0.1676159623602055,
+              "roll_rate": 0,
+              "phase": 0.8150256697713382,
+              "omega": 2.7486447289724363,
+              "fuel_kg": 3.6,
+              "wheel_angle": 0,
+              "shaft_work_J": 0,
+              "aero_work_J": 0,
+              "drive_heat_J": 0,
+              "control_work_J": 0,
+              "time": 0.04,
+              "status": "flying",
+              "gliding": false,
+              "timing_bias": 0,
+              "sweep_scale": 1
+            },
+            "mass_matrix": {
+              "A": 351.54010849550923,
+              "B": 25.5130897144197,
+              "C": 353.81613065761144
+            }
+          },
+          {
+            "phase": 0.7,
+            "sweep_scale": 0,
+            "pass": false,
+            "expected_acceleration": [
+              -6.321506082779341,
+              0.37891275396049917
+            ],
+            "actual_acceleration": [
+              -6.309308495374062,
+              0.17331966234653162
+            ],
+            "expected_after_40ms": {
+              "phase": 0.8148231243021966,
+              "omega": 2.7387236159201342,
+              "pitch": 0.00630162111622517,
+              "pitch_rate": 0.16499249598017274
+            },
+            "actual_after_40ms": {
+              "position": [
+                0,
+                100,
+                0
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "pitch": 0.006137776552926161,
+              "roll": 0,
+              "heading": 0,
+              "pitch_rate": 0.1568411202480048,
+              "roll_rate": 0,
+              "phase": 0.8148336111850499,
+              "omega": 2.7391921870397344,
+              "fuel_kg": 3.6,
+              "wheel_angle": 0,
+              "shaft_work_J": 0,
+              "aero_work_J": 0,
+              "drive_heat_J": 0,
+              "control_work_J": 0,
+              "time": 0.04,
+              "status": "flying",
+              "gliding": false,
+              "timing_bias": 0,
+              "sweep_scale": 0
+            },
+            "mass_matrix": {
+              "A": 345.1551954843826,
+              "B": 11.110897221859776,
+              "C": 341.6340686437291
+            }
+          },
+          {
+            "phase": 1.8,
+            "sweep_scale": 1,
+            "pass": false,
+            "expected_acceleration": [
+              4.97697663107836,
+              0.05128383246184502
+            ],
+            "actual_acceleration": [
+              4.975971478776044,
+              -0.0324025630506481
+            ],
+            "expected_after_40ms": {
+              "phase": 1.9240405242382117,
+              "omega": 3.2042956584716813,
+              "pitch": 0.006132636310820348,
+              "pitch_rate": 0.159200003628764
+            },
+            "actual_after_40ms": {
+              "position": [
+                0,
+                100,
+                0
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "pitch": 0.006062928968717022,
+              "roll": 0,
+              "heading": 0,
+              "pitch_rate": 0.15566426340482717,
+              "roll_rate": 0,
+              "phase": 1.9240369102222847,
+              "omega": 3.2040983145813295,
+              "fuel_kg": 3.6,
+              "wheel_angle": 0,
+              "shaft_work_J": 0,
+              "aero_work_J": 0,
+              "drive_heat_J": 0,
+              "control_work_J": 0,
+              "time": 0.04,
+              "status": "flying",
+              "gliding": false,
+              "timing_bias": 0,
+              "sweep_scale": 1
+            },
+            "mass_matrix": {
+              "A": 312.982577031083,
+              "B": -6.134392512918707,
+              "C": 364.82307543166536
+            }
+          },
+          {
+            "phase": 1.8,
+            "sweep_scale": 0,
+            "pass": false,
+            "expected_acceleration": [
+              5.055522538103356,
+              0.09902806402991651
+            ],
+            "actual_acceleration": [
+              5.055188544926018,
+              0.08348757845556745
+            ],
+            "expected_after_40ms": {
+              "phase": 1.924118111587888,
+              "omega": 3.208552254902818,
+              "pitch": 0.006109326270951392,
+              "pitch_rate": 0.15631429358930954
+            },
+            "actual_after_40ms": {
+              "position": [
+                0,
+                100,
+                0
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "pitch": 0.006094592023332553,
+              "roll": 0,
+              "heading": 0,
+              "pitch_rate": 0.1555261163958286,
+              "roll_rate": 0,
+              "phase": 1.924116558116974,
+              "omega": 3.208516122690603,
+              "fuel_kg": 3.6,
+              "wheel_angle": 0,
+              "shaft_work_J": 0,
+              "aero_work_J": 0,
+              "drive_heat_J": 0,
+              "control_work_J": 0,
+              "time": 0.04,
+              "status": "flying",
+              "gliding": false,
+              "timing_bias": 0,
+              "sweep_scale": 0
+            },
+            "mass_matrix": {
+              "A": 312.4239277291402,
+              "B": -1.053716048279501,
+              "C": 342.78756640854516
+            }
+          }
+        ],
+        "tolerance": "initial acceleration 0.01% + 1e-4; 40 ms pitch 0.5 mrad, rate 0.005 rad/s"
+      }
+    }
+  ],
+  "diagnostics": {
+    "reference_equations": "Independent mass points, centroid, inertia, local sections and coupled E-L solve; no candidate counters/helpers used as expectations."
+  },
+  "geometry": []
+}
