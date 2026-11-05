@@ -145,7 +145,7 @@ def main(argv=None):
     p = commands.add_parser("review");p.add_argument("grade_dir");p.add_argument("review_json");p.add_argument("--reviewer",required=True)
     p = commands.add_parser("validate");p.add_argument("--node",default="node")
     p = commands.add_parser("audit-reviews");p.add_argument("reviews",nargs="+")
-    p = commands.add_parser("compare");p.add_argument("--models",nargs=2,required=True);p.add_argument("--repeats",type=int,default=3);p.add_argument("--output",required=True);p.add_argument("--config",default=cli_config);p.add_argument("--node",default="node")
+    p = commands.add_parser("compare");p.add_argument("--models",nargs="+",required=True);p.add_argument("--repeats",type=int,default=3);p.add_argument("--output",required=True);p.add_argument("--config",default=cli_config);p.add_argument("--node",default="node")
     p = commands.add_parser("export");p.add_argument("source");p.add_argument("destination")
     p = commands.add_parser("serve-artifacts");p.add_argument("directory");p.add_argument("--port",type=int,default=8765);p.add_argument("--original-camera",action="store_true",help="Serve the exact archived host without playback updates")
     p = commands.add_parser("prepare-world");p.add_argument("output");p.add_argument("--reference",action="store_true")

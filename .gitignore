@@ -6,6 +6,7 @@ node_modules/
 .cache/
 runs/
 reviews/aesthetics/
+captures/
 !runs/.gitkeep
 .DS_Store
 task/sources/*.jpg

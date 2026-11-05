@@ -69,6 +69,20 @@ the human review UI. Scores bind to complete submission hashes and retain every
 revision. Local ledgers are Git-ignored in reviews/aesthetics; export JSON from
 the review page. No automatic aesthetic judgment is substituted for yours.
 
+For blog visuals, open either current v7 simulator and click **Film a flyby**.
+The capture studio prepares a real powered airfield pass with a slow camera
+sweep, hides the interface from the exported scene and records an **8- or
+12-second, 1920 × 1080 video**. Preview it, then choose **Save MP4 video**
+(WebM on browsers without MP4 recording). **Save PNG** exports a clean still.
+**Capture current view** preserves your flight and camera instead of preparing
+a new pass. The local viewer saves videos and stills in the Git-ignored
+`captures/<cohort>/` directory; **Saved clips** opens that library after a reload.
+No external upload or extra package is needed. Keep the tab visible during recording.
+
+The studio targets 30 fps; real-time speed depends on the browser and model's
+physics cost. It changes camera/presentation and initial viewing conditions,
+not submitted aircraft code or recorded grades. [Example films and verification](validation/capture-studio-20261105/library-final/index.html).
+
 Every new packet contains all nine original images,the added assumptions,
 source interpretation guide,the public probe specification and visual design
 brief. No live key is passed to a submission or committed. Generation logs,

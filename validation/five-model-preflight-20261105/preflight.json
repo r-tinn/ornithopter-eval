@@ -1,0 +1,29 @@
+{
+  "kind": "Author-reference and harness preflight; not a model trial",
+  "task_version": "mechanical-v7-source-first",
+  "positive_reference_report": "positive/report.json",
+  "positive_reference_all_seven_pass": true,
+  "targeted_mutants": {
+    "summary": "../source-first-v7/summary.json",
+    "all_nine_rejected": true,
+    "changed_since_calibration": false
+  },
+  "pitch_stability_sha256_matches_calibration": true,
+  "python_tests_passed": 96,
+  "javascript_tests_passed": 16,
+  "models_requested": [
+    "gpt-6.1-sol",
+    "gpt-6-astra",
+    "gpt-5.6-sol",
+    "gpt-5.5",
+    "gpt-5.4"
+  ],
+  "availability": "All five exact IDs confirmed by GET /v1/models/{id}; no substitutions",
+  "budget": {
+    "seconds": 480,
+    "reasoning": "medium",
+    "token_cap": null,
+    "request_cap": null
+  },
+  "harness_change": "Two to eight distinct model IDs, one independent generator per model in parallel, no retries"
+}

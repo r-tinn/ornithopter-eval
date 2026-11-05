@@ -1,0 +1,37 @@
+{
+  "kind": "Capture UI/media regression and illustrative viewer clips; not model trials or new grades",
+  "scenarios": [
+    {
+      "id": "gpt-6.1-sol-01",
+      "field": "valley",
+      "clip": "gpt-6.1-sol-01-airfield.mp4",
+      "metadata": {
+        "duration": 7.844767,
+        "width": 1920,
+        "height": 1080,
+        "mime": "mp4"
+      },
+      "frames": {
+        "samples": [
+          {
+            "time": 0.4,
+            "mean": 121.42042245369412,
+            "deviation": 30.808914166434864
+          },
+          {
+            "time": 7.444767,
+            "mean": 121.47950810184754,
+            "deviation": 26.661607315151635
+          }
+        ],
+        "changed_fraction": 0.1873263888888889
+      },
+      "initial_simulation_time": 29.999999999998618,
+      "final_simulation_time": 37.950000000003236,
+      "errors": [],
+      "passed": true
+    }
+  ],
+  "passed": false,
+  "error": "AssertionError [ERR_ASSERTION]: Recording must advance the actual simulator"
+}

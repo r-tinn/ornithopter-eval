@@ -64,3 +64,12 @@ condition, not a claim of successful glide-to-powered restart. Initial kinetic
 energy belongs to the preset, not new engine work. Zero throttle then coasts.
 Saved v6/v7 playback gets a labelled host-control/preset overlay and an original-playback
 option. Never repair saved model physics or overwrite their recorded grades.
+
+The v7 host includes an optional local capture studio: Film a flyby prepares a
+powered Approach and advances 30 simulated seconds using the actual submitted
+physics before filming. Capture current view preserves the current flight.
+Exports are clean 1080p MP4/WebM video (8 or12 s, target30 fps) or PNG stills.
+Keep encoding/extra rendering work limited to capture use. The labelled
+retrospective overlay may use the current v7 host only when all the other
+shared environment modules match by hash. Capture footage is illustrative
+playback, never a new model trial, grader result or human aesthetic rating.

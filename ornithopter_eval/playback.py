@@ -3,7 +3,7 @@ import json
 import re
 from urllib.parse import parse_qs
 
-from .checks import MECHANICAL_VERSION,MECHANICAL_LEGACY_VERSION,SOURCE_FIRST_VERSION,SOURCE_FIRST_VERSIONS
+from .checks import MECHANICAL_VERSION,MECHANICAL_LEGACY_VERSION,SOURCE_FIRST_VERSION,SOURCE_FIRST_VERSIONS,LATEST_SOURCE_FIRST_VERSION
 CAMERA_PLAYBACK_VERSIONS=(MECHANICAL_VERSION,MECHANICAL_LEGACY_VERSION,*SOURCE_FIRST_VERSIONS)
 from .runner import ROOT,digest
 
@@ -51,6 +51,7 @@ class CameraPlayback:
         self.source_first=False
         self.approach_trials=[]
         self.approach_start_trials=[]
+        self.capture_trials=[]
         experiment=json.loads((root/'experiment.json').read_text())
         if experiment.get('task_version') not in CAMERA_PLAYBACK_VERSIONS:
             return
@@ -77,9 +78,23 @@ class CameraPlayback:
                     b'Math.min(devicePixelRatio,WORLD.pixel_ratio)',b'Math.min(devicePixelRatio,2)',1)
                 updated,approach=powered_approach_playback(updated)
                 updated,preset=powered_approach_preset_playback(updated)
-                if updated==original:
+                capture_files={}
+                # Only the matching v7 host receives the capture studio. Its
+                # physics/geometry and all other environment modules stay in
+                # the saved packet; compatibility is checked by content hash.
+                native=ROOT/'candidate/mechanical-v7/scaffold/environment'
+                shared=('engineering.mjs','flight-modes.mjs','source-mechanism.mjs','view-motion.mjs','world.mjs','style.css','vendor/three.module.min.js','vendor/three.core.min.js')
+                if (experiment['task_version']==LATEST_SOURCE_FIRST_VERSION and
+                    all((directory/'submission/environment'/file).is_file() and
+                        digest(directory/'submission/environment'/file)==digest(native/file) for file in shared)):
+                    updated=(native/'platform.mjs').read_bytes()
+                    recorded_capture=directory/'submission/environment/capture.mjs'
+                    if updated!=original or not recorded_capture.is_file() or digest(recorded_capture)!=digest(native/'capture.mjs'):
+                        capture_files={'capture.mjs':(native/'capture.mjs').read_bytes()}
+                        self.capture_trials.append(name)
+                if updated==original and not capture_files:
                     continue
-                self.trial_files[name]={'platform.mjs':updated}
+                self.trial_files[name]={'platform.mjs':updated,**capture_files}
                 if approach:
                     self.approach_trials.append(name)
                     self.trial_files[name]['flight-modes.mjs']=(ROOT/'candidate/mechanical-v7/scaffold/environment/flight-modes.mjs').read_bytes()
@@ -95,6 +110,10 @@ class CameraPlayback:
             'original_files_rewritten':False,'scores_or_captures_changed':False,
             'model_physics_or_geometry_rewritten':False,'approach_controls_updated':self.approach_trials,
             'approach_start_updated':self.approach_start_trials,
+            'capture_studio_updated':self.capture_trials,
+            'capture_studio':{'resolution':[1920,1080],'fps':30,'durations_s':[8,12],
+                              'exports':['browser-supported MP4/WebM','PNG'],
+                              'camera':'presentation-only cinematic sweep; actual model flight'} if self.capture_trials else None,
             'approach_start':{'distance_before_runway_m':450,'height_above_local_gear_contact_m':100,
                               'airspeed_m_s':16,'pitch_rad':.1,'wing_omega_rad_s':6,'throttle':.9,'gliding':False,
                               'kind':'already-powered initial condition; not a glide restart or scored flight'} if self.approach_start_trials else None,
@@ -112,11 +131,13 @@ class CameraPlayback:
             description='Interactive playback updated:</strong> sharper rendering; adding throttle in Approach engages the powered wings.' if self.source_first else 'Interactive camera updated:</strong> centred chase view and smoother rendering.'
             if self.approach_start_trials:
                 description='Interactive playback updated:</strong> Approach starts already flapping at 90% throttle, 450 m before the runway and 100 m above local ground contact.'
+            if self.capture_trials:
+                description+=' Open a simulator and choose Film a flyby for clean 1080p video and PNG exports.'
             banner=('<p role="status"><strong>'+description+' '
                     'Saved submissions, scores and grader captures retain the original rendering. '
                     '<a href="viewer-camera.json">Playback details</a></p>')
             return (self.root/name).read_text().replace('<body>','<body>'+banner,1).encode()
-        match=re.fullmatch(r'trials/([^/]+)/submission/(index\.html|environment/(platform\.mjs|view-motion\.mjs|flight-modes\.mjs))',name)
+        match=re.fullmatch(r'trials/([^/]+)/submission/(index\.html|environment/(platform\.mjs|view-motion\.mjs|flight-modes\.mjs|capture\.mjs))',name)
         if not match or match[1] not in self.trials:
             return None
         original=parse_qs(query).get('original')==['1']

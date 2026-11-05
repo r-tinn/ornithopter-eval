@@ -157,8 +157,8 @@ def run_experiment(output, models, repeats, config_path, node="node", transport=
     root = Path(output).resolve()
     if root.exists():
         raise ValueError("Experiment directory already exists; preserve all previous attempts")
-    if len(models)!=2 or len(set(models))!=2 or any(not re.fullmatch(r"[a-z0-9][a-z0-9._-]{0,99}",m) for m in models):
-        raise ValueError("Provide two distinct explicit model IDs")
+    if not 2<=len(models)<=8 or len(set(models))!=len(models) or any(not re.fullmatch(r"[a-z0-9][a-z0-9._-]{0,99}",m) for m in models):
+        raise ValueError("Provide between two and eight distinct explicit model IDs")
     if type(repeats) is not int or not 1<=repeats<=20:
         raise ValueError("Repeats must be between 1 and 20")
     if transport is create_response and not get_api_key():
@@ -183,7 +183,7 @@ def run_experiment(output, models, repeats, config_path, node="node", transport=
     experiment = {"task_version":version,"created_utc":datetime.now(timezone.utc).isoformat(),
         "git_commit":commit,"frozen_sha256":frozen,"config_sha256":digest(root / "config.json"),
         "models":models,"repeats":repeats,"config":config,"status":"prepared",
-        "protocol":f"Two generators in parallel per round; {repeats} independent rounds; grading only after submission; no retries.",
+        "protocol":f"{len(models)} generators in parallel per round; {repeats} independent rounds; grading only after submission; no retries.",
         "visual_review":"Not scored: previous image judge failed calibration.","trials":[]}
     for repeat in range(1,repeats+1):
         for model in models:
@@ -199,16 +199,16 @@ def run_experiment(output, models, repeats, config_path, node="node", transport=
         write_transcript(run)
         return manifest
 
-    with ThreadPoolExecutor(max_workers=2) as pool:
+    with ThreadPoolExecutor(max_workers=len(models)) as pool:
         for repeat in range(1,repeats+1):
             if digest(root / "config.json")!=experiment["config_sha256"] or any(digest(ROOT/name)!=sha for name,sha in frozen.items()):
                 raise ValueError("Task, harness, grader or configuration changed during the frozen experiment")
-            pair = [t for t in experiment["trials"] if t["repeat"]==repeat]
-            for trial in pair:
+            round_trials = [t for t in experiment["trials"] if t["repeat"]==repeat]
+            for trial in round_trials:
                 trial["status"]="running"
             experiment["status"]="running"
             refresh_workbench(root,experiment)
-            pending = {pool.submit(generate,t):t for t in pair}
+            pending = {pool.submit(generate,t):t for t in round_trials}
             for future in as_completed(pending):
                 trial = pending[future]
                 run = root / "trials" / trial["id"]
@@ -231,7 +231,7 @@ def run_experiment(output, models, repeats, config_path, node="node", transport=
                 print(trial["id"]+": "+json.dumps({k:trial.get(k) for k in ("status","automated","reason","grading_error")}),flush=True)
             if digest(root / "config.json")!=experiment["config_sha256"] or any(digest(ROOT/name)!=sha for name,sha in frozen.items()):
                 raise ValueError("Frozen experiment files changed during generation or grading")
-            if any(t["status"]=="infrastructure_error" or t.get("grading_error") for t in pair):
+            if any(t["status"]=="infrastructure_error" or t.get("grading_error") for t in round_trials):
                 experiment["status"]="attention_required"
                 return refresh_workbench(root,experiment)
     experiment["status"]="completed"
@@ -263,10 +263,13 @@ class ArtifactServer(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         url = urlsplit(self.path)
         name = unquote(url.path).lstrip("/") or "index.html"
+        from .captures import get as get_capture
+        if get_capture(self,name,url.query):return
         path = self.server.artifact_root / name
         allowed = {".html":"text/html",".mjs":"text/javascript",".js":"text/javascript",".css":"text/css",
                    ".json":"application/json",".jsonl":"text/plain",".txt":"text/plain",".log":"text/plain",
-                   ".md":"text/plain",".png":"image/png",".jpg":"image/jpeg",".zip":"application/zip"}
+                   ".md":"text/plain",".png":"image/png",".jpg":"image/jpeg",".zip":"application/zip",
+                   ".mp4":"video/mp4",".webm":"video/webm"}
         if (not path.resolve().is_relative_to(self.server.artifact_root) or any(part.startswith(".") for part in Path(name).parts)
             or any(p.is_symlink() for p in (path,*path.parents)) or path.suffix not in allowed):
             self.send_error(404);return
@@ -284,8 +287,14 @@ class ArtifactServer(http.server.BaseHTTPRequestHandler):
             body = re.sub(br'(<body[^>]*>)', lambda match: match[0] + banner.encode(), body, count=1)
         self.send_response(200)
         self.send_header("Content-Type",allowed[path.suffix]);self.send_header("Content-Length",str(len(body)))
-        self.send_header("Content-Security-Policy","default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'")
+        self.send_header("Content-Security-Policy","default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self' blob:; connect-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'")
         self.send_header("Cache-Control","no-store");self.end_headers();self.wfile.write(body)
+
+    def do_POST(self):
+        if urlsplit(self.path).path!='/__captures':
+            self.send_error(404);return
+        from .captures import save
+        save(self)
 
 
 def serve_artifacts(root, port=8765, camera_updates=True, *, review_ledger=None):

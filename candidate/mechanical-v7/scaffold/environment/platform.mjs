@@ -8,6 +8,7 @@ import {AIRFIELDS,WORLD,createWorld,surfaceHeight} from './world.mjs';
 import * as physics from '../physics.mjs';
 import {createAircraft,updateAircraft} from '../aircraft.mjs';
 import {PHYSICS_DT,FRAME_MS,copyPose,interpolatePose,chaseView,nextFrameDeadline} from './view-motion.mjs';
+import {FILM,installCapture,cinematicView} from './capture.mjs';
 
 const $=s=>document.querySelector(s),canvas=$('[data-testid=scene]'),viewport=$('#viewport');
 const scene=new T.Scene();scene.background=new T.Color(0xb8cece);scene.fog=new T.Fog(0xb8cece,700,3100);
@@ -22,6 +23,7 @@ shadow.rotation.x=-Math.PI/2;shadow.scale.set(1.3,.65,1);scene.add(shadow);
 const environment={wind:[0,0,0],rho:1.225,surfaceHeight};
 const controls={throttle:0,pitch:0,bank:0,rudder:0,brake:0};
 let state,previousState,renderState,aircraft,ready=false,running=false,mode='chase',field=AIRFIELDS[0],last=null,nextDraw=0,accumulator=0,frame=null,dirty=true;
+let capture;
 let orbitYaw=2.4,orbitPitch=.38,orbitDistance=E.span_m*1.25,drag=null,lastUI=0;
 const keys=new Set(),position=new T.Vector3(),target=new T.Vector3(),desired=new T.Vector3();
 function setStatus(message){$('#flight-status').textContent=message;}
@@ -73,11 +75,14 @@ function draw(){
   }
   position.fromArray(renderState.position);camera.up.set(0,1,0);
   const near=mode==='world'?20:.5;
-  if(camera.near!==near){camera.near=near;camera.updateProjectionMatrix();}
+  const fov=mode==='cinematic'?38:48;
+  if(camera.near!==near||camera.fov!==fov){camera.near=near;camera.fov=fov;camera.updateProjectionMatrix();}
   scene.fog.near=mode==='world'?3000:700;scene.fog.far=mode==='world'?6500:3100;
   const yaw=-renderState.heading,scale=(physics.parameters.span_m||3)/3;
   if(mode==='world'){
     desired.set(-1050,1400,2150);target.set(300,45,520);
+  }else if(mode==='cinematic'){
+    cinematicView(position,renderState.heading,physics.parameters.span_m,renderState.time-(capture?.epoch??0),desired,target);
   }else if(mode==='chase'){
     // Camera and airframe share the same interpolated pose, with no lateral offset
     // or independently delayed camera position / immediate look-at mismatch.
@@ -122,7 +127,7 @@ function animate(now){
     }catch(error){fail(error);}
     dirty=true;
   }
-  if(dirty&&(!running||now+.5>=nextDraw)){draw();nextDraw=nextFrameDeadline(now,nextDraw,FRAME_MS);dirty=false;}
+  if(dirty&&(!running||now+.5>=nextDraw)){draw();nextDraw=nextFrameDeadline(now,nextDraw,capture?.recording?1000/FILM.fps:FRAME_MS);dirty=false;}
   if(running||dirty)frame=requestAnimationFrame(animate);else last=null;
 }
 function pause(){running=false;keys.clear();controls.pitch=controls.bank=controls.rudder=controls.brake=0;accumulator=0;requestDraw();}
@@ -130,10 +135,11 @@ function start(){if(ready&&state.status!=='crashed'){copyPose(state,previousStat
 $('[data-testid=start]').onclick=start;$('[data-testid=pause]').onclick=pause;
 $('[data-testid=reset]').onclick=()=>preset(false);$('[data-testid=approach]').onclick=()=>preset(true);
 $('[data-testid=throttle]').oninput=e=>{controls.throttle=+e.target.value;engagePower();requestDraw();};
-for(const button of document.querySelectorAll('[data-view]'))button.onclick=()=>{
-  mode=button.dataset.view;$('#camera-label').textContent=mode.toUpperCase()+' VIEW';
-  for(const b of document.querySelectorAll('[data-view]'))b.classList.toggle('selected',b===button);requestDraw();
-};
+function selectView(view){
+  mode=view;$('#camera-label').textContent=mode.toUpperCase()+' VIEW';
+  for(const b of document.querySelectorAll('[data-view]'))b.classList.toggle('selected',b.dataset.view===view);requestDraw();
+}
+for(const button of document.querySelectorAll('[data-view]'))button.onclick=()=>selectView(button.dataset.view);
 for(const button of document.querySelectorAll('[data-field]'))button.onclick=()=>{
   field=AIRFIELDS.find(f=>f.id===button.dataset.field);
   for(const b of document.querySelectorAll('[data-field]'))b.classList.toggle('selected',b===button);preset(false);
@@ -149,7 +155,14 @@ window.addEventListener('keydown',e=>{
 });
 window.addEventListener('keyup',e=>keys.delete(e.code));window.addEventListener('blur',pause);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();});
-new ResizeObserver(()=>{renderer.setSize(viewport.clientWidth,viewport.clientHeight,false);camera.aspect=viewport.clientWidth/viewport.clientHeight;camera.updateProjectionMatrix();requestDraw();}).observe(viewport);
+function resizeViewport(){
+  const studio=capture?.studio;
+  renderer.setPixelRatio(studio?1:Math.min(devicePixelRatio,2));
+  renderer.setSize(studio?FILM.width:viewport.clientWidth,studio?FILM.height:viewport.clientHeight,false);
+  camera.aspect=studio?FILM.width/FILM.height:viewport.clientWidth/viewport.clientHeight;
+  camera.updateProjectionMatrix();requestDraw();
+}
+new ResizeObserver(resizeViewport).observe(viewport);
 function geometryDiagnostics(){
   if(!aircraft?.root)return {triangles:0,wheel_clearances:[]};
   aircraft.root.updateMatrixWorld(true);let triangles=0;
@@ -185,3 +198,16 @@ const analysis=document.createElement('details');analysis.innerHTML='<summary>Wi
 analysis.querySelector('button').onclick=()=>{try{const samples=[],m=physics.parameters.dry_mass_kg+state.fuel_kg,omega=2*Math.PI;for(let i=0;i<64;i++){const t=i/64,phase=omega*t,s={...state,position:[0,100,0],velocity:[20,.05*omega*Math.cos(phase),0],roll:0,heading:0,pitch:0,pitch_rate:0,phase,omega,gliding:false,timing_bias:0},f=physics.forces(s,{...controls,throttle:1},environment),required=m*(E.gravity_m_s2-.05*omega*omega*Math.sin(phase));samples.push({time:t,required_N:required,actual_N:f.force[1]+m*E.gravity_m_s2,residual_N:f.force[1]+m*E.gravity_m_s2-required,wing_lift_N:f.lift,forward_N:f.thrust,shaft_W:f.power,aero_W:f.aero_power_W});}const avg=k=>samples.reduce((a,x)=>a+x[k]/samples.length,0);analysis.querySelector('pre').textContent=JSON.stringify({mean_residual_N:avg('residual_N'),rms_residual_N:Math.sqrt(samples.reduce((a,x)=>a+x.residual_N**2/samples.length,0)),mean_forward_N:avg('forward_N'),aerodynamic_drive_work_J:avg('aero_W'),shaft_work_J:avg('shaft_W'),samples},null,2);const old=analysis.querySelector('svg');if(old)old.remove();const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 600 180');svg.style.width='min(600px,100%)';svg.setAttribute('role','img');svg.setAttribute('aria-label','Required upward force in brown and actual upward force in green over one wingbeat');const lo=Math.min(...samples.flatMap(s=>[s.required_N,s.actual_N])),hi=Math.max(...samples.flatMap(s=>[s.required_N,s.actual_N]));for(const [key,color] of [['required_N','#a86836'],['actual_N','#226252']]){const line=document.createElementNS(svg.namespaceURI,'polyline');line.setAttribute('points',samples.map((s,i)=>`${10+i/(samples.length-1)*580},${170-(s[key]-lo)/Math.max(1,hi-lo)*160}`).join(' '));line.setAttribute('fill','none');line.setAttribute('stroke',color);line.setAttribute('stroke-width','2');svg.append(line)}analysis.insertBefore(svg,analysis.querySelector('pre'));}catch(e){analysis.querySelector('pre').textContent=String(e)}};
 if(physics.parameters.fixture_only)$('#fixture-note').textContent='V7 handwritten calibration fixture — not a model result. Hypothetical human-piloted aircraft; reference-informed educational physics.';
 preset(false);
+capture=installCapture({canvas,viewport,ready:()=>ready,state:()=>state,view:()=>mode,setView:selectView,
+  start,pause,resize:resizeViewport,render:draw,
+  prepare:async signal=>{
+    preset(true);
+    for(let i=0;i<15;i++){
+      if(signal.aborted)throw new DOMException('Cancelled','AbortError');
+      advanceForReview(2);
+      if(state.status==='crashed')throw Error('The aircraft crashed while preparing this pass.');
+      await new Promise(requestAnimationFrame);
+    }
+    if(signal.aborted)throw new DOMException('Cancelled','AbortError');
+  }});
+window.flightLab.getCaptureDiagnostics=()=>capture.diagnostics();

@@ -109,3 +109,15 @@ class PlaybackTests(unittest.TestCase):
             for name in ('physics.mjs','aircraft.mjs','kinematics.mjs','environment/world.mjs'):
                 self.assertIsNone(playback.response(prefix+name))
         self.assertEqual(hashes,{str(p.relative_to(root)):digest(p) for p in root.rglob('*') if p.is_file()})
+
+    def test_capture_studio_is_only_served_for_a_matching_v7_host(self):
+        root=ROOT/'experiments/source-first-v7-20261105-one-each'
+        playback=CameraPlayback(root)
+        self.assertEqual(set(playback.capture_trials),{'gpt-5.6-sol-01','gpt-6.1-sol-01'})
+        for trial in playback.capture_trials:
+            prefix=f'trials/{trial}/submission/'
+            self.assertIn(b'installCapture',playback.response(prefix+'environment/platform.mjs'))
+            self.assertIn(b'canvas.captureStream',playback.response(prefix+'environment/capture.mjs'))
+            self.assertIsNone(playback.response(prefix+'environment/capture.mjs','original=1'))
+        legacy=CameraPlayback(ROOT/'experiments/source-first-v6-20261105-8min-one-each')
+        self.assertEqual(legacy.capture_trials,[])

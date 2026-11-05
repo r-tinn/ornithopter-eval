@@ -1,0 +1,102 @@
+{
+  "kind": "Capture UI/media regression and illustrative viewer clips; not model trials or new grades",
+  "scenarios": [
+    {
+      "id": "gpt-6.1-sol-01",
+      "field": "valley",
+      "clip": "gpt-6.1-sol-01-airfield.mp4",
+      "metadata": {
+        "duration": 7.903067,
+        "width": 1920,
+        "height": 1080,
+        "mime": "mp4"
+      },
+      "frames": {
+        "samples": [
+          {
+            "time": 0.4,
+            "mean": 110.47269675923343,
+            "deviation": 32.9776656310089
+          },
+          {
+            "time": 7.503067,
+            "mean": 111.39546874995841,
+            "deviation": 32.14047477491599
+          }
+        ],
+        "changed_fraction": 0.18074652777777778
+      },
+      "initial_simulation_time": 29.999999999998618,
+      "final_simulation_time": 37.975000000003256,
+      "capture": {
+        "studio": true,
+        "recording": false,
+        "preparing": false,
+        "format": "mp4",
+        "width": 1920,
+        "height": 1080,
+        "target_fps": 30,
+        "last_clip": {
+          "requested_seconds": 8,
+          "wall_seconds": 8.137900000000023,
+          "simulation_seconds": 7.975000000004638,
+          "mime": "video/mp4;codecs=avc1.42002a",
+          "bytes": 1778815,
+          "saved_path": "/Users/tinnfamily/code/ornithopter-eval/captures/source-first-v7-20261105-one-each/gpt-6-1-sol-01-20261105T120612Z-e9f717860ada.mp4",
+          "saved_href": "/__captures/gpt-6-1-sol-01-20261105T120612Z-e9f717860ada.mp4"
+        }
+      },
+      "errors": [],
+      "passed": true
+    },
+    {
+      "id": "gpt-5.6-sol-01",
+      "field": "meadow",
+      "clip": "gpt-5.6-sol-01-airfield.mp4",
+      "metadata": {
+        "duration": 7.914433,
+        "width": 1920,
+        "height": 1080,
+        "mime": "mp4"
+      },
+      "frames": {
+        "samples": [
+          {
+            "time": 0.4,
+            "mean": 142.89241319443502,
+            "deviation": 34.78987300109575
+          },
+          {
+            "time": 7.5144329999999995,
+            "mean": 145.6759143518296,
+            "deviation": 36.61551739814719
+          }
+        ],
+        "changed_fraction": 0.23564236111111111
+      },
+      "initial_simulation_time": 29.999999999998618,
+      "final_simulation_time": 37.983333333336596,
+      "capture": {
+        "studio": true,
+        "recording": false,
+        "preparing": false,
+        "format": "mp4",
+        "width": 1920,
+        "height": 1080,
+        "target_fps": 30,
+        "last_clip": {
+          "requested_seconds": 8,
+          "wall_seconds": 8.121699999999953,
+          "simulation_seconds": 7.983333333337978,
+          "mime": "video/mp4;codecs=avc1.42002a",
+          "bytes": 1345421,
+          "saved_path": "/Users/tinnfamily/code/ornithopter-eval/captures/source-first-v7-20261105-one-each/gpt-5-6-sol-01-20261105T120634Z-8998f987ddb7.mp4",
+          "saved_href": "/__captures/gpt-5-6-sol-01-20261105T120634Z-8998f987ddb7.mp4"
+        }
+      },
+      "errors": [],
+      "passed": true
+    }
+  ],
+  "passed": true
+}

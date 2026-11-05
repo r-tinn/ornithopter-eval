@@ -1,0 +1,6 @@
+{
+  "kind": "Capture UI/media regression and illustrative viewer clips; not model trials or new grades",
+  "scenarios": [],
+  "passed": false,
+  "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(shortDuration>1&&shortDuration<5)\n"
+}

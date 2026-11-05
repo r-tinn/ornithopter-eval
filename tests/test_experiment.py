@@ -18,6 +18,31 @@ def fake_grade(submission,output,node):
 
 
 class ExperimentTests(unittest.TestCase):
+    def test_five_models_each_get_one_independent_attempt_and_a_failure_does_not_skip_peers(self):
+        from ornithopter_eval.api import APIError
+        models=['model-a','model-b','model-c','model-d','model-e']
+        with tempfile.TemporaryDirectory() as temp:
+            calls=[]
+            def transport(payload,timeout):
+                calls.append(payload)
+                if payload['model']=='model-c':raise APIError('Unavailable requested model; no retry')
+                return {'status':'completed','output':[],'usage':{'input_tokens':100,'output_tokens':1}}
+            root=Path(temp)/'five'
+            result=run_experiment(root,models,1,ROOT/'configs/frontier-calibration.json',transport=transport,grader=fake_grade)
+            self.assertEqual(result['status'],'attention_required')
+            self.assertEqual(sorted(p['model'] for p in calls),models)
+            self.assertTrue(all(p['input']==calls[0]['input'] for p in calls))
+            self.assertEqual(len(result['trials']),5)
+            for trial in result['trials']:
+                failed=trial['model']=='model-c'
+                self.assertEqual(trial['status'],'infrastructure_error' if failed else 'submitted')
+                self.assertEqual(result['models'][trial['model']]['graded_attempts'],0 if failed else 1)
+                self.assertTrue((root/'trials'/trial['id']/'transcript.txt').is_file())
+            for invalid in ([models[0]],models+[models[0]],[f'model-{n}' for n in range(9)]):
+                with self.assertRaises(ValueError):
+                    run_experiment(Path(temp)/'invalid',invalid,1,ROOT/'configs/frontier-calibration.json')
+            self.assertFalse((Path(temp)/'invalid').exists())
+
     def test_generation_profile_is_frozen_for_both_models_without_changing_task(self):
         with tempfile.TemporaryDirectory() as temp:
             root=Path(temp)/'constrained';calls=[]

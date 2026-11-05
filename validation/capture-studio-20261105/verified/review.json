@@ -1,0 +1,98 @@
+{
+  "kind": "Capture UI/media regression and illustrative viewer clips; not model trials or new grades",
+  "scenarios": [
+    {
+      "id": "gpt-6.1-sol-01",
+      "field": "valley",
+      "clip": "gpt-6.1-sol-01-airfield.mp4",
+      "metadata": {
+        "duration": 7.8838,
+        "width": 1920,
+        "height": 1080,
+        "mime": "mp4"
+      },
+      "frames": {
+        "samples": [
+          {
+            "time": 0.4,
+            "mean": 110.84346064812341,
+            "deviation": 33.29767186247716
+          },
+          {
+            "time": 7.4838,
+            "mean": 111.37585069440544,
+            "deviation": 32.09260207271039
+          }
+        ],
+        "changed_fraction": 0.18107638888888888
+      },
+      "initial_simulation_time": 29.999999999998618,
+      "final_simulation_time": 37.916666666669876,
+      "capture": {
+        "studio": true,
+        "recording": false,
+        "preparing": false,
+        "format": "mp4",
+        "width": 1920,
+        "height": 1080,
+        "target_fps": 30,
+        "last_clip": {
+          "requested_seconds": 8,
+          "wall_seconds": 8.237600000023843,
+          "simulation_seconds": 7.916666666671258,
+          "mime": "video/mp4;codecs=avc1.42002a",
+          "bytes": 898327
+        }
+      },
+      "errors": [],
+      "passed": true
+    },
+    {
+      "id": "gpt-5.6-sol-01",
+      "field": "meadow",
+      "clip": "gpt-5.6-sol-01-airfield.mp4",
+      "metadata": {
+        "duration": 7.864133,
+        "width": 1920,
+        "height": 1080,
+        "mime": "mp4"
+      },
+      "frames": {
+        "samples": [
+          {
+            "time": 0.4,
+            "mean": 142.99509837962137,
+            "deviation": 34.824119443812044
+          },
+          {
+            "time": 7.4641329999999995,
+            "mean": 145.63006944442557,
+            "deviation": 36.233230414471336
+          }
+        ],
+        "changed_fraction": 0.2261284722222222
+      },
+      "initial_simulation_time": 29.999999999998618,
+      "final_simulation_time": 37.16666666666928,
+      "capture": {
+        "studio": true,
+        "recording": false,
+        "preparing": false,
+        "format": "mp4",
+        "width": 1920,
+        "height": 1080,
+        "target_fps": 30,
+        "last_clip": {
+          "requested_seconds": 8,
+          "wall_seconds": 8.223200000047683,
+          "simulation_seconds": 7.166666666670661,
+          "mime": "video/mp4;codecs=avc1.42002a",
+          "bytes": 567832
+        }
+      },
+      "errors": [],
+      "passed": true
+    }
+  ],
+  "passed": true
+}
