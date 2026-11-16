@@ -1,4 +1,6 @@
 """Offline UI smoke fixture only; never starts an API request or a real rating."""
+import json
+import shutil
 import signal
 import sys
 import tempfile
@@ -18,6 +20,10 @@ if __name__ == '__main__':
     with tempfile.TemporaryDirectory(prefix='aesthetic-ui-offline-') as directory:
         root = Path(directory) / 'cohort'
         fixture(root)
+        shutil.copytree(root/'trials/offline-model-01',root/'trials/offline-model-02')
+        experiment=json.loads((root/'experiment.json').read_text())
+        experiment['trials'].append({**experiment['trials'][0],'id':'offline-model-02'})
+        (root/'experiment.json').write_text(json.dumps(experiment))
         (root / 'index.html').write_text('<!doctype html><html><body><h1>Offline UI fixture</h1></body></html>')
         try:
             serve_artifacts(root, port=0, camera_updates=False, review_ledger=Path(directory) / 'ratings.jsonl')
