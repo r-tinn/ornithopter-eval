@@ -18,6 +18,24 @@ def fake_grade(submission,output,node):
 
 
 class ExperimentTests(unittest.TestCase):
+    def test_explicit_grading_revision_is_recorded_and_forwarded(self):
+        from unittest.mock import patch
+        revision = 'v7-launch-60-65-70-bank-v2'
+        def transport(payload, timeout):
+            return {'status': 'completed', 'output': [], 'usage': {'input_tokens': 1, 'output_tokens': 1}}
+        def grade(submission, output, **kwargs):
+            self.assertEqual(kwargs['grading_revision'], revision)
+            self.assertEqual(kwargs['task_version'], 'mechanical-v7-source-first')
+            return fake_grade(submission, output, kwargs['node'])
+        with tempfile.TemporaryDirectory() as temp, patch('ornithopter_eval.experiment.grade_submission', side_effect=grade) as grader:
+            result = run_experiment(Path(temp)/'batch', ['model-a','model-b'], 1,
+                ROOT/'configs/source-first-v7.json', transport=transport, grader=grader,
+                sequential=True, stop_on_error=True, grading_revision=revision)
+            self.assertEqual(result['grading_revision'], revision)
+            self.assertEqual(grader.call_count, 2)
+            saved = json.loads((Path(temp)/'batch/experiment.json').read_text())
+            self.assertIn('grader/protocols/'+revision+'.json', saved['frozen_sha256'])
+
     def test_sequential_fail_fast_grades_before_next_model_and_never_dispatches_after_api_error(self):
         from ornithopter_eval.api import APIError
         order=[]

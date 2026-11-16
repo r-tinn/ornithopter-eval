@@ -14,7 +14,7 @@ from urllib.parse import unquote, urlsplit
 
 from .api import create_response, get_api_key
 from .checks import CHECKS, TASK_VERSION, MECHANICAL_VERSION, MECHANICAL_VERSIONS, PILOTED_VERSION, SOURCE_FIRST_VERSION, SOURCE_FIRST_VERSIONS, checklist
-from .grading import grade_submission
+from .grading import grade_submission, GRADING_REVISIONS
 from .runner import ROOT, digest, initial_input, prepare, run_model, write_json
 from .protocol import load_config
 
@@ -172,7 +172,7 @@ def refresh_workbench(root, experiment):
     return summary
 
 
-def run_experiment(output, models, repeats, config_path, node="node", transport=create_response, grader=grade_submission, generation_profile=None, *, sequential=False, stop_on_error=False):
+def run_experiment(output, models, repeats, config_path, node="node", transport=create_response, grader=grade_submission, generation_profile=None, *, sequential=False, stop_on_error=False, grading_revision=None):
     root = Path(output).resolve()
     if root.exists():
         raise ValueError("Experiment directory already exists; preserve all previous attempts")
@@ -188,8 +188,10 @@ def run_experiment(output, models, repeats, config_path, node="node", transport=
     version = config.get("task_version")
     if version not in (TASK_VERSION, MECHANICAL_VERSION,PILOTED_VERSION,*SOURCE_FIRST_VERSIONS):
         raise ValueError("Unsupported task version")
+    if grading_revision is not None and (grading_revision not in GRADING_REVISIONS or version != "mechanical-v7-source-first"):
+        raise ValueError("Unsupported grading revision for this task")
     frozen = {str(p.relative_to(ROOT)):digest(p) for pattern in
-              ("ornithopter_eval/*.py","ornithopter_eval/*.html","grader/*.mjs","task/*.md","task/starter/*","task/sources/*.jpg","candidate/mechanical-v4/**/*","candidate/mechanical-v5/**/*","candidate/mechanical-v6/**/*","candidate/mechanical-v7/**/*","audits/source-compatibility-20261104/sources/*.jpg")
+              ("ornithopter_eval/*.py","ornithopter_eval/*.html","grader/*.mjs","grader/protocols/*.json","task/*.md","task/starter/*","task/sources/*.jpg","candidate/mechanical-v4/**/*","candidate/mechanical-v5/**/*","candidate/mechanical-v6/**/*","candidate/mechanical-v7/**/*","audits/source-compatibility-20261104/sources/*.jpg")
               for p in sorted(ROOT.glob(pattern)) if p.is_file()}
     root.mkdir(parents=True)
     if generation_profile is None:
@@ -209,6 +211,8 @@ def run_experiment(output, models, repeats, config_path, node="node", transport=
                     if sequential else f"{len(models)} generators in parallel per round; {repeats} independent rounds; grading only after submission; no retries."),
         "execution":{"concurrency":1 if sequential else len(models),"stop_on_error":stop_on_error},
         "visual_review":"Not scored: previous image judge failed calibration.","trials":[]}
+    if grading_revision:
+        experiment["grading_revision"] = grading_revision
     for repeat in range(1,repeats+1):
         for model in models:
             name = model+f"-{repeat:02d}"
@@ -245,7 +249,7 @@ def run_experiment(output, models, repeats, config_path, node="node", transport=
                     if manifest.get('api_diagnostics'):
                         trial['api_diagnostics'] = manifest['api_diagnostics']
                     if manifest["status"] in ("submitted","budget_exhausted"):
-                        report = (grader(run / "submission",run / "grade",node=node,task_version=version)
+                        report = (grader(run / "submission",run / "grade",node=node,task_version=version,grading_revision=grading_revision)
                                   if grader is grade_submission else grader(run / "submission",run / "grade",node=node))
                         trial["grading_status"] = report["status"]
                         trial["automated"] = automated_result(report)

@@ -146,6 +146,7 @@ def main(argv=None):
     p = commands.add_parser("validate");p.add_argument("--node",default="node")
     p = commands.add_parser("audit-reviews");p.add_argument("reviews",nargs="+")
     p = commands.add_parser("compare");p.add_argument("--models",nargs="+",required=True);p.add_argument("--repeats",type=int,default=3);p.add_argument("--output",required=True);p.add_argument("--config",default=cli_config);p.add_argument("--node",default="node")
+    p.add_argument("--grading-revision",choices=["v7-launch-60-65-70-v1","v7-launch-60-65-70-bank-v2"])
     p.add_argument('--sequential',action='store_true',help='Generate and grade one model at a time, in the supplied order')
     p.add_argument('--stop-on-error',action='store_true',help='With --sequential, stop on the first infrastructure error or interrupted API deadline')
     p = commands.add_parser("export");p.add_argument("source");p.add_argument("destination")
@@ -205,7 +206,7 @@ def main(argv=None):
             return 0 if result["consistent"] else 1
         elif args.command == "compare":
             result = run_experiment(args.output,args.models,args.repeats,args.config,node=args.node,generation_profile=args.generation_profile,
-                                    sequential=args.sequential,stop_on_error=args.stop_on_error)
+                                    sequential=args.sequential,stop_on_error=args.stop_on_error,grading_revision=args.grading_revision)
             print(json.dumps({"status":result["status"],"models":result["models"]},indent=2))
             return 0 if result["status"]=="completed" else 1
         elif args.command == "export":
