@@ -35,6 +35,10 @@ existing wheel_rotation_axis regression, plus no_verification_tools as a separat
 validity result, and a separate human aesthetic_realism rating from 1 to 5 after
 the owner flies the submission. Never invent a human rating or combine it into
 the binary task total. Preserve rating revisions and submission identity.
+Scoring policy file-only-zero-v1: a failed no_verification_tools/file-only
+validity check gives the attempt zero task points and counts as zero in averages.
+Keep raw task-check evidence unchanged. Apply this explicitly to the November 16
+variance comparison; preserve historical published scoring views and label revisions.
 Time-budget notices are limited to the 50% and 75% thresholds (240 and 360 s),
 delivered at the next exchange; do not send ongoing usage updates. Retain
 the original settings for published cohorts.

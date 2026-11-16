@@ -62,10 +62,12 @@ in a successfully loaded submission fails its check.
 
 **File-only validity** audits all recorded attempted tools. Only targeted
 ls/cat/head reads and declared patches. A blocked execution request still fails.
-No private reasoning inspection. Missing/inconsistent traces are unavailable.
+A failed audit gives the attempt zero task points, included in averages; raw
+task-check evidence is retained. No private reasoning inspection.
+Missing/inconsistent traces are unavailable.
 
 **Human aesthetic realism,1–5** is entered only by the owner after playing the
-simulator. Separate from x/6 and protocol pass/fail; initially ungraded. The
+simulator. Separate from x/7 and protocol pass/fail; initially ungraded. The
 supplied DESIGN_BRIEF.md gives the anchors. Rating revisions are retained.
 
 Independent equations verify the frozen educational reduction, not empirical

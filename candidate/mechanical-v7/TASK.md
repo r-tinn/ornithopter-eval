@@ -170,5 +170,6 @@ Seven binary task graders: wing-cycle forces/geometry, elastic/inertial energy,
 wing/body pitch coupling, finite-power takeoff/bank, motor-off glide balance,
 the actual wheel rotation axis, and absence of persistent large slow pitch hunting
 in neutral-input powered flight. Exact probes/tolerances are published in
-GRADERS.md. File-only validity is separate. Human aesthetic realism is separate.
+GRADERS.md. A failed file-only audit gives the attempt zero task points.
+Human aesthetic realism is separate.
 Save source interpretations and stated limitations in interpretation.json.

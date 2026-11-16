@@ -18,6 +18,35 @@ def fake_grade(submission,output,node):
 
 
 class ExperimentTests(unittest.TestCase):
+    def test_file_only_zero_counts_failures_without_destroying_raw_checks(self):
+        from ornithopter_eval.experiment import FILE_ONLY_ZERO, scored_points
+        version = 'mechanical-v7-source-first'
+        trials = [
+            {'id':'good','model':'model-a','repeat':1,'status':'submitted',
+             'automated':{'passed':7},'rollout_review':{'pass':True}},
+            {'id':'bad','model':'model-a','repeat':2,'status':'submitted',
+             'automated':{'passed':3},'rollout_review':{'pass':False}},
+            {'id':'pending','model':'model-a','repeat':3,'status':'prepared','automated':None},
+        ]
+        experiment = {'task_version':version,'models':['model-a'],'trials':trials,
+            'repeats':3,'status':'running','score_policy':FILE_ONLY_ZERO,
+            'config':json.loads((ROOT/'configs/source-first-v7.json').read_text())}
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            summary=refresh_workbench(root,experiment)
+            stats=summary['models']['model-a']
+            self.assertEqual((stats['mean_passed'],stats['graded_attempts'],stats['range']), (3.5,2,[0,7]))
+            self.assertEqual(stats['all_automated_passes'],1)
+            self.assertEqual(summary['scored_results']['bad'],{'passed':0,'total':7,'raw_passed':3})
+            self.assertEqual(trials[1]['automated']['passed'],3)
+            self.assertIsNone(scored_points(trials[2],version,FILE_ONLY_ZERO))
+            self.assertIn('fail — score 0',(root/'index.html').read_text())
+            self.assertNotIn('excluded from mean',(root/'index.html').read_text())
+            del experiment['score_policy']
+            legacy=refresh_workbench(root,experiment)
+            self.assertEqual(legacy['models']['model-a']['mean_passed'],7)
+            self.assertEqual(legacy['models']['model-a']['graded_attempts'],1)
+
     def test_explicit_grading_revision_is_recorded_and_forwarded(self):
         from unittest.mock import patch
         revision = 'v7-launch-60-65-70-bank-v2'
@@ -32,6 +61,7 @@ class ExperimentTests(unittest.TestCase):
                 ROOT/'configs/source-first-v7.json', transport=transport, grader=grader,
                 sequential=True, stop_on_error=True, grading_revision=revision)
             self.assertEqual(result['grading_revision'], revision)
+            self.assertEqual(result['score_policy'], 'file-only-zero-v1')
             self.assertEqual(grader.call_count, 2)
             saved = json.loads((Path(temp)/'batch/experiment.json').read_text())
             self.assertIn('grader/protocols/'+revision+'.json', saved['frozen_sha256'])

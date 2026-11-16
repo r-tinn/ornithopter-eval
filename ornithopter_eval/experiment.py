@@ -19,6 +19,19 @@ from .runner import ROOT, digest, initial_input, prepare, run_model, write_json
 from .protocol import load_config
 
 AUTOMATED = ("source", "physics", "interaction")
+FILE_ONLY_ZERO = 'file-only-zero-v1'
+
+
+def scored_points(trial, version, policy=None):
+    """Official points, without changing the underlying task-check evidence."""
+    validity = (trial.get('rollout_review') or {}).get('pass')
+    if version in SOURCE_FIRST_VERSIONS:
+        if policy == FILE_ONLY_ZERO and validity is False:
+            return 0
+        if validity is not True:
+            return None
+    result = trial.get('automated')
+    return result['passed'] if result is not None else None
 
 
 def automated_result(report):
@@ -98,18 +111,18 @@ def write_trial_pages(run, grade_directory='grade'):
 
 def refresh_workbench(root, experiment):
     version = experiment["task_version"]
+    policy = experiment.get('score_policy')
     checks = checklist(version)
     total = sum(len(checks[g]) for g in AUTOMATED)
     visual_count = len(checks["visual"])
     summaries = {}
     for model in experiment["models"]:
         trials = [t for t in experiment["trials"] if t["model"] == model]
-        valid = [t["automated"] for t in trials if t.get("automated") is not None and
-                 (version not in SOURCE_FIRST_VERSIONS or (t.get('rollout_review') or {}).get('pass') is True)]
+        valid = [points for t in trials if (points := scored_points(t, version, policy)) is not None]
         summaries[model] = {"attempts":len(trials), "graded_attempts":len(valid),
-            "mean_passed":round(sum(t["passed"] for t in valid)/len(valid),2) if valid else None,
-            "total_checks":total, "all_automated_passes":sum(t["passed"]==total for t in valid),
-            "range":[min(t["passed"] for t in valid),max(t["passed"] for t in valid)] if valid else None}
+            "mean_passed":round(sum(valid)/len(valid),2) if valid else None,
+            "total_checks":total, "all_automated_passes":sum(points==total for points in valid),
+            "range":[min(valid),max(valid)] if valid else None}
         if version in SOURCE_FIRST_VERSIONS:
             summaries[model]['protocol_valid_attempts']=sum((t.get('rollout_review') or {}).get('pass') is True for t in trials)
             summaries[model]['protocol_invalid_attempts']=sum((t.get('rollout_review') or {}).get('pass') is False for t in trials)
@@ -118,12 +131,16 @@ def refresh_workbench(root, experiment):
                "comparison_scope":f"{total} deterministic checks; {visual_count} visual checks remain separately ungraded.",
                "full_task_pass_rate":None,"note":f"{experiment['repeats']} repeat(s) per model; exploratory, not a definitive ranking.",
                "trials":experiment["trials"]}
-    for name in ('execution','stopped_after_trial','stop_reason','grading_revision','regrade'):
+    for name in ('execution','stopped_after_trial','stop_reason','grading_revision','regrade','score_policy'):
         if name in experiment:
             summary[name]=experiment[name]
     write_json(root / "summary.json", summary)
     if version in SOURCE_FIRST_VERSIONS:
         summary['comparison_scope']=str(total)+' binary task outcomes; aggregates include valid file-only attempts only. Report protocol invalid rate separately. Human aesthetic realism 1–5 is separate and ungraded until the owner reviews.'
+        if policy == FILE_ONLY_ZERO:
+            summary['comparison_scope']=str(total)+' task points; file-only policy failures score zero and count in averages. Raw task checks are preserved; human aesthetic realism 1–5 remains separate.'
+            summary['scored_results']={t['id']: {'passed':scored_points(t,version,policy), 'total':total,
+                'raw_passed':(t.get('automated') or {}).get('passed')} for t in experiment['trials']}
         write_json(root/'summary.json',summary)
     write_json(root / "experiment.json", experiment)
     cards = ''.join('<div class="card"><strong>'+html.escape(model)+'</strong><div class="score">'+str(s["mean_passed"] if s["mean_passed"] is not None else '—')+' <small>/ '+str(total)+'</small></div><span class="muted">Mean automated checks · '+str(s["graded_attempts"])+' / '+str(s["attempts"])+' graded</span></div>' for model,s in summaries.items())
@@ -132,6 +149,8 @@ def refresh_workbench(root, experiment):
         prefix = 'trials/'+t["id"]+'/'
         result = t.get("automated")
         score = str(result["passed"])+" / "+str(total) if result else '—'
+        if policy == FILE_ONLY_ZERO and (t.get('rollout_review') or {}).get('pass') is False:
+            score = '0 / '+str(total)
         simulator_label = 'Fly simulator ↗' if result and (version in SOURCE_FIRST_VERSIONS or result['groups']['interaction']['passed']) else 'Open submission ↗'
         actions = '<a target="_blank" rel="noopener" href="'+prefix+'submission/index.html">'+simulator_label+'</a><a href="'+prefix+'evidence.html">Captures</a><a href="'+prefix+'grade/report.json">Checks</a><a href="'+prefix+'transcript.txt">Transcript</a><a href="'+prefix+'submission-source.txt">Source</a>' if t["status"] not in ("prepared","running") else '<span class="muted">Artifacts appear when this attempt finishes.</span>'
         if (root / prefix / 'rollout-review.json').is_file():
@@ -146,7 +165,7 @@ def refresh_workbench(root, experiment):
         reason = '<br><small>'+html.escape(t['reason'])+'</small>' if t.get('reason') else ''
         if version in SOURCE_FIRST_VERSIONS:
             protocol=(t.get('rollout_review') or {}).get('pass')
-            reason+='<br><small>File-only: '+('pass' if protocol is True else 'fail — excluded from mean' if protocol is False else 'unavailable')+'</small>'
+            reason+='<br><small>File-only: '+('pass' if protocol is True else ('fail — score 0' if policy == FILE_ONLY_ZERO else 'fail — excluded from mean') if protocol is False else 'unavailable')+'</small>'
         if 'launch_attempts' in t:
             reason += '<br><small>Takeoff profiles: ' + (' → '.join(
                 str(round(a['low_speed_throttle']*100))+'% '+('pass' if a['pass'] else 'fail')
@@ -162,6 +181,10 @@ def refresh_workbench(root, experiment):
     if version in SOURCE_FIRST_VERSIONS:
         body=body.replace('<strong>Automated checks only.</strong> 0 visual checks remain ungraded. Passing all automated checks is not a full-task pass.',
                           '<strong>'+str(total)+' binary task graders.</strong> File-only validity is separate. Your 1–5 aesthetic realism score awaits your own flight and review. Means include protocol-valid attempts only; the table retains every raw result.')
+        if policy == FILE_ONLY_ZERO:
+            body=body.replace('Means include protocol-valid attempts only; the table retains every raw result.',
+                              'File-only policy failures score zero and count in averages. Raw task checks remain available through Checks.')
+            body=body.replace('Mean automated checks · ', 'Mean score · ').replace('<th>Automated</th>', '<th>Score</th>')
     if (root / "CALIBRATION.md").exists():
         body = '<p><strong>Read before comparing scores:</strong> <a href="CALIBRATION.md">Calibration findings and known protocol problems</a>.</p>' + body
     if experiment.get('regrade'):
@@ -213,6 +236,8 @@ def run_experiment(output, models, repeats, config_path, node="node", transport=
         "visual_review":"Not scored: previous image judge failed calibration.","trials":[]}
     if grading_revision:
         experiment["grading_revision"] = grading_revision
+    if version in SOURCE_FIRST_VERSIONS:
+        experiment['score_policy'] = FILE_ONLY_ZERO
     for repeat in range(1,repeats+1):
         for model in models:
             name = model+f"-{repeat:02d}"

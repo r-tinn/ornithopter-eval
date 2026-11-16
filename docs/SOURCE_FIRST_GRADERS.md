@@ -1,4 +1,8 @@
-# Eight graders for the source-first revision
+# Scoring revision: file-only-zero-v1
+
+From 16 November 2026, a file-only policy failure gives the attempt zero task points, included in averages. The seven raw task checks and the validity audit remain available as evidence. Human aesthetic realism stays separate. Earlier published cohorts retain their original scoring unless explicitly revised. The November 16 variance comparison applies this rule to all three observations per model.
+
+# Historical v6 protocol (original scoring)
 
 The runnable task is [mechanical-v6-source-first](../candidate/mechanical-v6/TASK.md).
 Its [exact public probes and tolerances](../candidate/mechanical-v6/GRADERS.md)
