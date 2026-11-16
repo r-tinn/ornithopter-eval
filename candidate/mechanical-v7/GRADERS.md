@@ -1,4 +1,4 @@
-# Seven binary task checks, file-only validity, human aesthetics
+# Eight task graders: seven binary checks and human aesthetics
 
 V7 adds a neutral-input pitch-stability regression; published v6 remains six checks. No score weights or extra easy points.
 Every task check yields one boolean plus raw cases, trajectories and errors.
@@ -67,7 +67,9 @@ task-check evidence is retained. No private reasoning inspection.
 Missing/inconsistent traces are unavailable.
 
 **Human aesthetic realism,1–5** is entered only by the owner after playing the
-simulator. Separate from x/7 and protocol pass/fail; initially ungraded. The
+simulator. This eighth grader contributes rating/5 of one point, with the same
+weight as each binary grader. Overall = (binary points + rating/5)/8; a file-only
+failure zeros the whole attempt. It remains ungraded until the owner rates it. The
 supplied DESIGN_BRIEF.md gives the anchors. Rating revisions are retained.
 
 Independent equations verify the frozen educational reduction, not empirical

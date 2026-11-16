@@ -1,6 +1,10 @@
+# Overall scoring revision: eight-grader-equal-v1
+
+The owner requested one overall score on 16 November 2026. Seven binary graders each contribute one point; the recorded human aesthetic rating (1–5) contributes rating/5 of one point. Overall score = (binary points + human rating/5) / 8, reported as a percentage. A failed file-only audit gives the whole attempt zero, included in averages. Preserve raw component scores and rating revisions. The earlier separate-score graph is retained in reports/variance-20261116/separate-scores-v1. This is an explicit aggregation change, not a new generation or regrade.
+
 # Scoring revision: file-only-zero-v1
 
-From 16 November 2026, a file-only policy failure gives the attempt zero task points, included in averages. The seven raw task checks and the validity audit remain available as evidence. Human aesthetic realism stays separate. Earlier published cohorts retain their original scoring unless explicitly revised. The November 16 variance comparison applies this rule to all three observations per model.
+From 16 November 2026, a file-only policy failure gives the attempt zero task points, included in averages. The seven raw task checks and the validity audit remain available as evidence. Human ratings remain recorded on their original scale; the overall score uses the aggregation above. Earlier published cohorts retain their original scoring unless explicitly revised. The November 16 variance comparison applies this rule to all three observations per model.
 
 # Historical v6 protocol (original scoring)
 

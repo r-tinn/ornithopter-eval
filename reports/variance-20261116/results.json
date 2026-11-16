@@ -4,7 +4,7 @@
     "2026-11-05T15:07:53.482580+00:00": "39cdec9b90019fa499ef74f4f458fff19ec23747596c7f385d7f827f88a400dd",
     "2026-11-16T14:03:53.872827+00:00": "1b66f8e9933b44a92afda8f9b88edac18fce47c1502e4a7baf7019d861ca9689"
   },
-  "scope": "Three attempts per model. Task points /7 include file-only failures as zero. Human aesthetic realism /5 is a separate ordinal rating by one reviewer. Descriptive means only; no combined score. Cohorts were generated on different dates; model aliases do not guarantee an immutable backend.",
+  "scope": "Eight equally weighted graders: seven binary checks and one recorded human rating normalized by dividing by five. File-only violations zero the entire attempt. Three attempts per model; one human reviewer. Descriptive means, not a definitive ranking. Cohorts were generated on different dates; model aliases do not guarantee an immutable backend. Component scores and rating identity/revisions are preserved.",
   "rows": [
     {
       "model": "gpt-6.1-sol",
@@ -18,7 +18,9 @@
       "human_rating_revision": 1,
       "human_rating_id": "e367d1c0-d03a-4a1c-b258-87af7f056649",
       "human_rating_created_utc": "2026-11-16T13:59:21.437824+00:00",
-      "submission_digest": "253f37e99c594f68bccc408697d06c1621c4d0db6572a3617c1bdc1600d72849"
+      "submission_digest": "253f37e99c594f68bccc408697d06c1621c4d0db6572a3617c1bdc1600d72849",
+      "combined_points": 7.6,
+      "combined_percent": 95.0
     },
     {
       "model": "gpt-6.1-sol",
@@ -32,7 +34,9 @@
       "human_rating_revision": 1,
       "human_rating_id": "cf8d20e0-d7bb-44c6-8807-465ddc3ce4f6",
       "human_rating_created_utc": "2026-11-16T15:35:20.666256+00:00",
-      "submission_digest": "33277fe93cadab9fc73b354cfba3057ab31949dbc384a8bf792a403adfa54a37"
+      "submission_digest": "33277fe93cadab9fc73b354cfba3057ab31949dbc384a8bf792a403adfa54a37",
+      "combined_points": 7.6,
+      "combined_percent": 95.0
     },
     {
       "model": "gpt-6.1-sol",
@@ -46,7 +50,9 @@
       "human_rating_revision": 1,
       "human_rating_id": "89d228fc-1ecf-42d0-b5a2-5c464e4c119c",
       "human_rating_created_utc": "2026-11-16T15:47:33.379430+00:00",
-      "submission_digest": "7f7884a46af0e901178eb87bd807d1b03a3f26b4e2592f8c52881821d30de39e"
+      "submission_digest": "7f7884a46af0e901178eb87bd807d1b03a3f26b4e2592f8c52881821d30de39e",
+      "combined_points": 7.4,
+      "combined_percent": 92.5
     },
     {
       "model": "gpt-6-astra",
@@ -60,7 +66,9 @@
       "human_rating_revision": 1,
       "human_rating_id": "1cb84b88-e9b8-41d8-9a71-e1b322662484",
       "human_rating_created_utc": "2026-11-16T13:59:16.213411+00:00",
-      "submission_digest": "62a93d9b7deb873a4dd6677139393d9a4b04c4d04888f0664a5fb71ac16e98a2"
+      "submission_digest": "62a93d9b7deb873a4dd6677139393d9a4b04c4d04888f0664a5fb71ac16e98a2",
+      "combined_points": 7.4,
+      "combined_percent": 92.5
     },
     {
       "model": "gpt-6-astra",
@@ -74,7 +82,9 @@
       "human_rating_revision": 1,
       "human_rating_id": "12362d65-08fb-431a-9a49-b27a0f84fa5d",
       "human_rating_created_utc": "2026-11-16T15:46:04.732469+00:00",
-      "submission_digest": "1cd14db7a2368a935f90937f4db42040f01c9d87afaa6e465cb6ada1232cc8db"
+      "submission_digest": "1cd14db7a2368a935f90937f4db42040f01c9d87afaa6e465cb6ada1232cc8db",
+      "combined_points": 7.4,
+      "combined_percent": 92.5
     },
     {
       "model": "gpt-6-astra",
@@ -88,7 +98,9 @@
       "human_rating_revision": 1,
       "human_rating_id": "ef136f5a-8e77-4e83-b005-f5ff2e5d7ebe",
       "human_rating_created_utc": "2026-11-16T15:48:03.812849+00:00",
-      "submission_digest": "10f19b6f15a07f7d76b908c7453fcd713f2305f918a63bc88afd7b4665906488"
+      "submission_digest": "10f19b6f15a07f7d76b908c7453fcd713f2305f918a63bc88afd7b4665906488",
+      "combined_points": 7.4,
+      "combined_percent": 92.5
     },
     {
       "model": "gpt-5.6-sol",
@@ -102,7 +114,9 @@
       "human_rating_revision": 1,
       "human_rating_id": "b4d11603-c0e8-44ed-ab64-8c57d32f9a33",
       "human_rating_created_utc": "2026-11-16T13:59:08.979437+00:00",
-      "submission_digest": "42988c3405661ec411e67d8d1483ebbf9b83e5108d200b695edb5c5f0c5ed7f8"
+      "submission_digest": "42988c3405661ec411e67d8d1483ebbf9b83e5108d200b695edb5c5f0c5ed7f8",
+      "combined_points": 6.4,
+      "combined_percent": 80.0
     },
     {
       "model": "gpt-5.6-sol",
@@ -116,7 +130,9 @@
       "human_rating_revision": 1,
       "human_rating_id": "e8a81f38-ff2c-49c1-a5ab-1c97c42e747e",
       "human_rating_created_utc": "2026-11-16T15:46:34.957626+00:00",
-      "submission_digest": "23d09342f527ac49288599de0e9a3be82826a44578e578162c2b9f63a27c6dcd"
+      "submission_digest": "23d09342f527ac49288599de0e9a3be82826a44578e578162c2b9f63a27c6dcd",
+      "combined_points": 4.2,
+      "combined_percent": 52.5
     },
     {
       "model": "gpt-5.6-sol",
@@ -130,7 +146,9 @@
       "human_rating_revision": 1,
       "human_rating_id": "b959434f-ce96-4888-a618-98c636b18ccf",
       "human_rating_created_utc": "2026-11-16T15:48:10.045195+00:00",
-      "submission_digest": "09a9a991e3ea6017d7b12729d9171d0c82e0a036edce5c2effef991418cb0279"
+      "submission_digest": "09a9a991e3ea6017d7b12729d9171d0c82e0a036edce5c2effef991418cb0279",
+      "combined_points": 7.2,
+      "combined_percent": 90.0
     },
     {
       "model": "gpt-5.5",
@@ -144,7 +162,9 @@
       "human_rating_revision": 1,
       "human_rating_id": "81b92810-8a88-449c-b7bc-1280ce9cca9d",
       "human_rating_created_utc": "2026-11-16T13:58:41.904503+00:00",
-      "submission_digest": "f81aea4fd956cf77a436dc2baa3607186bf403b006deed71b9cad1f18b40bd09"
+      "submission_digest": "f81aea4fd956cf77a436dc2baa3607186bf403b006deed71b9cad1f18b40bd09",
+      "combined_points": 0,
+      "combined_percent": 0.0
     },
     {
       "model": "gpt-5.5",
@@ -158,7 +178,9 @@
       "human_rating_revision": 1,
       "human_rating_id": "6319090d-7c4b-4fd0-ac23-24b9fa0267ab",
       "human_rating_created_utc": "2026-11-16T15:46:40.558874+00:00",
-      "submission_digest": "6b2400466af79712673f87049e022e43d6e0b4c47dd29310de3a4a0cf6f538b7"
+      "submission_digest": "6b2400466af79712673f87049e022e43d6e0b4c47dd29310de3a4a0cf6f538b7",
+      "combined_points": 3.2,
+      "combined_percent": 40.0
     },
     {
       "model": "gpt-5.5",
@@ -172,7 +194,9 @@
       "human_rating_revision": 1,
       "human_rating_id": "913d6352-c641-4ea8-83d2-578be0e72aa3",
       "human_rating_created_utc": "2026-11-16T15:48:16.195584+00:00",
-      "submission_digest": "656493143b621b2a9819a483c1a27addb0096324da761437ec3f2c801897ed7d"
+      "submission_digest": "656493143b621b2a9819a483c1a27addb0096324da761437ec3f2c801897ed7d",
+      "combined_points": 6.2,
+      "combined_percent": 77.5
     },
     {
       "model": "gpt-5.4",
@@ -186,7 +210,9 @@
       "human_rating_revision": 1,
       "human_rating_id": "39d234d5-9071-4f72-825e-c78a71eff68f",
       "human_rating_created_utc": "2026-11-16T13:58:33.742243+00:00",
-      "submission_digest": "a99c9e834bcbee42affb2d9b1eff0db85788d9bbd371c1e979e52cc01a1397e6"
+      "submission_digest": "a99c9e834bcbee42affb2d9b1eff0db85788d9bbd371c1e979e52cc01a1397e6",
+      "combined_points": 0.2,
+      "combined_percent": 2.5
     },
     {
       "model": "gpt-5.4",
@@ -200,7 +226,9 @@
       "human_rating_revision": 1,
       "human_rating_id": "255d6cd8-56b4-419f-bb03-0abde899a6b8",
       "human_rating_created_utc": "2026-11-16T15:46:46.775144+00:00",
-      "submission_digest": "8dd242c3c013b723ece10e76763af05f4a991a832fc8ab90fa9672ed0081a4b9"
+      "submission_digest": "8dd242c3c013b723ece10e76763af05f4a991a832fc8ab90fa9672ed0081a4b9",
+      "combined_points": 2.2,
+      "combined_percent": 27.500000000000004
     },
     {
       "model": "gpt-5.4",
@@ -214,7 +242,9 @@
       "human_rating_revision": 1,
       "human_rating_id": "83786ba1-3b62-4808-8500-d544c9d62863",
       "human_rating_created_utc": "2026-11-16T15:48:21.096651+00:00",
-      "submission_digest": "92531ad27b03372fff109f9bb7f85178527544ea0319353bfe7abfd83f835269"
+      "submission_digest": "92531ad27b03372fff109f9bb7f85178527544ea0319353bfe7abfd83f835269",
+      "combined_points": 0,
+      "combined_percent": 0.0
     }
   ],
   "models": [
@@ -232,7 +262,18 @@
         3,
         2
       ],
-      "human_mean": 2.6666666666666665
+      "human_mean": 2.6666666666666665,
+      "combined_points": [
+        7.6,
+        7.6,
+        7.4
+      ],
+      "combined_scores": [
+        95.0,
+        95.0,
+        92.5
+      ],
+      "combined_mean": 94.16666666666667
     },
     {
       "model": "gpt-6-astra",
@@ -248,7 +289,18 @@
         2,
         2
       ],
-      "human_mean": 2
+      "human_mean": 2,
+      "combined_points": [
+        7.4,
+        7.4,
+        7.4
+      ],
+      "combined_scores": [
+        92.5,
+        92.5,
+        92.5
+      ],
+      "combined_mean": 92.5
     },
     {
       "model": "gpt-5.6-sol",
@@ -264,7 +316,18 @@
         1,
         1
       ],
-      "human_mean": 1.3333333333333333
+      "human_mean": 1.3333333333333333,
+      "combined_points": [
+        6.4,
+        4.2,
+        7.2
+      ],
+      "combined_scores": [
+        80.0,
+        52.5,
+        90.0
+      ],
+      "combined_mean": 74.16666666666667
     },
     {
       "model": "gpt-5.5",
@@ -280,7 +343,18 @@
         1,
         1
       ],
-      "human_mean": 1
+      "human_mean": 1,
+      "combined_points": [
+        0,
+        3.2,
+        6.2
+      ],
+      "combined_scores": [
+        0.0,
+        40.0,
+        77.5
+      ],
+      "combined_mean": 39.166666666666664
     },
     {
       "model": "gpt-5.4",
@@ -296,7 +370,21 @@
         1,
         1
       ],
-      "human_mean": 1
+      "human_mean": 1,
+      "combined_points": [
+        0.2,
+        2.2,
+        0
+      ],
+      "combined_scores": [
+        2.5,
+        27.500000000000004,
+        0.0
+      ],
+      "combined_mean": 10.000000000000002
     }
-  ]
+  ],
+  "overall_score_policy": "eight-grader-equal-v1",
+  "combined_max_points": 8,
+  "formula": "If file-only audit passes: (raw task checks passed + human rating / 5) / 8 * 100. Otherwise: 0."
 }

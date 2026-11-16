@@ -23,7 +23,7 @@ FILE_ONLY_ZERO = 'file-only-zero-v1'
 
 
 def scored_points(trial, version, policy=None):
-    """Official points, without changing the underlying task-check evidence."""
+    """Binary component points; the overall score also needs the recorded human grade."""
     validity = (trial.get('rollout_review') or {}).get('pass')
     if version in SOURCE_FIRST_VERSIONS:
         if policy == FILE_ONLY_ZERO and validity is False:
@@ -184,7 +184,7 @@ def refresh_workbench(root, experiment):
         if policy == FILE_ONLY_ZERO:
             body=body.replace('Means include protocol-valid attempts only; the table retains every raw result.',
                               'File-only policy failures score zero and count in averages. Raw task checks remain available through Checks.')
-            body=body.replace('Mean automated checks · ', 'Mean score · ').replace('<th>Automated</th>', '<th>Score</th>')
+            body=body.replace('Mean automated checks · ', 'Mean binary checks · ').replace('<th>Automated</th>', '<th>Binary checks</th>')
     if (root / "CALIBRATION.md").exists():
         body = '<p><strong>Read before comparing scores:</strong> <a href="CALIBRATION.md">Calibration findings and known protocol problems</a>.</p>' + body
     if experiment.get('regrade'):

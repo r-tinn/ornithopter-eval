@@ -1,4 +1,4 @@
-"""Plot recorded task scores and identity-checked human ratings; never writes reviews."""
+"""Plot the eight-grader overall score from recorded checks and verified ratings."""
 import argparse
 import csv
 import hashlib
@@ -52,6 +52,31 @@ def collect(comparison):
             'rows': rows, 'models': summaries}
 
 
+def combine(data):
+    """Eight equally weighted graders; file-only violations gate the whole score."""
+    for row in data['rows']:
+        if type(row.get('file_only_valid')) is not bool:
+            raise ValueError('A completed file-only audit is required')
+        if type(row.get('raw_task_checks')) is not int or not 0 <= row['raw_task_checks'] <= 7:
+            raise ValueError('Seven completed raw task checks are required')
+        human = row['aesthetic_realism']
+        if type(human) is not int or not 1 <= human <= 5:
+            raise ValueError('A recorded human rating from 1 to 5 is required')
+        row['combined_points'] = (row['raw_task_checks'] + human / 5
+                                  if row['file_only_valid'] is True else 0)
+        row['combined_percent'] = row['combined_points'] / 8 * 100
+    for model in data['models']:
+        rows = [r for r in data['rows'] if r['model'] == model['model']]
+        model['combined_points'] = [r['combined_points'] for r in rows]
+        model['combined_scores'] = [r['combined_percent'] for r in rows]
+        model['combined_mean'] = statistics.mean(model['combined_scores'])
+    data['overall_score_policy'] = 'eight-grader-equal-v1'
+    data['combined_max_points'] = 8
+    data['formula'] = 'If file-only audit passes: (raw task checks passed + human rating / 5) / 8 * 100. Otherwise: 0.'
+    data['scope'] = 'Eight equally weighted graders: seven binary checks and one recorded human rating normalized by dividing by five. File-only violations zero the entire attempt. Three attempts per model; one human reviewer. Descriptive means, not a definitive ranking. Cohorts were generated on different dates; model aliases do not guarantee an immutable backend. Component scores and rating identity/revisions are preserved.'
+    return data
+
+
 def plot(data, output):
     os.environ.setdefault('XDG_CACHE_HOME', str(ROOT / '.cache'))
     os.environ.setdefault('MPLCONFIGDIR', str(ROOT / '.cache/matplotlib'))
@@ -61,43 +86,36 @@ def plot(data, output):
     from matplotlib.lines import Line2D
     plt.rcParams.update({'font.family': 'DejaVu Sans', 'font.size': 12,
                          'svg.fonttype': 'path', 'axes.titleweight': 'bold'})
-    fig, axes = plt.subplots(1, 2, figsize=(13.6, 7.0), sharey=True)
+    fig, ax = plt.subplots(figsize=(11.5, 6.8))
     fig.patch.set_facecolor('#faf9f5')
-    fig.subplots_adjust(left=.17, right=.92, bottom=.28, top=.75, wspace=.34)
+    fig.subplots_adjust(left=.20, right=.87, bottom=.27, top=.75)
+    ax.set_facecolor('#faf9f5')
     names = {'gpt-6.1-sol': 'GPT-6.1 Sol', 'gpt-6-astra': 'GPT-6 Astra',
              'gpt-5.6-sol': 'GPT-5.6 Sol', 'gpt-5.5': 'GPT-5.5', 'gpt-5.4': 'GPT-5.4'}
-    for ax, scores, mean, color, title, ticks, limits in [
-        (axes[0], 'task_scores', 'task_mean', '#216b68', 'Automated task score / 7', range(8), (-.25, 7.3)),
-        (axes[1], 'human_scores', 'human_mean', '#ac5d32', 'Human aesthetic realism / 5', range(1, 6), (.75, 5.3))]:
-        ax.set_facecolor('#faf9f5')
-        for i, model in enumerate(data['models']):
-            values = model[scores]
-            ax.vlines(model[mean], i-.30, i+.30, color='#26363b', linewidth=2, zorder=2)
-            ax.scatter(values, [i+offset for offset in (-.17, 0, .17)], s=75,
-                       color=color, edgecolors='#faf9f5', linewidths=.8, zorder=3)
-            ax.text(1.03, i, f'{model[mean]:.2f}', transform=ax.get_yaxis_transform(),
-                    va='center', color='#26363b', fontsize=12)
-        ax.set_title(title, loc='left', pad=27, fontsize=15, color='#26363b')
-        ax.text(1.03, 1.035, 'Mean', transform=ax.transAxes, fontsize=10, color='#65716e')
-        ax.set_xticks(list(ticks)); ax.set_xlim(limits); ax.set_ylim(4.6, -.6)
-        ax.set_yticks(range(5), [names[m['model']] for m in data['models']])
-        ax.grid(axis='x', color='#e0e3df', linewidth=.8)
-        ax.set_axisbelow(True)
-        for spine in ax.spines.values(): spine.set_visible(False)
-        ax.tick_params(axis='both', length=0, pad=10, colors='#26363b')
-    axes[0].set_xlabel('File-only policy failures score zero', labelpad=15, fontsize=11)
-    axes[1].set_xlabel('1 = rough and unconvincing; 5 = exceptional', labelpad=15, fontsize=11)
-    fig.text(.06, .93, 'Ornithopter eval: automated checks and human judgment',
-             fontsize=22, weight='bold', color='#20383a')
-    fig.text(.06, .87, 'Five models · three attempts each · all 15 human ratings recorded',
-             fontsize=13, color='#65716e')
-    fig.legend(handles=[Line2D([], [], marker='o', linestyle='None', color='#65716e', markersize=7, label='One attempt'),
+    for i, model in enumerate(data['models']):
+        ax.vlines(model['combined_mean'], i-.30, i+.30, color='#26363b', linewidth=2, zorder=2)
+        ax.scatter(model['combined_scores'], [i+offset for offset in (-.17, 0, .17)], s=75,
+                   color='#216b68', edgecolors='#faf9f5', linewidths=.8, zorder=3)
+        ax.text(1.025, i, f"{model['combined_mean']:.1f}%", transform=ax.get_yaxis_transform(),
+                va='center', color='#26363b', fontsize=12)
+    ax.text(1.025, 1.035, 'Mean', transform=ax.transAxes, fontsize=10, color='#65716e')
+    ax.set_xticks(range(0, 101, 20)); ax.set_xlim(-3, 103); ax.set_ylim(4.6, -.6)
+    ax.set_yticks(range(5), [names[m['model']] for m in data['models']])
+    ax.set_xlabel('Overall score (%)', labelpad=14)
+    ax.grid(axis='x', color='#e0e3df', linewidth=.8); ax.set_axisbelow(True)
+    for spine in ax.spines.values(): spine.set_visible(False)
+    ax.tick_params(axis='both', length=0, pad=10, colors='#26363b')
+    fig.text(.07, .93, 'Ornithopter eval: overall results', fontsize=24, weight='bold', color='#20383a')
+    fig.text(.07, .865, 'Eight equally weighted graders · five models · three attempts each', fontsize=13, color='#65716e')
+    fig.legend(handles=[Line2D([], [], marker='o', linestyle='None', color='#216b68', markersize=7, label='One attempt'),
                         Line2D([], [], marker='|', linestyle='None', color='#26363b', markersize=17, markeredgewidth=2, label='Mean of three attempts')],
-               loc='lower center', bbox_to_anchor=(.52,.115), ncol=2, frameon=False, fontsize=11)
-    fig.text(.06, .075, 'Human ratings: one reviewer (R-Tinn), ordinal 1–5 scale. No combined score; means are descriptive.', fontsize=10, color='#65716e')
-    fig.text(.06, .035, 'Original cohort: 5 Nov 2026 · two additional attempts: 16 Nov 2026 · scoring: file-only-zero-v1', fontsize=10, color='#65716e')
+               loc='lower center', bbox_to_anchor=(.53,.12), ncol=2, frameon=False, fontsize=11)
+    fig.text(.07, .08, 'Score = (seven binary points + human rating ÷ 5) / 8. File-only policy failure = 0.', fontsize=10, color='#65716e')
+    fig.text(.07, .04, 'One human reviewer · descriptive means · cohorts: 5 and 16 Nov 2026 · eight-grader-equal-v1', fontsize=10, color='#65716e')
     fig.savefig(output / 'results.png', dpi=200, facecolor=fig.get_facecolor())
     fig.savefig(output / 'results.svg', facecolor=fig.get_facecolor())
+    svg = output / 'results.svg'
+    svg.write_text('\n'.join(line.rstrip() for line in svg.read_text().splitlines())+'\n')
     plt.close(fig)
 
 
@@ -108,10 +126,11 @@ def main():
     parser.add_argument('--snapshot', type=Path, help='Replot an exported results.json without the local rating ledgers')
     args = parser.parse_args()
     data = json.loads(args.snapshot.read_text()) if args.snapshot else collect(args.comparison.resolve())
+    data = combine(data)
     args.output.mkdir(parents=True, exist_ok=True)
     (args.output/'results.json').write_text(json.dumps(data, indent=2)+'\n')
     with (args.output/'results.csv').open('w', newline='') as stream:
-        writer = csv.DictWriter(stream, fieldnames=list(data['rows'][0]))
+        writer = csv.DictWriter(stream, fieldnames=list(data['rows'][0]), lineterminator='\n')
         writer.writeheader(); writer.writerows(data['rows'])
     plot(data, args.output)
     print(json.dumps(data['models'], indent=2))

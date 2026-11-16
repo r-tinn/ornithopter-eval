@@ -29,16 +29,16 @@ generation deadline, via configs/source-first-v7.json or the explicit overlay
 configs/source-first-time-8min.json. No benchmark token or
 request-count cap. Preserve the old token profiles for reproduction. Do not
 silently reinterpret a saved task/config as the new protocol.
-The current v7 rubric has nine outcomes: seven binary task graders including the
-neutral-input powered_pitch_stability check and the
-existing wheel_rotation_axis regression, plus no_verification_tools as a separate
-validity result, and a separate human aesthetic_realism rating from 1 to 5 after
-the owner flies the submission. Never invent a human rating or combine it into
-the binary task total. Preserve rating revisions and submission identity.
-Scoring policy file-only-zero-v1: a failed no_verification_tools/file-only
-validity check gives the attempt zero task points and counts as zero in averages.
-Keep raw task-check evidence unchanged. Apply this explicitly to the November 16
-variance comparison; preserve historical published scoring views and label revisions.
+The current v7 rubric has eight equally weighted scored graders: seven binary
+checks including powered_pitch_stability and wheel_rotation_axis, plus the
+owner's aesthetic_realism rating. Under eight-grader-equal-v1, normalize the
+recorded 1–5 human rating by dividing by five, then add it to the seven binary
+points and divide by eight (or report /8). A failed no_verification_tools/file-only
+audit zeros the entire attempt, including the human contribution, and counts in
+averages. Preserve raw binary checks and actual human ratings/revisions and
+submission identity. Never invent a human score; an overall score awaits that
+rating. The November 16 comparison uses this explicit aggregation revision;
+retain previous scoring views and original published cohorts for reproduction.
 Time-budget notices are limited to the 50% and 75% thresholds (240 and 360 s),
 delivered at the next exchange; do not send ongoing usage updates. Retain
 the original settings for published cohorts.

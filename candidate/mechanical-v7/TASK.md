@@ -171,5 +171,7 @@ wing/body pitch coupling, finite-power takeoff/bank, motor-off glide balance,
 the actual wheel rotation axis, and absence of persistent large slow pitch hunting
 in neutral-input powered flight. Exact probes/tolerances are published in
 GRADERS.md. A failed file-only audit gives the attempt zero task points.
-Human aesthetic realism is separate.
+The eighth grader is a human aesthetic-realism rating from 1–5, normalized by
+dividing by five to contribute one point. All eight graders have equal weight;
+a file-only audit failure zeros the whole attempt.
 Save source interpretations and stated limitations in interpretation.json.
