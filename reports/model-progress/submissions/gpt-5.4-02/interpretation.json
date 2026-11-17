@@ -1,0 +1,153 @@
+{
+  "summary": {
+    "approach": "Implemented a source-first reduced mechanical ornithopter using the supplied engineering completion where the notebook leaves numbers, coefficients or detailed link geometry unspecified.",
+    "derived_from_photo_02": {
+      "aspect_ratio": 8.29,
+      "wrist_span_fraction": 0.5,
+      "wing_area_m2": 23.643,
+      "notes": "Used the rounded 'Say' full span 7.4 ft and wrist span 3.7 ft = 50% of full span. Excluded the inconsistent 3.135 ft wing-length conversion as directed. Area comes from 14^2 / AR for the 14 m engineering span."
+    }
+  },
+  "selected_photographs": [
+    {
+      "photo": "Unknown-2.jpg",
+      "source_label": "02",
+      "principle_used": "Mute swan planform proportions, wrist-to-span fraction, and the area paragraph giving AR=b^2/S.",
+      "readable_details": [
+        "Rounded 'Say' span 7.4 ft",
+        "Wrist span 3.7 ft = 50% b",
+        "Area paragraph states AR = 8.29 from the scaled planform estimate"
+      ],
+      "uncertain_or_rejected": [
+        "The 3.135 ft wing-length conversion is inconsistent with the metric entry and was not used",
+        "Exact outline between measured stations is inferred from the swan drawing plus supplied source mechanism geometry"
+      ],
+      "engineering_completion_used": "Set aspect_ratio=8.29, wrist_span_fraction=0.5, and wing_area_m2=14^2/8.29."
+    },
+    {
+      "photo": "Unknown-8.jpg",
+      "source_label": "08",
+      "principle_used": "Curved-plate section context only.",
+      "readable_details": [
+        "The chart shows low-Re curved-plate trends with ambiguous exact values"
+      ],
+      "uncertain_or_rejected": [
+        "Did not digitise exact CL/CD tables from the photograph",
+        "Did not claim these curves are full-scale swan coefficients"
+      ],
+      "engineering_completion_used": "Used the supplied illustrative inner/outer section tables and camber-lift gains from engineering.json."
+    },
+    {
+      "photo": "Unknown-9.jpg",
+      "source_label": "09",
+      "principle_used": "Human-carrying ornithopter intent and the sine-wave target-trajectory / required-force method.",
+      "readable_details": [
+        "Defines an ideal trajectory as a sine wave",
+        "States candidate wing actions should be judged against the required wing forces",
+        "Explicitly frames the problem as a powered man-carrying ornithopter"
+      ],
+      "uncertain_or_rejected": [
+        "No engine, mass budget or numerical drive model is specified on this page"
+      ],
+      "engineering_completion_used": "Used the supplied 16 kW engine, mass budget and reduced strip model while preserving the source force-matching idea."
+    },
+    {
+      "photo": "Unknown-10.jpg",
+      "source_label": "10",
+      "principle_used": "Straight-and-level flapping requires cyclic lift and thrust variation rather than perfectly steady forces.",
+      "readable_details": [
+        "Progress follows an undulating trajectory at slightly unsteady airspeed",
+        "Ring-gait wake context"
+      ],
+      "uncertain_or_rejected": [
+        "No exact powered aircraft mechanism is specified"
+      ],
+      "engineering_completion_used": "Simulation keeps real cyclic force variation from the moving wing rather than prescribing fixed steady lift."
+    },
+    {
+      "photo": "Unknown-11.jpg",
+      "source_label": "11",
+      "principle_used": "Low-speed downstroke lasts longer than recovery; cruising tends toward equal timing; wing-body resonance reduces inertial power.",
+      "readable_details": [
+        "Low speed: longer flap-down duration",
+        "Cruise: periods become equal",
+        "Candidate wing actions should be matched to required lift and drag"
+      ],
+      "uncertain_or_rejected": [
+        "Handwritten marginal revisions are not fully legible"
+      ],
+      "engineering_completion_used": "Used theta = phi - b sin(phi) with low-speed bias b=0.3 and cruise b=0, plus the supplied coupled spring/inertia model."
+    },
+    {
+      "photo": "Unknown-12.jpg",
+      "source_label": "12",
+      "principle_used": "Wing/body mass-spring resonance, fore-aft wing motion, pitching reaction, and force directions from actual wing motion.",
+      "readable_details": [
+        "Wing and body inertias with wishbone spring resonate at flapping frequency",
+        "Fore and aft movement changes cg-to-lift separation and introduces pitching moment",
+        "Outer hand wing trails on recovery"
+      ],
+      "uncertain_or_rejected": [
+        "Magnitude of the superimposed wing/body resonance effect is discussed qualitatively"
+      ],
+      "engineering_completion_used": "Used source-mechanism mass derivatives, real moving application-point velocities, sweep linkage, and coupled phase/pitch equations."
+    },
+    {
+      "photo": "Unknown-13.jpg",
+      "source_label": "13",
+      "principle_used": "Continuation of wing-action argument; incidence and camber are distinct; different bird examples share basic parts but not the same exact proportions.",
+      "readable_details": [
+        "Incidences are adjusted to optimise thrust and drag",
+        "Goshawk drawing is an example of wing parts and section variation"
+      ],
+      "uncertain_or_rejected": [
+        "The goshawk camber percentages are not treated as swan specifications"
+      ],
+      "engineering_completion_used": "Implemented independent twist/incidence and camber phase curves rather than conflating them."
+    },
+    {
+      "photo": "Unknown-14.jpg",
+      "source_label": "14",
+      "principle_used": "Arm wing about 5-6% thick; outer hand wing effectively a thin curved/slotted plate; recovery partly closes the outer wing; conventional tail/rudder are acceptable.",
+      "readable_details": [
+        "Arm thickness 5 to 6%",
+        "Outer hand wing negligible thickness",
+        "Trailing and partial closing on recovery reduces tip area and drag",
+        "Tail or weight-shift controls are compatible"
+      ],
+      "uncertain_or_rejected": [
+        "No exact mechanical tail geometry is given"
+      ],
+      "engineering_completion_used": "Used supplied thickness fractions, two overlapping sliding outer leaves, recovery exposure reduction, and a conventional tail/fin/rudder mechanical completion."
+    },
+    {
+      "photo": "Unknown-15.jpg",
+      "source_label": "15",
+      "principle_used": "Glide power as baseline and powered-flight power as the sum of extra aerodynamic, trajectory and inertial terms; spring transfers energy but does not create net propulsion energy.",
+      "readable_details": [
+        "Base line power from gliding drag times speed",
+        "Additional powered terms include induced/thrust effects, cyclic acceleration and wing inertia",
+        "Inertial power can vanish if damping is zero"
+      ],
+      "uncertain_or_rejected": [
+        "No complete numeric powered aircraft efficiency budget is present on the photographed page"
+      ],
+      "engineering_completion_used": "Implemented real shaft work, aerodynamic dissipation, transmission/damping heat, and finite fuel burn; the spring only stores and returns mechanical energy."
+    }
+  ],
+  "visual_and_mechanical_completion": {
+    "description": "The rendered aircraft is an engineered swan-derived ornithopter with broad inner wings, tapered rounded outer leaves, exposed transmission, trussed fuselage, seated pilot, three wheels, and conventional tail/rudder surfaces.",
+    "assumptions_not_claimed_as_stanley": [
+      "16 kW engine selection and governor model",
+      "Transmission efficiency, equivalent inertia and BSFC",
+      "Mass allocations except pilot and engine reference",
+      "Illustrative section coefficient tables",
+      "Specific tail area, arm, control torques and damping values"
+    ]
+  },
+  "limitations": [
+    "The notebook photographs do not supply a full validated ornithopter design; the submission uses the provided reduced engineering completion wherever the handwriting does not fix a number.",
+    "The aerodynamic model omits wake history, hysteresis, section pitching moment and overlap-flow interaction.",
+    "The visual design is a plausible mechanical completion within the provided lightweight renderer, not a reconstructed historic build."
+  ]
+}

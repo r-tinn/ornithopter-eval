@@ -1,0 +1,67 @@
+{
+  "kind": "independent author geometry calibration, not model performance",
+  "all_passed": false,
+  "model_calls": 0,
+  "results": [
+    {
+      "variant": "positive",
+      "target": null,
+      "observed": {
+        "wingtip_motion_continuity": true,
+        "pilot_clearance": true,
+        "wing_drive_linkage": true,
+        "rear_truss_structure": false
+      },
+      "calibrated": false,
+      "report": "positive/grade-airframe/report.json"
+    },
+    {
+      "variant": "pilot_bar",
+      "target": "pilot_clearance",
+      "observed": {
+        "wingtip_motion_continuity": true,
+        "pilot_clearance": false,
+        "wing_drive_linkage": true,
+        "rear_truss_structure": false
+      },
+      "calibrated": true,
+      "report": "pilot_bar/grade-airframe/report.json"
+    },
+    {
+      "variant": "static_drive",
+      "target": "wing_drive_linkage",
+      "observed": {
+        "wingtip_motion_continuity": true,
+        "pilot_clearance": true,
+        "wing_drive_linkage": false,
+        "rear_truss_structure": false
+      },
+      "calibrated": true,
+      "report": "static_drive/grade-airframe/report.json"
+    },
+    {
+      "variant": "unbraced_tail",
+      "target": "rear_truss_structure",
+      "observed": {
+        "wingtip_motion_continuity": true,
+        "pilot_clearance": true,
+        "wing_drive_linkage": true,
+        "rear_truss_structure": false
+      },
+      "calibrated": true,
+      "report": "unbraced_tail/grade-airframe/report.json"
+    },
+    {
+      "variant": "whipping_tip",
+      "target": "wingtip_motion_continuity",
+      "observed": {
+        "wingtip_motion_continuity": false,
+        "pilot_clearance": true,
+        "wing_drive_linkage": true,
+        "rear_truss_structure": false
+      },
+      "calibrated": true,
+      "report": "whipping_tip/grade-airframe/report.json"
+    }
+  ]
+}

@@ -14,7 +14,8 @@ from urllib.parse import unquote, urlsplit
 
 from .api import create_response, get_api_key
 from .checks import CHECKS, TASK_VERSION, MECHANICAL_VERSION, MECHANICAL_VERSIONS, PILOTED_VERSION, SOURCE_FIRST_VERSION, SOURCE_FIRST_VERSIONS, checklist
-from .grading import grade_submission, GRADING_REVISIONS
+from .grading import grade_submission, GRADING_REVISIONS, AIRFRAME_REVISIONS
+from .airframe import scored_checks
 from .runner import ROOT, digest, initial_input, prepare, run_model, write_json
 from .protocol import load_config
 
@@ -23,7 +24,7 @@ FILE_ONLY_ZERO = 'file-only-zero-v1'
 
 
 def scored_points(trial, version, policy=None):
-    """Binary component points; the overall score also needs the recorded human grade."""
+    """Binary points, with file-only validity gating; historical aggregation stays versioned."""
     validity = (trial.get('rollout_review') or {}).get('pass')
     if version in SOURCE_FIRST_VERSIONS:
         if policy == FILE_ONLY_ZERO and validity is False:
@@ -40,6 +41,12 @@ def automated_result(report):
     checks_expected = checklist(report.get("task_version"))
     observed = []
     groups = {}
+    if report.get("grading_revision") in AIRFRAME_REVISIONS:
+        expected=scored_checks(report["grading_revision"])
+        extra=report.get("dimensions",{}).get("airframe",{}).get("checks",[])
+        if len(extra)!=len(expected) or {c["id"] for c in extra}!=expected or any(type(c.get("pass")) is not bool for c in extra):return None
+        observed.extend(extra)
+        groups["airframe"]={"passed":sum(c["pass"] for c in extra),"total":len(expected)}
     for group in AUTOMATED:
         checks = report.get("dimensions", {}).get(group, {}).get("checks", [])
         if len(checks) != len(checks_expected[group]) or {c["id"] for c in checks} != set(checks_expected[group]):
@@ -113,7 +120,8 @@ def refresh_workbench(root, experiment):
     version = experiment["task_version"]
     policy = experiment.get('score_policy')
     checks = checklist(version)
-    total = sum(len(checks[g]) for g in AUTOMATED)
+    airframe_only = experiment.get("grading_revision") in AIRFRAME_REVISIONS
+    total = sum(len(checks[g]) for g in AUTOMATED)+(len(scored_checks(experiment["grading_revision"])) if experiment.get("grading_revision") in AIRFRAME_REVISIONS else 0)
     visual_count = len(checks["visual"])
     summaries = {}
     for model in experiment["models"]:
@@ -126,7 +134,8 @@ def refresh_workbench(root, experiment):
         if version in SOURCE_FIRST_VERSIONS:
             summaries[model]['protocol_valid_attempts']=sum((t.get('rollout_review') or {}).get('pass') is True for t in trials)
             summaries[model]['protocol_invalid_attempts']=sum((t.get('rollout_review') or {}).get('pass') is False for t in trials)
-            summaries[model]['aesthetic_realism']='Human review pending; separate from task score'
+            if not airframe_only:
+                summaries[model]['aesthetic_realism']='Human review pending; separate from task score'
     summary = {"task_version":version,"status":experiment["status"],"models":summaries,
                "comparison_scope":f"{total} deterministic checks; {visual_count} visual checks remain separately ungraded.",
                "full_task_pass_rate":None,"note":f"{experiment['repeats']} repeat(s) per model; exploratory, not a definitive ranking.",
@@ -141,6 +150,8 @@ def refresh_workbench(root, experiment):
             summary['comparison_scope']=str(total)+' task points; file-only policy failures score zero and count in averages. Raw task checks are preserved; human aesthetic realism 1–5 remains separate.'
             summary['scored_results']={t['id']: {'passed':scored_points(t,version,policy), 'total':total,
                 'raw_passed':(t.get('automated') or {}).get('passed')} for t in experiment['trials']}
+        if airframe_only:
+            summary['comparison_scope']=f'{total} deterministic binary checks. File-only policy failures score zero and count in averages.'
         write_json(root/'summary.json',summary)
     write_json(root / "experiment.json", experiment)
     cards = ''.join('<div class="card"><strong>'+html.escape(model)+'</strong><div class="score">'+str(s["mean_passed"] if s["mean_passed"] is not None else '—')+' <small>/ '+str(total)+'</small></div><span class="muted">Mean automated checks · '+str(s["graded_attempts"])+' / '+str(s["attempts"])+' graded</span></div>' for model,s in summaries.items())
@@ -152,16 +163,25 @@ def refresh_workbench(root, experiment):
         if policy == FILE_ONLY_ZERO and (t.get('rollout_review') or {}).get('pass') is False:
             score = '0 / '+str(total)
         simulator_label = 'Fly simulator ↗' if result and (version in SOURCE_FIRST_VERSIONS or result['groups']['interaction']['passed']) else 'Open submission ↗'
-        actions = '<a target="_blank" rel="noopener" href="'+prefix+'submission/index.html">'+simulator_label+'</a><a href="'+prefix+'evidence.html">Captures</a><a href="'+prefix+'grade/report.json">Checks</a><a href="'+prefix+'transcript.txt">Transcript</a><a href="'+prefix+'submission-source.txt">Source</a>' if t["status"] not in ("prepared","running") else '<span class="muted">Artifacts appear when this attempt finishes.</span>'
+        if t['status'] in ('prepared', 'running'):
+            actions = '<span class="muted">Artifacts appear when this attempt finishes.</span>'
+        else:
+            actions = '<a target="_blank" rel="noopener" href="'+prefix+'submission/index.html">'+simulator_label+'</a>'
+            grade_dir = t.get('grade_directory', 'grade')
+            artifacts = (('evidence.html', 'Captures'), (grade_dir+'/report.json', 'Checks'),
+                         ('published-verdicts.json', 'Published checks'), ('transcript.txt', 'Transcript'),
+                         ('submission-source.txt', 'Source'))
+            for path, label in artifacts:
+                if (root / prefix / path).is_file():
+                    actions += '<a href="'+prefix+path+'">'+label+'</a>'
         if (root / prefix / 'rollout-review.json').is_file():
             actions += '<a href="'+prefix+'rollout-review.json">File-only audit</a>'
         if (root / prefix / 'api-diagnostics.json').is_file():
             actions += '<a href="'+prefix+'api-diagnostics.json">API diagnostics</a>'
         if t['status']=='prepared' and experiment.get('stopped_after_trial'):
             actions='<span class="muted">Not started; batch stopped.</span>'
-        if t.get('grade_directory') and t['grade_directory']!='grade':
-            actions=actions.replace('href="'+prefix+'grade/report.json"','href="'+prefix+t['grade_directory']+'/report.json"')
-            actions+='<a href="'+prefix+'grade/report.json">Initial grading</a>'
+        if t.get('grade_directory', 'grade') != 'grade' and (root / prefix / 'grade/report.json').is_file():
+            actions += '<a href="'+prefix+'grade/report.json">Initial grading</a>'
         reason = '<br><small>'+html.escape(t['reason'])+'</small>' if t.get('reason') else ''
         if version in SOURCE_FIRST_VERSIONS:
             protocol=(t.get('rollout_review') or {}).get('pass')
@@ -191,6 +211,9 @@ def refresh_workbench(root, experiment):
         bank_note = (' Bank begins only after 30 m clearance held for 3 seconds; gentle 8-second roll-in, 6-second hold, 8-second roll-out and 8-second recovery. No readiness by 150 seconds fails.'
                      if experiment['grading_revision']=='v7-launch-60-65-70-bank-v2' else '')
         body = '<p><strong>Regraded saved submissions · '+html.escape(experiment['grading_revision'])+'</strong><br>No new model generations. Takeoff profiles: 60%, 65%, 70% below 14 m/s, full throttle above it. Stop at the first complete pass.'+bank_note+' Original grades remain linked as “Initial grading”.</p>' + body
+    if experiment.get("grading_revision") in AIRFRAME_REVISIONS:
+        body=body.replace(' Your 1–5 aesthetic realism score awaits your own flight and review.', '')
+        body=f"<p><strong>{experiment['grading_revision']}: {total} deterministic binary checks. No human rating or LLM judge.</strong></p>"+body
     _write_html(root / "index.html", _page("Frontier model calibration", body))
     return summary
 
@@ -199,8 +222,8 @@ def run_experiment(output, models, repeats, config_path, node="node", transport=
     root = Path(output).resolve()
     if root.exists():
         raise ValueError("Experiment directory already exists; preserve all previous attempts")
-    if not 2<=len(models)<=8 or len(set(models))!=len(models) or any(not re.fullmatch(r"[a-z0-9][a-z0-9._-]{0,99}",m) for m in models):
-        raise ValueError("Provide between two and eight distinct explicit model IDs")
+    if not 1<=len(models)<=8 or len(set(models))!=len(models) or any(not re.fullmatch(r"[a-z0-9][a-z0-9._-]{0,99}",m) for m in models):
+        raise ValueError("Provide between one and eight distinct explicit model IDs")
     if type(repeats) is not int or not 1<=repeats<=20:
         raise ValueError("Repeats must be between 1 and 20")
     if type(sequential) is not bool or type(stop_on_error) is not bool or (stop_on_error and not sequential):
@@ -209,6 +232,13 @@ def run_experiment(output, models, repeats, config_path, node="node", transport=
         raise ValueError("A local API key is required; no experiment was created")
     config = load_config(config_path, generation_profile)
     version = config.get("task_version")
+    if config.get("rubric_revision") in AIRFRAME_REVISIONS:
+        prompt_revision=config["rubric_revision"]
+        if grading_revision not in (None,prompt_revision) and not (prompt_revision=='airframe-binary-v4' and grading_revision in ('airframe-binary-v5','airframe-binary-v6','airframe-binary-v7')):
+            raise ValueError("Unsupported prompt and grading revision pairing")
+        grading_revision=grading_revision or prompt_revision
+        from .airframe import require_calibration
+        require_calibration(grading_revision)
     if version not in (TASK_VERSION, MECHANICAL_VERSION,PILOTED_VERSION,*SOURCE_FIRST_VERSIONS):
         raise ValueError("Unsupported task version")
     if grading_revision is not None and (grading_revision not in GRADING_REVISIONS or version != "mechanical-v7-source-first"):
@@ -371,18 +401,24 @@ def serve_artifacts(root, port=8765, camera_updates=True, *, review_ledger=None)
     server.artifact_root = root
     from .playback import configure_camera_playback
     configure_camera_playback(server,root,camera_updates)
-    from .aesthetics import review_server
-    reviewer = review_server(root, f'http://127.0.0.1:{server.server_port}', camera_updates, review_ledger)
-    server.human_review_url = reviewer.origin + '/'
-    worker = threading.Thread(target=reviewer.serve_forever, daemon=True)
-    worker.start()
+    experiment=json.loads((root/'experiment.json').read_text())
+    reviewer=worker=None
     print(f"Artifact workbench: http://127.0.0.1:{server.server_port}/",flush=True)
-    print(f"Human aesthetic review: {server.human_review_url}", flush=True)
-    print(f"Rating ledger: {reviewer.store.ledger}", flush=True)
+    if experiment.get('grading_revision') not in AIRFRAME_REVISIONS:
+        from .aesthetics import review_server
+        reviewer=review_server(root,f'http://127.0.0.1:{server.server_port}',camera_updates,review_ledger)
+        server.human_review_url=reviewer.origin+'/'
+        worker=threading.Thread(target=reviewer.serve_forever,daemon=True);worker.start()
+        print(f"Human aesthetic review: {server.human_review_url}",flush=True)
+        print(f"Rating ledger: {reviewer.store.ledger}",flush=True)
+    else:
+        server.human_review_url=None
+        print('Deterministic-only rubric: no human review server.',flush=True)
     try:
         server.serve_forever()
     finally:
         server.server_close()
-        reviewer.shutdown()
-        reviewer.server_close()
-        worker.join()
+        if reviewer:
+            reviewer.shutdown()
+            reviewer.server_close()
+            worker.join()

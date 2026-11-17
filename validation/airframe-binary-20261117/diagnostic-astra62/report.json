@@ -1,0 +1,568 @@
+{
+  "rubric": "airframe-binary-v1",
+  "kind": "deterministic supplemental inspection",
+  "submission_sha256": {
+    "aircraft.mjs": "d8c655198649066dc1fe96dda121870b8ae2d0536c5047b04cc4419ebc4a4172",
+    "environment/capture.mjs": "163afc21a91601ef467f554816f8c0565289fa9a2f45454dce97256703161618",
+    "environment/engineering.mjs": "c4b8598f927d5d130e4f4b16c7d59f74c23aadfd246d00f1b82bb65031e66d5c",
+    "environment/flight-modes.mjs": "791aee69341621305c6c0ea2f7e4c129cbc0a02a7a60e7a1cfc2265d01d41d62",
+    "environment/platform.mjs": "be26d96516749b728e5ca45cd1e3b665abdadcf90a2695c9198e4ffea03bb3e4",
+    "environment/source-mechanism.mjs": "cb55fd96906c7d708ea948a1010c2a9e6d688224ff65155b7e1eeb91c9db3b4d",
+    "environment/style.css": "21db9f38d2ab3f0c10c667245fed2748689382465c4164e281bed102b2b7f5ed",
+    "environment/vendor/THREE-LICENSE.txt": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+    "environment/vendor/three.core.min.js": "05b2609338c76cd65daf74f3ac515bc9a5045e1b3b33edc07d8c9bd55250fa90",
+    "environment/vendor/three.module.min.js": "86bcee248b64f44bcfc23c331ae74619061957d59cab040171dcb6fb5900beb6",
+    "environment/view-motion.mjs": "a01247f64b5244a8223f490b10044296c779284e6fa685e75344421499ef92b1",
+    "environment/world.mjs": "cf5859d1582b6b7b77fcab7a69f5c6cab25c7ae48c482f31d62e39967b52aa85",
+    "index.html": "c8ad6882313e105f01e3598e741b82df5e02e7d052a985d2d19056aadf41ccce",
+    "interpretation.json": "68ece157250f5c044671c2b8455fdca23096307e60bc929893c157c349b21454",
+    "kinematics.mjs": "f535556c1ae022bf0850a2b176628c9aa91de05b0fbf112bba981dae4c656411",
+    "physics.mjs": "64c16147e7e7ab87e5e4f032763c9967174a6af24dc662bbe93f59d8b7cab6af"
+  },
+  "grader_sha256": {
+    "grader/protocols/airframe-binary-v1.json": "9d6bbf58bd92f65c685da72ee66e47129546fd61d26ca07bd981b764edec851f",
+    "grader/airframe-evidence.mjs": "94bca6ed400369c1b45f3f7f8364455327e15a120b5a56ff410b14d10ca91b8f",
+    "grader/airframe-geometry.mjs": "b8ab48c9c8ba325985f085acd13cc0152e2848e75d467eae8dd42446d63491c9",
+    "ornithopter_eval/airframe.py": "2d91b621f87079f8f0ad1648c7d7b7e8eda45569399701c7ddee658958db2e37"
+  },
+  "status": "completed",
+  "checks": [
+    {
+      "id": "wingtip_motion_continuity",
+      "pass": true,
+      "detail": {
+        "id": "wingtip_motion_continuity",
+        "phase_samples": 240,
+        "nominal_omega_rad_s": 6,
+        "envelope_multiplier": 1.5,
+        "scope": "Rendered outer-wing leaf vertices must follow continuous finite motion within 1.5 times the prescribed shared helper's peak speed and acceleration at the same nominal phase rate, at both published timing settings. Includes wrapped cycle seam. No wingbeat speed penalty merely for correctly implementing the prescribed rapid recovery. Does not prove all decorative wing parts move physically.",
+        "cases": [
+          {
+            "timing_bias": 0,
+            "observed": {
+              "peak_speed_m_s": 20.308959514080843,
+              "peak_acceleration_m_s2": 312.9445152642501
+            },
+            "reference": {
+              "peak_speed_m_s": 20.308959514080843,
+              "peak_acceleration_m_s2": 312.9445152642501
+            },
+            "pass": true
+          },
+          {
+            "timing_bias": 0.3,
+            "observed": {
+              "peak_speed_m_s": 20.33779317669376,
+              "peak_acceleration_m_s2": 352.7539512835619
+            },
+            "reference": {
+              "peak_speed_m_s": 20.33779317669376,
+              "peak_acceleration_m_s2": 352.7539512835619
+            },
+            "pass": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "pilot_clearance",
+      "pass": false,
+      "detail": {
+        "phase_samples": 24,
+        "penetration_margin_m": 0.008,
+        "edge_sample_spacing_m": 0.025,
+        "pilot_components": 31,
+        "tested_surface_points": 5409,
+        "witnesses": [
+          {
+            "phase": 0,
+            "aircraft_component": 6,
+            "point_m": [
+              1.7799999713897705,
+              -0.7444187998771667,
+              0.17502230405807495
+            ],
+            "scope": "Actual non-pilot mesh surface lies more than 8 mm inside a pilot component"
+          },
+          {
+            "phase": 0,
+            "aircraft_component": 9,
+            "point_m": [
+              1.7676362991333008,
+              -0.7833729386329651,
+              0.13914570212364197
+            ],
+            "scope": "Actual non-pilot mesh surface lies more than 8 mm inside a pilot component"
+          },
+          {
+            "phase": 0,
+            "aircraft_component": 41,
+            "point_m": [
+              1.5089747792198545,
+              -0.6354976409957522,
+              -0.19451277667567843
+            ],
+            "scope": "Actual non-pilot mesh surface lies more than 8 mm inside a pilot component"
+          },
+          {
+            "phase": 0,
+            "aircraft_component": 42,
+            "point_m": [
+              1.558408422129495,
+              -0.6409384991441455,
+              0.19424647092819214
+            ],
+            "scope": "Actual non-pilot mesh surface lies more than 8 mm inside a pilot component"
+          },
+          {
+            "phase": 0,
+            "aircraft_component": 121,
+            "point_m": [
+              1.2699999809265137,
+              -0.4730555448267195,
+              0.16333332823382485
+            ],
+            "scope": "Actual non-pilot mesh surface lies more than 8 mm inside a pilot component"
+          },
+          {
+            "phase": 0,
+            "aircraft_component": 122,
+            "point_m": [
+              0.8951990944998605,
+              -0.27441684688840595,
+              0.08999999719006675
+            ],
+            "scope": "Actual non-pilot mesh surface lies more than 8 mm inside a pilot component"
+          }
+        ],
+        "scope": "Sampled non-pilot mesh surfaces penetrating the actual pilot mesh. Contacts below 8 mm ignored; no guarantee between phase samples or for concealed/incorrect pilot geometry."
+      }
+    },
+    {
+      "id": "wing_drive_linkage",
+      "pass": false,
+      "detail": {
+        "moving_links": [
+          {
+            "index": 149,
+            "a": [
+              -0.8197513133954144,
+              0.8787216736762542,
+              -0.24368879645690628
+            ],
+            "b": [
+              0.03417541719283934,
+              0.7398341440116616,
+              -0.25482356314029186
+            ],
+            "length": 0.8652193884435154,
+            "travel_m": 0.41808554231953476
+          },
+          {
+            "index": 150,
+            "a": [
+              -0.8197513133954144,
+              0.9158249245095168,
+              -0.7064895894404473
+            ],
+            "b": [
+              0.0341754171928394,
+              0.7769373948449242,
+              -0.7176243561238328
+            ],
+            "length": 0.8652193884435154,
+            "travel_m": 0.4773314374198093
+          },
+          {
+            "index": 202,
+            "a": [
+              -0.8197513133954144,
+              0.8787216736762542,
+              0.2436887964569063
+            ],
+            "b": [
+              0.03417541719283934,
+              0.7398341440116616,
+              0.2548235631402919
+            ],
+            "length": 0.8652193884435154,
+            "travel_m": 0.41808554231953476
+          },
+          {
+            "index": 203,
+            "a": [
+              -0.8197513133954144,
+              0.9158249245095168,
+              0.7064895894404473
+            ],
+            "b": [
+              0.0341754171928394,
+              0.7769373948449242,
+              0.7176243561238328
+            ],
+            "length": 0.8652193884435154,
+            "travel_m": 0.4773314374198092
+          }
+        ],
+        "connected_pairs": [],
+        "scope": "Two joined slender rigid moving members spanning the engine/root region. Tests a visible linkage, not force transmission, joint stress or mechanical advantage."
+      }
+    },
+    {
+      "id": "rear_truss_structure",
+      "pass": false,
+      "detail": {
+        "scope": "Connected slender-member triangular bays in the aft region, not strength/material/visual-quality certification",
+        "endpoint_tolerance_m": 0.1,
+        "minimum_triangle_area_m2": 0.025,
+        "cases": [],
+        "members": [
+          {
+            "a": [
+              -3.221040461775546,
+              0.006121857192458585,
+              -0.07065833528584342
+            ],
+            "b": [
+              -0.3596464195650835,
+              0.1545441891230866,
+              -0.33140856276215447
+            ]
+          },
+          {
+            "a": [
+              -3.221040461775546,
+              0.006121857192458585,
+              0.0706583352858434
+            ],
+            "b": [
+              -0.3596464195650835,
+              0.1545441891230866,
+              0.33140856276215447
+            ]
+          },
+          {
+            "a": [
+              -3.2248428297409677,
+              -0.10863087103086705,
+              0
+            ],
+            "b": [
+              -0.36249137932818276,
+              -0.4700351559456706,
+              0
+            ]
+          },
+          {
+            "a": [
+              -3.220695486886926,
+              0.020218583112056168,
+              3.206955842994782e-13
+            ],
+            "b": [
+              -2.51930452249678,
+              -0.20021858418187558,
+              -4.07967115129702e-11
+            ]
+          },
+          {
+            "a": [
+              -0.5399999997832559,
+              0.7299999973990701,
+              -0.30000001192092896
+            ],
+            "b": [
+              -0.5399999997832559,
+              0.7299999973990701,
+              0.30000001192092896
+            ]
+          },
+          {
+            "a": [
+              -0.4499999866432309,
+              -1.2000000273820794,
+              -1.125000021866081
+            ],
+            "b": [
+              -0.8500000001768802,
+              -0.2999999931965091,
+              -0.2599999990019702
+            ]
+          },
+          {
+            "a": [
+              -0.4499999866432309,
+              -1.2000000273820794,
+              1.125000021866081
+            ],
+            "b": [
+              -0.8500000001768802,
+              -0.2999999931965091,
+              0.2599999990019702
+            ]
+          },
+          {
+            "a": [
+              -0.44999999922605843,
+              -1.050000011229642,
+              -1.1250000284671242
+            ],
+            "b": [
+              -0.3799999972282354,
+              -0.51000000081876,
+              -0.30999999535138334
+            ]
+          },
+          {
+            "a": [
+              -0.3799999972282354,
+              -0.51000000081876,
+              0.3099999953513834
+            ],
+            "b": [
+              -0.44999999922605843,
+              -1.050000011229642,
+              1.1250000284671242
+            ]
+          },
+          {
+            "a": [
+              -0.4499999989162792,
+              -1.2000000476837158,
+              -1.125
+            ],
+            "b": [
+              -0.4499999989162792,
+              -1.0099999904632568,
+              -1.125
+            ]
+          },
+          {
+            "a": [
+              -0.4499999934976751,
+              -1.2000000151720915,
+              -1.2879999876022339
+            ],
+            "b": [
+              -0.4499999934976751,
+              -1.2000000151720915,
+              -1.1119999885559082
+            ]
+          },
+          {
+            "a": [
+              -0.4499999989162792,
+              -1.2000000476837158,
+              1.125
+            ],
+            "b": [
+              -0.4499999989162792,
+              -1.0099999904632568,
+              1.125
+            ]
+          },
+          {
+            "a": [
+              -0.4499999934976751,
+              -1.2000000151720915,
+              1.1119999885559082
+            ],
+            "b": [
+              -0.4499999934976751,
+              -1.2000000151720915,
+              1.2879999876022339
+            ]
+          },
+          {
+            "a": [
+              -2.7303518294832063,
+              0.10120938515887953,
+              -1.3000000456914729
+            ],
+            "b": [
+              -2.4811513791353184,
+              0.08123070952388023,
+              -0.6199999822138448
+            ]
+          },
+          {
+            "a": [
+              -2.481151379135319,
+              0.08123070952388019,
+              0.6199999822138444
+            ],
+            "b": [
+              -2.7303518294832068,
+              0.1012093851588795,
+              1.3000000456914729
+            ]
+          },
+          {
+            "a": [
+              -3.3365870498464596,
+              0.7173855339965507,
+              0
+            ],
+            "b": [
+              -3.0292068702074966,
+              0.8137680587985006,
+              0
+            ]
+          },
+          {
+            "a": [
+              -3.1350000002799607,
+              0.1999999996839147,
+              -0.15000000596046448
+            ],
+            "b": [
+              -3.1350000002799607,
+              0.1999999996839147,
+              0.15000000596046448
+            ]
+          },
+          {
+            "a": [
+              -2.4499999888995325,
+              0.23999998044707266,
+              0
+            ],
+            "b": [
+              -2.820000014665095,
+              0.770000017588466,
+              0
+            ]
+          },
+          {
+            "a": [
+              -3.1350000000000007,
+              0.20000000000000004,
+              -0.15
+            ],
+            "b": [
+              -2.5199999999999996,
+              0.19999999999999998,
+              -0.16500000000000004
+            ]
+          },
+          {
+            "a": [
+              -3.1350000000000007,
+              0.20000000000000004,
+              0.15
+            ],
+            "b": [
+              -2.5199999999999996,
+              0.19999999999999998,
+              0.165
+            ]
+          },
+          {
+            "a": [
+              -1.730000048549446,
+              -0.0899999949821974,
+              0.22999999992987327
+            ],
+            "b": [
+              -1.2599999519346696,
+              -0.1300000036216959,
+              0.2600000014006585
+            ]
+          },
+          {
+            "a": [
+              -0.9174943882378003,
+              1.1127508642076285,
+              -3.4853542234198107
+            ],
+            "b": [
+              -0.9174943882378003,
+              0.8530281093181695,
+              -0.24574868430208419
+            ]
+          },
+          {
+            "a": [
+              -0.8126368179092747,
+              1.4508812331840846,
+              -5.214616436160944
+            ],
+            "b": [
+              -0.8892546004006937,
+              1.3346739878100202,
+              -3.4677598637289897
+            ]
+          },
+          {
+            "a": [
+              -0.3662285122326164,
+              1.445880900507373,
+              -6.989305255471299
+            ],
+            "b": [
+              -0.8661655928281132,
+              1.4604147336261943,
+              -5.230564774530492
+            ]
+          },
+          {
+            "a": [
+              -0.9174943882378003,
+              0.8530281093181697,
+              0.2457486843020844
+            ],
+            "b": [
+              -0.9174943882378003,
+              1.1127508642076287,
+              3.4853542234198107
+            ]
+          },
+          {
+            "a": [
+              -0.8892546004006937,
+              1.3346739878100198,
+              3.4677598637289897
+            ],
+            "b": [
+              -0.8126368179092747,
+              1.4508812331840841,
+              5.214616436160944
+            ]
+          },
+          {
+            "a": [
+              -0.866165592828113,
+              1.4604147336261943,
+              5.230564774530493
+            ],
+            "b": [
+              -0.3662285122326161,
+              1.445880900507373,
+              6.989305255471298
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "original_grades_unchanged": true,
+  "scope": "Retrospective application of new requirements is exploratory; no new model generation, no human ratings and no LLM judges.",
+  "passed": 1,
+  "total": 4,
+  "evidence": {
+    "pilot_clearance": [
+      "pilot_clearance-0.png",
+      "pilot_clearance-1.png"
+    ],
+    "wing_drive_mechanism": [
+      "wing_drive_mechanism-0.png",
+      "wing_drive_mechanism-1.png"
+    ],
+    "forward_airframe_structure": [
+      "forward_airframe_structure-0.png"
+    ],
+    "rear_truss_structure": [
+      "rear_truss_structure-0.png"
+    ]
+  }
+}

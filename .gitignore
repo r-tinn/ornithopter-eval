@@ -12,3 +12,19 @@ captures/
 task/sources/*.jpg
 !task/sources/Unknown-2.jpg
 !task/sources/Unknown-14.jpg
+
+# Local secrets and environment overrides
+.env.*
+!.env.example
+
+# Airframe calibration: keep verdicts and the one reproducible author fixture.
+# Duplicated input packets, renders, and browser logs stay local.
+validation/airframe-binary-20261117/**/inputs/
+validation/airframe-binary-20261117/**/submission/
+!validation/airframe-binary-20261117/full-reference/submission/
+validation/airframe-binary-20261117/**/*.png
+validation/airframe-binary-20261117/**/*.log
+validation/airframe-binary-20261117/full-reference/grade/browser-results.json
+validation/airframe-binary-20261117/**/measurements.json
+validation/airframe-binary-20261117/**/evidence.json
+validation/airframe-binary-20261117/full-reference/grade/

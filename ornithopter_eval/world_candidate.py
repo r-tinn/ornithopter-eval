@@ -76,7 +76,23 @@ def prepare_world_trial(output, config_path, *, config=None):
         raise ValueError('Unsupported mechanical task version')
     validate_config(config)
     output = prepare_world(output,task_version=version)
+    if config.get('rubric_revision'):
+        if config['rubric_revision'] not in ('airframe-binary-v1','airframe-binary-v2','airframe-binary-v3','airframe-binary-v4','airframe-binary-v5') or version!=LATEST_SOURCE_FIRST_VERSION:
+            raise ValueError('Unsupported airframe rubric revision')
+        v2=config['rubric_revision']!='airframe-binary-v1'
+        number='Three' if v2 else 'Four'
+        total='Ten' if v2 else 'Eleven'
+        extra=(ROOT/'candidate/mechanical-v7'/('AIRFRAME_BINARY_V'+config['rubric_revision'][-1]+'.md')).read_text()
+        task=(output/'inputs/TASK.md').read_text()
+        task=task.replace('The owner will fly it and rate\naesthetic realism separately, 1–5.', f'{number} deterministic airframe checks apply; no human aesthetic score.')
+        task=task.split('## Evaluation')[0]+'## Evaluation\n\n'+extra
+        (output/'inputs/TASK.md').write_text(task)
+        (output/'inputs/GRADERS.md').write_text((output/'inputs/GRADERS.md').read_text().split('**Human aesthetic realism')[0].replace('# Eight task graders: seven binary checks and human aesthetics',f'# {total} deterministic binary task checks').replace('No score weights or extra easy points.','The seven original checks remain unchanged.')+'\n'+extra)
+        brief=output/'inputs/DESIGN_BRIEF.md'
+        if brief.exists():
+            brief.write_text(f'Design guidance only; any historical human-rating anchors below are unscored under {config["rubric_revision"]}.\n\n'+brief.read_text())
     manifest = json.loads((output/'manifest.json').read_text())
+    manifest['input_sha256']={str(p.relative_to(output)):digest(p) for p in sorted((output/'inputs').rglob('*')) if p.is_file()}
     manifest.update(status='prepared',model=None,config=config,
         created_utc=datetime.now(timezone.utc).isoformat(),
         grading_status=f'provisional smoke checklist; {len(checklist(version)["visual"])} visual checks ungraded',

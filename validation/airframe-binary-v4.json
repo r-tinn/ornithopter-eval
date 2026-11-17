@@ -1,0 +1,38 @@
+{
+  "all_passed": true,
+  "reference_all_ten_pass": true,
+  "cases": {
+    "reference": {
+      "clearance_pass": true,
+      "tolerated_foot_samples": 0,
+      "report": "reference/inspection/report.json"
+    },
+    "shallow_boot": {
+      "clearance_pass": true,
+      "tolerated_foot_samples": 4656,
+      "report": "shallow_boot/inspection/report.json"
+    },
+    "deep_boot": {
+      "clearance_pass": false,
+      "tolerated_foot_samples": 0,
+      "report": "deep_boot/inspection/report.json"
+    },
+    "head_bar": {
+      "clearance_pass": false,
+      "tolerated_foot_samples": 0,
+      "report": "head_bar/inspection/report.json"
+    },
+    "torso_bar": {
+      "clearance_pass": false,
+      "tolerated_foot_samples": 0,
+      "report": "torso_bar/inspection/report.json"
+    }
+  },
+  "kernel_sha256": {
+    "grader/airframe-evidence-v4.mjs": "cce1d80fa8f03432b57b41751938099a1cf4a0d254ae3652585a54bad8d0ee1a",
+    "grader/wing-drive.mjs": "14462610546aeb945115e5592e21a625469f294a51916a920629112a6bc24bd8",
+    "grader/airframe-geometry.mjs": "13615ebfecbbd8f3550db6035e9322c4bad8e10f9b2bc0affb3a74ffee689624"
+  },
+  "calibration_directory": "runs/clearance-v4-calibration-final",
+  "boundary_case": "Initial shallow-boot fixture exceeded 25 mm and correctly failed; preserved in runs/clearance-v4-calibration."
+}

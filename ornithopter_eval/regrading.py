@@ -7,6 +7,7 @@ from pathlib import Path
 
 from .checks import LATEST_SOURCE_FIRST_VERSION
 from .experiment import automated_result, refresh_workbench, write_trial_pages
+from .airframe_versions import AIRFRAME_GRADING_REVISION, AIRFRAME_REVISIONS
 from .grading import BANK_GRADING_REVISION, GRADING_REVISIONS, grade_submission
 from .runner import digest
 
@@ -51,6 +52,17 @@ def regrade_experiment(source, output, *, grading_revision, node='node', grader=
                         'rolls out over 8 seconds and observes 8 seconds of recovery. '
                         'It fails if the aircraft cannot reach readiness by 150 seconds. '
                         'The bank must actually occur and flight must survive recovery.\n')
+    if grading_revision in AIRFRAME_REVISIONS:
+        count,total=(3,10) if grading_revision != AIRFRAME_GRADING_REVISION else (4,11)
+        (output/'CALIBRATION.md').write_text(
+            '# Exploratory deterministic airframe regrade\n\n'
+            'Same immutable saved submissions and original generation packets. '
+            f'Seven base checks use bank-v2; {count} additional geometry/motion checks '
+            'are applied retrospectively. These requirements were chosen after '
+            'inspecting model outputs, so this is not a held-out ranking. '
+            'No API calls or LLM judges. No human rating contributes points. '
+            f'File-only failure zeros the full /{total} attempt. Original grades and '
+            f'rating history remain preserved. See docs/AIRFRAME_BINARY_V{grading_revision[-1]}.md.\n')
     experiment['generation_protocol'] = experiment.get('protocol')
     experiment['protocol'] = 'Retrospective regrade only; original model generation and submissions unchanged.'
     experiment['grading_revision'] = grading_revision

@@ -1,0 +1,73 @@
+{
+  "source_first_reading": "All nine supplied photographs were re-read and used as source guidance for a reduced, human-piloted mechanical ornithopter. The result is an educational simulation, not a claim of a recovered buildable Stanley Tinn design.",
+  "derived_geometry": {
+    "photo": "Unknown-2.jpg",
+    "aspect_ratio": 8.284417549167928,
+    "calculation": "Use the rounded Say span b=7.4 ft and the text's total area S=6.61 ft^2, so AR=b^2/S. The inconsistent 3.135 ft wing-length conversion is excluded.",
+    "wrist_span_fraction": 0.5,
+    "area_m2": 23.6581,
+    "principle": "Preserve broad inner arm wing, wrist at about half span, and rounded/tapered outer hand-wing planform."
+  },
+  "photograph_interpretations": [
+    {
+      "photo": "Unknown-2.jpg",
+      "used_principle": "Mute-swan planform proportions, AR from b^2/S, wrist-to-wrist fraction about half span, broad inner chord and tapered rounded outer wing.",
+      "unreadable_or_rejected": "The original wing-length conversion marked around 3.135 ft is inconsistent and is not used.",
+      "engineering_completion": "Scaled to the supplied 14 m span and area=14^2/AR; source-mechanism supplies detailed panel geometry."
+    },
+    {
+      "photo": "Unknown-8.jpg",
+      "used_principle": "Section-data context only: curved-plate behaviour and ambiguous axes caution against exact coefficient recovery.",
+      "unreadable_or_rejected": "No exact full-scale CL/CD table is claimed from the chart.",
+      "engineering_completion": "The provided engineering.json section tables are used as illustrative assumptions."
+    },
+    {
+      "photo": "Unknown-9.jpg",
+      "used_principle": "Design method: choose trajectory, cruising speed and flapping frequency, then evaluate candidate wing actions; human-carrying mechanical flapping flight is the target.",
+      "unreadable_or_rejected": "Historical marginal notes are not treated as design requirements.",
+      "engineering_completion": "Simulator uses the supplied masses, controls, 16 kW engine model and terrain world."
+    },
+    {
+      "photo": "Unknown-10.jpg",
+      "used_principle": "Straight and level flapping necessarily has cyclic lift/thrust and small undulating motion; powered man-carrying ornithopter context.",
+      "unreadable_or_rejected": "The ring-vortex sketch is qualitative, not a prescribed force waveform.",
+      "engineering_completion": "Forces are computed locally from moving wing strips rather than prescribed to match a sine path."
+    },
+    {
+      "photo": "Unknown-11.jpg",
+      "used_principle": "Low-speed downstroke lasts longer than recovery; at cruise periods become equal. Wing/body/wishbone dynamics should act as a resonant mass-spring system.",
+      "unreadable_or_rejected": "Marginal revisions are uncertain.",
+      "engineering_completion": "Implemented theta=phi-b sin(phi), with low-speed timing bias from engineering and fixed per run."
+    },
+    {
+      "photo": "Unknown-12.jpg",
+      "used_principle": "Wing and body inertias share a common CG; fore/aft wing movement creates pitching moments; recovery closes/reduces the hand wing; tail helps align pitch.",
+      "unreadable_or_rejected": "No numerical linkage dimensions are recovered.",
+      "engineering_completion": "The source-mechanism helper supplies actual moving masses, CG, derivatives and coupled phase/pitch inertia."
+    },
+    {
+      "photo": "Unknown-13.jpg",
+      "used_principle": "Incidence and camber are separately adjusted during the cycle; bird-wing section figures show curved, changing sections.",
+      "unreadable_or_rejected": "The goshawk dimensions and camber percentages are treated as examples, not swan specifications.",
+      "engineering_completion": "Camber curves are the supplied inner/outer base plus cyclic amplitude values."
+    },
+    {
+      "photo": "Unknown-14.jpg",
+      "used_principle": "Inner arm section about 5-6 percent thick; outer hand wing is a thin curved/slotted plate; trailing/partial closing on recovery reduces tip area and drag; conventional tail/rudder controls are compatible.",
+      "unreadable_or_rejected": "Bird landing and water-ski details are not directly copied.",
+      "engineering_completion": "Two overlapping sliding outer leaves give reduced exposure on recovery; the aircraft has a tailplane, fin, rudder, elevator and three wheels."
+    },
+    {
+      "photo": "Unknown-15.jpg",
+      "used_principle": "Power accounting begins with D*V glide work and adds induced, trajectory, inertial, body and wing terms; springs exchange but do not create net energy.",
+      "unreadable_or_rejected": "Appendix algorithm and detailed equations are missing.",
+      "engineering_completion": "Shaft work, aerodynamic dissipation, drive heat and control work are integrated from the same production forces and coupled dynamics."
+    }
+  ],
+  "visual_design": "Open triangular tube fuselage, seated pilot, visible engine/crank/transmission, mast and bracing, conventional tail/fin/rudder, three actual rotating tyres, and source-mounted curved/sliding wing panels. The rendered wing surfaces are the same makePanel geometry consumed by physics through wingPose.",
+  "limitations": [
+    "Engine, component masses, coefficient tables, transmission efficiency and fuel consumption are engineering assumptions, not notebook readings.",
+    "No CFD, unsteady wake, structural flexibility, aeroelastic stability proof or buildable human-flight validation is claimed.",
+    "The linkage curves are an explicit mechanical completion of the readable principles rather than digitised notebook samples."
+  ]
+}

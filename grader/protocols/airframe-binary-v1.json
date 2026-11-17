@@ -1,0 +1,20 @@
+{
+  "id": "airframe-binary-v1",
+  "status": "calibration_required",
+  "base_grading_revision": "v7-launch-60-65-70-bank-v2",
+  "scoring": "Seven existing binary checks plus four deterministic geometry/motion checks, equal weight, /11. Failed file-only validity zeros the attempt. Missing or uncalibrated checks leave the total unavailable. No human aesthetic score or LLM judges.",
+  "retrospective": "New requirements were selected after inspecting these models. Regrading saved submissions is exploratory, not a fresh held-out comparison. Preserve original grades and human ratings.",
+  "motion_check": {
+    "id": "wingtip_motion_continuity",
+    "phase_samples": 240,
+    "nominal_omega_rad_s": 6,
+    "envelope_multiplier": 1.5,
+    "scope": "Rendered outer-wing leaf vertices must follow continuous finite motion within 1.5 times the prescribed shared helper's peak speed and acceleration at the same nominal phase rate, at both published timing settings. Includes wrapped cycle seam. No wingbeat speed penalty merely for correctly implementing the prescribed rapid recovery. Does not prove all decorative wing parts move physically."
+  },
+  "geometry_checks": [
+    "pilot_clearance",
+    "wing_drive_linkage",
+    "rear_truss_structure"
+  ],
+  "deferred": "Forward-airframe aesthetic realism is not scored: no adequate simple deterministic criterion. Rear-wheel idea clarified to a wing drive linkage; either a crank or piston arrangement is allowed."
+}

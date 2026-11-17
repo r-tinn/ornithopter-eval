@@ -29,16 +29,17 @@ generation deadline, via configs/source-first-v7.json or the explicit overlay
 configs/source-first-time-8min.json. No benchmark token or
 request-count cap. Preserve the old token profiles for reproduction. Do not
 silently reinterpret a saved task/config as the new protocol.
-The current v7 rubric has eight equally weighted scored graders: seven binary
-checks including powered_pitch_stability and wheel_rotation_axis, plus the
-owner's aesthetic_realism rating. Under eight-grader-equal-v1, normalize the
-recorded 1–5 human rating by dividing by five, then add it to the seven binary
-points and divide by eight (or report /8). A failed no_verification_tools/file-only
-audit zeros the entire attempt, including the human contribution, and counts in
-averages. Preserve raw binary checks and actual human ratings/revisions and
-submission identity. Never invent a human score; an overall score awaits that
-rating. The November 16 comparison uses this explicit aggregation revision;
-retain previous scoring views and original published cohorts for reproduction.
+The current airframe-binary-v7 revision uses ten deterministic binary checks:
+the existing seven plus pilot_clearance, wing_drive_linkage, and
+wingtip_motion_continuity. Rear-truss geometry is unscored. No human or LLM
+judges. Keep the existing v4 generation packet. Select v5 separately with --grading-revision airframe-binary-v7. File-only
+failure zeros the whole /10 attempt. Preserve the historical v1 /11 results,
+earlier configs and human ratings. Retrospective results are exploratory.
+Do not tune checks to force a named model to pass. Retain calibration evidence.
+See docs/AIRFRAME_BINARY_V7.md.
+The owner has frozen the existing generation prompt. Grader changes must not
+change it. Use saved submissions and local deterministic checks only; do not
+make API calls or start fresh model generations for this benchmark.
 Time-budget notices are limited to the 50% and 75% thresholds (240 and 360 s),
 delivered at the next exchange; do not send ongoing usage updates. Retain
 the original settings for published cohorts.
@@ -53,7 +54,7 @@ The current eval is a mechanical ornithopter inside a supplied lightweight
 world. The swan studies inform wing proportions/mechanics, not a literal animal
 design target. Keep only hills, a few trees and two landing strips; bundle all
 needed files here so the original project is never a runtime dependency. No
-other aircraft or complicated scenery systems are needed. The source-first v7 task uses nine photos (02,08–15), a 55kg pilot and revised favourable 177.5kg wet budget. Do not present an author reference fixture as a model result. Use configs/source-first-v7.json for new cohorts; all seven task graders must pass the author reference and reject the documented targeted mutants before a model cohort.
+other aircraft or complicated scenery systems are needed. The source-first v7 task uses nine photos (02,08–15), a 55kg pilot and revised favourable 177.5kg wet budget. Do not present an author reference fixture as a model result. Use the explicit airframe profile described above for new cohorts; all seven task graders must pass the author reference and reject the documented targeted mutants before a model cohort.
 
 V7 is a separate stability revision. Preserve all published v6 six-check scores
 and packets. The new pitch check targets large multi-second hunting with fixed
@@ -77,3 +78,21 @@ Keep encoding/extra rendering work limited to capture use. The labelled
 retrospective overlay may use the current v7 host only when all the other
 shared environment modules match by hash. Capture footage is illustrative
 playback, never a new model trial, grader result or human aesthetic rating.
+
+## Future grader ideas recorded 16 November 2026
+
+Original owner ideas, clarified on 17 November: the rear-wing wheels mean a
+visible moving wing-drive mechanism, allowing cranks/connecting rods/pistons.
+Four narrow deterministic checks are implemented under airframe-binary-v1; the
+forward-structure aesthetic idea remains unscored. Original wording is retained:
+
+- Pilot clearance: aircraft parts, including moving wings and mechanisms, must
+  not intersect the pilot's body throughout the flapping cycle.
+- Rear-wing wheels: check the owner's requested wheels at the back of the wings
+  for the flapping motion. Preserve this requirement as stated; establish the
+  intended mechanism from the drawings before specifying the grader.
+- Wingtip motion: tips must not snap like a whip or move at implausibly high
+  speeds. Define physically justified motion limits before making this binary.
+- Forward structure: the area in front of the pilot should have realistic
+  aircraft structure and material, rather than empty space or merely a primitive
+  cone. Develop concrete visual acceptance examples before grading.

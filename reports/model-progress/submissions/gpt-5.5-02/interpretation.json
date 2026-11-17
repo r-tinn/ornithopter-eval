@@ -1,0 +1,81 @@
+{
+  "source_first_reading": "All nine supplied photographs were reread. The implementation translates the readable principles into a reduced, human-piloted mechanical aircraft; the numerical propulsion, mass and coefficient data are the supplied engineering completion, not claimed notebook data.",
+  "derived_geometry": {
+    "photo": "Unknown-2.jpg",
+    "aspect_ratio": 8.286,
+    "calculation": "Use the rounded Say full span 7.4 ft and the original area paragraph S=6.61 ft^2: AR=b^2/S=7.4^2/6.61.",
+    "wrist_span_fraction": 0.5,
+    "calculation_wrist": "Use rounded Say wrist span 3.7 ft divided by 7.4 ft full span.",
+    "excluded": "The inconsistent 3.135 ft wing-length conversion was not used.",
+    "model_area_m2": "14^2/AR = about 23.65 m^2"
+  },
+  "photographs": [
+    {
+      "file": "Unknown-2.jpg",
+      "used_principle": "Mute swan planform proportions: broad inboard arm wing, rounded/tapered outer hand wing, AR from b^2/S, wrist-to-wrist about half span.",
+      "unreadable_or_uncertain": "Specimen variation and the handwritten comments do not provide a buildable aircraft structure.",
+      "engineering_completion": "14 m span, source-helper four-segment rounded outer planform, two sliding outer leaves, and supplied mass budget."
+    },
+    {
+      "file": "Unknown-8.jpg",
+      "used_principle": "Curved-plate/section context is present but ambiguous; incidence, camber and drag/lift are treated as aerodynamic variables.",
+      "unreadable_or_uncertain": "The multi-axis graph is low-Re and not safely digitised for full-scale coefficients.",
+      "engineering_completion": "The section coefficient tables in engineering.mjs are used as favourable illustrative assumptions."
+    },
+    {
+      "file": "Unknown-9.jpg",
+      "used_principle": "Bird flight is used as a guide to manned ornithopter design; desired trajectory and force matching motivate evaluating candidate wing actions.",
+      "unreadable_or_uncertain": "No final dimensions, engine, or validated stability data are supplied.",
+      "engineering_completion": "Human pilot, hills/runways world, and finite 16 kW-class engine model are supplied assumptions."
+    },
+    {
+      "file": "Unknown-10.jpg",
+      "used_principle": "Straight-and-level flapping necessarily has cyclic lift/thrust and small undulating motion rather than a perfectly steady force.",
+      "unreadable_or_uncertain": "Marginal notes are partial and do not define exact curves.",
+      "engineering_completion": "The simulation computes cyclic strip forces from the shared wingPose rather than prescribing level flight."
+    },
+    {
+      "file": "Unknown-11.jpg",
+      "used_principle": "At low speed the down/working stroke lasts longer; at cruising speed timing tends toward equal periods; wing/body spring resonance reduces inertial power.",
+      "unreadable_or_uncertain": "Hand revisions do not give final numeric timing law.",
+      "engineering_completion": "theta=phi-b*sin(phi), with low-speed b from engineering.mjs and cruise b=0, plus the supplied spring/inertia helper."
+    },
+    {
+      "file": "Unknown-12.jpg",
+      "used_principle": "Fore/aft wing motion, closing on recovery, mass-spring wing/body resonance, and pitching moment from centre-of-lift/CG separation are essential.",
+      "unreadable_or_uncertain": "The text is qualitative; exact linkage sizes are not specified.",
+      "engineering_completion": "Outer leaf overlap changes exposed area while hidden mass remains; generalized forces and pitch coupling use source-mechanism.mjs."
+    },
+    {
+      "file": "Unknown-13.jpg",
+      "used_principle": "Local incidence and camber are adjusted through the cycle; wing parts and feather-like taper inform the source-shaped outer wing.",
+      "unreadable_or_uncertain": "The goshawk section percentages are an example, not mute-swan aircraft data.",
+      "engineering_completion": "Separate camber curves and section tables are used without claiming digitisation."
+    },
+    {
+      "file": "Unknown-14.jpg",
+      "used_principle": "Inner arm wing thickness about 5-6%, outer hand wing as thin slotted curved plate; recovery trailing/partial closing reduces tip drag; conventional tail/rudder/weight-shift controls are acceptable completions.",
+      "unreadable_or_uncertain": "No exact tail volume, landing-gear arrangement, or structural detail is provided.",
+      "engineering_completion": "A conventional tail, fin/rudder, elevator, three wheels, open frame, engine/transmission and seated pilot are modelled."
+    },
+    {
+      "file": "Unknown-15.jpg",
+      "used_principle": "Power accounting begins with glide D*V and adds aerodynamic, trajectory, and wing-inertia terms; springs transfer energy but cannot supply net propulsion.",
+      "unreadable_or_uncertain": "Missing appendices and detailed equations remain missing.",
+      "engineering_completion": "Shaft work, aerodynamic dissipation, transmission/damping heat and control work are accumulated from the same dynamics."
+    }
+  ],
+  "mass_and_power_assumptions": {
+    "pilot_kg": 55,
+    "dry_mass_including_pilot_kg": 173.9,
+    "fuel_initial_kg": 3.6,
+    "wet_initial_kg": 177.5,
+    "note": "These are the supplied revised favourable engineering assumptions, not Stanley's measured values."
+  },
+  "limitations": [
+    "Educational reduced model only: no structural validation, CFD, aeroelastic proof, unsteady wake model or human-flight certification.",
+    "The wing phase curves are explicit mechanical completions, not notebook samples.",
+    "Coefficient tables, engine behaviour, fuel use, damping and masses beyond the cited pilot/engine context are assumptions supplied for this task.",
+    "Ground contact is a simple three-wheel constraint with rolling/braking loss, not a suspension model."
+  ]
+}

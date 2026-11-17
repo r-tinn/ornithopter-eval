@@ -1,0 +1,76 @@
+{
+  "title": "Fen S-02 | a powered field demonstrator",
+  "basis": "Interpretation of Stanley J. O. Tinn's bird-flight studies. The sketches describe functions and comparisons, not drawings of this machine.",
+  "photographs": [
+    {
+      "photo": "Unknown-2.jpg",
+      "reading": "The mute swan dorsal view has a broad arm, a break at the wrist and a narrowing rounded hand. The Say column gives b = 7.4 ft and wrist span = 3.7 ft. The original approximate elliptical-area paragraph gives S = 6.61 square feet.",
+      "use": "AR = 7.4 squared / 6.61 (about 8.28); wrist fraction = 3.7 / 7.4 = 0.5. Carry these two ratios, not the drawing's linear dimensions, to a 14 m machine with extended area 196 / AR square metres.",
+      "uncertainty": "The alternative AR 7.83 is a comparison, not the area measurement used here. Exclude the inconsistent 3.135 ft wing length. Wear and overwritten wording do not warrant a more precise outline.",
+      "completion": "Central hinge gap, constant inner chord, four outer taper segments and tip chord floor come from the engineering planform."
+    },
+    {
+      "photo": "Unknown-8.jpg",
+      "reading": "Göttingen 417a, curved plate: families of section curves share multiple scales, with Reynolds labels near 42,000 and 168,000.",
+      "use": "Use separate arm and hand section responses, including drag, at the local airflow angle.",
+      "uncertainty": "Axis assignments and pencil marks are too ambiguous for reliable point-by-point recovery. These conditions do not validate a large aircraft.",
+      "completion": "Interpolate the supplied illustrative section tables, add the declared camber response and nominal finite-span induced drag. No numbers are fitted to this chart."
+    },
+    {
+      "photo": "Unknown-9.jpg",
+      "reading": "The paper proposes choosing a sine-wave trajectory, cruising speed and beat frequency to calculate required vertical forces, then evaluating candidate wing actions against that requirement. Larger birds motivate a powered manned ornithopter.",
+      "use": "Provide actual candidate forces to the comparison panel; integrate free motion rather than assigning the comparison trajectory. Show a human in a cockpit.",
+      "uncertainty": "Neither the historical annotations nor the introductory argument specify a full-size propulsion package.",
+      "completion": "55 kg seated adult and a continuously derated 16 kW engine are present-day benchmark choices."
+    },
+    {
+      "photo": "Unknown-10.jpg",
+      "reading": "Even 'straight & level' flapping varies lift, thrust and airspeed within a cycle. Wing closure and intermittent lift in bounding or ring gait are examples, not all birds' cruise law.",
+      "use": "Resolve impulses continuously over a coupled stroke; do not prescribe steady lift or constant thrust.",
+      "uncertainty": "The Rayner wake illustration and marginal note are not a quantitative aircraft wake or motor model.",
+      "completion": "Independent exposed strips in quasi-steady air replace a time-dependent vortex field."
+    },
+    {
+      "photo": "Unknown-11.jpg",
+      "reading": "Longer downstroke at low speed; periods tending to equality at cruise. The wing-wishbone-body assembly stores energy. The candidate lift and drag history is to be compared with desired forces.",
+      "use": "Fixed timing-cam bias per run; the crank still accelerates with spring, inertia and load. Cyclic thrust is retained as well as cyclic lift.",
+      "uncertainty": "The crossed-out double-parabola discussion and marginal revisions do not establish a final equation or definite amplitude.",
+      "completion": "The panel's sinusoid is a reference only. Bias 0.3 or 0 and the analytic stroke map are assumed; there is no in-flight timing switch."
+    },
+    {
+      "photo": "Unknown-12.jpg",
+      "reading": "Wing and body move about a common cg. Fore/aft changes in force arm can pitch the body, helped by the tail. The arm and hand analogy describes up and forward with closure, then opening and pulling down and back.",
+      "use": "Use local relative velocity, resolved lift and drag, a fore/aft linkage and recovery overlap. Keep both leaf masses, move the body relative to the whole cg, and couple its pitch inertia to the crank.",
+      "uncertainty": "The quick-return mechanism and possible nonlinear spring are suggestions, not dimensioned linkages. The gliding discussion does not specify a clutch schedule.",
+      "completion": "The prescribed sweep distance, two rigid sliding leaves, linear torsional springs and fixed glide configuration are mechanical abstractions."
+    },
+    {
+      "photo": "Unknown-13.jpg",
+      "reading": "The opening completes the recovery argument: reduced area AND span. Local incidences, with 'and camber' added by hand, can change force efficiency. Four section sketches below are for a goshawk.",
+      "use": "Slide the hand leaves together; bend the mean section and feather its incidence independently.",
+      "uncertainty": "Goshawk camber percentages (13, 10, 9, 6) do not specify the swan or a time history. Thickness is not camber.",
+      "completion": "Use region-specific camber base/amplitude and separate twist amplitudes from the engineering wing model."
+    },
+    {
+      "photo": "Unknown-14.jpg",
+      "reading": "Arm about 5–6 percent thick; outer hand like a thin slotted curved plate. Steep hand motion can redirect nominal lift and drag; partial closing removes some recovery area. Conventional tail or weight shift and a longer moment arm suit a machine.",
+      "use": "Give the inner surface structural depth, the thin leaves independent rails, and the airframe a horizontal tail and hinged rudder. Ground travel is real, not a jump to flying speed.",
+      "uncertainty": "The water takeoff angles, cadence comparison and tentative wishbone stiffness change are bird examples, not human aircraft settings.",
+      "completion": "Inner structural depth 0.055 chord and thin outer framing, specified stroke, translating gear constraint and passive tail incidence are illustrative."
+    },
+    {
+      "photo": "Unknown-15.jpg",
+      "reading": "Base glide power is drag times speed (division by 550 converts the stated imperial units to horsepower); driven flight must also account for hand-wing forces, varying horizontal and vertical motion, inertia and losses.",
+      "use": "Integrate local drag dissipation and crank/pitch work separately. A spring returns previously stored energy and cannot supply net work over a cycle.",
+      "uncertainty": "The unavailable appendices, tentative efficiency comments and handwritten scaling note do not furnish an engine map or transmission efficiency.",
+      "completion": "Use finite governor torque, fuel burn, reflected drive inertia, 85 percent transmission and stated damping, not a metabolic model."
+    }
+  ],
+  "mass_and_energy": "173.9 kg dry including pilot, 30 kg of moving wing, plus 3.6 kg initial fuel = 177.5 kg. Non-pilot mass allocations are favourable estimates with an engine-package reference, not a structural proof. The powered approach begins with kinetic energy; the extended glide preset is separately trimmed, not entered by closing the throttle.",
+  "limitations": [
+    "Not a buildable design or a validated prediction. No recovery of missing appendices, ambiguous chart coordinates or revised equations is claimed.",
+    "Phase curves, reductions, passive pitch damping and spring stiffness are engineering assumptions, not notebook measurements. No automatic trim or energy from a prescribed flapping speed.",
+    "No unsteady stall or wake, overlapping-leaf flow, section pitching moment, structural stress or aeroelastic solution. Nominal extended aspect ratio is used through the beat.",
+    "Distributed wing mass and two-coordinate longitudinal inertia; body component masses are lumped. Roll/yaw inertia coupling omitted. Grounded pitch constraint and impact capture stand in for suspension and tyre dynamics."
+  ]
+}

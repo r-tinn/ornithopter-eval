@@ -1,0 +1,57 @@
+{
+  "project": "Kestrel Works / ST-07 Serein — a mechanical interpretation of Stanley J. O. Tinn's bird-flight study",
+  "photographs": {
+    "02 (Unknown-2.jpg)": {
+      "reading": "Mute swan in plan, scale bar 2 m. The Say column rounds full span to 7.4 ft and wrist span to 3.7 ft. The original paragraph under the table gives 6.61 square feet with an approximately elliptical outer wing.",
+      "use": "AR = 7.4 squared / 6.61; the wrist is halfway out the semispan because wrist-to-wrist/full span = 3.7/7.4. Scale both to 14 m, area = 196/AR. A broad almost parallel inner bay gives way to a round-shouldered taper.",
+      "limits": "The text contrasts about 8.29 with 7.83 for another measurement and discusses how the wings were spread. Do not combine the alternate AR or the inconsistent Say 3.135 ft wing length with the area estimate. Hinge gap, four-segment curvature and finite tip chord are completion choices."
+    },
+    "08 (Unknown-8.jpg)": {
+      "reading": "Göttingen 417a (Curved plate): several coefficient and incidence scales and more than one Reynolds number (42,000 and 168,000).",
+      "use": "Treat the thin outer plate differently from the thicker arm; interpolate separate illustrative lift and drag tables, correct for camber, and include finite-span drag.",
+      "limits": "Curve-to-axis assignments and pencil markings cannot give dependable full-scale section numbers. The supplied tables are not points read from this plot."
+    },
+    "09 (Unknown-9.jpg)": {
+      "reading": "Bird flight as a guide to ornithopter design: start with a sine trajectory, cruise speed and frequency, infer required vertical forces, then evaluate a candidate action. Larger birds motivate a powered man-carrying machine.",
+      "use": "Supply force histories, not an imposed motion, to the host comparison. Carry a seated adult in a wheeled, powered aircraft.",
+      "limits": "No complete full-scale layout or validated human flight performance is given; 55 kg pilot, engine and working dimensions are assumptions."
+    },
+    "10 (Unknown-10.jpg)": {
+      "reading": "Even nominally straight and level flight undulates: lift and thrust vary throughout the stroke. Bounds and intermittent ring-gait lift are discussed, with Rayner's pigeon wake as an example.",
+      "use": "Integrate both horizontal and vertical forces continuously. Neither constant lift nor a zero-force recovery is imposed.",
+      "limits": "The wake drawing is not a quantitative swan wake or force trace. The local steady strips do not shed or track rings."
+    },
+    "11 (Unknown-11.jpg)": {
+      "reading": "Downstroke takes longer than recovery at low speed; periods approach equality at cruise. The wishbone/wing/body system stores and returns energy. A smooth trajectory provides a force comparison rather than a pair of joined parabolas.",
+      "use": "Fixed eccentric timing setting per run, derivative-driven stroke speed; paired elastic hinges and distributed moving inertia. Compare the candidate forces with m times the desired acceleration plus weight.",
+      "limits": "Crossed-out phrases and handwritten marginal changes do not supply an unambiguous revised acceleration bound. The .3 and zero bias, comparison amplitude and spring constant are illustrative."
+    },
+    "12 (Unknown-12.jpg)": {
+      "reading": "Two-part arm and hand action: up and forward with wrist trailing, flick open, pull down and back; close on recovery. Fore/aft separation of lift centre and CG gives pitching reaction. Inertias and wishbone elasticity interact about the common CG.",
+      "use": "Link sweep, stroke and wrist rotation to a single mechanical coordinate. Derive local section airflow, force and work from material-point velocity. Couple crank and body pitch with a configuration-dependent inertia matrix.",
+      "limits": "No measured multi-axis phase trace or stiffness law is recoverable. Differential stroke amplitudes, linear springs and an overlapping two-leaf hand are model linkages, not anatomy."
+    },
+    "13 (Unknown-13.jpg)": {
+      "reading": "Opening continuation explicitly reduces area AND span before repeating the cycle; local incidences (and a handwritten camber addition) affect thrust and drag. The later figure gives sections through a goshawk.",
+      "use": "Sliding outer leaves shorten effective span while retaining mass. Twist rotates a section and camber bends it separately; structural thickness is a third property.",
+      "limits": "The 13/10/9/6 percent sequence belongs to the illustrated goshawk, not this swan planform. Independent baseline and cyclic cambers are from engineering."
+    },
+    "14 (Unknown-14.jpg)": {
+      "reading": "The arm is about 5–6 percent thick; the outer hand resembles a slotted curved plate. The tip moves steeply, so section lift and drag need not point vertically and aft. Closing reduces the high-drag tip on recovery. Conventional long-arm tail or weight shift is proposed.",
+      "use": "A ribbed arm and thin curved hand fabric, recovery overlap, force directions normal/parallel to local flow, tailplane, fin and rudder. Use a rolling run rather than a prescribed leap.",
+      "limits": "The quoted water takeoff angles and possible stiffness increase are observations/hypotheses, not a required linkage excursion. .055/.008 thickness fractions, tail incidence, area, damping and control authority are mechanical completions."
+    },
+    "15 (Unknown-15.jpg)": {
+      "reading": "Baseline glide power is Dg V (divide by 550 in the page's ft-lb/s horsepower units). Hand-wing forces, accelerating the body and accelerating the wings matter in powered flight. Inertia need not consume net cycle work in a lossless oscillator.",
+      "use": "Accumulate actual aerodynamic drag times local speed in SI. Integrate translation, spring potential exchange, coupled kinetic energy, pilot work and dissipative drive losses. Positive shaft work requires fuel.",
+      "limits": "The pencil addendum and referenced appendices do not close the design algorithm. Suggested biological efficiencies are not motor or transmission efficiencies."
+    }
+  },
+  "engineering_completion": {
+    "mass": "Supplied favourable allocations: 173.9 kg dry including the clothed 55 kg adult and 30 kg wings; 3.6 kg fuel makes 177.5 kg initially. Overlap hides fabric area, never wing mass.",
+    "drive": "16 kW derated shaft limit, 85 percent transmission, finite starting torque, reflected drive inertia and BSFC are engineering assumptions, not Tinn's numbers.",
+    "stability": "Use supplied passive pitch-rate damping and fixed tail incidence. The deliberate extended glide trim is a calculated initial condition. Powered approach begins with speed, crank energy and fuel already aboard, not a transition out of the glide.",
+    "reduction": "No structural stress sizing, unsteady wakes, section moments, overlap interaction or roll/yaw inertia coupling. Gear contact is constrained rather than sprung; ground rolling loss is not aerodynamic dissipation. Decorative structure resolves no additional masses.",
+    "scope": "Illustrative educational simulation only. Missing appendices, uncertain revisions, full-scale section measurements and flight validation are not reconstructed. Not a buildable human-flight design."
+  }
+}

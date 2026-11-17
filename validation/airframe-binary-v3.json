@@ -1,0 +1,10 @@
+{
+  "all_passed": true,
+  "reference_all_ten_pass": true,
+  "kernel_sha256": {
+    "grader/airframe-evidence-v3.mjs": "ade772be2d1d9eec11b64f075ba2544e2f1da4417a5d98eb162f47b0437bacea",
+    "grader/wing-drive.mjs": "14462610546aeb945115e5592e21a625469f294a51916a920629112a6bc24bd8",
+    "grader/airframe-geometry.mjs": "13615ebfecbbd8f3550db6035e9322c4bad8e10f9b2bc0affb3a74ffee689624"
+  },
+  "calibration": "Existing author flight reference (unchanged seven checks) and local v3 positive/frozen-drive browser probes; synthetic connected/disconnected/frozen instance and cam controls in tests/wing-drive.test.mjs."
+}

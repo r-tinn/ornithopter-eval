@@ -1,0 +1,97 @@
+{
+  "title": "S14 — source-linked elastic-drive research ornithopter",
+  "authorial_scope": "A mechanical translation of Stanley J. O. Tinn's readable principles, not a reconstruction of a complete design. All nine supplied original photographs were read afresh. The aircraft is engine-powered and human-piloted, not human-powered.",
+  "source_readings": [
+    {
+      "photograph": "02 / Unknown-2.jpg",
+      "readable": "Mute swan planform. Rounded Say full span 7.4 ft; wrist span 3.7 ft = 50% b. Original paragraph gives estimated elliptical-outer-wing total area 6.61 ft² and AR about 8.29. Drawing shows a broad nearly constant-chord arm and a rounded narrowing hand.",
+      "used": "aspect_ratio = 7.4² / 6.61 = 8.284417549; wrist_span_fraction = 3.7 / 7.4 = 0.5. At the assumed 14 m span, area = 196 / aspect_ratio, approximately 23.66 m². Helper supplies a normalized broad inner and four-segment rounded/tapered outer outline.",
+      "uncertainty": "The source contrasts this estimated area with another table, discusses approximately 14% discrepancy and changing spread. The isolated 3.135 ft wing-length conversion is inconsistent and excluded. Faint top marginal attribution is not used.",
+      "engineering_completion": "14 m machine span, hinge gap, taper ratio, curved material-coordinate production geometry, rigid structure and two sliding outer leaves are supplied assumptions."
+    },
+    {
+      "photograph": "08 / Unknown-8.jpg",
+      "readable": "Göttingen 417a (curved plate), plotted lift, drag and moment data with angle of incidence and Reynolds-number labels including 168,000 and 42,000.",
+      "used": "Different inboard and outboard section behavior; recognize the relevance of curved thin plates without extrapolating low-Re measurements into exact aircraft coefficients.",
+      "uncertainty": "The multi-axis chart and handwritten annotations do not support an unambiguous full-scale digitization. Exact measured ordinates and moment curves are not recovered.",
+      "engineering_completion": "Separate supplied illustrative inner/outer CL/CD tables with linear interpolation, declared camber corrections and induced drag; no chart digitization claimed."
+    },
+    {
+      "photograph": "09 / Unknown-9.jpg",
+      "readable": "Bird flight as a guide to ornithopter design, copyright 2007 Stanley J. O. Tinn. Define an ideal sine trajectory with cruising speed and flapping frequency to obtain required vertical forces; evaluate candidate wing actions against that requirement using classical steady-state aerodynamics. Human-carrying mechanical flight is the intent.",
+      "used": "Human-piloted cockpit and physical candidate mechanism; retain the host's required-versus-actual force comparison, not a prescribed flight trajectory.",
+      "uncertainty": "Historical marginal edits and the continuation onto missing pages are not treated as a complete specification.",
+      "engineering_completion": "A 55 kg seated adult, finite-power engine, numerical solver and explicit physical coefficients are supplied benchmark choices."
+    },
+    {
+      "photograph": "10 / Unknown-10.jpg",
+      "readable": "Application to a powered man-carrying ornithopter. Straight and level flapping flight cannot be exactly straight and level: cyclic lift and thrust produce an undulating path and unsteady airspeed. Bounding and ring-gait flight are described.",
+      "used": "Lift and thrust emerge from local wing motion each step. Small wingbeat-scale motion is allowed; no altitude hold, imposed lift trace or direct thrust is added.",
+      "uncertainty": "The faint handwritten top margin is not used quantitatively; reproduced wake sketches are context rather than an unsteady-wake solver.",
+      "engineering_completion": "Quasi-steady finite strip aerodynamics, fixed-step numerical reduction and explicit governor torque replace unavailable experimental wake data."
+    },
+    {
+      "photograph": "11 / Unknown-11.jpg",
+      "readable": "Longer flap-down at low speeds; equal working/recovery periods toward cruise. Wing-wishbone-body resonance can reduce inertial requirements. Compare candidate aerodynamic forces against required forces for a smooth target trajectory. Fore/aft thrust variations also exist.",
+      "used": "Fixed quick-return setting theta = phi - b sin(phi), b=0.3 for low-speed operation and b=0 for a separate cruise setting; geometry-derived inertia and a conservative spring. The comparison panel remains diagnostic.",
+      "uncertainty": "Dense marginal revisions of the trajectory argument are uncertain and not used as final numerical equations.",
+      "engineering_completion": "Exact phase curves, amplitudes, stiffness, damping, rotating drive inertia and timing-bias values are explicit supplied completions, not sampled notebook motions. Timing is never automatically changed in flight."
+    },
+    {
+      "photograph": "12 / Unknown-12.jpg",
+      "readable": "Wing/body inertia plus wishbone springiness form a mass-spring system. Fore/aft wing movement changes CG-to-lift separation and introduces pitching reaction. Wing action divides arm and hand: forward recovery with closing, then down and back against air to lift and propel.",
+      "used": "Distributed retained wing masses, moving whole-aircraft CG, coupled phase/pitch inertia, fore/aft linkage and actual application-point velocities. Local aerodynamic forces and generalized work are computed from the same pose as rendering.",
+      "uncertainty": "No exact stiffness law, hinge layout, stroke curves or practical transmission dimensions are recovered.",
+      "engineering_completion": "Supplied 30 kg wings, two-coordinate Lagrangian matrix, linear hinge springs and mechanical sliding-leaf closure. sweep_scale=0 is an explicit linkage intervention."
+    },
+    {
+      "photograph": "13 / Unknown-13.jpg",
+      "readable": "Opening continuation: recovery gives reduced area and span; local incidence adjustments optimize thrust and drag, with handwritten 'and camber'. Later goshawk figure shows regional profiles; text states 13%, 10%, 9%, 6% camber at the illustrated positions.",
+      "used": "Independently changing incidence, curved geometry camber, and exposed span; retained mass in overlapping leaves. Ribs and thin battens make the mechanical regions readable.",
+      "uncertainty": "The goshawk percentages and dimensions are not swan specifications and are not imported into this machine.",
+      "engineering_completion": "Supplied regional base/amplitude camber and twist, three-point curved sections, two rigid half-length sliding leaves and finite-difference geometry derivatives."
+    },
+    {
+      "photograph": "14 / Unknown-14.jpg",
+      "readable": "Arm section thickness 5–6%, negligible outer-hand thickness described as a slotted curved plate. At low speed the steep local path changes lift/drag directions; partial closing reduces recovery area and drag. Conventional tail or weight shift is compatible; a fin/rudder and longer tail arm may help an ornithopter. Takeoff observations distinguish inner and outer motion.",
+      "used": "5.5% inner thickness metadata/deeper inner construction, thin outer structure, local force-vector resolution, recovery overlap and a conventional long-arm stabilizer, elevator, fin and rudder. Three-wheel runway gear replaces animal water running.",
+      "uncertainty": "Observed animal takeoff angles and suggested 10% frequency / 20% stiffness increases are not validated machine settings.",
+      "engineering_completion": "Prescribed engineering amplitudes, illustrative local sections, fixed spring stiffness, 1.3 m² tail and finite control torques/coefficient; no automatic takeoff-frequency or spring switch."
+    },
+    {
+      "photograph": "15 / Unknown-15.jpg",
+      "readable": "Glide drag Dg = W/(L/D); gliding horsepower Dg V / 550 in imperial units. Powered flight adds aerodynamic, horizontal/vertical motion and inertial requirements. Inertial power is zero if damping is zero. Missing appendices contain further assessment and design algorithm.",
+      "used": "Drag-times-local-speed dissipation, actual shaft work, transmission/damping heat, pilot-control work and fuel accounting. Springs exchange stored energy but supply no net propulsion. Frozen extended-wing glide is a separate explicitly initialized configuration.",
+      "uncertainty": "The suggested 25% inertial efficiency and approximately 30% bird metabolic efficiency are not machine efficiencies. Missing appendices and handwritten scaling details are not reconstructed.",
+      "engineering_completion": "16 kW capped shaft, finite starting torque, 85% transmission, supplied BSFC/idle flow and midpoint integration. Glide trim values are engineering-derived, not notebook measurements."
+    }
+  ],
+  "mass_and_power": {
+    "pilot_kg": 55,
+    "dry_mass_including_pilot_kg": 173.9,
+    "initial_fuel_kg": 3.6,
+    "initial_wet_mass_kg": 177.5,
+    "wing_mass_kg": 30,
+    "shaft_limit_W": 16000,
+    "note": "Full supplied component allocations retained, including the revised 10 kg contingency. The engine, pilot, favorable component masses and section tables are not attributed to Stanley."
+  },
+  "implementation": {
+    "kinematics": "Pure state-linked pose; no clock flapping. The engine, springs, aerodynamics and actual inertia determine phase speed. Motor-off operation coasts without automatic glide entry.",
+    "aerodynamics": "Exposed strips only; spanwise velocity removed; local normal/chord/span resolve force. Retain both rigid leaves' masses during overlap. Body and tail include CG reaction velocity, pitch velocity, moments and work.",
+    "dynamics": "Coupled phase and body-pitch solve with geometry-derived mass matrix and derivatives; explicit midpoint RK2 with substeps no larger than 1/240 s. No hidden trim controller, lift compensation or direct thrust.",
+    "ground": "Reduced three-wheel constraint holds body pitch zero while normal load is nonnegative. Ground effective phase inertia includes moving-CG vertical kinetic energy. Liftoff uses the actual computed normal load. Touchdown checks actual gear sink including moving-CG and pitch contributions.",
+    "wheels": "Three separate actual torus tyre meshes; circular planes normal to lateral z and wheel_angle rotates about z, never about the cylinder's default y axis.",
+    "visual_design": "Ivory fabric on dark teal metal/carbon spar structure, contrasting thin outer battens and deep inboard ribs, visible torsion spring packs, brass reduction cranks, finned engine, exhaust, fuel tank, braced truss keel and a restrained conventional tail. Recognisable orange-suited seated adult with separate bent limbs, boots, harness, helmet and visor.",
+    "approach": "Host initializes already-powered flight at 16 m/s, pitch 0.1, omega 6, throttle 0.9, low-speed linkage, 100 m clearance and 450 m before the runway. That kinetic energy is initial state, not shaft work.",
+    "causal_interventions": "Same production model supports rho=0, gravity=0, motor_enabled=false, pitch_locked, damping_scale and sweep_scale. Frozen glide remains explicitly distinct from zero throttle."
+  },
+  "limitations": [
+    "Educational favorable reduction, not a recovered buildable design, flight validation or structural safety claim.",
+    "No CFD, unsteady wake history, stall hysteresis, section pitching moments, overlap-flow interaction or aeroelastic structural analysis.",
+    "Outer leaves are rigid sliding assemblies; camber is prescribed through the linkage rather than a resolved elastic skin mechanism.",
+    "Roll/yaw inertial coupling is omitted; banking rotates actual forces and gives no compensating lift.",
+    "Flat-plate body drag, finite strip count and lumped non-wing body inertia are supplied illustrative assumptions.",
+    "Ground contact is a reduced rigid runway constraint, not a suspension, tyre deformation or complete rough-terrain model.",
+    "No execution, tests, builds, syntax checks or visual preview were requested under the file-only policy. Flight acceptance and aesthetic ratings have not been observed."
+  ]
+}

@@ -77,41 +77,44 @@ def combine(data):
     return data
 
 
-def plot(data, output):
+def plot(data, output, *, subtitle="Three repeats · medium reasoning · eight-minute budget"):
     os.environ.setdefault('XDG_CACHE_HOME', str(ROOT / '.cache'))
     os.environ.setdefault('MPLCONFIGDIR', str(ROOT / '.cache/matplotlib'))
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
-    from matplotlib.lines import Line2D
     plt.rcParams.update({'font.family': 'DejaVu Sans', 'font.size': 12,
                          'svg.fonttype': 'path', 'axes.titleweight': 'bold'})
-    fig, ax = plt.subplots(figsize=(11.5, 6.8))
-    fig.patch.set_facecolor('#faf9f5')
-    fig.subplots_adjust(left=.20, right=.87, bottom=.27, top=.75)
-    ax.set_facecolor('#faf9f5')
-    names = {'gpt-6.1-sol': 'GPT-6.1 Sol', 'gpt-6-astra': 'GPT-6 Astra',
+    fig, ax = plt.subplots(figsize=(12, 7.2))
+    fig.patch.set_facecolor('#ffffff')
+    fig.subplots_adjust(left=.20, right=.79, bottom=.14, top=.76)
+    ax.set_facecolor('#ffffff')
+    names = {'gpt-6.2-astra': 'GPT-6.2 Astra', 'gpt-6.1-sol': 'GPT-6.1 Sol', 'gpt-6-astra': 'GPT-6 Astra',
              'gpt-5.6-sol': 'GPT-5.6 Sol', 'gpt-5.5': 'GPT-5.5', 'gpt-5.4': 'GPT-5.4'}
-    for i, model in enumerate(data['models']):
-        ax.vlines(model['combined_mean'], i-.30, i+.30, color='#26363b', linewidth=2, zorder=2)
-        ax.scatter(model['combined_scores'], [i+offset for offset in (-.17, 0, .17)], s=75,
-                   color='#216b68', edgecolors='#faf9f5', linewidths=.8, zorder=3)
-        ax.text(1.025, i, f"{model['combined_mean']:.1f}%", transform=ax.get_yaxis_transform(),
-                va='center', color='#26363b', fontsize=12)
-    ax.text(1.025, 1.035, 'Mean', transform=ax.transAxes, fontsize=10, color='#65716e')
-    ax.set_xticks(range(0, 101, 20)); ax.set_xlim(-3, 103); ax.set_ylim(4.6, -.6)
-    ax.set_yticks(range(5), [names[m['model']] for m in data['models']])
-    ax.set_xlabel('Overall score (%)', labelpad=14)
-    ax.grid(axis='x', color='#e0e3df', linewidth=.8); ax.set_axisbelow(True)
+    models = sorted(data['models'], key=lambda m: m['combined_mean'], reverse=True)
+    for i, model in enumerate(models):
+        mean = model['combined_mean']
+        ax.barh(i, mean, height=.62, color='#169c99', zorder=3)
+        label = f'{mean:.1f}'.rstrip('0').rstrip('.') + '%'
+        if mean < 8:
+            ax.text(mean+1.5, i, label, va='center', color='#20383a', fontsize=13)
+        else:
+            ax.text(mean-1.5 if mean >= 18 else mean/2, i, label,
+                    ha='right' if mean >= 18 else 'center', va='center',
+                    color='white', fontsize=13)
+        lo, hi = min(model['combined_scores']), max(model['combined_scores'])
+        ax.text(1.075, i, f'{lo:.1f}–{hi:.1f}%', transform=ax.get_yaxis_transform(),
+                va='center', color='#65716e', fontsize=11)
+    ax.text(1.075, 1.055, 'Observed range', transform=ax.transAxes, fontsize=10, color='#65716e')
+    ax.set_xticks(range(0, 101, 20), [f'{v}%' for v in range(0, 101, 20)])
+    ax.set_xlim(0, 100); ax.set_ylim(len(models)-.45, -.65)
+    ax.set_yticks(range(len(models)), [names.get(m['model'], m['model']) for m in models])
+    ax.set_xlabel('Mean overall score', labelpad=14)
+    ax.grid(axis='x', color='#e5e8e8', linewidth=.8); ax.set_axisbelow(True)
     for spine in ax.spines.values(): spine.set_visible(False)
     ax.tick_params(axis='both', length=0, pad=10, colors='#26363b')
-    fig.text(.07, .93, 'Ornithopter eval: overall results', fontsize=24, weight='bold', color='#20383a')
-    fig.text(.07, .865, 'Eight equally weighted graders · five models · three attempts each', fontsize=13, color='#65716e')
-    fig.legend(handles=[Line2D([], [], marker='o', linestyle='None', color='#216b68', markersize=7, label='One attempt'),
-                        Line2D([], [], marker='|', linestyle='None', color='#26363b', markersize=17, markeredgewidth=2, label='Mean of three attempts')],
-               loc='lower center', bbox_to_anchor=(.53,.12), ncol=2, frameon=False, fontsize=11)
-    fig.text(.07, .08, 'Score = (seven binary points + human rating ÷ 5) / 8. File-only policy failure = 0.', fontsize=10, color='#65716e')
-    fig.text(.07, .04, 'One human reviewer · descriptive means · cohorts: 5 and 16 Nov 2026 · eight-grader-equal-v1', fontsize=10, color='#65716e')
+    fig.text(.065, .925, 'Ornithopter eval', fontsize=27, weight='bold', color='#20383a')
+    fig.text(.065, .855, subtitle, fontsize=12, color='#65716e')
     fig.savefig(output / 'results.png', dpi=200, facecolor=fig.get_facecolor())
     fig.savefig(output / 'results.svg', facecolor=fig.get_facecolor())
     svg = output / 'results.svg'

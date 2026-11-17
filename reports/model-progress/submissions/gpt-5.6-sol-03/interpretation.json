@@ -1,0 +1,87 @@
+{
+  "title": "Source-first interpretation for a mechanical, human-piloted ornithopter",
+  "source_derived": {
+    "aspect_ratio": {
+      "photo": "Unknown-2.jpg (photograph 02)",
+      "reading": "The rounded 'Say' full span is 7.4 ft and the planform paragraph gives total area 6.61 ft^2 and AR=b^2/S.",
+      "calculation": "7.4^2 / 6.61 = 8.284417549...",
+      "implemented": 8.284417549167928,
+      "excluded": "The 3.135 ft wing-length conversion is internally inconsistent and is not used."
+    },
+    "wrist_span_fraction": {
+      "photo": "Unknown-2.jpg (photograph 02)",
+      "reading": "Rounded wrist-to-wrist span 3.7 ft, full span 7.4 ft, explicitly annotated as 50% b.",
+      "calculation": "3.7 / 7.4",
+      "implemented": 0.5
+    },
+    "scaled_area_m2": {
+      "calculation": "14^2 / aspect_ratio",
+      "implemented": 23.658875091
+    }
+  },
+  "photographs": [
+    {
+      "photo": "Unknown-2.jpg (02)",
+      "readable_principle": "Swan planform has a broad arm wing, rounded/tapered hand wing, and a wrist at half span. The area paragraph, not the inconsistent wing-length conversion, supplies aspect ratio.",
+      "implementation": "A 14 m, AR 8.2844 planform with wrist fraction 0.5; source-mechanism generates the broad inner panel and four-segment rounded tapered outer outline.",
+      "uncertainty_or_assumption": "The drawing is scaling evidence, not a construction drawing. Full-scale chord and area are calculated with the supplied 14 m span."
+    },
+    {
+      "photo": "Unknown-8.jpg (08)",
+      "readable_principle": "The photographed Göttingen curved-plate chart separates lift, drag and moment trends but has crowded axes and low-Re context.",
+      "implementation": "Inner and outer local strip polars are interpolated from the supplied engineering tables; camber adds a separately stated lift increment.",
+      "uncertainty_or_assumption": "No exact coefficients were digitised from this chart. The tables are favourable illustrative engineering completions, not Stanley's measurements."
+    },
+    {
+      "photo": "Unknown-9.jpg (09)",
+      "readable_principle": "Define a desired cyclic trajectory and compare candidate wing forces with its required vertical-force range; the stated objective is a powered man-carrying ornithopter.",
+      "implementation": "The simulation computes local aerodynamic forces and the comparison panel may compare them with the sine-trajectory requirement; free flight is never prescribed to match it.",
+      "uncertainty_or_assumption": "The notes provide a method, not a validated trajectory, engine, pilot mass, or full-scale design."
+    },
+    {
+      "photo": "Unknown-10.jpg (10)",
+      "readable_principle": "Straight and level flapping flight is necessarily cyclic in lift and thrust and therefore mildly undulating; recovery can reduce lift and leave a cyclic wake.",
+      "implementation": "Strip forces vary naturally with crank phase, twist, local velocity and recovery overlap. COM motion remains dynamic rather than altitude-held.",
+      "uncertainty_or_assumption": "Unsteady vortex rings and wake memory are omitted by the supplied reduced strip model."
+    },
+    {
+      "photo": "Unknown-11.jpg (11)",
+      "readable_principle": "At low speed the down/working stroke lasts longer than recovery; at cruise the periods become equal. Candidate lift and drag should be compared with required values, and wing/body elasticity may reduce inertial power.",
+      "implementation": "theta=phi-b sin(phi), with fixed low-speed b=0.3 and cruise b=0; a real hinge spring, distributed wing inertia, drive inertia and aerodynamic work are coupled.",
+      "uncertainty_or_assumption": "Handwritten marginal revisions are not treated as reliable numerical specifications. Timing and stiffness values are supplied engineering assumptions."
+    },
+    {
+      "photo": "Unknown-12.jpg (12)",
+      "readable_principle": "Wing/body mass-spring motion occurs about the common CG; fore/aft wing movement creates pitching reaction. Working hands move down/back while recovery trails and closes to reduce span and area.",
+      "implementation": "The helper derives moving CG, inertia coupling B, application-point Jacobians and pitch moments from the same pose used for rendering. Outer leaves sweep, twist and overlap on recovery.",
+      "uncertainty_or_assumption": "The sinusoidal linkage curves and two rigid sliding leaves explicitly complete prose that does not provide machine dimensions."
+    },
+    {
+      "photo": "Unknown-13.jpg (13)",
+      "readable_principle": "The opening continuation calls for reduced recovery area/span and adjusted local incidence. Camber, incidence and section shape are distinct; the later goshawk figure is only an example.",
+      "implementation": "Exposure, twist and camber are independent pose fields and independent geometric/aerodynamic inputs.",
+      "uncertainty_or_assumption": "The goshawk's printed 13/10/9/6 percent cambers are not assigned to the swan or aircraft."
+    },
+    {
+      "photo": "Unknown-14.jpg (14)",
+      "readable_principle": "The arm section is about 5–6% thick; the outer hand is a thin slotted curved plate whose high lift/drag is useful on the working stroke and reduced by trailing/closing on recovery. Conventional tail, rudder or weight shift are suitable completions.",
+      "implementation": "Inner thickness metadata is 5.5%, outer 0.8%; curved overlapping leaves shorten exposed span on recovery. The aircraft has a conventional tailplane, elevator, fin and rudder.",
+      "uncertainty_or_assumption": "Tail sizes, controls, local polars and mechanical structure are supplied completions, not notebook dimensions."
+    },
+    {
+      "photo": "Unknown-15.jpg (15)",
+      "readable_principle": "Glide work begins with D times V, while flapping adds induced, trajectory, acceleration and wing-inertia terms; ideal inertial exchange is not net energy production.",
+      "implementation": "The model records shaft work, aerodynamic dissipation, transmission/damping heat and control work. The spring stores and returns energy while the finite 16 kW shaft is the only propulsion source.",
+      "uncertainty_or_assumption": "The handwritten dimensional-analysis note is not used as a coefficient or performance claim."
+    }
+  ],
+  "engineering_completions": [
+    "The supplied 55 kg seated pilot, 173.9 kg dry mass including pilot, 3.6 kg fuel and 177.5 kg initial wet mass are implemented.",
+    "The supplied 16 kW engine, governor, finite starting torque, transmission efficiency, spring, damping, mass allocation, tail and section tables fill absent quantities.",
+    "Outer geometry is represented by two rigid half-length leaves. Hidden overlap keeps its mass while exposed aerodynamic area changes.",
+    "The three-wheel ground model is a reduced rigid runway constraint, not suspension or tyre dynamics.",
+    "Section pitching moments, wake interaction, overlap-flow interference, flexible aeroelasticity and unsteady stall are omitted."
+  ],
+  "visual_interpretation": "A triangulated metal/wood fuselage, visible engine and reduction crank, wishbone bearings and spring, broad fabric inner wings, overlapping curved hand-wing leaves, conventional tail, three pneumatic tyres and a helmeted seated adult make the mechanism and load paths legible. It translates the source principles rather than imitating a bird.",
+  "limitations": "This is a favourable educational reduced model, not a recovered Stanley design, experimentally validated prediction, or buildable human-flight aircraft. Stanley is not claimed to have specified the engine, pilot, coefficient tables, masses, numerical linkage curves or controls."
+}

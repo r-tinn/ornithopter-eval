@@ -7,6 +7,7 @@ import threading
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
+from .airframe_versions import AIRFRAME_REVISIONS
 from .runner import ROOT, digest, write_json
 from .checks import CHECKS, TASK_VERSION, MECHANICAL_VERSION, MECHANICAL_VERSIONS, PILOTED_VERSION, SOURCE_FIRST_VERSION, SOURCE_FIRST_VERSIONS, LATEST_SOURCE_FIRST_VERSION, checklist, normalize_checks, refresh_verdict
 
@@ -42,7 +43,7 @@ class SubmissionServer(http.server.BaseHTTPRequestHandler):
 
 LAUNCH_GRADING_REVISION = 'v7-launch-60-65-70-v1'
 BANK_GRADING_REVISION = 'v7-launch-60-65-70-bank-v2'
-GRADING_REVISIONS = (LAUNCH_GRADING_REVISION, BANK_GRADING_REVISION)
+GRADING_REVISIONS = (LAUNCH_GRADING_REVISION, BANK_GRADING_REVISION, *AIRFRAME_REVISIONS)
 
 
 def grade_submission(submission, output, node="node", timeout=None, task_version=TASK_VERSION, grading_revision=None):
@@ -50,8 +51,13 @@ def grade_submission(submission, output, node="node", timeout=None, task_version
         raise ValueError('Unsupported task version')
     if grading_revision is not None and (grading_revision not in GRADING_REVISIONS or task_version != LATEST_SOURCE_FIRST_VERSION):
         raise ValueError('Unsupported grading revision for this task')
+    airframe_revision=grading_revision in AIRFRAME_REVISIONS
+    browser_revision=BANK_GRADING_REVISION if airframe_revision else grading_revision
+    if airframe_revision:
+        from .airframe import require_calibration
+        require_calibration(grading_revision)
     if timeout is None:
-        timeout = 360 if grading_revision==BANK_GRADING_REVISION else 180 if task_version==LATEST_SOURCE_FIRST_VERSION else 120 if task_version in MECHANICAL_VERSIONS else 60
+        timeout = 360 if browser_revision==BANK_GRADING_REVISION else 180 if task_version==LATEST_SOURCE_FIRST_VERSION else 120 if task_version in MECHANICAL_VERSIONS else 60
     checks = checklist(task_version)
     browser_file = ('source-first-v7.mjs' if task_version==LATEST_SOURCE_FIRST_VERSION else 'source-first-v6.mjs') if task_version in SOURCE_FIRST_VERSIONS else ("piloted-v5.mjs" if task_version==PILOTED_VERSION else ("mechanical-v4.mjs" if task_version in MECHANICAL_VERSIONS else "browser.mjs"))
     submission, output = Path(submission).resolve(), Path(output).resolve()
@@ -76,7 +82,7 @@ def grade_submission(submission, output, node="node", timeout=None, task_version
                              "Browser isolation is defense in depth, not a hardened sandbox for hostile code."]}
     if grading_revision:
         report['grading_revision'] = grading_revision
-        if grading_revision == BANK_GRADING_REVISION:
+        if browser_revision == BANK_GRADING_REVISION:
             policy = ROOT/'grader/protocols'/ (BANK_GRADING_REVISION+'.json')
             report['grader_sha256']['protocols/'+policy.name] = digest(policy)
             report['bank_policy'] = json.loads(policy.read_text())
@@ -136,8 +142,8 @@ def grade_submission(submission, output, node="node", timeout=None, task_version
     thread.start()
     try:
         command = [node,str(ROOT / "grader" / browser_file), f"http://127.0.0.1:{server.server_port}",str(output),task_version]
-        if grading_revision:
-            command.append(grading_revision)
+        if browser_revision:
+            command.append(browser_revision)
         with (output / "grader.log").open("w") as log:
             process = subprocess.Popen(command, env=clean_env, stdout=log, stderr=log, start_new_session=True)
             try:
@@ -160,6 +166,16 @@ def grade_submission(submission, output, node="node", timeout=None, task_version
         report["dimensions"]["visual"] = {"kind":"review", "checks":[
             {"id":name,"question":question,"pass":None} for name, question in checks["visual"].items()]}
         report["evidence"] = raw["evidence"]
+        if airframe_revision:
+            from .airframe import inspect, scored_checks
+            extra=inspect(submission,output/'airframe',node,revision=grading_revision)
+            if extra['status']!='completed':
+                raise RuntimeError('Airframe inspection unavailable; no total: '+extra.get('error','unknown error'))
+            report['dimensions']['airframe']={'kind':'deterministic','checks':[c for c in extra['checks'] if c['id'] in scored_checks(grading_revision)]}
+            report['grader_sha256'].update(extra['grader_sha256'])
+            report['score_scope']=f'{7+len(scored_checks(grading_revision))} deterministic binary outcomes; file-only failure zeros the whole attempt. No human/LLM judge.'
+            report.pop('aesthetic_realism',None)
+            report['evidence']['screenshots'].extend('airframe/'+name for key,names in extra['evidence'].items() if key in scored_checks(grading_revision) for name in names)
         refresh_verdict(report)
     except (OSError,ValueError,RuntimeError) as exc:
         report.update(status="infrastructure_error",error=str(exc))

@@ -1,0 +1,258 @@
+{
+  "all_passed": true,
+  "reference_all_ten_pass": true,
+  "cases": {
+    "reference": {
+      "head_pass": true,
+      "drive_pass": true,
+      "head_cases": [
+        {
+          "timing_bias": 0,
+          "gap_m": 0.5272777683599008,
+          "phase_rad": 4.974188368183839,
+          "part": "wing surface",
+          "head_point_m": [
+            1.0391520726680756,
+            0.3458005797863007,
+            -0.07075068354606628
+          ],
+          "aircraft_point_m": [
+            0.8648334741592407,
+            0.8117596507072449,
+            -0.24544188380241394
+          ]
+        },
+        {
+          "timing_bias": 0.3,
+          "gap_m": 0.5270943205178255,
+          "phase_rad": 4.71238898038469,
+          "part": "wing surface",
+          "head_point_m": [
+            1.0391520726680756,
+            0.3458005797863007,
+            -0.07075068354606628
+          ],
+          "aircraft_point_m": [
+            0.8606524467468262,
+            0.8096427917480469,
+            -0.24629756808280945
+          ]
+        }
+      ],
+      "drive_paths": {
+        "pass": true,
+        "crank_paths": [
+          {
+            "input": "mesh:133",
+            "rod": "mesh:139",
+            "pin_gap_m": 1.051158715444938e-08,
+            "wing_gap_m": 0.014333091015433605
+          }
+        ],
+        "cam_contacts": [],
+        "phase_samples": 24
+      }
+    },
+    "borderline_head": {
+      "head_pass": true,
+      "drive_pass": true,
+      "head_cases": [
+        {
+          "timing_bias": 0,
+          "gap_m": 0.2039399281653295,
+          "phase_rad": 4.71238898038469,
+          "part": "wing surface",
+          "head_point_m": [
+            1.0114840883016587,
+            0.7310104948282242,
+            -0.11867303401231766
+          ],
+          "aircraft_point_m": [
+            0.8777680397033691,
+            0.8266531825065613,
+            -0.23935438692569733
+          ]
+        },
+        {
+          "timing_bias": 0.3,
+          "gap_m": 0.2036102455523651,
+          "phase_rad": 4.4505895925855405,
+          "part": "wing surface",
+          "head_point_m": [
+            1.0114840883016587,
+            0.7310104948282242,
+            -0.11867303401231766
+          ],
+          "aircraft_point_m": [
+            0.8777127265930176,
+            0.8250406384468079,
+            -0.2400018721818924
+          ]
+        }
+      ],
+      "drive_paths": {
+        "pass": true,
+        "crank_paths": [
+          {
+            "input": "mesh:133",
+            "rod": "mesh:139",
+            "pin_gap_m": 1.051158715444938e-08,
+            "wing_gap_m": 0.014333091015433605
+          }
+        ],
+        "cam_contacts": [],
+        "phase_samples": 24
+      }
+    },
+    "near_head": {
+      "head_pass": false,
+      "drive_pass": true,
+      "head_cases": [
+        {
+          "timing_bias": 0,
+          "gap_m": 0.17306095742561128,
+          "phase_rad": 4.71238898038469,
+          "part": "wing surface",
+          "head_point_m": [
+            1.0056416335701943,
+            0.7895789281278849,
+            -0.12879246473312378
+          ],
+          "aircraft_point_m": [
+            0.8777680397033691,
+            0.8266531825065613,
+            -0.23935438692569733
+          ]
+        },
+        {
+          "timing_bias": 0.3,
+          "gap_m": 0.17317872399409975,
+          "phase_rad": 4.4505895925855405,
+          "part": "wing surface",
+          "head_point_m": [
+            1.0056416335701943,
+            0.7895789281278849,
+            -0.12879246473312378
+          ],
+          "aircraft_point_m": [
+            0.8777127265930176,
+            0.8250406384468079,
+            -0.2400018721818924
+          ]
+        }
+      ],
+      "drive_paths": {
+        "pass": true,
+        "crank_paths": [
+          {
+            "input": "mesh:133",
+            "rod": "mesh:139",
+            "pin_gap_m": 1.051158715444938e-08,
+            "wing_gap_m": 0.014333091015433605
+          }
+        ],
+        "cam_contacts": [],
+        "phase_samples": 24
+      }
+    },
+    "disconnected": {
+      "head_pass": true,
+      "drive_pass": false,
+      "head_cases": [
+        {
+          "timing_bias": 0,
+          "gap_m": 0.5272777683599008,
+          "phase_rad": 4.974188368183839,
+          "part": "wing surface",
+          "head_point_m": [
+            1.0391520726680756,
+            0.3458005797863007,
+            -0.07075068354606628
+          ],
+          "aircraft_point_m": [
+            0.8648334741592407,
+            0.8117596507072449,
+            -0.24544188380241394
+          ]
+        },
+        {
+          "timing_bias": 0.3,
+          "gap_m": 0.5270943205178255,
+          "phase_rad": 4.71238898038469,
+          "part": "wing surface",
+          "head_point_m": [
+            1.0391520726680756,
+            0.3458005797863007,
+            -0.07075068354606628
+          ],
+          "aircraft_point_m": [
+            0.8606524467468262,
+            0.8096427917480469,
+            -0.24629756808280945
+          ]
+        }
+      ],
+      "drive_paths": {
+        "pass": false,
+        "crank_paths": [],
+        "cam_contacts": [],
+        "phase_samples": 24
+      }
+    },
+    "frozen": {
+      "head_pass": true,
+      "drive_pass": false,
+      "head_cases": [
+        {
+          "timing_bias": 0,
+          "gap_m": 0.5272777683599008,
+          "phase_rad": 4.974188368183839,
+          "part": "wing surface",
+          "head_point_m": [
+            1.0391520726680756,
+            0.3458005797863007,
+            -0.07075068354606628
+          ],
+          "aircraft_point_m": [
+            0.8648334741592407,
+            0.8117596507072449,
+            -0.24544188380241394
+          ]
+        },
+        {
+          "timing_bias": 0.3,
+          "gap_m": 0.5270943205178255,
+          "phase_rad": 4.71238898038469,
+          "part": "wing surface",
+          "head_point_m": [
+            1.0391520726680756,
+            0.3458005797863007,
+            -0.07075068354606628
+          ],
+          "aircraft_point_m": [
+            0.8606524467468262,
+            0.8096427917480469,
+            -0.24629756808280945
+          ]
+        }
+      ],
+      "drive_paths": {
+        "pass": false,
+        "crank_paths": [],
+        "cam_contacts": [],
+        "phase_samples": 24
+      }
+    }
+  },
+  "kernel_sha256": {
+    "grader/airframe-evidence-v5.mjs": "26ddeafb8e77d39652f96efe23579421186983376471cc4e8508f45086687044",
+    "grader/wing-drive-v5.mjs": "c2eaab85494890d2c3ef66e77a2c25299996480db3625055751b81599b0ae300",
+    "grader/head-clearance.mjs": "2e40b9a6059f349637b9c66fb106ccba5bf55715d9bd22957d550c3812fa157e",
+    "grader/airframe-geometry.mjs": "13615ebfecbbd8f3550db6035e9322c4bad8e10f9b2bc0affb3a74ffee689624"
+  },
+  "calibration_directory": "runs/airframe-v5-calibration-adoption",
+  "earlier_attempts": [
+    "runs/airframe-v5-calibration",
+    "runs/airframe-v5-calibration-final"
+  ]
+}

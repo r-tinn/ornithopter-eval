@@ -1,0 +1,102 @@
+{
+  "summary": {
+    "intent": "Human-piloted mechanical ornithopter translating the photographed notebook principles into a reduced educational flight model and recognisable machine.",
+    "source_first": true,
+    "explicit_engineering_completions": [
+      "14 m span scaling",
+      "55 kg pilot and revised 173.9 kg dry mass budget",
+      "16 kW engine, 85% transmission and reflected drive inertia",
+      "Illustrative inner/outer section coefficient tables",
+      "Two overlapping sliding outer leaves",
+      "Passive pitch damping, tail sizing and control coefficients"
+    ]
+  },
+  "photo_interpretations": [
+    {
+      "photo": "Unknown-2.jpg",
+      "source_label": "02",
+      "principle_used": "Mute swan planform proportions, broad inner wing, rounded/tapered outer hand wing, aspect-ratio paragraph and wrist-span fraction.",
+      "readable_values": {
+        "full_span_say_ft": 7.4,
+        "wrist_span_ft": 3.7,
+        "wrist_span_fraction": 0.5,
+        "aspect_ratio_from_paragraph": 8.29
+      },
+      "unreadable_or_rejected": [
+        "The 3.135 ft wing-length conversion is inconsistent with the other scaling and was excluded."
+      ],
+      "engineering_completion": "The aircraft uses span_m=14 and wing_area_m2=14^2/8.29 ≈ 23.64 m^2."
+    },
+    {
+      "photo": "Unknown-8.jpg",
+      "source_label": "08",
+      "principle_used": "Curved-plate section context only; not used as a recovered full-scale coefficient table.",
+      "unreadable_or_uncertain": [
+        "The multi-axis graph is ambiguous in the photograph and appears to be low-Re context."
+      ],
+      "engineering_completion": "Supplied engineering inner/outer CL/CD anchor tables were used instead of inventing exact coefficients from the image."
+    },
+    {
+      "photo": "Unknown-9.jpg",
+      "source_label": "09",
+      "principle_used": "Ideal trajectory / required-force method and explicit human-carrying powered-ornithopter intent.",
+      "engineering_completion": "The simulator computes actual aerodynamic forces from the moving wing geometry rather than prescribing the target trajectory."
+    },
+    {
+      "photo": "Unknown-10.jpg",
+      "source_label": "10",
+      "principle_used": "Straight-and-level flapping is cyclic rather than perfectly steady; lift and thrust vary through the cycle.",
+      "engineering_completion": "No altitude-hold or force-prescription is added; powered flight remains genuinely unsteady."
+    },
+    {
+      "photo": "Unknown-11.jpg",
+      "source_label": "11",
+      "principle_used": "Longer low-speed working stroke, equal timing toward cruise, and wing-body resonant mass-spring interpretation.",
+      "unreadable_or_uncertain": [
+        "Some marginal pencil revisions are not fully legible."
+      ],
+      "engineering_completion": "Implemented theta = phi - b*sin(phi) with low-speed timing_bias=0.3 and cruise bias 0, while retaining spring/inertia driven phase dynamics."
+    },
+    {
+      "photo": "Unknown-12.jpg",
+      "source_label": "12",
+      "principle_used": "Local force direction from actual wing motion, fore/aft movement, overlap/closing on recovery, spring–inertia exchange and body-pitch reaction.",
+      "engineering_completion": "Forces are resolved from each strip's instantaneous body-relative velocity after removing spanwise flow; sweep and mass coupling use the same wingPose geometry."
+    },
+    {
+      "photo": "Unknown-13.jpg",
+      "source_label": "13",
+      "principle_used": "Incidence, camber and thickness are distinct concepts; the later goshawk figure is an example of sectional variation rather than a swan blueprint.",
+      "unreadable_or_uncertain": [
+        "The goshawk camber percentages are not treated as swan dimensions."
+      ],
+      "engineering_completion": "Camber, twist and thickness are kept separate in the model; outer sections are thin and more cambered than the inner arm wing."
+    },
+    {
+      "photo": "Unknown-14.jpg",
+      "source_label": "14",
+      "principle_used": "Inner arm wing about 5–6% thick, outer hand wing thin curved/slotted plate, changing effective action in working and recovery strokes, and use of conventional tail/rudder controls.",
+      "engineering_completion": "Inner thickness fraction 0.055, outer thickness fraction 0.008, overlapping recovery leaves, horizontal tail, fin/rudder and three-wheel landing gear are used as mechanical completions."
+    },
+    {
+      "photo": "Unknown-15.jpg",
+      "source_label": "15",
+      "principle_used": "Power as D*V in glide plus additional aerodynamic, trajectory and wing-inertia terms; springs redistribute energy but do not create net propulsion energy.",
+      "engineering_completion": "The simulation tracks shaft work, aerodynamic dissipation, transmission/damping heat and control work separately; spring energy only enters through the coupled mechanics."
+    }
+  ],
+  "visual_design_choices": {
+    "silhouette": "Long light fuselage, high flapping shoulder crank, broad inboard wing and rounded tapered outer leaves derived from the swan study.",
+    "mechanical_features": [
+      "Exposed crank mast and transmission cluster",
+      "Trussed tail boom with conventional tailplane and rudder",
+      "Three-wheel undercarriage with wheels rotating about the aircraft lateral axis",
+      "Seated pilot, seat, tank and engine package"
+    ]
+  },
+  "limitations": [
+    "The photographs do not specify a validated human-carrying structure, engine installation or aerodynamic coefficient set.",
+    "Missing appendices and unreadable marginal notes leave genuine gaps filled by supplied engineering assumptions.",
+    "The flight model omits unsteady wake effects, sectional pitching moments, flexible structure and overlap-flow interference."
+  ]
+}

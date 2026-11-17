@@ -1,0 +1,91 @@
+{
+  "title": "Tinn articulated demonstrator",
+  "status": "Source-led educational mechanical completion, not a recovered design or a flightworthy aircraft.",
+  "source_reading": [
+    {
+      "photograph": "02 / Unknown-2.jpg",
+      "readable": "Mute swan planform: broad arm wing, rounded tapered hand wing. Rounded Say span 7.4 ft, wrist span 3.7 ft = 50% b. Original wing-area paragraph gives 6.61 square feet and AR about 8.29.",
+      "used": "aspect_ratio = 7.4 squared / 6.61 = 8.284417549167928; wrist_span_fraction = 3.7 / 7.4 = 0.5. Full-size area is 14 squared / aspect_ratio, approximately 23.658 square metres. Broad inner chord and rounded outer ellipse retained by the supplied four-segment planform helper.",
+      "uncertain": "Exclude the inconsistent 3.135 ft wing-length conversion. Handwritten alterations around the area paragraph and its specimen comparison do not establish a replacement measurement.",
+      "completion": "14 m span, central hinge gap, taper ratio and curved material-coordinate geometry are supplied engineering assumptions."
+    },
+    {
+      "photograph": "08 / Unknown-8.jpg",
+      "readable": "Göttingen 417a curved plate chart, with lift, drag and moment axes and low Reynolds-number annotations including roughly 168000 and 42000.",
+      "used": "Separate inner and outer section descriptions; no numerical full-scale chart digitisation claimed.",
+      "uncertain": "Multi-axis scales, curve associations and pencilled readings are ambiguous; exact coefficients are not recovered.",
+      "completion": "All section arrays, endpoint clamping, camber lift increments and finite-span induced drag are the supplied illustrative full-scale model."
+    },
+    {
+      "photograph": "09 / Unknown-9.jpg",
+      "readable": "Bird flight as a guide to ornithopter design, Stanley J. O. Tinn, 2007. Define an ideal sine trajectory; cruising speed and flapping frequency determine the required range of vertical forces. Evaluate candidate wing actions using steady-state aerodynamics. Manned mechanical flight is the stated objective.",
+      "used": "The existing force-comparison panel compares candidate forces with the required trajectory; free flight integrates actual forces, never a prescribed path. A visible seated adult operates the aircraft.",
+      "uncertain": "Some handwritten historical revisions cannot be read confidently and are not used as engineering data.",
+      "completion": "Pilot 55 kg, clothing, helmet, seating, engine power and cockpit controls are modern supplied/design additions."
+    },
+    {
+      "photograph": "10 / Unknown-10.jpg",
+      "readable": "Straight and level flapping flight cannot be exactly steady: cyclic lift and thrust produce an undulating path and unsteady airspeed. Bounding and ring-gait flight are discussed. The opening refers explicitly to a powered man-carrying ornithopter.",
+      "used": "Cyclic strip forces and real wing/body motion remain visible; no smoothing of the physics or direct thrust is added.",
+      "uncertain": "The marginal handwritten sentence is not used quantitatively; missing appendices remain missing.",
+      "completion": "A finite-torque petrol engine drives the mechanism rather than biological muscle or pilot pedalling."
+    },
+    {
+      "photograph": "11 / Unknown-11.jpg",
+      "readable": "At low speed flap down lasts longer than recovery; periods become equal as speed increases. Wing-wishbone-body assembly can be resonant. Compare lift and drag of candidate actions against the desired force variation. Fore/aft CG oscillation accompanies cyclic thrust.",
+      "used": "Fixed timing-bias linkage settings 0.3 and 0; a coupled spring/inertia model; honest required-versus-candidate force comparison.",
+      "uncertain": "Crossed-out double-parabola passage and extensive marginal revisions do not define unambiguous revised numerical equations.",
+      "completion": "theta = phi - b sin(phi), spring stiffness, inertia and all numerical phase curves are supplied mechanical completions, not notebook samples. No in-flight automatic timing change."
+    },
+    {
+      "photograph": "12 / Unknown-12.jpg",
+      "readable": "Wing and body inertia plus wishbone springiness exchange energy. Fore/aft wing motion changes CG/centre-of-lift separation and pitches the body. Wing action uses arm and hand portions: forward recovery, opening and pulling down/back; closing during recovery.",
+      "used": "Actual distributed wing masses, CG reaction, coupled phase and pitch coordinates, sweep linkage and two overlapping sliding outer leaves. Lift/drag directions use actual local motion.",
+      "uncertain": "No complete mechanical linkage dimensions or validated full-scale spring curve are given.",
+      "completion": "The supplied helper constructs mass geometry and derivatives from our wingPose. Half-length rigid sliding leaves implement closing without deleting hidden mass; tail and passive pitch damping are engineering additions."
+    },
+    {
+      "photograph": "13 / Unknown-13.jpg",
+      "readable": "Opening continuation: reduced area and span on recovery, repetition of cycle, local incidences optimise thrust and drag; pencilled addition mentions camber. Later goshawk example has different proportions and lists 13%, 10%, 9%, 6% camber.",
+      "used": "Recovery overlap changes exposed span; incidence and changing camber remain independent geometric and aerodynamic quantities.",
+      "uncertain": "The goshawk percentages and figure dimensions are not swan specifications and are not copied.",
+      "completion": "Supplied small inner and outer camber curves produce curved geometry and section-coefficient changes independently of twist. Exposure and camber laws are explicit assumptions."
+    },
+    {
+      "photograph": "14 / Unknown-14.jpg",
+      "readable": "Arm section 5 to 6 percent thick, outer hand wing a thin slotted curved plate. Local trajectory tilts lift and drag into thrust/vertical directions; closing reduces recovery drag. Conventional tail/weight shift and a longer-arm fin/rudder suit an ornithopter. Swan takeoff discussion includes arm -15 to +45 degrees and hand +/-45 degrees.",
+      "used": "5.5% inner thickness metadata, thin curved outer fabric, visible articulation, conventional tail/elevator and rudder, three-wheel rolling takeoff.",
+      "uncertain": "Biological takeoff angles are context, not full-scale aircraft linkage limits; no aircraft performance guarantee is inferred.",
+      "completion": "Supplied stroke amplitudes, 0.8% outer structural thickness, local strip aerodynamics, controls and landing-gear contact model replace unspecified mechanical details. Decorative ribs and spars do not add unbudgeted simulated mass."
+    },
+    {
+      "photograph": "15 / Unknown-15.jpg",
+      "readable": "Baseline glide drag Dg = W divided by L/D; glide power Dg V / 550 in horsepower. Extra powered-flight costs include induced drag, horizontal acceleration, vertical trajectory and wing inertia. Inertial power is zero without damping in the ideal model. Design algorithm refers to Appendix 12.",
+      "used": "Aerodynamic drag work, translation, coupled rotational kinetic energy and hinge spring energy are accounted for. Spring energy is storage, never a net source. Motor-off motion coasts under the same equations.",
+      "uncertain": "Missing appendices, bracketed references and pencilled scaling notes do not supply a complete power model.",
+      "completion": "16 kW shaft limit, 85% transmission, finite starting torque, 300 kg m2 reflected inertia, fuel BSFC, damping coefficients and RK2 integration are supplied engineering assumptions, not Stanley's numbers."
+    }
+  ],
+  "engineering": {
+    "dry_mass_including_pilot_kg": 173.9,
+    "pilot_mass_kg": 55,
+    "initial_fuel_kg": 3.6,
+    "initial_wet_mass_kg": 177.5,
+    "mass_allocations": "Supplied revised engineering mass_budget, including all 30 kg of wings during overlap.",
+    "neutral_stability": "Passive pitch damping 1000 N m s/rad, dissipating coefficient times pitch_rate squared; no trim autopilot or altitude hold.",
+    "ground_model": "Three-wheel pitch-zero constrained reduction, Ag and Agp include vertical whole-CG reaction. Constraint releases only when normal load would be negative. Actual terrain and rotated CG correction determine tyre contact.",
+    "integration": "Midpoint RK2 with substeps no larger than 1/240 second. Airborne two-coordinate Lagrange solve. No arbitrary phase stopping on throttle removal.",
+    "glide": "Explicit frozen extended configuration only when state.gliding is true; neutral unpowered glide uses engineering.glide. Approach is already-powered flight at the supplied 16 m/s, pitch 0.1, omega 6 and 90% throttle; initial kinetic energy belongs to its initial condition.",
+    "visual_language": "Ivory translucent sailcloth, graphite-green tubular truss, bronze hinge springs, exposed finned engine and belt reduction, sliding leaf spars, long conventional tail, teal open cockpit and helmeted seated pilot. Tyres rotate about lateral z axles.",
+    "causal_interventions": "motor_enabled, gravity, rho, pitch_locked, damping_scale, pose override and sweep_scale all act on the same production model."
+  },
+  "limitations": [
+    "Illustrative favourable lightweight mass budget, not structurally validated or experimentally flight-validated.",
+    "Quasi-steady low-strip-count model omits wake history, unsteady stall, section pitching moments, flexible wing motion and flow interaction between overlapping leaves.",
+    "Roll/yaw inertial coupling is omitted; horizontal rudder force and finite roll controls are reduced controls.",
+    "Three-wheel rigid contact is not a suspension model. Touchdown projection dissipates energy; it is not a source of flight energy.",
+    "Visual fittings represent the allocated components, not additional independently simulated masses.",
+    "No tests, code execution, builds or visual previews were performed under the file-only protocol.",
+    "Historical source references and handwritten marginal revisions are incomplete; no invented recovered data or missing appendices are claimed."
+  ]
+}

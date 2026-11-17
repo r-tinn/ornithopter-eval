@@ -1,0 +1,71 @@
+{
+  "aircraft": "S-02 | Fenland, single-seat experimental ornithopter",
+  "attribution": "Interpretation of the photographed notes and marked-up pages of Stanley J. O. Tinn, Bird flight as a guide to ornithopter design (2007). This is a simulated mechanical translation, not Stanley's construction specification.",
+  "readings": [
+    {
+      "photo": "02 (Unknown-2.jpg)",
+      "reading": "The plan view has a wide nearly parallel-sided arm and a narrowing rounded hand. The 'Say' column gives 7.4 ft total and 3.7 ft across both wrists; the area paragraph gives 6.61 square feet. Use b²/S = 7.4²/6.61, and bw/b = 3.7/7.4, not a half-span divided by the full span.",
+      "uncertainty": "Crossings-out qualify the ellipse; 7.83 is a comparison, not the result of that area calculation. The 3.135 ft wing-length conversion conflicts with the metric and adjacent imperial entries. Neither this length nor the faint marginal figures enter the model.",
+      "completion": "Scale the extended planform to 14 m, area 196/AR. Subtract the central hinge gap; represent the outer ellipse by four tapered segments with a short finite tip chord."
+    },
+    {
+      "photo": "08 (Unknown-8.jpg)",
+      "reading": "Göttingen 417a (Curved Plate): several curves and scales share a grid, including lift, drag, moment and incidence. Two Reynolds annotations appear near the upper right in the chart's reading orientation.",
+      "uncertainty": "The overlaid scales and pencil readings do not establish an unambiguous numerical polar, much less a full-scale one.",
+      "completion": "Use engineering.sections, with separate inner/outer tables, linear interpolation, camber correction and an induced drag term. No plotted coordinates were digitised."
+    },
+    {
+      "photo": "09 (Unknown-9.jpg)",
+      "reading": "A sine-wave height history, cruising speed and beat frequency define a required force range against which to evaluate wing actions. The aim is a powered man-carrying ornithopter informed by larger birds, not a miniature bird or human muscle drive.",
+      "uncertainty": "No viable aircraft dimensions, pilot mass or engine sizing follow from the introductory argument; the historical marginal note is not a performance specification.",
+      "completion": "Use the comparison panel as an analysis condition only. Place a seated 55 kg pilot in an engine-driven aircraft; the actual CG trajectory follows Newton's law."
+    },
+    {
+      "photo": "10 (Unknown-10.jpg)",
+      "reading": "Nominally straight & level flapping is not instantaneously straight or level: lift and thrust vary and so does airspeed. The pigeon wake illustration and discussion of bounding and ring gait are examples, not instructions to extinguish lift each recovery.",
+      "uncertainty": "The handwriting over the future-work passage is not treated as a completed vehicle design.",
+      "completion": "Retain instantaneous strip forces on both strokes. No programmed coast segment, vortex-ring force or imposed oscillation."
+    },
+    {
+      "photo": "11 (Unknown-11.jpg)",
+      "reading": "A longer flap down at low speeds approaches equal periods at cruise. The wing–wishbone–body system suggests resonant exchange. Compare forces from candidate actions with forces for the desired trajectory, including cyclic fore/aft thrust.",
+      "uncertainty": "Multiple marginal revisions of the trajectory paragraph and its acceleration bound are not a reliable final equation. Nor is the kestrel wake sketch a set of time samples.",
+      "completion": "A fixed linkage setting warps crank phase by -b sin(phi), b=0.3 or 0. Use a pair of torsion springs in the coupled kinetic-energy system; do not prescribe frequency or feed comparison residuals into the controls."
+    },
+    {
+      "photo": "12 (Unknown-12.jpg)",
+      "reading": "Wing/body motion is about their common cg. Changing separation between cg and centre of lift affects pitch. In the swimming-stroke analogy the wrist trails as the arm comes up and forward; the feathers open before the hand pulls down and back. The hand closes again on recovery.",
+      "uncertainty": "These are descriptions, not measured phase offsets, tracks or a spring law. The suggested nonlinear spring and quick return are possibilities.",
+      "completion": "Use two articulated regions each side, feathering, fore/aft guide travel, overlapping outer leaves and mass-matrix coupling. Resolve loads from local flow and moment arms; the body origin recoils relative to the integrated CG."
+    },
+    {
+      "photo": "13 (Unknown-13.jpg)",
+      "reading": "The sentence carried over from 12 explicitly says reduced area and span; local incidence, with 'and camber' added, affects thrust and drag. The later profiles at a–d are sections of a goshawk.",
+      "uncertainty": "The 13, 10, 9 and 6 per cent cambers are examples on that bird, not specifications for the mute swan or a machine.",
+      "completion": "Twist rotates the chord; a separate camber coordinate curves the fabric and modifies CL. Neither changes the specified material thickness ratio. Recovery overlap masks area, never mass."
+    },
+    {
+      "photo": "14 (Unknown-14.jpg)",
+      "reading": "5 to 6% thickness on the arm contrasts with an effectively slotted curved plate outboard. At low speed the steep local path can turn section lift substantially forward. Partial closing cuts return drag. A conventional long-arm tail and fin/rudder are proposed as alternatives to differential bird wings.",
+      "uncertainty": "Swan take-off angles and speculative changes in wishbone stiffness are not actuator travel or gear loads for a manned machine.",
+      "completion": "Inner rib depth 5.5% chord, outboard plate thickness scale 0.8%. Two sliding hand leaves are a mechanical analogue rather than individual feathers. Use three-wheel runway takeoff, conventional tail, and finite control torque."
+    },
+    {
+      "photo": "15 (Unknown-15.jpg)",
+      "reading": "The glide horsepower expression Dg V / 550 is drag times speed in imperial units. The list then separates additional induced loss, fore/aft and vertical motion and moving-wing inertial work. A lossless oscillation returns stored energy; it is not an energy source.",
+      "uncertainty": "Appendix 12 and full design calculations are absent. Handwritten dimensional notes and tentative efficiencies are not adopted as calibrated constants.",
+      "completion": "Account for translation, phase/pitch kinetic coupling, hinge energy, drag dissipation, pilot work and damping heat in SI. Finite shaft power and fuel pay for shaft work; the frozen-wing glide draws on mechanical energy alone."
+    }
+  ],
+  "engineering_assumptions": {
+    "mass_kg": {"dry_including_pilot":173.9,"pilot":55,"wings":30,"fuselage":20,"tail":5,"landing_gear":8,"engine":16.9,"transmission":12,"installation":8,"cockpit_controls":6,"tank":3,"contingency":10,"fuel_initial":3.6,"wet_initial":177.5},
+    "drive": "Moster185 EFI reference package, assumed 16 kW continuous shaft cap, 85% transmission efficiency, 300 kg m² reflected slow-shaft inertia, torque governor, idle flow and BSFC are benchmark completions. Passive pitch damping of 1000 N m s/rad is also assumed, not an observed swan property.",
+    "presets": "Runway starts at rest. Approach starts already powered (16 m/s, pitch 0.1, crank 6 rad/s, throttle 0.9). Neither acquires angular velocity from a clock. Deliberate glide starts with frozen extended wings at the supplied aerodynamic trim."
+  },
+  "limitations": [
+    "Favourable estimated structure and ideal linkages, not load-rated components. Not a buildable design or a validated prediction of human flight.",
+    "Quasi-steady exposed strips with nominal extended AR. No wake history, material elasticity of the skin, overlap interference or section pitching moments. The shared finite-difference geometry accounts for represented point velocities, including camber work.",
+    "Body masses lumped at the body origin; explicit distributed wing masses. Longitudinal coupling only; no roll/yaw inertia coupling. Wheels use a rigid contact reduction rather than suspension and terrain deformation.",
+    "Missing appendices, ambiguous graph traces and marginal revisions remain missing; the mechanical linkage curves, glide trim and coefficient tables are engineering assumptions."
+  ]
+}

@@ -155,7 +155,7 @@ class ExperimentTests(unittest.TestCase):
                 self.assertEqual(trial['status'],'infrastructure_error' if failed else 'submitted')
                 self.assertEqual(result['models'][trial['model']]['graded_attempts'],0 if failed else 1)
                 self.assertTrue((root/'trials'/trial['id']/'transcript.txt').is_file())
-            for invalid in ([models[0]],models+[models[0]],[f'model-{n}' for n in range(9)]):
+            for invalid in ([],models+[models[0]],[f'model-{n}' for n in range(9)]):
                 with self.assertRaises(ValueError):
                     run_experiment(Path(temp)/'invalid',invalid,1,ROOT/'configs/frontier-calibration.json')
             self.assertFalse((Path(temp)/'invalid').exists())
@@ -177,6 +177,21 @@ class ExperimentTests(unittest.TestCase):
             self.assertEqual(saved['generation_profile']['id'],'source-first-constrained-v1')
             self.assertEqual(config.read_bytes(),before)
             self.assertIn('File-only audit',(root/'index.html').read_text())
+
+    def test_single_model_three_sequential_repeats(self):
+        with tempfile.TemporaryDirectory() as temp:
+            calls=[]
+            def transport(payload,timeout):
+                calls.append(payload)
+                return {"status":"completed","output":[],"usage":{"input_tokens":1,"output_tokens":1}}
+            result=run_experiment(Path(temp)/'single',['model-a'],3,
+                ROOT/'configs/frontier-calibration.json',transport=transport,grader=fake_grade,
+                sequential=True,stop_on_error=True)
+            self.assertEqual(result['status'],'completed')
+            self.assertEqual([t['id'] for t in result['trials']],['model-a-01','model-a-02','model-a-03'])
+            self.assertEqual(len(calls),3)
+            self.assertTrue(all(p['input']==calls[0]['input'] for p in calls))
+            self.assertTrue(all(p['reasoning']=={'effort':'medium'} for p in calls))
 
     def test_six_independent_attempts_with_identical_input_and_medium_reasoning(self):
         with tempfile.TemporaryDirectory() as temp:

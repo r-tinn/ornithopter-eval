@@ -1,5 +1,7 @@
 """The complete checklist. Every verdict is boolean; null means ungraded."""
 
+from .airframe_versions import AIRFRAME_REVISIONS
+
 TASK_VERSION = "swan-v3.1"
 CHECKS = {
     "source": {
@@ -189,6 +191,9 @@ def normalize_checks(group, observed, checks=CHECKS):
 
 def refresh_verdict(report):
     checks = checklist(report.get("task_version"))
+    if report.get('grading_revision') in AIRFRAME_REVISIONS:
+        from .airframe import scored_checks
+        checks={**checks,'airframe':{name:name for name in scored_checks(report['grading_revision'])}}
     if set(report["dimensions"]) != set(checks):
         raise ValueError("Report must contain the complete checklist")
     for group, expected in checks.items():

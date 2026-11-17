@@ -1,0 +1,110 @@
+{
+  "task_version": "mechanical-v7-source-first",
+  "grading_revision": "airframe-binary-v1",
+  "status": "passed",
+  "passed": true,
+  "submission_sha256": {
+    "aircraft.mjs": "9e0b4d9d5bd671612410553cfca5edba0598a1aab4ff041a84d479c159992e98",
+    "author-base.mjs": "aa5cbd7153f63e832e95bae3b05ee15d8ac9bc71967c2d14501539c7fac1a893",
+    "environment/capture.mjs": "163afc21a91601ef467f554816f8c0565289fa9a2f45454dce97256703161618",
+    "environment/engineering.mjs": "c4b8598f927d5d130e4f4b16c7d59f74c23aadfd246d00f1b82bb65031e66d5c",
+    "environment/flight-modes.mjs": "791aee69341621305c6c0ea2f7e4c129cbc0a02a7a60e7a1cfc2265d01d41d62",
+    "environment/platform.mjs": "be26d96516749b728e5ca45cd1e3b665abdadcf90a2695c9198e4ffea03bb3e4",
+    "environment/source-mechanism.mjs": "cb55fd96906c7d708ea948a1010c2a9e6d688224ff65155b7e1eeb91c9db3b4d",
+    "environment/style.css": "21db9f38d2ab3f0c10c667245fed2748689382465c4164e281bed102b2b7f5ed",
+    "environment/vendor/THREE-LICENSE.txt": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+    "environment/vendor/three.core.min.js": "05b2609338c76cd65daf74f3ac515bc9a5045e1b3b33edc07d8c9bd55250fa90",
+    "environment/vendor/three.module.min.js": "86bcee248b64f44bcfc23c331ae74619061957d59cab040171dcb6fb5900beb6",
+    "environment/view-motion.mjs": "a01247f64b5244a8223f490b10044296c779284e6fa685e75344421499ef92b1",
+    "environment/world.mjs": "cf5859d1582b6b7b77fcab7a69f5c6cab25c7ae48c482f31d62e39967b52aa85",
+    "index.html": "c8ad6882313e105f01e3598e741b82df5e02e7d052a985d2d19056aadf41ccce",
+    "interpretation.json": "4f388540dc66824cf3850dd2012096a3735d7b078e169f3a534c05f8e95c333f",
+    "kinematics.mjs": "3c6bd41b1ff702216bc02bf2122623eb786fdd4e7040ba2cc3320548896308c7",
+    "physics.mjs": "9a1863b8d18c8dd6bba69c5a97985bd50d1ed8606c28dcb17902e43d8202a626"
+  },
+  "grader_sha256": {
+    "source-first-v7.mjs": "ad2f301074e595cfe823df17ff2d90bebc80efa695c56d1d753004c92156443b",
+    "grading.py": "63342f4001992f10fe063c947256a1aebadc8d0ee2ec41ba266b4a267069bb1e",
+    "checks.py": "499d976db6bc819d0cdfc385ad796a8bd71cf7867fd07e1f5943a8d118caa05e",
+    "wheel-axis.mjs": "a887902fa5c75256c18ee468a15da99c118fc9b8f4ce3366863481fa1d6bdb37",
+    "protocols/v7-launch-60-65-70-bank-v2.json": "28c100682e7948673214dcb62eb3bcdb18ca753dd65d495f1d2dea355a2dd34e",
+    "source-probes.mjs": "9fdbbd25d3df8ff4e7459055dd95b3e0cd88ac74fa01b64e357a46769576a213",
+    "source-calibrate.mjs": "e2f79b564f30428e415783d4f0594e883ccefa0001c0ec4dde594c38e51ec2d6",
+    "source-first-v6.mjs": "a2c76bab60b2302f125c3d91492310f0bb4f06f74956ceacbda0962e4fafa686",
+    "expected_engineering.json": "2952e9b0acc66dc3f7d9d183aedcc3cb5d09560409ed39dbae108d45c790eb81",
+    "pitch-stability.mjs": "932049248f583e913532a09e8f53937b9af772bcb49f523b2aa0dea93dfdcc4d",
+    "grader/protocols/airframe-binary-v1.json": "9d6bbf58bd92f65c685da72ee66e47129546fd61d26ca07bd981b764edec851f",
+    "grader/airframe-evidence.mjs": "9f55f5b87880abd3b7c3f9a326723eb7f60b43af681b0f115bb5850c7c688df9",
+    "grader/airframe-geometry.mjs": "13615ebfecbbd8f3550db6035e9322c4bad8e10f9b2bc0affb3a74ffee689624",
+    "ornithopter_eval/airframe.py": "9efb3c9cabd0f2d5f2dbda47bc76df3fcfe5445e53d7e1291ee93dc9bfa807ee"
+  },
+  "dimensions": {
+    "source": {
+      "passed": true,
+      "checks": []
+    },
+    "physics": {
+      "passed": true,
+      "checks": [
+        {
+          "id": "wing_cycle_force_coupling",
+          "pass": true
+        },
+        {
+          "id": "elastic_inertial_exchange",
+          "pass": true
+        },
+        {
+          "id": "wing_body_pitch_coupling",
+          "pass": true
+        },
+        {
+          "id": "power_limited_flight",
+          "pass": true
+        },
+        {
+          "id": "unpowered_glide_balance",
+          "pass": true
+        },
+        {
+          "id": "powered_pitch_stability",
+          "pass": true
+        }
+      ]
+    },
+    "interaction": {
+      "passed": true,
+      "checks": [
+        {
+          "id": "wheel_rotation_axis",
+          "pass": true
+        }
+      ]
+    },
+    "visual": {
+      "passed": true,
+      "checks": []
+    },
+    "airframe": {
+      "passed": true,
+      "checks": [
+        {
+          "id": "wingtip_motion_continuity",
+          "pass": true
+        },
+        {
+          "id": "pilot_clearance",
+          "pass": true
+        },
+        {
+          "id": "wing_drive_linkage",
+          "pass": true
+        },
+        {
+          "id": "rear_truss_structure",
+          "pass": true
+        }
+      ]
+    }
+  }
+}

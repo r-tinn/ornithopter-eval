@@ -7,7 +7,7 @@ from pathlib import Path
 
 from .api import APIError, get_api_key
 from .checks import TASK_VERSION
-from .grading import grade_submission
+from .grading import GRADING_REVISIONS, grade_submission
 from .experiment import export_experiment, run_experiment, serve_artifacts
 from .review import apply_review, audit_consistency, judge
 from .runner import ROOT, prepare, run_model, verify_sources, write_json
@@ -137,20 +137,20 @@ def validate(node):
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Ornithopter evaluation and shared-world review")
     commands = parser.add_subparsers(dest="command",required=True)
-    cli_config=str(ROOT/'configs/source-first-v7.json')
+    cli_config=str(ROOT/'configs/source-first-airframe-v4.json')
     p = commands.add_parser("prepare");p.add_argument("output");p.add_argument("--config",default=cli_config)
     p = commands.add_parser("run");p.add_argument("--model",required=True);p.add_argument("--output",required=True);p.add_argument("--config",default=cli_config)
-    p = commands.add_parser("grade");p.add_argument("submission");p.add_argument("--output",required=True);p.add_argument("--node",default="node");p.add_argument('--task-version');p.add_argument('--grading-revision',choices=['v7-launch-60-65-70-v1','v7-launch-60-65-70-bank-v2'])
+    p = commands.add_parser("grade");p.add_argument("submission");p.add_argument("--output",required=True);p.add_argument("--node",default="node");p.add_argument('--task-version');p.add_argument('--grading-revision',choices=GRADING_REVISIONS)
     p = commands.add_parser("judge");p.add_argument("submission");p.add_argument("grade_dir");p.add_argument("--model",required=True)
     p = commands.add_parser("review");p.add_argument("grade_dir");p.add_argument("review_json");p.add_argument("--reviewer",required=True)
     p = commands.add_parser("validate");p.add_argument("--node",default="node")
     p = commands.add_parser("audit-reviews");p.add_argument("reviews",nargs="+")
     p = commands.add_parser("compare");p.add_argument("--models",nargs="+",required=True);p.add_argument("--repeats",type=int,default=3);p.add_argument("--output",required=True);p.add_argument("--config",default=cli_config);p.add_argument("--node",default="node")
-    p.add_argument("--grading-revision",choices=["v7-launch-60-65-70-v1","v7-launch-60-65-70-bank-v2"])
+    p.add_argument("--grading-revision",choices=GRADING_REVISIONS)
     p.add_argument('--sequential',action='store_true',help='Generate and grade one model at a time, in the supplied order')
     p.add_argument('--stop-on-error',action='store_true',help='With --sequential, stop on the first infrastructure error or interrupted API deadline')
     p = commands.add_parser("export");p.add_argument("source");p.add_argument("destination")
-    p = commands.add_parser('regrade-experiment');p.add_argument('source');p.add_argument('--output',required=True);p.add_argument('--grading-revision',required=True,choices=['v7-launch-60-65-70-v1','v7-launch-60-65-70-bank-v2']);p.add_argument('--node',default='node')
+    p = commands.add_parser('regrade-experiment');p.add_argument('source');p.add_argument('--output',required=True);p.add_argument('--grading-revision',required=True,choices=GRADING_REVISIONS);p.add_argument('--node',default='node')
     p = commands.add_parser("serve-artifacts");p.add_argument("directory");p.add_argument("--port",type=int,default=8765);p.add_argument("--original-camera",action="store_true",help="Serve the exact archived host without playback updates")
     p = commands.add_parser("prepare-world");p.add_argument("output");p.add_argument("--reference",action="store_true")
     p = commands.add_parser("prepare-piloted");p.add_argument("output");p.add_argument("--reference",action="store_true")
